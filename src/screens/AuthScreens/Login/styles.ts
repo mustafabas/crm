@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   inputContainer: {
     justifyContent: "space-between",
     padding: 20,
-    flex:4,
+    flex:1,
   },
   signupLink: {
     flexDirection: "row",

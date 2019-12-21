@@ -7,6 +7,7 @@ import {
 } from "react-navigation";
 
 import {createStackNavigator} from 'react-navigation-stack'
+import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { Dimensions } from "react-native";
 
 const { width } = Dimensions.get("window");
@@ -17,6 +18,12 @@ const { width } = Dimensions.get("window");
 // import Blank from "../screens/AppScreens/Blank";
 // import SideBar from "../screens/AppScreens/SideBar";
 import Login from "../screens/AuthScreens/Login";
+import SignUpFirstScreen from '../screens/AuthScreens/SignUp/SignUpFirstScreen'
+import SignUpSecondScreen from '../screens/AuthScreens/SignUp/SignUpSecondScreen'
+import PhoneVerificationScreen from "../screens/AuthScreens/SignUp/PhoneVerificationScreen";
+import HomeScreen from '../screens/AppScreens/Home/HomeScreen'
+import { Icon } from "native-base";
+import CustomerOrdersScreen from '../screens/AppScreens/Customer/CustomerOrdersScreen'
 // import AuthLoading from "../screens/AuthLoading";
 // import Customer from "../pages/customer";
 // import Employee from "../pages/employee";
@@ -51,22 +58,34 @@ import Login from "../screens/AuthScreens/Login";
 //     // headerMode:"none"
 //   })
 
-// const CustomerApp = createStackNavigator(
-//   {
-//     Customer: { screen: Customer },
-//     CustomerAdd: { screen: addCustomer },
-//     OrdersCustomer: { screen: OrdersCustomer },
-//     AddOrder: { screen: addOrder },
-//     EditCustomer: { screen: editCustomer },
-//     NewPricePage: { screen: newPricePage },
-//     CustomerDefinedPricePage: { screen: customerDefinedPricePage },
-//     EditOrder: { screen: editOrder }
-//   },
-//   {
-//     // headerMode: "none"
-//   }
+const CustomerStack = createStackNavigator(
+  {
+    // Customer: { screen: Customer },
+    // CustomerAdd: { screen: addCustomer },
+    // OrdersCustomer: { screen: OrdersCustomer },
+    // AddOrder: { screen: addOrder },
+    // EditCustomer: { screen: editCustomer },
+    // NewPricePage: { screen: newPricePage },
+    // CustomerDefinedPricePage: { screen: customerDefinedPricePage },
+    // EditOrder: { screen: editOrder }
+    CustomerOrders : CustomerOrdersScreen
+  },
+  {
+    // headerMode: "none"
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: '#216AF4',
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: '600',
+        fontFamily:'Avenir Next',
+        fontSize:18
+      },
+    },
+  }
 
-// );
+);
 
 // const SettingsApp = createStackNavigator(
 //   {
@@ -82,47 +101,61 @@ import Login from "../screens/AuthScreens/Login";
 //   }
 // )
 
-// const MainStack = createBottomTabNavigator(
-//   {
-//     Customer: {
-//       screen: CustomerApp,
-//       navigationOptions: {
-//         tabBarLabel: 'Müşteriler',
-//         tabBarIcon: () => (
-//           <Icon name="ios-contacts" size={25} />
-//         ),
-//       }
-//     },
-//     Employee: {
-//       screen: EmployeeApp,
 
-//       navigationOptions: {
-//         tabBarLabel: 'Çalışanlar',
-//         tabBarIcon: () => (
-//           <Icon name="ios-person" size={25} />
-//         ),
-//       },
+const HomeStack = createStackNavigator({
+  Home : HomeScreen,
+  Customer : CustomerStack
+},{
+  headerMode:'none'
+})
 
-//     },
-//     Settings: {
-//       screen: SettingsApp,
-//       navigationOptions: {
-//         tabBarLabel: 'Ayarlar',
-//         tabBarIcon: () => (
-//           <Icon name="ios-settings" size={25} />
-//         )
-//       }
-//     },
-//   },
-//   {
-//     initialRouteName: "Customer",
+const MainStack = createBottomTabNavigator(
+  {
+    Customer: {
+      screen: HomeStack,
+      navigationOptions: {
+        tabBarLabel: 'Müşteriler',
+        tabBarIcon: () => (
+          <Icon name="ios-contacts" size={25} />
+        ),
+      }
+    },
+    Employee: {
+      screen: HomeScreen,
 
-//   }
-// );
+      navigationOptions: {
+        tabBarLabel: 'Çalışanlar',
+        tabBarIcon: () => (
+          <Icon name="ios-person" size={25} />
+        ),
+      },
+
+    },
+    Settings: {
+      screen: HomeScreen,
+      navigationOptions: {
+        tabBarLabel: 'Ayarlar',
+        tabBarIcon: () => (
+          <Icon name="ios-settings" size={25} />
+        )
+      }
+    },
+  },
+  {
+    initialRouteName: "Customer",
+
+  }
+);
+
+
 
 const LoginScreen = createStackNavigator(
   {
-    Login: { screen: Login }
+    Login: { screen: Login },
+    SignUpFirst :SignUpFirstScreen,
+    SignUpSecond : SignUpSecondScreen,
+    PhoneVerification:PhoneVerificationScreen,
+    Home: HomeScreen
   },
   {
     initialRouteName: "Login",
@@ -136,11 +169,12 @@ export default createAppContainer(
     {
       // AuthLoading: AuthLoading,
       LoginScreen: LoginScreen,
-      // MainStack: MainStack,
+
+      MainStack: MainStack,
       // AddCustomer: CustomerApp,
     },
     {
-      initialRouteName: "LoginScreen" //createDrawernavigator içindeki bir sayfa buraya yazılamazmış!!!!
+      initialRouteName: "MainStack" //createDrawernavigator içindeki bir sayfa buraya yazılamazmış!!!!
     }
   )
 );
