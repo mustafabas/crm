@@ -11,13 +11,18 @@ import {
   ActivityIndicator,
   ImageBackground,
 } from "react-native";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { Container, Header, Content, Form, Item, Input, Label,Icon, Button } from 'native-base';
+
+import { NavigationScreenProp, NavigationState, SafeAreaView } from "react-navigation";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { loginUserService } from "../../../redux/actions/loginAction";
 import styles from "./styles";
 import { connect } from "react-redux";
 import { AppState } from '../../../redux/store'
+import Hr from "react-native-hr-component";
+
+// import Icon from 'react-native-vector-icons/Ionicons'
 // import { Input } from "react-native-elements";
 
 const logo = require("./water.png");
@@ -32,98 +37,213 @@ interface Props {
 }
 
 interface userData {
-  username: string;
+  email: string;
   password: string;
 }
 
 const loginSchema = Yup.object().shape({
-  username: Yup.string()
-    .matches(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/)
+  email: Yup.string()
+    .email()
     .min(4)
     .max(50)
     .required(),
   password: Yup.string()
     .matches(/^[a-zA-Z0-9_-]+$/)
     .min(6)
-    .max(16)
     .required()
 });
 
-export default class Login extends Component<Props, {}> {
+class Login extends Component<Props, {}> {
 
   handleLogin = (values: userData) => {
     const { loginUserService, isSucceed } = this.props;
-    // loginUserService(values.username, values.password);
+    loginUserService(values.email, values.password);
   };
+
+
+
 
   render() {
     if (this.props.isSucceed) {
       this.props.navigation.navigate("Customer");
     }
     return (
-      <ImageBackground  source={require('../../../images/BackGroundLoginScreen.png')}style={styles.container}>
-        <StatusBar backgroundColor="#2B6EDC" />
+      <ImageBackground  source={require('../../../images/background.png')}style={[styles.container,{justifyContent:'flex-start'}]}>
+        {/* <StatusBar backgroundColor="#2B6EDC" /> */}
+        <SafeAreaView style={{flex:1}}>
+
+       
         <KeyboardAvoidingView
+        style={{flex:1}}
           behavior={Platform.OS === "ios" ? "padding" : "height"}
         >
-          <ScrollView bounces={false}>
+          <ScrollView contentContainerStyle={{flexGrow:1}} bounces={true}>
             <Formik
-              initialValues={{ username: "", password: "" }}
+              initialValues={{ email: "", password: "" ,IsSecureText : true }}
               validationSchema={loginSchema}
               onSubmit={values => this.handleLogin(values)}
             >
               {props => {
                 return (
-                  <View>
-                    <View style={styles.headStyle}>
-                      <Image
-                        style={styles.logo}
-                        source={logo}
+                  <View style={{flex:1}}>
+                    <View style={[styles.inputContainer,{justifyContent:'center'}]}>
 
-                      />
-                      <Text style={styles.headText}>
-                        Korkmazlar
-                      </Text>
-                    </View>
-                    <View style={styles.inputContainer}>
-                      <View style={styles.input}>
-                        {/* <Input
-                          inputStyle={{color : 'white'}}
-                          placeholder="Kullanıcı Adı / E-posta"
-                          placeholderTextColor="white"
-                          value={props.values.username}
-                          keyboardType="email-address"
-                          autoCapitalize="words"
-                          autoCorrect={false}
-                          onChangeText={props.handleChange("username")}
-                          onBlur={props.handleBlur("username")}
-                        /> */}
+                      
+           
+              <View style={{alignSelf:'center',borderColor:'white'}}>
+              <Text style={{fontFamily:'Avenir Next',fontSize:32,color:'white',fontWeight:'bold'}}>Giriş Yap</Text>
+              </View>
+              <View style={{marginTop:'5%'}}>
+                
+
+              <Item style={{marginTop:20,borderBottomWidth:1,borderTopWidth:1,borderLeftWidth:1,borderRightWidth:1,borderColor: (props.touched.email && props.errors.email) ? "#FD0D55" : "#2069F3",borderRadius:30,backgroundColor:'#2069F3',paddingVertical:5
+            ,shadowRadius: 5.00,
+                    
+            elevation: 12,
+
+            shadowColor: "#2069F3",
+shadowOffset: {width: 3, height: 3 },
+shadowOpacity: .5,}}>
+            <Icon style={{color:(props.touched.email && props.errors.email) ? "#FD0D55" : 'white',marginTop:-0,marginLeft:20}} active name='ios-mail' />
+            {/* <Label style={{color:'white',fontFamily:"Avenir Next"}} >Email</Label> */}
+           
+            <Input 
+
+             value={props.values.email}
+             onChangeText={props.handleChange("email")}
+             onBlur={ (props.touched.email && props.errors.email) ? ()=> {
+             
+              props.setFieldValue('email',"") 
+              props.handleChange("email")
+              // props.handleBlur("NameSurname")
+
+             }
+             
+               
+               :  props.handleBlur("email")}
+
+               onEndEditing={ (props.touched.email && props.errors.email) ? ()=> {
+             
+                props.setFieldValue('email',"") 
+                props.handleChange("email")
+                props.handleBlur("email")
+  
+               }
+  
+               
+                 
+                 :  props.handleBlur("email")}
+
+           
+             style={{color:'white',fontFamily:"Avenir Next",paddingTop:0}}
+             placeholder= {(props.touched.email && props.errors.email) ? "Lütfen Emailinizi Giriniz." : "Email"}
+             placeholderTextColor="#dcdcdc"
+             />
+            
+          </Item>
+
+          <Item style={{marginTop:20,borderBottomWidth:1,borderTopWidth:1,borderLeftWidth:1,borderRightWidth:1,borderColor: (props.touched.password && props.errors.password) ? "#FD0D55" : "#2069F3",borderRadius:30,backgroundColor:'#2069F3',paddingVertical:5
+            ,shadowRadius: 5.00,
+                    
+            elevation: 12,
+
+            shadowColor: "#2069F3",
+shadowOffset: {width: 3, height: 3 },
+shadowOpacity: .5,}}>
+            <Icon style={{color:(props.touched.password && props.errors.password) ? "#FD0D55" : 'white',marginTop:-0,marginLeft:20}} active name='ios-lock' />
+            {/* <Label style={{color:'white',fontFamily:"Avenir Next"}} >Email</Label> */}
+           
+            <Input 
+
+             value={props.values.password}
+             onChangeText={props.handleChange("password")}
+             onBlur={ (props.touched.password && props.errors.password) ? ()=> {
+             
+              props.setFieldValue('password',"") 
+              props.handleChange("password")
+              // props.handleBlur("NameSurname")
+
+             }
+             
+               
+               :  props.handleBlur("password")}
+
+               onEndEditing={ (props.touched.password && props.errors.password) ? ()=> {
+             
+                props.setFieldValue('password',"") 
+                props.handleChange("password")
+                props.handleBlur("password")
+  
+               }
+  
+               
+                 
+                 :  props.handleBlur("password")}
+
+           
+             style={{color:'white',fontFamily:"Avenir Next",paddingTop:0}}
+             placeholder= {(props.touched.password && props.errors.password) ? "Lütfen Şifrenizi Giriniz." : "******"}
+             placeholderTextColor="#dcdcdc"
+             secureTextEntry = {props.values.IsSecureText}
+             />
+             <TouchableOpacity onPressIn ={()=> props.setFieldValue('IsSecureText',false)} onPressOut={()=> props.setFieldValue('IsSecureText',true)} >
+               <Icon style={{color:'white'}} active name="ios-eye" />
+             </TouchableOpacity>
+            
+          </Item>
+
+          <TouchableOpacity style={{alignSelf:'flex-end',marginTop:30}}>
+            <Text style={{color:'white',fontFamily:"Avenir Next"}}>
+            Şifremi unuttum?
+            </Text>
+          </TouchableOpacity>
+
+
                       </View>
-                      <View style={styles.input}>
-                        {/* <Input
-                          inputStyle={{color:'white'}}
 
-                          placeholder="Şifre"
-                          placeholderTextColor="white"
-                          value={props.values.password}
-                          onChangeText={props.handleChange("password")}
-                          onBlur={props.handleBlur("password")}
-                          secureTextEntry
-                        /> */}
-                      </View>
-                     
+                <View>
+                <Button onPress={()=>props.handleSubmit()} style={{justifyContent:'center',marginTop:30,marginHorizontal:40,borderRadius:20,backgroundColor:'white',
+                    shadowRadius: 5.00,
+                    
+                    elevation: 12,
 
+                    shadowColor: "#969696",
+    shadowOffset: {width: 3, height: 3 },
+    shadowOpacity: .5,
 
+    
+                    }}>
+            <Text style={{color:'#49B1FD',fontFamily:"Avenir Next",fontWeight:'bold',fontSize:16}} >Giriş Yap</Text>
+          </Button>
+          <Hr hrPadding={50} hrStyles ={{marginTop:30}}lineColor="#eee" width={1}  text="Ya da" textStyles={{color:'white',fontFamily:"Avenir Next"}}/>
+
+          <Button onPress={()=> this.props.navigation.navigate('SignUpFirst')} style={{justifyContent:'center',marginTop:30,marginBottom:30,marginHorizontal:40,borderRadius:20,backgroundColor:'#01C3E3',
+                    shadowRadius: 5.00,
+                    
+                    elevation: 12,
+
+                    shadowColor: "#006c7e",
+    shadowOffset: {width: 3, height: 3 },
+    shadowOpacity: .5,
+
+    
+                    }}>
+            <Text style={{color:'white',fontFamily:"Avenir Next",fontWeight:'bold',fontSize:16}} >Üye Ol</Text>
+          </Button>
+
+                </View>
+</View>                      
+                      
 
 
                     </View>
-                  </View>
+
                 );
               }}
             </Formik>
           </ScrollView>
         </KeyboardAvoidingView>
-
+        </SafeAreaView>
       </ImageBackground>
     );
   }
@@ -147,4 +267,4 @@ function bindToAction(dispatch: any) {
 }
 
 
-// export default connect(mapStateToProps, bindToAction)(Login);
+export default connect(mapStateToProps, bindToAction)(Login);
