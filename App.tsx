@@ -5,6 +5,7 @@ import {View} from 'react-native'
 import AppContainer from "./src/navigation/AppNavigation";
 import configureStore from "./src/redux/store";
 import { PersistGate } from "redux-persist/integration/react";
+import FlashMessage from "react-native-flash-message";
 
 export default class App extends Component {
   render() {
@@ -15,6 +16,7 @@ export default class App extends Component {
             <AppContainer />
           </PersistGate>
         </Provider>
+        <FlashMessage position="top" animated={true} />
       </View>
     );
   }

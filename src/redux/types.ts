@@ -23,7 +23,24 @@ export const CUSTOMER_EDIT_FAILED ="CustomerEditFailed";
 export const LOGIN_STARTED = "loginStarted";
 export const LOGIN_SUCCEED = "loginSucceed";
 export const LOGIN_FAILED = "loginFailed";
+export const RESET_PROPS = "resetProps";
 
+
+export const  SIGNUP_STARTED = "SignUpStarted";
+export const SIGNUP_SUCCEED = "SignUpucceed";
+export const SIGNUP_FAILED = "SignUpFailed";
+
+export const  SIGNUP2_STARTED = "SignUp2Started";
+export const SIGNUP2_SUCCEED = "SignUp2Succeed";
+export const SIGNUP2_FAILED = "SignUp2Failed";
+
+export const  SIGNUP3_STARTED = "SignUp3Started";
+export const SIGNUP3_SUCCEED = "SignUp3Succeed";
+export const SIGNUP3_FAILED = "SignUp3Failed";
+
+
+
+export const USER_CREATE_FIRST_STEP = "userCreateFirstStep";
 export const SET_CURRENT_USER = 'SET_CURRENT_USER';
 
 export const PRODUCT_ADD_SUCCEED = "ProductAddSucceed";

@@ -22,7 +22,7 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import Icon from "react-native-vector-icons/Ionicons";
 import { customerDelete } from "../redux/actions/customerDeleteAction";
-import RNPickerSelect from 'react-native-picker-select';
+// import RNPickerSelect from 'react-native-picker-select';
 import { Input } from "react-native-elements";
 import RBSheet from "react-native-raw-bottom-sheet";
 import { stat } from "fs";

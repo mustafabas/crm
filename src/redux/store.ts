@@ -33,6 +33,7 @@ import deleteEmployeeReducers from "./reducers/deleteEmployeeReducers";
 import getUserReducers from "./reducers/getUserReducers";
 import reportReducers from "./reducers/reportReducers";
 import getEmployeeCostReducers from "./reducers/getEmployeeCostReducers";
+import signUpReducers from './reducers/signUpReducers'
 
 const persistConfig = {
   key: "root",
@@ -73,6 +74,7 @@ const rootReducer = combineReducers({
   home: HomeReducers,
   system: reducer,
   login: loginRed,
+  signUp : signUpReducers
 })
 
 

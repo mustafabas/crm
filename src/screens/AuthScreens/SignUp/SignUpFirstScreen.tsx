@@ -16,11 +16,13 @@ import { Container, Header, Content, Form, Item, Input, Label,Icon, Button, Spin
 import { NavigationScreenProp, NavigationState, SafeAreaView } from "react-navigation";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { loginUserService } from "../../../redux/actions/loginAction";
+// import { loginUserService } from "../../../redux/actions/loginAction";
 import styles from "../Login/styles";
 import { connect } from "react-redux";
 import { AppState } from '../../../redux/store'
 import Hr from "react-native-hr-component";
+import { controlEmail } from "../../../redux/actions/signUpActions";
+import { showMessage } from "react-native-flash-message";
 
 // import Icon from 'react-native-vector-icons/Ionicons'
 // import { Input } from "react-native-elements";
@@ -33,11 +35,12 @@ interface Props {
   isSucceed: boolean;
   isLoading: boolean;
   loginErrorMessage: string;
-  loginUserService: (email: string, password: string) => void;
+  controlEmail : (NameSurname: string,password:string , email:string) => void;
 }
 
-interface userData {
-  username: string;
+interface userDataFirst {
+  NameSurname: string;
+  email: string;
   password: string;
 }
 
@@ -57,16 +60,38 @@ const loginSchema = Yup.object().shape({
     .required()
 });
 
-export default class SignUpFirstScreen extends Component<Props, {}> {
+class SignUpFirstScreen extends Component<Props, {}> {
 
-  handleLogin = (values: userData) => {
-    const { loginUserService, isSucceed } = this.props;
-    // loginUserService(values.username, values.password);
+
+  showSimpleMessage() {
+
+    if (this.props.isFinished && (!this.props.isSucceed)) {
+
+      showMessage({
+        message: "Email veya sifre hatali",
+        type: "danger",
+        icon: 'auto'
+      }
+      );
+    }
+  
+  }
+
+
+
+
+  handleLogin = (values: userDataFirst) => {
+    const { isSucceed } = this.props;
+    // this.props.navigation.setParams({NameSurname : values.NameSurname , email : values.email,password : values.password})
+
+    this.props.controlEmail(values.NameSurname,values.password,values.email);
+   
   };
 
   render() {
-    if (this.props.isSucceed) {
-      this.props.navigation.navigate("Customer");
+    
+    if(this.props.isSucceed) {
+      this.props.navigation.navigate('SignUpSecond')
     }
     return (
       <ImageBackground  source={require('../../../images/background.png')}style={[styles.container,{justifyContent:'flex-start'}]}>
@@ -246,7 +271,7 @@ secureTextEntry = {props.values.IsSecureText}
                       </View>
 </View>                      
          
-          <Button onPress={()=>this.props.navigation.navigate('SignUpSecond')}  style={{justifyContent:'center',marginTop:30,marginBottom:30,marginHorizontal:40,borderRadius:20,backgroundColor:'#01C3E3',
+          <Button onPress={()=>props.handleSubmit()}  style={{justifyContent:'center',marginTop:30,marginBottom:30,marginHorizontal:40,borderRadius:20,backgroundColor:'#01C3E3',
                     shadowRadius: 5.00,
                     
                     elevation: 12,
@@ -276,6 +301,7 @@ secureTextEntry = {props.values.IsSecureText}
           </ScrollView>
         </KeyboardAvoidingView>
         </SafeAreaView>
+        {this.showSimpleMessage()}
       </ImageBackground>
     );
   }
@@ -284,19 +310,20 @@ secureTextEntry = {props.values.IsSecureText}
 
 
 const mapStateToProps = (state: AppState) => ({
-  isFinished: state.login.isFinished,
-  isSucceed: state.login.isSucceed,
-  isLoading: state.login.isLoading,
-  loginErrorMessage: state.login.loginErrorMessage
+  isFinished: state.signUp.isFinished,
+  isSucceed: state.signUp.isSucceed,
+  isLoading: state.signUp.isLoading,
+  loginErrorMessage: state.signUp.loginErrorMessage
+
 })
 
 function bindToAction(dispatch: any) {
   return {
-    loginUserService: (email: string, password: string) =>
-      dispatch(loginUserService(email, password))
+    controlEmail : (NameSurname: string,password:string , email:string) =>
+      dispatch(controlEmail(NameSurname,password,email))
   };
 
 }
 
 
-// export default connect(mapStateToProps, bindToAction)(Login);
+export default connect(mapStateToProps, bindToAction)(SignUpFirstScreen);

@@ -4,6 +4,7 @@ import {WATER_USER_LOGIN} from './../constants'
 import { Dispatch } from "react";
 import {LOGIN_FAILED,LOGIN_STARTED,LOGIN_SUCCEED,RESET_PROPS} from './../types'
 import {Action} from '../states'
+import { navigate } from "../services/Navigator";
 
 
 export function loginUserService(username:string, password:string) {
@@ -41,16 +42,18 @@ export function loginUserService(username:string, password:string) {
   else {
     if(response.data.message == "User.Login.UserNotFound"){
       dispatch(loginIsSucceed(false,"Böyle bir kullanıcı bulunamadı!")); 
+      dispatch(reset());
     }
   }
   })
   .catch(() => {
     dispatch(loginIsSucceed(false, "Bir hata oluştu."));
+    // dispatch(reset());
     dispatch(reset());
 
   });
 
-
+ 
   }
 
 }
