@@ -106,8 +106,8 @@ class HomeScreen extends Component<Props,State>{
         super(props);
   
         this.state = {
-            scrollY: new Animated.Value(0),
-            scrollYNew : new Animated.Value(0),
+            scrollY: new Animated.Value(0.001),
+            scrollYNew : new Animated.Value(0.001),
             HeaderTitle : "Müşteriler",
             selectedState :1,
             modalVisible: false,
@@ -253,7 +253,7 @@ class HomeScreen extends Component<Props,State>{
         this.setState({
             orderType : page ,
             selectedState : page,
-            scrollY :  new Animated.Value(0)})
+            scrollY :  new Animated.Value(0.001)})
 
         // this.forceUpdate()
             
@@ -447,7 +447,7 @@ useNativeDriver ={true}
                            <Animated.View 
                            useNativeDriver ={true}
                            style={{flexDirection:'row' , transform: [{translateY: topThird}]}}>
-                           <ScrollView alwaysBounceVertical={false} showsHorizontalScrollIndicator={false} alwaysBounceHorizontal={true} style={{flexDirection:'row',marginVertical:30}}>
+                           <ScrollView alwaysBounceVertical={false} horizontal={true} showsHorizontalScrollIndicator={false} alwaysBounceHorizontal={true} style={{flexDirection:'row',marginVertical:30}}>
                            <View style={{flexDirection:'row'}}>
                             <TouchableOpacity onPress={()=>this.changePage(2)} style={{marginHorizontal:10}}>
                                 <Text style={{fontFamily:'Avenir Next',fontWeight:"600",fontSize:16,color: this.state.selectedState === 2 ? 'black': '#8F9599'}}>Ödeme Alınacaklar</Text>
