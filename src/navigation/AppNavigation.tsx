@@ -8,9 +8,10 @@ import {
 
 import {createStackNavigator} from 'react-navigation-stack'
 import { createBottomTabNavigator } from 'react-navigation-tabs';
-import { Dimensions } from "react-native";
-
+import { Dimensions, TouchableOpacity, View } from "react-native";
+import { createIconSetFromIcoMoon } from 'react-native-vector-icons'
 const { width } = Dimensions.get("window");
+// import { createIconSetFromIcoMoon } from 'react-native-vector-icons'
 
 // import Icon from "react-native-vector-icons/Ionicons";
 
@@ -22,9 +23,11 @@ import SignUpFirstScreen from '../screens/AuthScreens/SignUp/SignUpFirstScreen'
 import SignUpSecondScreen from '../screens/AuthScreens/SignUp/SignUpSecondScreen'
 import PhoneVerificationScreen from "../screens/AuthScreens/SignUp/PhoneVerificationScreen";
 import HomeScreen from '../screens/AppScreens/Home/HomeScreen'
-import { Icon } from "native-base";
+import { Icon, Image, Text } from "native-base";
 import CustomerOrdersScreen from '../screens/AppScreens/Customer/CustomerOrdersScreen'
-// import AuthLoading from "../screens/AuthLoading";
+import AuthLoading from "../screens/AuthLoading";
+import svgs from '../images/icomoon/SVG/svgs'
+import SvgIcon from 'react-native-svg-icon';
 // import Customer from "../pages/customer";
 // import Employee from "../pages/employee";
 // import Settings from "../pages/settings";
@@ -57,7 +60,7 @@ import CustomerOrdersScreen from '../screens/AppScreens/Customer/CustomerOrdersS
 //   {
 //     // headerMode:"none"
 //   })
-
+// const IconNew = createIconSetFromIcoMoon(icoMoonConfig)
 const CustomerStack = createStackNavigator(
   {
     // Customer: { screen: Customer },
@@ -109,37 +112,83 @@ const HomeStack = createStackNavigator({
   headerMode:'none'
 })
 
+
+// const Icon = createIconSetFromIcoMoon(require('../images/file1.svg'))
+const IconNew = (props) => <SvgIcon {...props} style={{marginTop:55,marginLeft:55}} svgs={svgs} />
+
 const MainStack = createBottomTabNavigator(
   {
     Customer: {
       screen: HomeStack,
       navigationOptions: {
         tabBarLabel: 'Müşteriler',
-        tabBarIcon: () => (
-          <Icon name="ios-contacts" size={25} />
-        ),
+        tabBarIcon: ({ focused }) => {
+
+          return (
+        
+              
+            <IconNew stroke={focused ? '#2069F3' :'black' }  strokeWidth={3} fill={focused ? '#2069F3' :'black' } width="80" height="80" name="User" svgs={svgs} />
+          
+        
+          )
+        }
       }
     },
     Employee: {
       screen: HomeScreen,
 
       navigationOptions: {
-        tabBarLabel: 'Çalışanlar',
-        tabBarIcon: () => (
-          <Icon name="ios-person" size={25} />
-        ),
+        // tabBarLabel: 'Çalışanlar',
+        tabBarIcon: ({ focused }) => {
+
+          return (
+        
+              
+            <IconNew stroke={focused ? '#2069F3' :'black' } strokeWidth={3} fill={focused ? '#2069F3' :'black' } width="80" height="80" name="UserPlus" svgs={svgs} />
+          
+        
+          )
+        }
       },
 
     },
     Settings: {
       screen: HomeScreen,
       navigationOptions: {
-        tabBarLabel: 'Ayarlar',
-        tabBarIcon: () => (
-          <Icon name="ios-settings" size={25} />
-        )
+
+
+tabBarIcon: ({ focused }) => {
+
+  return (
+
+      
+    <IconNew fill={focused ? '#2069F3' :'black' } width="80" height="80" name="Report" svgs={svgs} />
+  
+
+  )
+}
+
       }
     },
+    Profile: {
+      screen: HomeScreen,
+      navigationOptions: {
+
+
+tabBarIcon: ({ focused }) => {
+
+  return (
+
+      
+    <IconNew stroke={focused ? '#2069F3' :'black' } strokeWidth={3} fill={focused ? '#2069F3' :'black' } width="80" height="80" name="Profile" svgs={svgs} />
+          
+
+  )
+}
+
+      }
+    },
+
   },
   {
     initialRouteName: "Customer",
@@ -167,14 +216,14 @@ const LoginScreen = createStackNavigator(
 export default createAppContainer(
   createSwitchNavigator(
     {
-      // AuthLoading: AuthLoading,
+      AuthLoading: AuthLoading,
       LoginScreen: LoginScreen,
 
       MainStack: MainStack,
       // AddCustomer: CustomerApp,
     },
     {
-      initialRouteName: "MainStack" //createDrawernavigator içindeki bir sayfa buraya yazılamazmış!!!!
+      initialRouteName: "AuthLoading" //createDrawernavigator içindeki bir sayfa buraya yazılamazmış!!!!
     }
   )
 );

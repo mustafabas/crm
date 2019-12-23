@@ -75,10 +75,12 @@ const styles = StyleSheet.create({
     //flex:1,
   },
   inputFiyat: {
+    fontFamily : 'Avenir Next',
     elevation: 2,
     backgroundColor: 'rgba(255, 255, 255, 0.4)',
     //marginHorizontal: 5,
     //paddingHorizontal: 20,
+
     color: 'black',
     marginBottom: 10,
     borderRadius: 4,
@@ -890,17 +892,15 @@ const styles = StyleSheet.create({
   },
 
   SheetButtonContainer: {
-    backgroundColor: "#2B6EDC",
-    flexDirection: 'row',
-    paddingTop: 10,
-    borderBottomWidth: 1,
-    paddingBottom: 15,
-    width: '100%',
-    borderRadius: 5,
-    flex: 1,
-    justifyContent: "center",
-    margin:5,
-    right:30,
+    alignSelf:'flex-end',marginRight:20,paddingHorizontal:40,borderRadius:20,backgroundColor:'#01C3E3',
+                    shadowRadius: 5.00,
+                    
+                    elevation: 12,
+
+                    shadowColor: "#006c7e",
+    shadowOffset: {width: 3, height: 3 },
+    shadowOpacity: .5,
+
   },
   PickerColor: {
     backgroundColor: '#E2E7F5'

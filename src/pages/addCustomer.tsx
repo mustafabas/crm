@@ -18,7 +18,7 @@ import { customerAdd } from "../redux/actions/customerAddAction";
 import { AppState } from '../redux/store'
 import { connect } from "react-redux";
 import Icon from "react-native-vector-icons/Ionicons";
-import RNPickerSelect from 'react-native-picker-select';
+// import RNPickerSelect from 'react-native-picker-select';
 import { Input, CheckBox } from "react-native-elements";
 interface Props {
   navigation: NavigationScreenProp<NavigationState>;
