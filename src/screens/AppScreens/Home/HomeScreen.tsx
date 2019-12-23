@@ -25,7 +25,7 @@ import {
 import { Icon, Input, Item, Tabs, Tab, TabHeading, Button, ScrollableTab } from 'native-base';
 import { Alert } from 'react-native';
 import { NavigationScreenProp, NavigationState } from 'react-navigation';
-import { Dimensions } from 'react-native';
+import { Dimensions, Picker } from 'react-native';
 import { ICustomerItem } from '../../../redux/models/homeModel';
 import { connect } from 'react-redux';
 import { GetCustomers, GetCustomerMore } from '../../../redux/actions/homeAction';
@@ -33,9 +33,6 @@ import { customerDelete } from '../../../redux/actions/customerDeleteAction';
 import { AppState } from '../../../redux/store';
 
 import RBSheet from "react-native-raw-bottom-sheet";
-
-import {Picker} from '@react-native-community/picker';
-
 
 
 const vw: number = SafeAreaWithHeader.vw;
