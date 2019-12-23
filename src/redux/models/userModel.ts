@@ -5,3 +5,7 @@ export interface IGetUserItem{
     password :string;
     active: boolean;
 }
+
+
+
+

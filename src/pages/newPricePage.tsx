@@ -16,7 +16,7 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import styles from "./styles";
 import { HeaderLeft } from "../components";
-import RNPickerSelect from 'react-native-picker-select';
+// import RNPickerSelect from 'react-native-picker-select';
 import Icon from "react-native-vector-icons/Ionicons";
 import { connect } from "react-redux";
 import { AppState } from "../redux/store";

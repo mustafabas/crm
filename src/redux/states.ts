@@ -9,6 +9,7 @@ import { IUserItem } from "./models/addUserModel";
 import { IGetUserItem} from "./models/userModel";
 import {IReportItem } from "./models/reportModel"
 import {IEmployeeCostItem} from "./models/employeeCostModel"
+import { UserFirstData } from "./reducers/signUpReducers";
 
 export interface State {
     data: any[];
@@ -30,8 +31,26 @@ export interface State {
     isFinished: boolean;
     isSucceed: boolean;
     loginErrorMessage : string;
-  
+
+
   }
+
+
+  export interface UserCreate {
+    isLoading: boolean;
+    isFinished: boolean;
+    isSucceed: boolean;
+    loginErrorMessage : string;
+    isSecondLoading : boolean;
+    isSecondFinished : boolean;
+    isSecondSucceed : boolean;
+    isThirdLoading : boolean;
+    isThirdFinished : boolean;
+    isThirdSucceed : boolean;
+    userFirstData : UserFirstData;
+  }
+
+
 
   export interface Orders
   {

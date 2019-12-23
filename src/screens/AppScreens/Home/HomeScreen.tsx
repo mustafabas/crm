@@ -6,13 +6,11 @@ import {
     View,
     Platform,
     FlatList,
-
     ScrollView,
-
     Image,
     Animated
 ,TouchableOpacity,
-ActivityIndicator
+ActivityIndicator,Picker
 } from 'react-native';
 import {
     statusBarHeight,
@@ -34,7 +32,8 @@ import { AppState } from '../../../redux/store';
 
 import RBSheet from "react-native-raw-bottom-sheet";
 
-import {Picker} from '@react-native-community/picker';
+// import {} from '@react-native-community/picker';
+import { logoutUserService } from '../../../redux/actions/loginAction';
 
 
 
@@ -171,11 +170,15 @@ class HomeScreen extends Component<Props,State>{
 
 
                 return (
-                    <Animated.View style={[styles.iOSTitleContainer, {
+                    <Animated.View
+                    useNativeDriver ={true}
+                     style={[styles.iOSTitleContainer, {
                         height: Platform.OS === "ios" ? this.headerHeight : this.headerHeight -30,
                         opacity: titleOpacity,
                         borderBottomColor: borderBottomColor,
-                        zIndex:1
+                        zIndex:1,
+                        borderBottomWidth:2
+
                     }]}>
                         <View>
 
@@ -212,9 +215,12 @@ class HomeScreen extends Component<Props,State>{
                 outputRange: [0,0,-15,-35,-45, -45,-90]
             });
             return (
-                <Animated.View style={ [styles.iOSBigTitleContainer, {backgroundColor:'clear',zIndex:1,transform: [{translateY: top}]}]}
+                <Animated.View
+                useNativeDriver ={true}
+                 style={ [styles.iOSBigTitleContainer, {backgroundColor:'clear',zIndex:1,transform: [{translateY: top}]}]}
                                key="iosBigTitle">
                     <Animated.Text
+                    useNativeDriver ={true}
                         allowFontScaling={false}
                         style={[styles.iOSBigTitle, {fontSize: fontSize}]}>
                         {this.state.HeaderTitle}
@@ -270,7 +276,7 @@ class HomeScreen extends Component<Props,State>{
     renderGetPay() {
         const top = this.state.scrollY.interpolate({
             inputRange: [0 ,20, 70,90],
-            outputRange: [0,-20, -110,-110]
+            outputRange: [0,-20, -130,-130]
         });
 
         const topThird = this.state.scrollY.interpolate({
@@ -282,8 +288,8 @@ class HomeScreen extends Component<Props,State>{
         return(
 
             <Animated.FlatList
-            
-            style={{ marginBottom:-60,transform: [{translateY: top}]}}
+            useNativeDriver ={true}
+            style={{ marginBottom:Platform.OS === "ios" ? -60 : -220,paddingTop:10,transform: [{translateY: top}]}}
             
            //  onScroll={
            //     Animated.event(
@@ -299,7 +305,7 @@ class HomeScreen extends Component<Props,State>{
         ListHeaderComponent= {()=> <View style={{alignItems:'center',marginTop:-5,marginBottom:5}}><Text style={{fontFamily:'Avenir Next',fontWeight:"600",fontSize:16,color: this.state.selectedState === 1 ? 'black': '#8F9599'}}>{this.state.orderType === 3 ? this.state.dayList[this.state.today.getDay()]  : this.state.dayList[this.state.dayOfWeek]}</Text>
            <View style={{backgroundColor: this.state.selectedState === 1 ? 'black': '#8F9599',width:20,height:1,alignSelf:'center'}}></View></View>}
              ItemSeparatorComponent = {({}) => <View style={{height:10}}></View>}
-           renderItem={({ item }) => <View style={{ marginHorizontal: 5, flexDirection: 'row', backgroundColor: '#EFF3F9', paddingVertical: 20, paddingHorizontal: 5,flex:1, justifyContent: 'space-between', borderRadius: 15 }}>
+           renderItem={({ item }) => <TouchableOpacity onPress={()=>this.props.navigation.navigate("Customer", { customerId: item.customerId, nameSurname: item.nameSurname, companyName: item.companyName, displayTookTotalAmount: item.displayTookTotalAmount, restTotalAmount: item.displayRestTotalAmount, totalAmount: item.displayTotalAmount })} style={{ marginHorizontal: 5, flexDirection: 'row', backgroundColor: '#EFF3F9', paddingVertical: 20, paddingHorizontal: 5,flex:1, justifyContent: 'space-between', borderRadius: 15 }}>
                <View style={{ width: 33, height: 33, borderRadius: 16.5, backgroundColor: '#2069F3', justifyContent: 'center', alignItems: 'center' }}>
                    <Text style={{ color: 'white' }}>{item.nameSurname.substring(0, 1)}</Text>
                </View>
@@ -338,7 +344,7 @@ class HomeScreen extends Component<Props,State>{
                        {item.displayTotalAmount}
                    </Text>
                </View>
-           </View>}
+           </TouchableOpacity>}
            
            keyExtractor={(item, index) => String(index)}
            onEndReached={() => {
@@ -391,7 +397,7 @@ class HomeScreen extends Component<Props,State>{
      renderContentArea = () => {
         const top = this.state.scrollY.interpolate({
             inputRange: [-15,0 ,35, 70,90],
-            outputRange: [0,0,-35, -75,-75]
+            outputRange: [0,0,-35, -95,-95]
         });
 
         const topSecond = this.state.scrollY.interpolate({
@@ -407,6 +413,7 @@ class HomeScreen extends Component<Props,State>{
             let padding =  66
             return (
                 <Animated.View
+                useNativeDriver ={true}
                     showsVerticalScrollIndicator={false}
                     scrollEventThrottle={16}
                     style={{paddingTop: padding, transform: [{translateY: top}]}}
@@ -416,10 +423,10 @@ class HomeScreen extends Component<Props,State>{
                     //     )}
                         
                 >
-                    <View style={[styles.contentContainer, {paddingBottom: 0}]}>
+                    <View style={[styles.contentContainer, {paddingBottom: 0,marginBottom:-20}]}>
                            <View >
                           <Animated.View 
-
+useNativeDriver ={true}
             style={{ transform: [{scaleY: topSecond}]}}
 
             >
@@ -437,7 +444,9 @@ class HomeScreen extends Component<Props,State>{
                             </Item>
                           </Animated.View>
 
-                           <Animated.View style={{flexDirection:'row' , transform: [{translateY: topThird}]}}>
+                           <Animated.View 
+                           useNativeDriver ={true}
+                           style={{flexDirection:'row' , transform: [{translateY: topThird}]}}>
                            <ScrollView alwaysBounceVertical={false} showsHorizontalScrollIndicator={false} alwaysBounceHorizontal={true} style={{flexDirection:'row',marginVertical:30}}>
                            <View style={{flexDirection:'row'}}>
                             <TouchableOpacity onPress={()=>this.changePage(2)} style={{marginHorizontal:10}}>
@@ -490,6 +499,9 @@ class HomeScreen extends Component<Props,State>{
     };
 
     getDayOfMusteri(value: number) {
+        if(value === 8) {
+            logoutUserService()
+        }
         this.flatListRef.getNode().scrollToOffset({animated: true, offset: 0})
         console.log(value)
         this.setState({
@@ -562,7 +574,7 @@ class HomeScreen extends Component<Props,State>{
     this.getDayOfMusteri(itemValue)
 
   }>
-<Picker.Item label="Tüm Günler" value={1} />
+<Picker.Item label="Tüm Günler" value={0} />
   <Picker.Item label="Pazartesi" value={1} />
   <Picker.Item label="Salı" value={2} />
   <Picker.Item label="Çarşamba" value={3}/>
@@ -570,6 +582,7 @@ class HomeScreen extends Component<Props,State>{
   <Picker.Item label="Cuma" value={5} />
   <Picker.Item label="Cumartesi" value={6} />
   <Picker.Item label="Pazar" value={7} />
+  <Picker.Item label="cıkıs" value={8} />
 </Picker>
                        </RBSheet>
                     }
@@ -606,7 +619,7 @@ const styles = StyleSheet.create({
 
         marginBottom: 13,
         fontSize: 18,
-        lineHeight: 18,
+        // lineHeight: 20,
         // fontWeight: 'bold',
 
         fontWeight: "600",

@@ -17,7 +17,7 @@ import { HeaderLeft } from "../components";
 import { customerEdit } from "../redux/actions/customerEditAction";
 import { AppState } from '../redux/store'
 import { connect } from "react-redux";
-import RNPickerSelect from 'react-native-picker-select';
+// import RNPickerSelect from 'react-native-picker-select';
 import Icon from "react-native-vector-icons/Ionicons";
 import { GetUser } from "../redux/actions/getUserAction"
 import { Input, CheckBox } from "react-native-elements";

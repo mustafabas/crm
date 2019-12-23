@@ -21,11 +21,14 @@ import styles from "./styles";
 import { connect } from "react-redux";
 import { AppState } from '../../../redux/store'
 import Hr from "react-native-hr-component";
+import { showMessage, hideMessage } from "react-native-flash-message";
+
 
 // import Icon from 'react-native-vector-icons/Ionicons'
 // import { Input } from "react-native-elements";
 
 const logo = require("./water.png");
+
 
 interface Props {
   navigation: NavigationScreenProp<NavigationState>;
@@ -61,12 +64,24 @@ class Login extends Component<Props, {}> {
   };
 
 
+  showSimpleMessage() {
+
+    if (this.props.isFinished && (!this.props.isSucceed)) {
+
+      showMessage({
+        message: "Email veya sifre hatali",
+        type: "danger",
+        icon: 'auto'
+      }
+      );
+    }
+  
+  }
+
 
 
   render() {
-    if (this.props.isSucceed) {
-      this.props.navigation.navigate("Customer");
-    }
+    
     return (
       <ImageBackground  source={require('../../../images/background.png')}style={[styles.container,{justifyContent:'flex-start'}]}>
         {/* <StatusBar backgroundColor="#2B6EDC" /> */}
@@ -244,6 +259,7 @@ shadowOpacity: .5,}}>
           </ScrollView>
         </KeyboardAvoidingView>
         </SafeAreaView>
+        {this.showSimpleMessage()}
       </ImageBackground>
     );
   }
