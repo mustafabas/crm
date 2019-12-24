@@ -176,8 +176,9 @@ export interface AddUser
 
 export interface EmployeeCostAdd
 {
-  isSuccess: boolean,
-  EmployeeCostAddMessage: string,
+  isSuccess: boolean;
+  EmployeAddCostLoading:boolean;
+  EmployeeCostAddMessage: string;
 }
 
 export interface ReportState{

@@ -7,6 +7,11 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
 
   },
+  containerNew:{
+    flex: 1,
+    backgroundColor: "#fff",
+    justifyContent: "flex-start",
+  },
   addCustomerContainer: {
     flex: 1,
     backgroundColor: "white",
@@ -70,7 +75,6 @@ const styles = StyleSheet.create({
     color: 'black',
     //marginBottom:5,
     paddingTop: 0,
-    height: 50,
     marginTop: 10,
     //flex:1,
   },

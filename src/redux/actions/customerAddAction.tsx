@@ -8,7 +8,7 @@ import { Alert } from 'react-native';
 
 export function customerAdd(nameSurname: string, companyName: string, dayOfWeek: number, fountainCount: string, dayOfWeeks: string) {
 
-  console.log(dayOfWeeks + " fsfsafassaffas")
+
 
   return (dispatch: Dispatch<Action>) => {
     axios.post(WATER_CUSTOMER_ADD,

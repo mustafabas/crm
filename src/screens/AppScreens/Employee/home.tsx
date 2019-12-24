@@ -3,7 +3,6 @@ import {
   View,
   FlatList,
   StatusBar,
-  Text,
   TouchableOpacity,
   ActivityIndicator,
   KeyboardAvoidingView,
@@ -11,10 +10,11 @@ import {
   Modal,
   Alert,
   AsyncStorage,
+  Image,
 } from "react-native";
+import { Icon, Input, Item, Tabs, Tab, TabHeading, Text, Button, ScrollableTab, ListItem, Left, Thumbnail, Body, Right, Form, Label, Content } from 'native-base';
 import { NavigationScreenProp, NavigationState, ScrollView, } from "react-navigation";
 import { connect } from "react-redux";
-import styles from "./../../styles";
 import { AppState } from "../../../redux/store";
 import { IEmployeeItem } from "../../../redux/models/employeeModel";
 import { employeeDelete } from "../../../redux/actions/deleteEmployeeAction";
@@ -25,7 +25,12 @@ import { employeeCost } from "../../../redux/actions/employeeCostAction"
 import { timingSafeEqual } from "crypto";
 import { type } from "os";
 import RBSheet from "react-native-raw-bottom-sheet";
+import styles from "../../styles";
+import { stat } from "fs";
+import SvgIcon from 'react-native-svg-icon';
+import svgs from '../../../images/icomoon/SVG/svgs';
 
+const IconNew = (props) => <SvgIcon {...props}  svgs={svgs} />
 
 interface Props {
   navigation: NavigationScreenProp<NavigationState>;
@@ -35,6 +40,7 @@ interface Props {
   employeeDeleteIsSuccess: boolean;
   GetEmployees: () => void;
   employeeCost: (employeId: number, cost: number) => void;
+  employeeAddCostLoading:boolean;
 }
 
 interface State {
@@ -90,7 +96,7 @@ class Employee extends Component<Props, State> {
       return {
         title: 'Çalışanlar',
         headerStyle: {
-          backgroundColor: '#2B6EDC',
+          backgroundColor: '#216AF4',
         },
         headerTintColor: '#fff',
         headerTitleStyle: {
@@ -100,12 +106,13 @@ class Employee extends Component<Props, State> {
     }
     else {
       return {
+
         title: 'Çalışanlar',
         headerRight: <TouchableOpacity style={{ marginRight: 20 }} onPress={() => navigation.navigate("AddEmployee")}>
-            
+          <Icon style={{ color: '#ffff' }} name="ios-add-circle" />
         </TouchableOpacity>,
         headerStyle: {
-          backgroundColor: '#2B6EDC',
+          backgroundColor: '#216AF4',
         },
         headerTintColor: '#fff',
         headerTitleStyle: {
@@ -121,15 +128,7 @@ class Employee extends Component<Props, State> {
     this.getUserType();
   }
 
-  openModal(employeeId: number, nameSurname: string, monthlySalary: number, active: boolean) {
-    this.setState({
-      employeeId: employeeId,
-      nameSurname: nameSurname,
-      monthlySalary: monthlySalary,
-      active: active,
-    });
-    this.OrderSheet.open();
-  }
+
 
   closeModal() {
     this.setState({ modalVisible: false });
@@ -150,7 +149,7 @@ class Employee extends Component<Props, State> {
   }
 
   deleteSelectedEmployee() {
-    console.log("fsafafsfas")
+
     const { employeeDelete } = this.props;
     employeeDelete(this.state.employeeId);
     this.OrderSheet.close();
@@ -184,9 +183,17 @@ class Employee extends Component<Props, State> {
       })
 
   }
-
+  openModal(employeeId: number, nameSurname: string, monthlySalary: number, active: boolean) {
+    this.setState({
+      employeeId: employeeId,
+      nameSurname: nameSurname,
+      monthlySalary: monthlySalary,
+      active: active,
+    });
+    this.OrderSheet.open();
+  }
   giderEkle(values: amountData) {
-    this.props.employeeCost(this.state.employeeId, Number(values.amount));
+    this.props.employeeCost(this.state.employeeId, Number(values.amount));  
     this.AmountSheet.close();
     this.onRefresh();
 
@@ -211,12 +218,19 @@ class Employee extends Component<Props, State> {
     return (
 
       <View style={styles.SheetContainer}>
+        <TouchableOpacity style={[styles.SheetItemContainer, { justifyContent: 'flex-end', padding: 5 }]}
+          onPress={() => {
+            this.OrderSheet.close();
+          }}>
+          <Icon name="ios-close" style={[{ fontSize: 40, marginRight: 10 }, styles.SheetItemIcon]}></Icon>
+
+        </TouchableOpacity>
         <TouchableOpacity style={styles.SheetItemContainer}
           onPress={() => {
             this.OrderSheet.close();
             this.addCash();
           }}>
-          <Icon name="ios-add" size={30} style={styles.SheetItemIcon}></Icon>
+              <Icon name="ios-add"  style={styles.SheetItemIcon}></Icon>
           <Text style={styles.SheetItemText}
           >Ödeme Ekle</Text>
         </TouchableOpacity>
@@ -225,7 +239,7 @@ class Employee extends Component<Props, State> {
             this.OrderSheet.close();
             this.editEmployee();
           }}>
-          <Icon name="ios-arrow-round-forward" size={30} style={styles.SheetItemIcon}></Icon>
+            <Icon type="FontAwesome" name="pencil"  style={[styles.SheetItemIcon,{ fontSize:22}]} ></Icon>
           <Text style={styles.SheetItemText}
           >Düzenle</Text>
         </TouchableOpacity>
@@ -234,7 +248,8 @@ class Employee extends Component<Props, State> {
             this.OrderSheet.close();
             this.deleteEmployeeAlert();
           }}>
-          <Icon name="ios-trash" size={30} style={styles.SheetItemIcon}></Icon>
+            <Icon type="FontAwesome" name="trash-o" style={[styles.SheetItemIcon,{ fontSize:25}]}></Icon>
+        
           <Text style={styles.SheetItemText}
           >Sil</Text>
         </TouchableOpacity>
@@ -251,25 +266,34 @@ class Employee extends Component<Props, State> {
       >
         {props => {
           return (
-            <View style={{ flexDirection: "row" }}>
-              <View style={styles.inputFiyatContainer}>
-                <Input
-                  containerStyle={{ width: '80%' }}
-                  style={styles.inputFiyat}
-                  placeholder="Ürün Fiyatı"
-                  placeholderTextColor="#9A9A9A"
-                  value={props.values.amount + ""}
-                  autoCapitalize="none"
-                  keyboardType="numeric"
-                  onChangeText={props.handleChange("amount")}
-                  onBlur={props.handleBlur("amount")}
-                />
-              </View>
-              <TouchableOpacity
-                style={styles.SheetButtonContainer}
-                onPress={props.handleSubmit}>
-                <Text style={styles.amountButtonText}> Ekle </Text>
+            <View style={{ flexDirection: "column" }}>
+              <TouchableOpacity style={[styles.SheetItemContainer, { justifyContent: 'flex-end', padding: 10 }]}
+                onPress={() => {
+                  this.AmountSheet.close();
+                }}>
+                <Icon name="ios-close" style={[{ fontSize: 40, marginRight: 10 }, styles.SheetItemIcon]}></Icon>
               </TouchableOpacity>
+            
+              <Content style={{padding:0, margin:0}} >
+                <Form style={{flexDirection:'row', flex:1}}>
+                  <Item floatingLabel style={{width:'60%', borderBottomColor: props.touched.amount && props.errors.amount!=null ? 'red':'#216AF4'}}>
+                    <Label style={{ color:props.touched.amount && props.errors.amount!=null ? 'red':'#000'}}>Miktar</Label>
+                    <Input       
+                     onBlur={ (props.touched.amount && props.errors.amount) ? ()=> {
+             props.setFieldValue('amount',"") 
+             props.handleChange("amount")
+            }             
+              :  props.handleBlur("amount")}   
+              onChangeText={props.handleChange("amount")} 
+              />
+                  </Item>
+                  <Button onPress={()=>props.handleSubmit()} primary style={{width:'20%', marginLeft:'10%', marginTop:20,backgroundColor:'#01C3E3', borderRadius:5}}>
+                    {this._renderEmployeeCostAddButtonText()}
+            
+                    </Button>
+                </Form>
+                </Content>
+
             </View>
           );
         }}
@@ -277,7 +301,17 @@ class Employee extends Component<Props, State> {
     </View>);
 
   }
+  _renderEmployeeCostAddButtonText(){
+    if(this.props.employeeAddCostLoading){
+      return (
+        <ActivityIndicator></ActivityIndicator>
+      );
+    }
+    return(
+      <Text>Ekle</Text>
+      );
 
+  }
   _renderView() {
     const { isLoading, navigation } = this.props;
     if (isLoading) {
@@ -285,29 +319,32 @@ class Employee extends Component<Props, State> {
     }
     else {
       return (<View>
-      <FlatList
-        refreshing={this.state.refreshing}
-        onRefresh={() => this.onRefresh()}
-        data={this.props.employees}
-        renderItem={({ item }) => (
-          <View style={styles.row}>
-            <View style={styles.row_cell5}>
-              <View style={styles.row_cell8}>
-                <Text style={styles.musteri_adi}>{item.employeeName}</Text>
-                <Text style={styles.alt_bilgi}>İşe Giriş: {item.createDate.slice(8, 10) + "/" + item.createDate.slice(5, 7) + "/" + item.createDate.slice(0, 4)}</Text>
-              </View>
-              <View style={styles.row_cell2}>
-                <Text style={styles.maasText}> Maaş: {item.monthlySalary} TL</Text>
-              </View>
-            </View>
-            <TouchableOpacity
-              style={styles.iconButtonCustomer}
-              onPress={() => this.openModal(item.employeeId, item.employeeName, item.monthlySalary, item.active)}>
-              <Icon name="md-more" size={24} color={"#C4B47B"} />
-            </TouchableOpacity>
-          </View>)}
-        keyExtractor={item => item.employeeId.toString()}
-      />
+        <FlatList
+          refreshing={this.state.refreshing}
+          onRefresh={() => this.onRefresh()}
+          data={this.props.employees}
+          renderItem={({ item }) => (
+            <ListItem >
+              <Left style={{ flex: 0.2 }}>
+                <View style={{ width: 33, height: 33, borderRadius: 16.5, backgroundColor: '#2069F3', justifyContent: 'center', alignItems: 'center' }}>
+                  <Text style={{ color: 'white' }}>{item.employeeName.substring(0, 1)}</Text>
+                </View>
+              </Left>
+              <Body style={{ borderBottomColor: '#fff' }}>
+                <Text style={styles.employeeNameText}>{item.employeeName}</Text>
+                <Text note>{item.createDate.slice(8, 10) + "/" + item.createDate.slice(5, 7) + "/" + item.createDate.slice(0, 4)}</Text>
+              </Body>
+              <Right style={{ borderBottomColor: '#fff' }}>
+                <TouchableOpacity onPress={() => this.openModal(item.employeeId, item.employeeName, item.monthlySalary, item.active)}>
+                  <Icon name="ios-more" style={{ color: '#2069F3', fontSize: 30 }}></Icon>
+                </TouchableOpacity>
+                <Text note style={{ fontFamily: 'Avenir Next' }}>Maaş</Text>
+                <Text style={{ color: '#2069F3' }}>{item.monthlySalary} ₺</Text>
+              </Right>
+            </ListItem>
+          )}
+          keyExtractor={item => item.employeeId.toString()}
+        />
       </View>);
     }
   }
@@ -319,35 +356,33 @@ class Employee extends Component<Props, State> {
     }
     else {
       return (
-        <View style={styles.container}>
+        <View style={styles.containerNew}>
           <StatusBar backgroundColor="#2B6EDC" />
-          {/* <Header
-          title="Çalışanlar"
-          rightButtonPress={() => this.props.navigation.navigate("AddEmployee")}
-        /> */}
-        
           <KeyboardAvoidingView
             behavior={Platform.OS === "ios" ? "padding" : "height"}
           >
-            <View style={{margin:2}}></View>
             <TouchableOpacity style={styles.employeeCostContainer}
-            onPress={() => this.props.navigation.navigate("EmployeeCost")}>
-            <Text style={styles.employeeCostButtonText}>Çalışan Giderleri</Text>
-          </TouchableOpacity>
+              onPress={() => this.props.navigation.navigate("EmployeeCost")}>
+              <Text style={styles.employeeCostButtonText}>Çalışan Giderleri</Text>
+            </TouchableOpacity>
 
             <RBSheet
               ref={ref => {
                 this.OrderSheet = ref;
               }}
-              height={250}
+              height={230}
               duration={200}
               customStyles={{
                 container: {
                   justifyContent: "flex-start",
                   alignItems: "flex-start",
-                  paddingLeft: 20
+                  paddingLeft: 20,
+                  backgroundColor: '#EFF3F9',
+                  borderTopLeftRadius: 15,
+                  borderTopRightRadius: 15
                 }
-              }}
+              }
+              }
             >
               {this._renderEmployeeSheetContent()}
             </RBSheet>
@@ -356,13 +391,16 @@ class Employee extends Component<Props, State> {
               ref={ref => {
                 this.AmountSheet = ref;
               }}
-              height={100}
+              height={200}
               duration={200}
               customStyles={{
                 container: {
                   justifyContent: "flex-start",
                   alignItems: "flex-start",
-                  paddingLeft: 20
+                  paddingLeft: 20,
+                  backgroundColor: '#EFF3F9',
+                  borderTopLeftRadius: 15,
+                  borderTopRightRadius: 15
                 }
               }}
             >
@@ -370,7 +408,7 @@ class Employee extends Component<Props, State> {
             </RBSheet>
             <View style={{ marginTop: 10 }}></View>
           </KeyboardAvoidingView>
-          {this._renderView()} 
+          {this._renderView()}
         </View>
       );
     }
@@ -381,6 +419,7 @@ const mapStateToProps = (state: AppState) => ({
   isLoading: state.employee.isLoading,
   employees: state.employee.employees,
   employeeDeleteIsSuccess: state.deleteEmployee.isSuccess,
+  employeeAddCostLoading : state.employeeAddCost.EmployeAddCostLoading
 })
 function bindToAction(dispatch: any) {
   return {
@@ -388,8 +427,9 @@ function bindToAction(dispatch: any) {
       dispatch(GetEmployees()),
     employeeDelete: (employeeId: number) =>
       dispatch(employeeDelete(employeeId)),
-    employeeCost: (employeeId: number, cost: number) =>
+      employeeCost: (employeeId: number, cost: number) =>
       dispatch(employeeCost(employeeId, cost)),
+     
   };
 }
 

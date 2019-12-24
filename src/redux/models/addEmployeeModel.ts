@@ -2,4 +2,7 @@ export interface IEmployeeItem
 {
     nameSurname :string;
     monthlySalary :string;
+    identityNumber:string;
+    phoneNumber:string;
+    address:string;
 }

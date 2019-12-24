@@ -65,7 +65,7 @@ export function GetCustomerMore(orderType: number, searchText: string, dayOfWeek
 
 
     var WATER_CUSTOMERS_HOME_GET_ORDER_TYPE_SEARCH_TEXT = WATER_CUSTOMERS_HOME_GET + orderType + "&searchText=" + searchText + "&pageIndex=" + pageIndex + "&pageSize=10&dayOfWeek=" + dayOfWeek;
-    console.log(WATER_CUSTOMERS_HOME_GET_ORDER_TYPE_SEARCH_TEXT)
+
     axios.get(WATER_CUSTOMERS_HOME_GET_ORDER_TYPE_SEARCH_TEXT,
 
     )
@@ -90,8 +90,7 @@ export function GetCustomerMore(orderType: number, searchText: string, dayOfWeek
             }
             customersModel.push(customerItem);
           });
-          console.log('Ekstra')
-          console.log(customersModel)
+     
           dispatch(customersMore(customersModel));
 
         }

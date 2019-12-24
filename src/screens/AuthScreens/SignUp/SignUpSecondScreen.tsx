@@ -90,7 +90,7 @@ class SignUpSecondScreen extends Component<Props, {}> {
     user.address = values.adress
     user.companyName = values.companyName
     user.phoneNumber = values.phoneNumber
-    console.log("ASdasd")
+
     this.props.createBaseUser(user)
   };
 
@@ -273,9 +273,7 @@ shadowOpacity: .5,}}>
          
           <Button  onPress={()=> props.handleSubmit()}  style={{justifyContent:'center',marginTop:30,marginBottom:30,marginHorizontal:40,borderRadius:20,backgroundColor:'#01C3E3',
                     shadowRadius: 5.00,
-                    
                     elevation: 12,
-
                     shadowColor: "#006c7e",
     shadowOffset: {width: 3, height: 3 },
     shadowOpacity: .5,

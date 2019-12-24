@@ -153,7 +153,7 @@ class Employee extends Component<Props, State> {
   }
 
   deleteSelectedEmployee() {
-    console.log("fsafafsfas")
+
     const { employeeDelete } = this.props;
     employeeDelete(this.state.employeeId);
     this.OrderSheet.close();

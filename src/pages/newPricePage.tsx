@@ -91,7 +91,7 @@ class addOrder extends Component<Props, State> {
 
   yeniFiyat(values:input){
     const { customerPriceAdd } = this.props;
-    console.log(Number(values.price.replace(",",".")))
+
     
       customerPriceAdd(this.state.productId, this.state.customerId, Number(values.price.replace(",",".")));
       this.props.navigation.navigate("OrdersCustomer");

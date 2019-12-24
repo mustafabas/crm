@@ -28,6 +28,9 @@ import CustomerOrdersScreen from '../screens/AppScreens/Customer/CustomerOrdersS
 import AuthLoading from "../screens/AuthLoading";
 import svgs from '../images/icomoon/SVG/svgs'
 import SvgIcon from 'react-native-svg-icon';
+import employee from '../screens/AppScreens/Employee/home';
+import employeeAdd from '../screens/AppScreens/Employee/employeeAdd';
+
 // import Customer from "../pages/customer";
 // import Employee from "../pages/employee";
 // import Settings from "../pages/settings";
@@ -48,18 +51,18 @@ import SvgIcon from 'react-native-svg-icon';
 // import employeeCost from "../pages/employeeCost";
 // import editEmployeeCost from "../pages/editEmployeeCost";
 
-// const EmployeeApp = createStackNavigator(
-//   {
-//     Employee: { screen: employee },
-//     AddEmployee: { screen: addEmployee },
+ const EmployeeApp = createStackNavigator(
+   {
+     Employee: { screen: employee },
+    AddEmployee: { screen: employeeAdd },
 //     EditEmployee: { screen: editEmployee },
 //     EmployeeCost: { screen: employeeCost },
 //     EditEmployeeCost: { screen: editEmployeeCost },
 
-//   },
-//   {
+  },
+  {
 //     // headerMode:"none"
-//   })
+  });
 // const IconNew = createIconSetFromIcoMoon(icoMoonConfig)
 const CustomerStack = createStackNavigator(
   {
@@ -125,17 +128,13 @@ const MainStack = createBottomTabNavigator(
         tabBarIcon: ({ focused }) => {
 
           return (
-        
-              
             <IconNew stroke={focused ? '#2069F3' :'black' }  strokeWidth={3} fill={focused ? '#2069F3' :'black' } width="80" height="80" name="User" svgs={svgs} />
-          
-        
           )
         }
       }
     },
     Employee: {
-      screen: HomeScreen,
+      screen: EmployeeApp,
 
       navigationOptions: {
         // tabBarLabel: 'Çalışanlar',

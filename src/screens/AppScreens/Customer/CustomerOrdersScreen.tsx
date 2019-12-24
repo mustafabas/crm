@@ -86,7 +86,6 @@ const initialValues: amountData = {
   }
 
 
-
 class CustomerOrdersScreen extends Component<Props,State>{
 
     componentWillMount() {

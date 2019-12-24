@@ -7,6 +7,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     
   },
+  containerNew:{
+    flex: 1,
+    backgroundColor: "#fff",
+    justifyContent: "flex-start",
+  },
+  RbSheetContainer:{
+
+  },
   addCustomerContainer: {
     flex: 1,
     backgroundColor: "#2B6EDC",
@@ -109,6 +117,61 @@ const styles = StyleSheet.create({
     marginTop: 0,
     marginBottom: 6,
   },
+  rowStandart :{
+    marginHorizontal: 5, flexDirection: 'row', backgroundColor: '#EFF3F9', 
+    paddingVertical: 20, paddingHorizontal: 5, 
+    flex: 1, 
+    justifyContent: 'space-between', 
+    borderRadius: 15
+  },
+
+  row_cell5:{},
+  row_cell2:{},
+  maasText:{},
+  iconButtonCustomer:{},
+  musteribulunamadiContainer:{},
+  musteribulunamadiText:{},
+  employeeCostContainer:{},
+  employeeCostButtonText:{},
+  row_cell8:{},
+
+  SheetButtonContainer:{},
+  amountButtonText:{},
+  inputFiyat:{},
+
+  SheetContainer: {
+    flex: 1, 
+    justifyContent: 'flex-start',
+     alignItems: 'flex-start', 
+     flexDirection: 'column', 
+    paddingTop: 10
+  },
+  SheetAmountContainer: {
+    flex: 1, justifyContent: 'flex-start', alignItems: 'flex-start', flexDirection: 'column', paddingTop: 10,
+    backgroundColor:'#EFF3F9'
+  },
+  SheetItemContainer: {
+    borderBottomColor: "#D7DBE0", 
+    flexDirection: 'row', 
+    paddingTop: 10, 
+    borderBottomWidth: 1, 
+    paddingBottom: 15, 
+    width: '100%',
+    fontFamily:'Avenir Next',
+    fontSize:20,
+  },
+  SheetItemIcon: {
+    color: "#404243",
+    fontSize:30
+  },
+  SheetItemText: {
+    fontSize: 20, 
+    width: '100%', 
+    color: '#404243',
+    fontFamily:'Avenir Next',
+    marginLeft: 20
+  },
+  inputFiyatContainer:{},
   row_cell: {
     flex: 1,
     flexDirection: 'column',
@@ -140,13 +203,12 @@ const styles = StyleSheet.create({
     flex: 0,
     fontSize: 15,
   },
-
-
-  
-
-
-  
-  
+  employeeNameText:{
+    color:'#2069F3',
+    fontFamily: 'Avenir Next',
+    fontSize:18,
+    fontWeight:'800',
+  }
 
 });
 

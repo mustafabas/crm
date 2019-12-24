@@ -23,7 +23,7 @@ import {
 import { Icon, Input, Item, Tabs, Tab, TabHeading, Button, ScrollableTab } from 'native-base';
 import { Alert } from 'react-native';
 import { NavigationScreenProp, NavigationState } from 'react-navigation';
-import { Dimensions, Picker } from 'react-native';
+import { Dimensions } from 'react-native';
 import { ICustomerItem } from '../../../redux/models/homeModel';
 import { connect } from 'react-redux';
 import { GetCustomers, GetCustomerMore } from '../../../redux/actions/homeAction';
@@ -258,9 +258,7 @@ class HomeScreen extends Component<Props,State>{
         // this.forceUpdate()
             
         this._getCustomerList(page, this.state.searchText, this.state.dayOfWeek, 1);
-        console.log(this.state.orderType)
-        console.log(page)
-        console.log("hey")
+
         
     }
 
@@ -503,7 +501,7 @@ useNativeDriver ={true}
             logoutUserService()
         }
         this.flatListRef.getNode().scrollToOffset({animated: true, offset: 0})
-        console.log(value)
+    
         this.setState({
           dayOfWeek: value,
         });
