@@ -7,11 +7,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     
   },
-  containerNew:{
-    flex: 1,
-    backgroundColor: "#fff",
-    justifyContent: "flex-start",
-  },
+
   RbSheetContainer:{
 
   },
@@ -202,12 +198,6 @@ const styles = StyleSheet.create({
     includeFontPadding: false,
     flex: 0,
     fontSize: 15,
-  },
-  employeeNameText:{
-    color:'#2069F3',
-    fontFamily: 'Avenir Next',
-    fontSize:18,
-    fontWeight:'800',
   }
 
 });

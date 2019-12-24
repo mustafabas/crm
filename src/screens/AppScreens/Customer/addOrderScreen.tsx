@@ -80,10 +80,7 @@ const initialValues: amountData = {
 
 
 
-  function shouldShowBackButton(stackRouteNavigation) {
-    let parent = stackRouteNavigation.dangerouslyGetParent();
-    return parent.state.routes.indexOf(stackRouteNavigation.state) > 0;
-  }
+
 
 
 class CustomerOrdersScreen extends Component<Props,State>{
@@ -94,16 +91,8 @@ class CustomerOrdersScreen extends Component<Props,State>{
       }
 
       static navigationOptions = ({navigation}) => ({
-        title: 'Müşteri Siparişleri',
-        headerRight : () => {
-          return(
-            <TouchableOpacity style={{marginRight:20}}>
- <Icon  style={{color:'white'}}  name="ios-add-circle" />
-   
-            </TouchableOpacity>
-           
-          )
-         }
+        title: 'Sipariş Ekle',
+        
     })
 
 //     static navigationOptions = ({ navigation }) => ({

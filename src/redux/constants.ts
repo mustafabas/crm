@@ -9,7 +9,7 @@ export const WATER_CUSTOMER_ORDERS_GET = WATER_BASE_URL+"/customer/CustomerOrder
 export const WATER_CUSTOMER_ADD = WATER_BASE_URL+"/customer";
 export const WATER_CUSTOMER_DELETE = WATER_BASE_URL+"/customer/Delete";
 export const WATER_CUSTOMER_EDIT = WATER_BASE_URL+"/customer/Update";
-export const WATER_PRODUCT_ADD = WATER_BASE_URL+"/Product";
+export const WATER_PRODUCT_ADD = WATER_BASE_URL_NEW+"/api/Product";
 export const WATER_ADD_CASH = WATER_BASE_URL+"/Cash";
 export const WATER_GET_PRODUCT = WATER_BASE_URL+"/Product";
 export const WATER_EDIT_PRODUCT = WATER_BASE_URL+"/Product/Update";
@@ -36,4 +36,8 @@ export const WATER_EMPLOYEECOST_DELETE = WATER_BASE_URL+"/employeCost/Delete";
 
 export const  WATER_USER_CREATE = WATER_BASE_URL_NEW +"/SignUp"
 
+export const WATER_CUSTOMER_ADD_NEW = WATER_BASE_URL_NEW + '/api/customer'
+
 export const WATER_USER_CREATE_CONTROL_EMAIL = WATER_BASE_URL_NEW + "/api/UserCreate/EmailCheck" 
+
+

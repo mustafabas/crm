@@ -9,7 +9,7 @@ import {
 import {createStackNavigator} from 'react-navigation-stack'
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { Dimensions, TouchableOpacity, View } from "react-native";
-import { createIconSetFromIcoMoon } from 'react-native-vector-icons'
+
 const { width } = Dimensions.get("window");
 // import { createIconSetFromIcoMoon } from 'react-native-vector-icons'
 
@@ -34,7 +34,8 @@ import employeeAdd from '../screens/AppScreens/Employee/employeeAdd';
 // import Customer from "../pages/customer";
 // import Employee from "../pages/employee";
 // import Settings from "../pages/settings";
-// import addCustomer from "../pages/addCustomer";
+import addCustomer from "../screens/AppScreens/Customer/addCustomer";
+import productAdd from "../screens/AppScreens/Product/productAdd";
 // import OrdersCustomer from "../pages/OrdersCustomer";
 // import addOrder from "../pages/addOrder";
 // import editCustomer from "../pages/editCustomer";
@@ -63,6 +64,20 @@ import employeeAdd from '../screens/AppScreens/Employee/employeeAdd';
   {
 //     // headerMode:"none"
   });
+
+  const ProfileStack = createStackNavigator(
+    {
+      AddProduct: { screen: productAdd },
+     //AddEmployee: { screen: employeeAdd },
+ //     EditEmployee: { screen: editEmployee },
+ //     EmployeeCost: { screen: employeeCost },
+ //     EditEmployeeCost: { screen: editEmployeeCost },
+ 
+   },
+   {
+ //     // headerMode:"none"
+   });
+  
 // const IconNew = createIconSetFromIcoMoon(icoMoonConfig)
 const CustomerStack = createStackNavigator(
   {
@@ -93,6 +108,8 @@ const CustomerStack = createStackNavigator(
 
 );
 
+
+
 // const SettingsApp = createStackNavigator(
 //   {
 //     Settings: { screen: Settings },
@@ -108,11 +125,23 @@ const CustomerStack = createStackNavigator(
 // )
 
 
+
 const HomeStack = createStackNavigator({
   Home : HomeScreen,
-  Customer : CustomerStack
+  Customer : CustomerOrdersScreen,
+  addCustomer : addCustomer
+
 },{
-  headerMode:'none'
+  defaultNavigationOptions: {
+    headerStyle: {
+      backgroundColor: '#2069F3',
+      fontFamily : 'Avenir Next'
+    },
+    headerTintColor: '#fff',
+    headerTitleStyle: {
+      fontWeight: 'bold',
+    },
+  },
 })
 
 
@@ -137,6 +166,7 @@ const MainStack = createBottomTabNavigator(
       screen: EmployeeApp,
 
       navigationOptions: {
+        tabBarLabel: 'Çalışanlar',
         // tabBarLabel: 'Çalışanlar',
         tabBarIcon: ({ focused }) => {
 
@@ -154,6 +184,7 @@ const MainStack = createBottomTabNavigator(
     Settings: {
       screen: HomeScreen,
       navigationOptions: {
+        tabBarLabel: 'Rapor',
 
 
 tabBarIcon: ({ focused }) => {
@@ -170,28 +201,19 @@ tabBarIcon: ({ focused }) => {
       }
     },
     Profile: {
-      screen: HomeScreen,
+      screen: ProfileStack,
       navigationOptions: {
-
-
+      tabBarLabel: 'Profil',
 tabBarIcon: ({ focused }) => {
-
   return (
-
-      
     <IconNew stroke={focused ? '#2069F3' :'black' } strokeWidth={3} fill={focused ? '#2069F3' :'black' } width="80" height="80" name="Profile" svgs={svgs} />
-          
-
   )
 }
-
       }
     },
-
   },
   {
     initialRouteName: "Customer",
-
   }
 );
 

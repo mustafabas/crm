@@ -9,6 +9,7 @@ export const ORDER_LOADING_MORE = "OrderLoadingMORE";
 export const ORDER_GET_CUSTOMERID = "GetCustomerId";
 
 export const CUSTOMER_ADD_SUCCEED ="CustomerAddSucceed";
+export const CUSTOMER_ADD_LOADING = "CustomerAddLoading"
 export const CUSTOMER_ADD_FAILED ="CustomerAddFailed";
 
 export const CUSTOMER_DELETE_SUCCEED ="CustomerDeleteSucceed";
@@ -44,6 +45,7 @@ export const USER_CREATE_FIRST_STEP = "userCreateFirstStep";
 export const SET_CURRENT_USER = 'SET_CURRENT_USER';
 
 export const PRODUCT_ADD_SUCCEED = "ProductAddSucceed";
+export const PRODUCT_ADD_LOADING = "ProductAddLoading";
 export const PRODUCT_ADD_FAILED = "ProductAddFailed";
 
 export const GET_TAKE_TOTAL_AMOUNT = "GetTakeTotalAmounts";

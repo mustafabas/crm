@@ -25,10 +25,11 @@ import { employeeCost } from "../../../redux/actions/employeeCostAction"
 import { timingSafeEqual } from "crypto";
 import { type } from "os";
 import RBSheet from "react-native-raw-bottom-sheet";
-import styles from "../../styles";
+import styles from "../../../pages/styles";
 import { stat } from "fs";
 import SvgIcon from 'react-native-svg-icon';
 import svgs from '../../../images/icomoon/SVG/svgs';
+import { showMessage } from "react-native-flash-message";
 
 const IconNew = (props) => <SvgIcon {...props}  svgs={svgs} />
 
@@ -41,6 +42,8 @@ interface Props {
   GetEmployees: () => void;
   employeeCost: (employeId: number, cost: number) => void;
   employeeAddCostLoading:boolean;
+  employeeCostAddMessage:string;
+  isSuccess:boolean;
 }
 
 interface State {
@@ -94,7 +97,7 @@ class Employee extends Component<Props, State> {
   static navigationOptions = ({ navigation }: Props) => {
     if (navigation.getParam("Type") === "2") {
       return {
-        title: <Text style={{justifyContent:"center"}}>>Calislanlar</Text>,
+        title: <Text style={{justifyContent:"center"}}>>Çalışanlar</Text>,
         headerStyle: {
           backgroundColor: '#216AF4',
           justifyContent:'center'
@@ -204,7 +207,17 @@ class Employee extends Component<Props, State> {
     this.setState({ refreshing: true });
     this.componentWillMount();
   }
-
+  showSimpleMessage() {
+    if (this.props.employeeCostAddMessage.length>0) {
+      showMessage({
+        message: this.props.employeeCostAddMessage,
+        type: this.props.isSuccess ? "success" : "danger",
+        icon: "auto"
+      }
+      );
+    }
+  
+  }
   getUserType() {
     //function to make three option alert
     AsyncStorage.getItem("UserType").then((value) => {
@@ -410,6 +423,7 @@ class Employee extends Component<Props, State> {
             <View style={{ marginTop: 10 }}></View>
           </KeyboardAvoidingView>
           {this._renderView()}
+          {this.showSimpleMessage()}
         </View>
       );
     }
@@ -420,7 +434,9 @@ const mapStateToProps = (state: AppState) => ({
   isLoading: state.employee.isLoading,
   employees: state.employee.employees,
   employeeDeleteIsSuccess: state.deleteEmployee.isSuccess,
-  employeeAddCostLoading : state.employeeAddCost.EmployeAddCostLoading
+  employeeAddCostLoading : state.employeeAddCost.EmployeAddCostLoading,
+  employeeCostAddMessage:state.employeeAddCost.EmployeeCostAddMessage,
+  isSuccess:state.employeeAddCost.isSuccess
 })
 function bindToAction(dispatch: any) {
   return {

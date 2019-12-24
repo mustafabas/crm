@@ -77,6 +77,7 @@ const styles = StyleSheet.create({
     color: 'black',
     //marginBottom:5,
     paddingTop: 0,
+    // height: 50,
     marginTop: 10,
     //flex:1,
   },
@@ -725,6 +726,9 @@ const styles = StyleSheet.create({
     right:10,
     backgroundColor:"white"
   },
+  checkBoxTextStyle : {
+    fontFamily:'Avenir Next',fontSize:18,marginLeft:10,
+  },
 
   productUrunfiyatText: {
     color: "#0A157A",
@@ -876,22 +880,6 @@ const styles = StyleSheet.create({
     flex: 0,
     fontSize: 15,
   },
-  SheetContainer: {
-    flex: 1, justifyContent: 'flex-start', alignItems: 'flex-start', flexDirection: 'column', paddingTop: 10
-  },
-  SheetAmountContainer: {
-    flex: 1, justifyContent: 'flex-start', alignItems: 'flex-start', flexDirection: 'column', paddingTop: 10
-  },
-  SheetItemContainer: {
-    borderBottomColor: "#ccc", flexDirection: 'row', paddingTop: 10, borderBottomWidth: 1, paddingBottom: 15, width: '100%'
-  },
-  SheetItemIcon: {
-    color: "#333"
-  },
-  SheetItemText: {
-    fontSize: 20, width: '100%', color: '#000',
-    marginLeft: 20
-  },
   FormLabel: {
     fontSize: 17,
     color: '#333'
@@ -932,7 +920,45 @@ const styles = StyleSheet.create({
   reportDateText2:{
     fontSize:15,
     fontWeight:'bold'
-  }
+  },
+  employeeNameText:{
+    color:'#2069F3',
+    fontFamily: 'Avenir Next',
+    fontSize:18,
+    fontWeight:'800',
+  },
+  SheetContainer: {
+    flex: 1, 
+    justifyContent: 'flex-start',
+     alignItems: 'flex-start', 
+     flexDirection: 'column', 
+    paddingTop: 10
+  },
+  SheetAmountContainer: {
+    flex: 1, justifyContent: 'flex-start', alignItems: 'flex-start', flexDirection: 'column', paddingTop: 10,
+    backgroundColor:'#EFF3F9'
+  },
+  SheetItemContainer: {
+    borderBottomColor: "#D7DBE0", 
+    flexDirection: 'row', 
+    paddingTop: 10, 
+    borderBottomWidth: 1, 
+    paddingBottom: 15, 
+    width: '100%',
+    fontFamily:'Avenir Next',
+    fontSize:20,
+  },
+  SheetItemIcon: {
+    color: "#404243",
+    fontSize:30
+  },
+  SheetItemText: {
+    fontSize: 20, 
+    width: '100%', 
+    color: '#404243',
+    fontFamily:'Avenir Next',
+    marginLeft: 20
+  },
 });
 
 export default styles;

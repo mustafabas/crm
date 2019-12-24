@@ -81,8 +81,9 @@ export interface State {
 
   export interface ProductAdd
   {
-    isSuccess: boolean,
-    ProductAddMessage: string, 
+    isSuccess: boolean | null;
+    ProductAddMessage: string; 
+    isAddLoading:boolean;
   }
 
   export interface AddCash
