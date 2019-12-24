@@ -25,7 +25,7 @@ import { AddOrder } from "../../../redux/actions/addOrderAction";
 // import { IAddOrderItem } from "../redux/models/addOrderModel";
 import { GetProduct } from "../../../redux/actions/productForCustomerAction";
 import { IProductForCustomerItem } from "../../../redux/models/productForCustomerModel";
-import { Input, CheckBox,Picker, Item, Label } from "native-base";
+import { Input, CheckBox,Picker, Item, Label, Button } from "native-base";
 
 interface Props {
   navigation: NavigationScreenProp<NavigationState>;
@@ -294,12 +294,30 @@ onPress={() => this.setState({ status: !this.state.status })}
 
                         <Text style={styles.odenecekText}>Toplam Fiyat: {(Number(props.values.unitPrice.replace(",",".")) * Number(props.values.count))} TL</Text>
 
-                      <TouchableOpacity style={styles.siparisButtonContainer}>
+                      {/* <TouchableOpacity style={styles.siparisButtonContainer}>
                         <Text style={styles.amountButtonText}
-                          onPress={props.handleSubmit}
+                         
                         >Sipariş Ekle</Text>
-                      </TouchableOpacity>
+                      </TouchableOpacity> */}
 
+
+
+                      <Button onPress={props.handleSubmit}  style={{justifyContent:'center',marginTop:30,marginBottom:30,marginHorizontal:40,borderRadius:20,backgroundColor:'#01C3E3',
+                    shadowRadius: 5.00,
+                    
+                    elevation: 12,
+
+                    shadowColor: "#006c7e",
+    shadowOffset: {width: 3, height: 3 },
+    shadowOpacity: .5,
+
+    
+                    }}>
+                      {this.props.isLoading ? <Spinner  color='01C3E3' /> :   <Text  style={{color:'white',fontFamily:"Avenir Next",fontWeight:'bold',fontSize:16}} >Ekle</Text>}
+                       
+           
+          </Button>
+          
                     </View>
                   </View>
                 );

@@ -22,7 +22,7 @@ export function GetCustomers(orderType: number, searchText: string, dayOfWeek: n
         'Authorization': `Bearer ${token}`
     }
     var WATER_CUSTOMERS_HOME_GET_ORDER_TYPE_SEARCH_TEXT = WATER_CUSTOMERS_HOME_GET + orderType + "&searchText=" + searchText + "&pageIndex=" + pageIndex + "&pageSize=15&dayOfWeek=" + dayOfWeek + `&userId=${userId}`;
-
+console.log(WATER_CUSTOMERS_HOME_GET_ORDER_TYPE_SEARCH_TEXT)
     axios.get(WATER_CUSTOMERS_HOME_GET_ORDER_TYPE_SEARCH_TEXT,{
       headers: headers 
     }
@@ -51,12 +51,12 @@ export function GetCustomers(orderType: number, searchText: string, dayOfWeek: n
           });
 
           dispatch(customers(customersModel));
-          dispatch(loading(true));
+          dispatch(loading(false));
         }
 
 
         else {
-          dispatch(loading(true));
+          dispatch(loading(false));
         }
       })
       .catch((err) => {
