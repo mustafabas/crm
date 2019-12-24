@@ -21,10 +21,12 @@ export function loginUserService(username:string, password:string) {
     })
   .then((response) =>{
   if(response.data.isSuccess){
+      console.log(response.data.result.userId)
 
     AsyncStorage.setItem("userToken", response.data.result.token)
-    .then(() => {       
-      AsyncStorage.setItem("UserId", response.data.result.userId.toString()).then(()=>{
+    .then(() => {   
+  
+      AsyncStorage.setItem("userId", response.data.result.userId.toString()).then(()=>{
         AsyncStorage.setItem("UserType",response.data.result.userType.toString()).then(()=>{
           dispatch(loginIsSucceed(true,"")); 
         });
@@ -62,7 +64,7 @@ export function loginUserService(username:string, password:string) {
 
 export function logoutUserService() {
     return new Promise((resolve, reject) => {
-      AsyncStorage.removeItem("userToken")
+      AsyncStorage.multiRemove(["userToken","userId"])
         .then(() => {
           resolve();
         })
