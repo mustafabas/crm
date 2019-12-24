@@ -22,7 +22,7 @@ import {
 
 import { Icon, Input, Item, Tabs, Tab, TabHeading, Button, ScrollableTab } from 'native-base';
 import { Alert } from 'react-native';
-import { NavigationScreenProp, NavigationState } from 'react-navigation';
+import { NavigationScreenProps, NavigationState } from 'react-navigation';
 import { Dimensions } from 'react-native';
 import { ICustomerItem } from '../../../redux/models/homeModel';
 import { connect } from 'react-redux';
@@ -98,6 +98,20 @@ interface Props {
 
 class HomeScreen extends Component<Props,State>{
 
+
+    static navigationOptions = (
+        screenProps: NavigationScreenProps
+      ) => {
+    
+        return {
+    
+          headerStyle: {
+            // height : screenProps.navigation.getParam('headerHeight'),
+            // backgroundColor:'#d67676'
+          },
+          header: null
+        }
+      }
 
     
 
@@ -188,7 +202,7 @@ class HomeScreen extends Component<Props,State>{
                             {this.state.HeaderTitle}
                         </Text>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={()=>this.props.navigation.navigate('Customer')}  style={{zIndex:-1,marginLeft:-40,marginRight:20,marginBottom:8}}>
+                        <TouchableOpacity onPress={()=>this.props.navigation.navigate('addCustomer')}  style={{zIndex:-1,marginLeft:-40,marginRight:20,marginBottom:8}}>
                             <Icon style={{color:'#216AF4'}}  name="ios-add-circle" />
                         </TouchableOpacity>
                     </Animated.View>
@@ -228,7 +242,7 @@ class HomeScreen extends Component<Props,State>{
                     
 
 
-  <TouchableOpacity style={{}} onPress={()=>this.props.navigation.navigate('CustomerOrders')}>
+  <TouchableOpacity style={{}} onPress={()=>this.props.navigation.navigate('addCustomer')}>
   <Icon style={[styles.iOSBigTitle,{marginRight:20,fontSize:40}]}  name="ios-add-circle"/>
   </TouchableOpacity>
 
@@ -405,8 +419,8 @@ class HomeScreen extends Component<Props,State>{
             outputRange: [1,1, 0,0]
         });
         const topThird = this.state.scrollY.interpolate({
-            inputRange: [-15,0 ,35, 70,90],
-            outputRange: [0,0,0, -40,-40]
+            inputRange: [-15,0 ,35, 70,90,500],
+            outputRange: [0,0,0, -40,-40,-40]
         });
 
 
@@ -587,6 +601,7 @@ useNativeDriver ={true}
                        </RBSheet>
                     }
                 </View>
+                
             </View>
         )
     }

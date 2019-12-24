@@ -28,10 +28,12 @@ import CustomerOrdersScreen from '../screens/AppScreens/Customer/CustomerOrdersS
 import AuthLoading from "../screens/AuthLoading";
 import svgs from '../images/icomoon/SVG/svgs'
 import SvgIcon from 'react-native-svg-icon';
+
+import EmployeeScreen from '../screens/AppScreens/Employee/EmployeeScreen'
 // import Customer from "../pages/customer";
 // import Employee from "../pages/employee";
 // import Settings from "../pages/settings";
-// import addCustomer from "../pages/addCustomer";
+import addCustomer from "../screens/AppScreens/Customer/addCustomer";
 // import OrdersCustomer from "../pages/OrdersCustomer";
 // import addOrder from "../pages/addOrder";
 // import editCustomer from "../pages/editCustomer";
@@ -90,6 +92,23 @@ const CustomerStack = createStackNavigator(
 
 );
 
+const EmployeeStack = createStackNavigator({
+  Employee : EmployeeScreen
+  
+},
+{
+  defaultNavigationOptions: {
+    headerStyle: {
+      backgroundColor: '#2069F3',
+      fontFamily : 'Avenir Next'
+    },
+    headerTintColor: '#fff',
+    headerTitleStyle: {
+      fontWeight: 'bold',
+    },
+  },
+})
+
 // const SettingsApp = createStackNavigator(
 //   {
 //     Settings: { screen: Settings },
@@ -105,11 +124,23 @@ const CustomerStack = createStackNavigator(
 // )
 
 
+
 const HomeStack = createStackNavigator({
   Home : HomeScreen,
-  Customer : CustomerStack
+  Customer : CustomerOrdersScreen,
+  addCustomer : addCustomer
+
 },{
-  headerMode:'none'
+  defaultNavigationOptions: {
+    headerStyle: {
+      backgroundColor: '#2069F3',
+      fontFamily : 'Avenir Next'
+    },
+    headerTintColor: '#fff',
+    headerTitleStyle: {
+      fontWeight: 'bold',
+    },
+  },
 })
 
 
@@ -135,9 +166,10 @@ const MainStack = createBottomTabNavigator(
       }
     },
     Employee: {
-      screen: HomeScreen,
-
+      screen: EmployeeStack,
+      
       navigationOptions: {
+        tabBarLabel: 'Çalışanlar',
         // tabBarLabel: 'Çalışanlar',
         tabBarIcon: ({ focused }) => {
 
@@ -155,6 +187,7 @@ const MainStack = createBottomTabNavigator(
     Settings: {
       screen: HomeScreen,
       navigationOptions: {
+        tabBarLabel: 'Rapor',
 
 
 tabBarIcon: ({ focused }) => {
@@ -173,7 +206,7 @@ tabBarIcon: ({ focused }) => {
     Profile: {
       screen: HomeScreen,
       navigationOptions: {
-
+      tabBarLabel: 'Profil',
 
 tabBarIcon: ({ focused }) => {
 
