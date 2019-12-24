@@ -26,6 +26,7 @@ import HomeScreen from '../screens/AppScreens/Home/HomeScreen'
 import { Icon, Image, Text } from "native-base";
 import CustomerOrdersScreen from '../screens/AppScreens/Customer/CustomerOrdersScreen'
 import AuthLoading from "../screens/AuthLoading";
+import orderAdd from "../screens/AppScreens/Customer/orderAdd"
 import svgs from '../images/icomoon/SVG/svgs'
 import SvgIcon from 'react-native-svg-icon';
 import employee from '../screens/AppScreens/Employee/home';
@@ -36,6 +37,7 @@ import employeeAdd from '../screens/AppScreens/Employee/employeeAdd';
 // import Settings from "../pages/settings";
 import addCustomer from "../screens/AppScreens/Customer/addCustomer";
 import productAdd from "../screens/AppScreens/Product/productAdd";
+import ProfileScreen from "../screens/AppScreens/Profile/ProfileScreen";
 // import OrdersCustomer from "../pages/OrdersCustomer";
 // import addOrder from "../pages/addOrder";
 // import editCustomer from "../pages/editCustomer";
@@ -125,11 +127,11 @@ const CustomerStack = createStackNavigator(
 // )
 
 
-
 const HomeStack = createStackNavigator({
   Home : HomeScreen,
   Customer : CustomerOrdersScreen,
-  addCustomer : addCustomer
+  addCustomer : addCustomer,
+  orderAdd : orderAdd
 
 },{
   defaultNavigationOptions: {

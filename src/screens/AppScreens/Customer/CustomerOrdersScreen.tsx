@@ -97,7 +97,7 @@ class CustomerOrdersScreen extends Component<Props,State>{
         title: 'Müşteri Siparişleri',
         headerRight : () => {
           return(
-            <TouchableOpacity style={{marginRight:20}}>
+            <TouchableOpacity onPress={()=> navigation.navigate("orderAdd", { customerId: navigation.getParam("customerId")})} style={{marginRight:20}}>
  <Icon  style={{color:'white'}}  name="ios-add-circle" />
    
             </TouchableOpacity>
