@@ -13,9 +13,19 @@ export function GetCustomers(orderType: number, searchText: string, dayOfWeek: n
 
     dispatch(loading(true));
 
-    var WATER_CUSTOMERS_HOME_GET_ORDER_TYPE_SEARCH_TEXT = WATER_CUSTOMERS_HOME_GET + orderType + "&searchText=" + searchText + "&pageIndex=" + pageIndex + "&pageSize=15&dayOfWeek=" + dayOfWeek;
+    AsyncStorage.multiGet(['userToken', 'userId']).then((res) => {
+      let token = res[0][1];
+      let userId = res[1][1];
+      
+      const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+    }
+    var WATER_CUSTOMERS_HOME_GET_ORDER_TYPE_SEARCH_TEXT = WATER_CUSTOMERS_HOME_GET + orderType + "&searchText=" + searchText + "&pageIndex=" + pageIndex + "&pageSize=15&dayOfWeek=" + dayOfWeek + `&userId=${userId}`;
 
-    axios.get(WATER_CUSTOMERS_HOME_GET_ORDER_TYPE_SEARCH_TEXT,
+    axios.get(WATER_CUSTOMERS_HOME_GET_ORDER_TYPE_SEARCH_TEXT,{
+      headers: headers 
+    }
 
     )
       .then((response) => {
@@ -41,20 +51,23 @@ export function GetCustomers(orderType: number, searchText: string, dayOfWeek: n
           });
 
           dispatch(customers(customersModel));
-
+          dispatch(loading(true));
         }
 
 
         else {
-
+          dispatch(loading(true));
         }
       })
       .catch((err) => {
-        // dispatch(loading(false));
+        dispatch(loading(false));
 
       });
 
 
+  })
+
+   
   }
 
 }

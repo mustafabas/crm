@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
   },
   input: {
     elevation: 2,
-    backgroundColor: '#fff',
+    // backgroundColor: '#fff',
     //marginHorizontal: 5,
     //paddingHorizontal: 20,
     color: 'black',
@@ -840,17 +840,17 @@ const styles = StyleSheet.create({
   },
 
   rnpickerselect: {
-    height: 50,
-    elevation: 2,
+
+
     backgroundColor: '#fff',
-    marginHorizontal: 5,
-    paddingHorizontal: 20,
-    justifyContent: 'center',
-    color: 'black',
-    marginBottom: 10,
-    borderRadius: 4,
-    borderColor: "#333",
-    flex: 1
+    // marginHorizontal: 5,
+    // paddingHorizontal: 20,
+    // justifyContent: 'center',
+    // color: 'black',
+    // marginBottom: 10,
+    // borderRadius: 4,
+    // borderColor: "#333",
+    // flex: 1
   },
 
 

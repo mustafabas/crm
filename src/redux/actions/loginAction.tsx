@@ -10,7 +10,7 @@ import { navigate } from "../services/Navigator";
 export function loginUserService(username:string, password:string) {
 
   return (dispatch : Dispatch<Action>) =>  {
-
+    console.log(username + password)
 
     dispatch(loading(true));
 
@@ -32,6 +32,7 @@ export function loginUserService(username:string, password:string) {
       })
     })
     .catch(error => { 
+      console.log(error)
       dispatch(loginIsSucceed(false,"Bir hata oluştu."));
       dispatch(reset());
     });

@@ -26,6 +26,7 @@ import HomeScreen from '../screens/AppScreens/Home/HomeScreen'
 import { Icon, Image, Text } from "native-base";
 import CustomerOrdersScreen from '../screens/AppScreens/Customer/CustomerOrdersScreen'
 import AuthLoading from "../screens/AuthLoading";
+import orderAdd from "../screens/AppScreens/Customer/orderAdd"
 import svgs from '../images/icomoon/SVG/svgs'
 import SvgIcon from 'react-native-svg-icon';
 
@@ -34,6 +35,7 @@ import EmployeeScreen from '../screens/AppScreens/Employee/EmployeeScreen'
 // import Employee from "../pages/employee";
 // import Settings from "../pages/settings";
 import addCustomer from "../screens/AppScreens/Customer/addCustomer";
+import ProfileScreen from "../screens/AppScreens/Profile/ProfileScreen";
 // import OrdersCustomer from "../pages/OrdersCustomer";
 // import addOrder from "../pages/addOrder";
 // import editCustomer from "../pages/editCustomer";
@@ -122,13 +124,27 @@ const EmployeeStack = createStackNavigator({
 //     // headerMode: "none"
 //   }
 // )
-
+const ProfileStack = createStackNavigator({
+  Profile : ProfileScreen
+},{
+  defaultNavigationOptions: {
+    headerStyle: {
+      backgroundColor: '#2069F3',
+      fontFamily : 'Avenir Next'
+    },
+    headerTintColor: '#fff',
+    headerTitleStyle: {
+      fontWeight: 'bold',
+    },
+  },
+})
 
 
 const HomeStack = createStackNavigator({
   Home : HomeScreen,
   Customer : CustomerOrdersScreen,
-  addCustomer : addCustomer
+  addCustomer : addCustomer,
+  orderAdd : orderAdd
 
 },{
   defaultNavigationOptions: {
@@ -204,7 +220,7 @@ tabBarIcon: ({ focused }) => {
       }
     },
     Profile: {
-      screen: HomeScreen,
+      screen: ProfileStack,
       navigationOptions: {
       tabBarLabel: 'Profil',
 
