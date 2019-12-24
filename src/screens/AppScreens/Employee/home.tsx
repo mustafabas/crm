@@ -94,9 +94,10 @@ class Employee extends Component<Props, State> {
   static navigationOptions = ({ navigation }: Props) => {
     if (navigation.getParam("Type") === "2") {
       return {
-        title: 'Çalışanlar',
+        title: <Text style={{justifyContent:"center"}}>>Calislanlar</Text>,
         headerStyle: {
           backgroundColor: '#216AF4',
+          justifyContent:'center'
         },
         headerTintColor: '#fff',
         headerTitleStyle: {
