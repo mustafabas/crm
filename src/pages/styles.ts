@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     color: 'black',
     //marginBottom:5,
     paddingTop: 0,
-    height: 50,
+    // height: 50,
     marginTop: 10,
     //flex:1,
   },
@@ -718,6 +718,9 @@ const styles = StyleSheet.create({
     flex: 4,
     right:10,
     backgroundColor:"white"
+  },
+  checkBoxTextStyle : {
+    fontFamily:'Avenir Next',fontSize:18,marginLeft:10,
   },
 
   productUrunfiyatText: {

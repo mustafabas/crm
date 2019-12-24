@@ -81,6 +81,9 @@ class Login extends Component<Props, {}> {
 
 
   render() {
+    if(this.props.isSucceed) {
+      this.props.navigation.navigate('HomeStack')
+    }
     
     return (
       <ImageBackground  source={require('../../../images/background.png')}style={[styles.container,{justifyContent:'flex-start'}]}>

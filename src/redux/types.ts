@@ -9,6 +9,7 @@ export const ORDER_LOADING_MORE = "OrderLoadingMORE";
 export const ORDER_GET_CUSTOMERID = "GetCustomerId";
 
 export const CUSTOMER_ADD_SUCCEED ="CustomerAddSucceed";
+export const CUSTOMER_ADD_LOADING = "CustomerAddLoading"
 export const CUSTOMER_ADD_FAILED ="CustomerAddFailed";
 
 export const CUSTOMER_DELETE_SUCCEED ="CustomerDeleteSucceed";
