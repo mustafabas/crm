@@ -34,6 +34,7 @@ import getEmployeeCostReducers from "./reducers/getEmployeeCostReducers";
 import signUpReducers from './reducers/signUpReducers'
 import employeeCostReducers from "./reducers/employeeCostReducers";
 import editEmployeeReducers from "./reducers/editEmployeeReducers";
+import deleteOrderReducers from './reducers/deleteOrderReducers'
 
 const persistConfig = {
   key: "root",
@@ -76,7 +77,8 @@ const rootReducer = combineReducers({
   login: loginRed,
   signUp : signUpReducers,
   employeeAddCost : employeeCostReducers,
-  editEmployeReducer : editEmployeeReducers
+  editEmployeReducer : editEmployeeReducers,
+  deleteOrder : deleteOrderReducers
 })
 
 

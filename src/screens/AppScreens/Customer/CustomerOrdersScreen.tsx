@@ -29,6 +29,7 @@ import { orderDelete } from '../../../redux/actions/deleteOrderAction';
 import OrdersCustomer from '../../../pages/OrdersCustomer';
 import { AppState } from '../../../redux/store';
 import { Formik } from 'formik';
+import { showMessage } from 'react-native-flash-message';
 
 
 const title = "Home Screen"
@@ -46,8 +47,14 @@ interface Props {
     GetOrders: (customerId: number, pageIndex: number, pageSize: number) => void;
     GetOrdersMore: (customerId: number, pageIndex: number, pageSize: number) => void;
     AddCash: (orderId: number, amount: string) => void;
-    orderDelete: (orderId: number) => void;
+    orderDelete: (customerId : number,orderId: number) => void;
     RbSheet: RBSheet;
+    Message: string;
+    isSuccessAddCash : boolean;
+    MessageAddCash : string;
+
+
+  
   }
   
 
@@ -87,6 +94,30 @@ const initialValues: amountData = {
 
 
 class CustomerOrdersScreen extends Component<Props,State>{
+
+  showSimpleMessage() {
+
+    if (this.props.Message) {
+
+      showMessage({
+        message: this.props.Message,
+        type: this.props.isSuccess ? "success" : "danger",
+        icon: 'auto'
+      }
+      );
+    }
+    if(this.props.MessageAddCash) {
+      showMessage({
+        message: this.props.MessageAddCash,
+        type: this.props.isSuccessAddCash ? "success" : "danger",
+        icon: 'auto'
+      }
+      );
+    }
+  
+  }
+
+
 
     componentWillMount() {
         this.props.GetOrders(this.props.navigation.getParam("customerId"), 1, 10);
@@ -285,19 +316,21 @@ class CustomerOrdersScreen extends Component<Props,State>{
       }
     
       odemeAl(values: amountData) {
-        this.props.AddCash(this.state.orderId, values.amount.replace(",","."));
+
+        this.props.AddCash(this.props.navigation.getParam("customerId"),this.state.orderId, values.amount.replace(",","."));
         this.AmountSheet.close();
-        this.onRefresh();
+        // this.onRefresh();
     
       }
     
       deleteSelectedOrder() {
         const { orderDelete } = this.props;
         this.closeModal();
-        orderDelete(this.state.orderId);
-        this.props.GetOrders(this.props.navigation.getParam("customerId"), 1, 8);
+        this.OrderSheet.close();
+        orderDelete(this.props.navigation.getParam("customerId"),this.state.orderId);
+        // this.props.GetOrders(this.props.navigation.getParam("customerId"), 1, 8);
         this.setState({ refreshing: false });
-        this.onRefresh();
+        // this.onRefresh();
       }
     
 
@@ -389,7 +422,7 @@ class CustomerOrdersScreen extends Component<Props,State>{
                       <Text style={styles.SheetItemText}
                       >Ödeme Ekle</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.SheetItemContainer}
+                    {/* <TouchableOpacity style={styles.SheetItemContainer}
                       onPress={() => {
                         this.OrderSheet.close();
                         this.editOrder();
@@ -397,9 +430,10 @@ class CustomerOrdersScreen extends Component<Props,State>{
                                <Icon name="ios-arrow-round-forward" size={30} style={styles.SheetItemIcon}></Icon>
                       <Text style={styles.SheetItemText}
                       >Düzenle</Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                     <TouchableOpacity style={styles.SheetItemContainer}
                       onPress={() => {
+                        // this.OrderSheet.close();
                         // this.OrderSheet.close();
                         this.deleteOrderAlert();
                       }}>
@@ -511,7 +545,7 @@ class CustomerOrdersScreen extends Component<Props,State>{
                      Kalan: 
                  </Text>
                  <Text style={{color:'#404243',fontSize:16,fontWeight:'600',fontFamily:'Avenir Next'}}>
-                    {item.tookTotalPrice} TL
+                    {item.restAmount} TL
                  </Text>
  
                  </View>
@@ -753,6 +787,7 @@ class CustomerOrdersScreen extends Component<Props,State>{
 {/*  */}
 
                </ScrollView>
+               {this.showSimpleMessage()}
                 </View>
 
         )
@@ -765,6 +800,10 @@ const mapStateToProps = (state: AppState) => ({
     takeTotalAmount: state.orders.takeTotalAmount,
     tookTotalAmount: state.orders.tookTotalAmount,
     restTotalAmount: state.orders.restTotalAmount,
+    Message: state.deleteOrder.Message,
+    isSuccess : state.deleteOrder.isSuccess,
+    isSuccessAddCash : state.addCash.isSuccess,
+    MessageAddCash : state.addCash.AddCashMessage
   
   });
   
@@ -774,10 +813,10 @@ const mapStateToProps = (state: AppState) => ({
         dispatch(GetOrders(customerId, pageIndex, pageSize)),
       GetOrdersMore: (customerId: number, pageIndex: number, pageSize: number) =>
         dispatch(GetOrdersMore(customerId, pageIndex, pageSize)),
-      AddCash: (orderId: number, amount: string) =>
-        dispatch(AddCash(orderId, Number(amount))),
-      orderDelete: (orderId: number) =>
-        dispatch(orderDelete(orderId)),
+      AddCash: (customerId : number,orderId: number, amount: string) =>
+        dispatch(AddCash(customerId,orderId, Number(amount))),
+      orderDelete: (customerId : number,orderId: number) =>
+        dispatch(orderDelete(customerId, orderId)),
     };
   }
   

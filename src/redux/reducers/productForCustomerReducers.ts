@@ -10,12 +10,13 @@ const initialProduct:IProductForCustomerItem={
 }
 
 const intialState = {
-  product:initialProduct,
+  product: {} as IProductForCustomerItem,
   isLoading: false
 };
 
 export default (state: ProductForCustomer = intialState, action: Action) => {
   switch (action.type) {
+
     case PRODUCT_FOR_CUSTOMER_GET:
         
       return {
@@ -29,6 +30,6 @@ export default (state: ProductForCustomer = intialState, action: Action) => {
         isLoading: action.payload
       };
     default:
-      return state;
+      return {...state};
   }
 };

@@ -64,6 +64,7 @@ import ProfileScreen from "../screens/AppScreens/Profile/ProfileScreen";
 
   },
   {
+    initialRouteName:"Employee"
 //     // headerMode:"none"
   });
 

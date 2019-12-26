@@ -60,6 +60,8 @@ export const PRODUCT_LOADING = "ProductLoading";
 
 export const ADD_ORDER_SUCCEED ="AddOrderSucceed";
 export const ADD_ORDER_FAILED ="AddOrderFailed";
+export const ADD_ORDER_IS_LOADING = "AddOrderIsLoading";
+
 
 export const EDIT_PRODUCT_SUCCEED ="EditProductSucceed";
 export const EDIT_PRODUCT_FAILED ="EditProductFailed";

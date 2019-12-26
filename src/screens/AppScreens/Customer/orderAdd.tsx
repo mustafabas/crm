@@ -25,7 +25,8 @@ import { AddOrder } from "../../../redux/actions/addOrderAction";
 // import { IAddOrderItem } from "../redux/models/addOrderModel";
 import { GetProduct } from "../../../redux/actions/productForCustomerAction";
 import { IProductForCustomerItem } from "../../../redux/models/productForCustomerModel";
-import { Input, CheckBox,Picker, Item, Label, Button } from "native-base";
+import { Input, CheckBox,Picker, Item, Label, Button, Spinner } from "native-base";
+import { showMessage } from "react-native-flash-message";
 
 interface Props {
   navigation: NavigationScreenProp<NavigationState>;
@@ -34,9 +35,15 @@ interface Props {
   GetProducts: () => void;
   AddOrder: (productId: number, customerId: number, unitPrice: number, count: number,isPaid:boolean) => void;
   isSuccees: boolean;
+
   AddOrderMessage: string;
   GetProduct: (productId: number, customerId: number) => void;
   product: IProductForCustomerItem;
+
+
+
+  isTried : boolean;
+  isLoading : boolean;
 }
 
 interface State {
@@ -70,7 +77,21 @@ const girdiler = Yup.object().shape({
 });
 class orderAdd extends Component<Props, State> {
 
+  showSimpleMessage() {
 
+    if (this.props.AddOrderMessage ) {
+
+      showMessage({
+        message: this.props.AddOrderMessage,
+        type: this.props.isSuccees ? "success" : "danger",
+        icon: 'auto'
+      }
+      );
+    }
+  
+  }
+
+  
 
 
 
@@ -130,14 +151,17 @@ class orderAdd extends Component<Props, State> {
     const { AddOrder, navigation, isSuccees } = this.props;
     var customerId = navigation.getParam("customerId");
     AddOrder(this.state.productId, customerId, Number(values.unitPrice.replace(",",".")), Number(values.count),this.state.status);
-    this.handleAlert()
+    // this.handleAlert()
   }
 
   OrderInfo(productId: number) {
+    console.log(productId)
+    this.props.GetProduct(productId, this.props.navigation.getParam("customerId"));
+
     this.setState({
       productId: productId,
     });
-    this.props.GetProduct(productId, this.props.navigation.getParam("customerId"));
+    
 
   }
 
@@ -154,11 +178,13 @@ class orderAdd extends Component<Props, State> {
 
     return PickerModel;
   }
-  componentDidMount() {
-    this.props.GetProducts();
-  }
+  // componentDidMount() {
+  //   this.props.GetProducts();
+  // }
   componentWillMount() {
+    console.log(this.props.product)
     this.props.GetProducts();
+    console.log(this.props.product)
     var dateAta: string;
     var date = new Date();
     dateAta = date.toLocaleDateString() + " " + date.toLocaleTimeString();
@@ -168,19 +194,29 @@ class orderAdd extends Component<Props, State> {
 
  
 onValueChange2(value: string) {
+
   this.setState({
     selected2: value,
     selectedProductValue : this.props.products.find(task => (task.productId=== Number(value)), this)?.productCode
-
+    ,productId: value,
   });
-   this.OrderInfo(Number(value))
+
+  console.log("asdasd"+value)
+  this.props.GetProduct(Number(value), this.props.navigation.getParam("customerId"));
+
+
+  
+
+
+  //  this.OrderInfo(Number(value))
 }
 
 
   render() {
+    
     const initialValues: input = {
       count: this.state.count,
-      unitPrice: String(this.props.product.unitPrice),
+      unitPrice: this.props.product.unitPrice ? String(this.props.product.unitPrice) : "",
     }
 
     const placeholder = {
@@ -188,8 +224,11 @@ onValueChange2(value: string) {
       value: 19,
       color: '#2B6EDC',
     };
-
+    if(this.props.isSuccees) {
+      this.props.navigation.goBack()
+    }
     return (
+      
       <View style={styles.addCustomerContainer}>
 
         <StatusBar backgroundColor="#2B6EDC" />
@@ -228,9 +267,11 @@ headerBackButtonTextStyle={{color:'white'}}
                 placeholderStyle={{ color: "#bfc6ea" }}
                 placeholderIconColor="#007aff"
                 selectedValue={this.state.selected2}
-                onValueChange={this.onValueChange2.bind(this)}
-
-              >
+                // onValueChange={this.onValueChange2.bind(this)}
+                onValueChange={(itemValue, itemIndex) =>
+                  this.onValueChange2(itemValue)
+                }>
+              
                 {this.PickerMenuCreate().map((res)=> {
                     return (
                       <Picker.Item label={res.label} value={res.value} />
@@ -241,12 +282,12 @@ headerBackButtonTextStyle={{color:'white'}}
               </Picker>
               
                       </View>
-                    <View style={[styles.inputContainer]}>
+                    <View style={[styles.inputContainer,{paddingTop:0}]}>
                       
 
                       <View style={styles.input}>
                        <Item floatingLabel>
-                        <Label>
+                        <Label style={{fontFamily:'Avenir Next',fontSize:18,}}>
                         Ürün Adedi:
                         </Label>
                         <Input
@@ -262,10 +303,15 @@ headerBackButtonTextStyle={{color:'white'}}
                       </View>
 
 
-                      <Text>Ürün Kodu: {this.state.selectedProductValue}</Text>
+                      <Text style={{fontFamily:'Avenir Next',fontSize:18,marginTop:20}}>Ürün Kodu: {this.state.selectedProductValue}</Text>
                       
-                      <Text>Birim Fiyat:</Text>
-                      <View style={styles.input}>
+                    <Item floatingLabel style={{marginTop:20}}>
+                  <Label style={{fontFamily:'Avenir Next',fontSize:18}}>
+                  Birim Fiyat: 
+               
+                  </Label>
+                    
+                     {/* <View style={styles.input}> */}
                         <Input
                           // style={styles.input}
                           // placeholder="Ürün Adedi"
@@ -275,9 +321,10 @@ headerBackButtonTextStyle={{color:'white'}}
                           onChangeText={props.handleChange("unitPrice")}
                           onBlur={props.handleBlur("unitPrice")}
                         />
-                      </View>  
+                        </Item>
+                      {/* </View>   */}
                       <View style={{margin:2}}></View>
-                      <View style={{flexDirection:'row'}}>
+                      <View style={{flexDirection:'row',marginTop:30}}>
                       <CheckBox
 
 // containerStyle={styles.chechBoxContainer}             
@@ -325,6 +372,7 @@ onPress={() => this.setState({ status: !this.state.status })}
             </Formik>
           </ScrollView>
         </KeyboardAvoidingView>
+        {this.showSimpleMessage()}
       </View>
     );
   }
@@ -335,6 +383,9 @@ const mapStateToProps = (state: AppState) => ({
   products: state.products.products,
   isSuccees: state.addOrder.isSuccess,
   product: state.productForCustomer.product,
+  isTried : state.addOrder.isTried,
+  isLoading : state.addOrder.isLoading,
+  AddOrderMessage : state.addOrder.AddOrderMessage
 })
 function bindToAction(dispatch: any) {
   return {

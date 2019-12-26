@@ -1,5 +1,5 @@
 import { AddCash, Action } from "../states";
-import {ADD_CASH_SUCCEED,ADD_CASH_FAILED} from "../types";
+import {ADD_CASH_SUCCEED,ADD_CASH_FAILED, RESET_PROPS} from "../types";
 
 
 const initalState = {
@@ -21,6 +21,12 @@ export default (state: AddCash = initalState, action: Action) => {
         isSuccess:false,
         AddCashMessage:action.payload,
       };
+      case RESET_PROPS:
+        return {
+          ...state,
+          isSuccess: false,
+          AddCashMessage : ""
+        }
     default:
       return state;
   }
