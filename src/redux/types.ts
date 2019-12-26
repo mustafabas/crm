@@ -90,12 +90,14 @@ export const LOADING_EMPLOYEES = "LoadingEmployees";
 
 export const EMPLOYEE_ADD_SUCCEED ="EmployeeAddSucceed";
 export const EMPLOYEE_ADD_FAILED ="EmployeeAddFailed";
-
+export const EMPLOYEE_ADD_LOADING  = "EmployeeAddLoading";
 export const ADD_USER_SUCCEED ="AddUserSucceed";
 export const ADD_USER_FAILED ="AddUserFailed";
 
 export const EMPLOYEE_EDIT_SUCCEED ="EmployeeEditSucceed";
 export const EMPLOYEE_EDIT_FAILED ="EmployeeEditFailed";
+export const EMPLOYEE_GET_ONE ="EmployeeGetOne";
+export const EMPLOYEE_EDIT_LOADING = "EmployeeEditLoading";
 
 export const EMPLOYEE_DELETE_SUCCEED ="EmployeeDeleteSucceed";
 export const EMPLOYEE_DELETE_FAILED ="EmployeeDeleteFailed";

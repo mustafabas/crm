@@ -5,4 +5,6 @@ export interface IEmployeeItem
     identityNumber:string;
     phoneNumber:string;
     address:string;
+    dailyPriceFood:string ;
+    AddAsUser:boolean;
 }

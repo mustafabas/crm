@@ -6,8 +6,6 @@ import { persistStore, persistReducer } from "redux-persist";
 
 import AsyncStorage from '@react-native-community/async-storage';
 
-
-
 import reducer from "./reducers";
 import loginRed from './reducers/loginReducers'
 import HomeReducers from './reducers/homeReducers';
@@ -35,6 +33,7 @@ import reportReducers from "./reducers/reportReducers";
 import getEmployeeCostReducers from "./reducers/getEmployeeCostReducers";
 import signUpReducers from './reducers/signUpReducers'
 import employeeCostReducers from "./reducers/employeeCostReducers";
+import editEmployeeReducers from "./reducers/editEmployeeReducers";
 
 const persistConfig = {
   key: "root",
@@ -76,7 +75,8 @@ const rootReducer = combineReducers({
   system: reducer,
   login: loginRed,
   signUp : signUpReducers,
-  employeeAddCost : employeeCostReducers
+  employeeAddCost : employeeCostReducers,
+  editEmployeReducer : editEmployeeReducers
 })
 
 

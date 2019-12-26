@@ -4,7 +4,7 @@ import { IProductItem} from "./models/productModel";
 import {ICustomerPriceProductItem} from "./models/customerPriceProductModel"
 import {IDefinedCustomerPriceItem} from "./models/customerDefinedPriceModel"
 import {IProductForCustomerItem} from "./models/productForCustomerModel"
-import {IEmployeeItem} from "./models/employeeModel"
+import {IEmployeeItem, IEmployeeItemBaseResponseModel} from "./models/employeeModel"
 import { IUserItem } from "./models/addUserModel";
 import { IGetUserItem} from "./models/userModel";
 import {IReportItem } from "./models/reportModel"
@@ -155,10 +155,17 @@ export interface OrderDelete
 
 export interface EmployeeAdd
 {
-  isSuccess: boolean,
-  EmployeeAddMessage: string,
+  isSuccess: boolean;
+  EmployeeAddMessage: string;
+  isLoading:boolean;;
 }
-
+export interface EmployeeEditRedecurState
+{
+  isSuccess: boolean;
+  EmployeeUpdateMessage: string;
+  employee :IEmployeeItemBaseResponseModel | null;
+  isLoading : boolean;
+}
 export interface AddUser
   {
     isSuccess: boolean,

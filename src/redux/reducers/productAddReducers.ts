@@ -32,7 +32,7 @@ export default (state: ProductAdd = initalState, action: Action) => {
          return {
             ...state,
             isAddLoading:false,
-            ProductAddMessage:"Ürün Oluşturulamadı!",
+            ProductAddMessage:"",
           }
     default:
       return state;

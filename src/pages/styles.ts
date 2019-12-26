@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     //marginBottom:5,
     paddingTop: 0,
     // height: 50,
-    marginTop: 10,
+    marginTop: 5,
     //flex:1,
   },
   inputFiyat: {
@@ -601,8 +601,8 @@ const styles = StyleSheet.create({
     // flex:1,
     // justifyContent:"flex-end"
     marginBottom: 10,
-    paddingVertical: 10,
-    marginHorizontal: 5,
+  
+
   },
 
   logoutButtonText: {

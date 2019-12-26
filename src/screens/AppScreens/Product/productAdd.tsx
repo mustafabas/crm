@@ -86,8 +86,8 @@ class productAdd extends Component<Props, {}> {
         }
     };
     showSimpleMessage() {
-        if (this.props.ProductAddMessage.length > 0) {
-            
+        if (this.props.ProductAddMessage) {
+
             showMessage({
                 message: this.props.ProductAddMessage,
                 type: this.props.isSuccees ? "success" : "danger",

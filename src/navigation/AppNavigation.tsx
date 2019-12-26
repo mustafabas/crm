@@ -30,8 +30,8 @@ import orderAdd from "../screens/AppScreens/Customer/orderAdd"
 import svgs from '../images/icomoon/SVG/svgs'
 import SvgIcon from 'react-native-svg-icon';
 import employee from '../screens/AppScreens/Employee/home';
-import employeeAdd from '../screens/AppScreens/Employee/employeeAdd';
-
+import employeeAddScreen from '../screens/AppScreens/Employee/employeeAddScreen';
+import employeeEditScreen from '../screens/AppScreens/Employee/employeeEditScreen';
 // import Customer from "../pages/customer";
 // import Employee from "../pages/employee";
 // import Settings from "../pages/settings";
@@ -57,8 +57,8 @@ import ProfileScreen from "../screens/AppScreens/Profile/ProfileScreen";
  const EmployeeApp = createStackNavigator(
    {
      Employee: { screen: employee },
-    AddEmployee: { screen: employeeAdd },
-//     EditEmployee: { screen: editEmployee },
+    AddEmployee: { screen: employeeAddScreen },
+    EditEmployee: { screen: employeeEditScreen },
 //     EmployeeCost: { screen: employeeCost },
 //     EditEmployeeCost: { screen: editEmployeeCost },
 

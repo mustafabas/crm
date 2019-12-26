@@ -126,7 +126,7 @@ class Employee extends Component<Props, State> {
     }
   };
 
-  componentWillMount() {
+  componentWillMount() {  
     this.props.GetEmployees();
     this.setState({ refreshing: false });
     this.getUserType();
@@ -181,9 +181,6 @@ class Employee extends Component<Props, State> {
     this.props.navigation.navigate("EditEmployee",
       {
         employeeId: this.state.employeeId,
-        nameSurname: this.state.nameSurname,
-        monthlySalary: this.state.monthlySalary,
-        active: this.state.active,
       })
 
   }
@@ -205,7 +202,9 @@ class Employee extends Component<Props, State> {
 
   onRefresh() {
     this.setState({ refreshing: true });
-    this.componentWillMount();
+    this.props.GetEmployees();
+    this.setState({ refreshing: false });
+    this.getUserType();
   }
   showSimpleMessage() {
     if (this.props.employeeCostAddMessage.length>0) {
@@ -218,6 +217,7 @@ class Employee extends Component<Props, State> {
     }
   
   }
+
   getUserType() {
     //function to make three option alert
     AsyncStorage.getItem("UserType").then((value) => {
@@ -280,6 +280,9 @@ class Employee extends Component<Props, State> {
       >
         {props => {
           return (
+            <KeyboardAvoidingView
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+          >
             <View style={{ flexDirection: "column" }}>
               <TouchableOpacity style={[styles.SheetItemContainer, { justifyContent: 'flex-end', padding: 10 }]}
                 onPress={() => {
@@ -309,12 +312,16 @@ class Employee extends Component<Props, State> {
                 </Content>
 
             </View>
+            </KeyboardAvoidingView> 
           );
         }}
       </Formik>
-    </View>);
+    </View>
+ 
+    );
 
   }
+
   _renderEmployeeCostAddButtonText(){
     if(this.props.employeeAddCostLoading){
       return (
@@ -334,6 +341,7 @@ class Employee extends Component<Props, State> {
     else {
       return (<View>
         <FlatList
+        style={{marginBottom:40}}
           refreshing={this.state.refreshing}
           onRefresh={() => this.onRefresh()}
           data={this.props.employees}
@@ -372,14 +380,9 @@ class Employee extends Component<Props, State> {
       return (
         <View style={styles.containerNew}>
           <StatusBar backgroundColor="#2B6EDC" />
-          <KeyboardAvoidingView
-            behavior={Platform.OS === "ios" ? "padding" : "height"}
-          >
-            <TouchableOpacity style={styles.employeeCostContainer}
-              onPress={() => this.props.navigation.navigate("EmployeeCost")}>
-              <Text style={styles.employeeCostButtonText}>Çalışan Giderleri</Text>
-            </TouchableOpacity>
-
+          <Button style={styles.employeeCostContainer} onPress={() => this.props.navigation.navigate("EmployeeCost")}>
+          <Text style={styles.employeeCostButtonText}>Çalışan Giderleri</Text>
+          </Button>
             <RBSheet
               ref={ref => {
                 this.OrderSheet = ref;
@@ -396,8 +399,7 @@ class Employee extends Component<Props, State> {
                   borderTopRightRadius: 15
                 }
               }
-              }
-            >
+              }>
               {this._renderEmployeeSheetContent()}
             </RBSheet>
 
@@ -420,8 +422,6 @@ class Employee extends Component<Props, State> {
             >
               {this._renderEmployeeCostSheetContent()}
             </RBSheet>
-            <View style={{ marginTop: 10 }}></View>
-          </KeyboardAvoidingView>
           {this._renderView()}
           {this.showSimpleMessage()}
         </View>
