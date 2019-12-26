@@ -601,7 +601,8 @@ const styles = StyleSheet.create({
     // flex:1,
     // justifyContent:"flex-end"
     marginBottom: 10,
-  
+    padding:5,
+    marginTop:10
 
   },
 

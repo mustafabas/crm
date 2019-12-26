@@ -9,7 +9,7 @@ import { GetEmployees } from './employeeAction';
 import { reset } from './loginAction';
 
 
-export function employeeEdit(nameSurname:string, monthlySalary:number,email:string,password:string, phoneNumber:string, identityNumber:string, address:string, dailyPriceFood:number, employeeId :number) {
+export function employeeEdit(nameSurname:string, monthlySalary:number,email:string,password:string, phoneNumber:string, identityNumber:string, address:string, dailyPriceFood:number, employeeId :number, active:boolean) {
 
   return (dispatch : any) =>  {
     dispatch(employeEditLoading(true));
@@ -32,7 +32,7 @@ export function employeeEdit(nameSurname:string, monthlySalary:number,email:stri
           dailyFoodPrice: dailyPriceFood,
           userId:userId,
           employeId: employeeId,
-          active: true,
+          active: active,
           
       },
       {

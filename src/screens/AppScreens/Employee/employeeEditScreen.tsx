@@ -20,7 +20,7 @@ import { connect } from "react-redux";
 import { IEmployeeItem } from "../../../redux/models/addEmployeeModel";
 import { IUserItem } from "../../../redux/models/addUserModel";
 import { AddUser } from "../../../redux/actions/addUserAction"
-import { Item, Label, Input, Textarea, Button, Spinner, Switch } from "native-base";
+import { Item, Label, Input, Textarea, Button, Spinner, Switch, CheckBox } from "native-base";
 import { stat } from "fs";
 import { showMessage } from "react-native-flash-message";
 import { getEmployeeById, employeeEdit, employe } from "../../../redux/actions/editEmployeeAction";
@@ -31,11 +31,11 @@ interface Props {
     EmployeeUpdateMessage: string;
     employee: IEmployeeItemBaseResponseModel;
     user: IUserItem;
-    employeeEdit: (nameSurname: string, monthlySalary: number, email: string, password: string, phoneNumber: string, identityNumber: string, address: string, dailyPriceFood: number,employeeId :number) => void;
+    employeeEdit: (nameSurname: string, monthlySalary: number, email: string, password: string, phoneNumber: string, identityNumber: string, address: string, dailyPriceFood: number, employeeId: number, active:boolean) => void;
     AddUser: (nameSurname: string, mail: string, password: string) => void;
-    isLoading:boolean;
+    isLoading: boolean;
     GetEmployees: () => void;
-    getEmployeeById: (employeeId:number) => void;
+    getEmployeeById: (employeeId: number) => void;
 }
 
 interface State {
@@ -55,13 +55,13 @@ const girdiler = Yup.object().shape({
     monthlySalary: Yup.number()
         .positive("Pozitif değer giriniz!")
         .moreThan(0, "Sıfırdan büyük olmalıdır!"),
-        identityNumber: Yup.number()
+    identityNumber: Yup.number()
         .positive("Pozitif değer giriniz!"),
     dailyPriceFood: Yup.number()
         .positive("Pozitif değer giriniz!"),
     mail: Yup.string()
         .email("E-posta Giriniz!"),
-      phoneNumber: Yup.number()
+    phoneNumber: Yup.number()
         .positive("Pozitif değer giriniz!")
 });
 
@@ -90,20 +90,20 @@ class employeeEditScreen extends Component<Props, State> {
 
     componentWillMount() {
         this.getUserType();
-        const employeeId:number = Number(this.props.navigation.getParam('employeeId'));
+        const employeeId: number = Number(this.props.navigation.getParam('employeeId'));
         this.props.getEmployeeById(employeeId);
         console.log(this.props.employee);
-        
+
     }
 
     handleAddEmployee(values: multi) {
         const { employeeEdit, AddUser } = this.props;
-        const employeeId:number = Number(this.props.navigation.getParam('employeeId'));
-        employeeEdit(values.nameSurname, Number(values.monthlySalary), values.mail, values.password, values.phoneNumber, values.identityNumber, values.address, Number(values.dailyPriceFood),employeeId);
+        const employeeId: number = Number(this.props.navigation.getParam('employeeId'));
+        employeeEdit(values.nameSurname, Number(values.monthlySalary), values.mail, values.password, values.phoneNumber, values.identityNumber, values.address, Number(values.dailyPriceFood), employeeId, values.Active);
         // if (values.mail != "" && values.password != "") {
         //     AddUser(values.nameSurname, values.mail, values.password);
         // }     
-  
+
     };
     showSimpleMessage() {
         if (this.props.EmployeeUpdateMessage) {
@@ -115,7 +115,7 @@ class employeeEditScreen extends Component<Props, State> {
             }
             );
         }
-        if(this.props.isSuccees){
+        if (this.props.isSuccees) {
             this.props.navigation.navigate('Employee');
         }
     }
@@ -129,7 +129,7 @@ class employeeEditScreen extends Component<Props, State> {
     }
 
     render() {
-        if(this.props.isSuccees){
+        if (this.props.isSuccees) {
             this.props.navigation.navigate('Employee');
         }
         if (this.state.UserType === "2") {
@@ -139,16 +139,17 @@ class employeeEditScreen extends Component<Props, State> {
         }
         else {
             const employee = this.props.employee;
-                        const initialValues: multi = {
+            const initialValues: multi = {
                 nameSurname: employee.employeeName,
-                monthlySalary: employee.monthlySalary ? employee.monthlySalary.toString():"",
+                monthlySalary: employee.monthlySalary ? employee.monthlySalary.toString() : "",
                 mail: employee.mail,
                 password: employee.employeeName,
                 phoneNumber: employee.phoneNumber,
                 identityNumber: employee.identityNumber,
                 address: employee.address,
-                dailyPriceFood: employee.dailyPriceFood ? employee.dailyPriceFood.toString():"",
-                AddAsUser: this.props.employee.addAsUser
+                dailyPriceFood: employee.dailyPriceFood ? employee.dailyPriceFood.toString() : "",
+                AddAsUser: this.props.employee.addAsUser,
+                Active: this.props.employee.active
             }
 
             return (
@@ -164,7 +165,7 @@ class employeeEditScreen extends Component<Props, State> {
                                 onSubmit={values => this.handleAddEmployee(values)}
                             >
                                 {({ values, errors, handleChange, handleBlur, handleSubmit, resetForm, touched, setFieldValue }) => {
-      
+
                                     const propsNew = { trackColor: { true: "#2069F3", false: null } }
                                     return (
                                         <View style={styles.containerNew} >
@@ -179,15 +180,15 @@ class employeeEditScreen extends Component<Props, State> {
                                                         onChangeText={handleChange("nameSurname")}
                                                         onBlur={handleBlur("nameSurname")}
                                                     />
-                           
+
                                                 </Item>
-                                          
+
                                             </View>
                                             <View style={styles.input}>
                                                 <Item floatingLabel style={{ marginTop: 15, borderBottomColor: (touched.identityNumber && errors.identityNumber != null) ? 'red' : '#2069F3' }}>
                                                     <Label style={{ color: (touched.identityNumber && errors.identityNumber != null) ? 'red' : '#959595' }}>Kimlik Numarası</Label>
                                                     <Input
-                                                           value={values.identityNumber}
+                                                        value={values.identityNumber}
                                                         placeholderTextColor="#9A9A9A"
                                                         maxLength={11}
                                                         keyboardType="number-pad"
@@ -196,14 +197,14 @@ class employeeEditScreen extends Component<Props, State> {
                                                         onBlur={handleBlur("identityNumber")}
                                                     />
                                                 </Item>
-                                                <Text style={{width:'100%', color:'red'}}>{errors.identityNumber}</Text>
+                                                <Text style={{ width: '100%', color: 'red' }}>{errors.identityNumber}</Text>
                                             </View>
-                          
+
                                             <View style={styles.input}>
                                                 <Item floatingLabel style={{ marginTop: 15, borderBottomColor: (touched.monthlySalary && errors.monthlySalary != null) ? 'red' : '#2069F3' }}>
                                                     <Label style={{ color: (touched.monthlySalary && errors.monthlySalary != null) ? 'red' : '#959595' }}>Aylik Maaş</Label>
                                                     <Input
-                                                   value={values.monthlySalary}
+                                                        value={values.monthlySalary}
                                                         placeholderTextColor="#9A9A9A"
                                                         keyboardType="number-pad"
                                                         autoCapitalize="words"
@@ -212,7 +213,7 @@ class employeeEditScreen extends Component<Props, State> {
                                                     />
 
                                                 </Item>
-                                                <Text style={{width:'100%', color:'red'}}>{errors.monthlySalary}</Text>
+                                                <Text style={{ width: '100%', color: 'red' }}>{errors.monthlySalary}</Text>
                                             </View>
                                             <View style={styles.input}>
                                                 <Item floatingLabel style={{ marginTop: 15, borderBottomColor: (touched.dailyPriceFood && errors.dailyPriceFood != null) ? 'red' : '#2069F3' }}>
@@ -226,13 +227,13 @@ class employeeEditScreen extends Component<Props, State> {
                                                         onBlur={handleBlur("dailyPriceFood")}
                                                     />
                                                 </Item>
-                                                <Text style={{width:'100%', color:'red'}}>{errors.dailyPriceFood}</Text>
+                                                <Text style={{ width: '100%', color: 'red' }}>{errors.dailyPriceFood}</Text>
                                             </View>
                                             <View style={styles.input}>
                                                 <Item floatingLabel style={{ marginTop: 15, borderBottomColor: (touched.phoneNumber && errors.phoneNumber != null) ? 'red' : '#2069F3' }}>
                                                     <Label style={{ color: (touched.phoneNumber && errors.phoneNumber != null) ? 'red' : '#959595' }}>0511 111 11 11</Label>
                                                     <Input
-                                                     maxLength={11}
+                                                        maxLength={11}
                                                         placeholderTextColor="#9A9A9A"
                                                         value={values.phoneNumber}
                                                         keyboardType="number-pad"
@@ -241,58 +242,66 @@ class employeeEditScreen extends Component<Props, State> {
                                                         onBlur={handleBlur("phoneNumber")}
                                                     />
                                                 </Item>
-                                                <Text style={{width:'100%', color:'red'}}>{errors.phoneNumber}</Text>
+                                                <Text style={{ width: '100%', color: 'red' }}>{errors.phoneNumber}</Text>
                                             </View>
                                             <Textarea style={{ marginTop: 15, borderBottomWidth: 1, borderBottomColor: (touched.address && errors.address != null) ? 'red' : '#2069F3' }} rowSpan={5}
                                                 // underline
-                                                value={this.props.employee.address}
+                                                value={values.address}
                                                 autoCapitalize="words"
-                                                
+
                                                 placeholderTextColor={(touched.address && errors.address != null) ? 'red' : '#959595'}
                                                 onChangeText={handleChange("address")}
                                                 onBlur={handleBlur("address")}
 
                                                 placeholder="Adres" />
-                               <View style={[styles.input, {flexDirection:'row'}]}>
-                        <Switch 
-                        {...propsNew}
-                        onChange = {() => {{setFieldValue('AddAsUser', !values.AddAsUser)}}}
-                        value={values.AddAsUser}
-                         />
-                         <Text>Sisteme Giris Bilgileri Ekle</Text>
-                         </View>
-                         {
-                             values.AddAsUser && <View>
-                      <View style={styles.input}>
-                                                <Item floatingLabel style={{ marginTop: 15, borderBottomColor: (touched.mail && errors.mail != null) ? 'red' : '#2069F3' }}>
-                                                    <Label style={{ color: (touched.mail && errors.mail != null) ? 'red' : '#959595' }}>Mail Adresi</Label>
-                                                    <Input
-                                                            value={values.mail}
-                                                        placeholderTextColor="#9A9A9A"
-                                                        autoCapitalize="words"
-                                                        onChangeText={handleChange("mail")}
-                                                        onBlur={handleBlur("mail")}
-                                                    />
-                                                </Item>
-                                                <Text style={{color:'red'}}>{errors.mail}</Text>
+
+                                            <View style={[styles.input, { flexDirection: 'row', paddingTop:10, paddingBottom:10 }]}>
+                                                <CheckBox checked={values.Active} onPress={() => { setFieldValue('Active', !values.Active)  }}
+                        
+                                                />
+
+                                                <Text style={{marginLeft:20}}>Aktif Çalışan</Text>
                                             </View>
-                                            <View style={styles.input}>
-                                                <Item floatingLabel style={{ marginTop: 15, borderBottomColor: (touched.password && errors.password != null) ? 'red' : '#2069F3' }}>
-                                                    <Label style={{ color: (touched.password && errors.password != null) ? 'red' : '#959595' }}>Sifre</Label>
-                                                    <Input
-                                                     secureTextEntry={true}
-                         
-                                                        placeholderTextColor="#9A9A9A"
-                                                        value={values.password}
-                                                        autoCapitalize="words"
-                                                        onChangeText={handleChange("password")}
-                                                        onBlur={handleBlur("password")}
-                                                    />
-                                                </Item>
-                                                <Text style={{width:'100%', color:'red'}}>{errors.phoneNumber}</Text>
+                                            <View style={[styles.input, { flexDirection: 'row' }]}>
+                                                <Switch
+                                                    {...propsNew}
+                                                    onChange={() => { { setFieldValue('AddAsUser', !values.AddAsUser) } }}
+                                                    value={values.AddAsUser}
+                                                />
+                                                <Text>Sisteme Giris Bilgileri Ekle</Text>
                                             </View>
-                            </View>
-                         }
+                                            {
+                                                values.AddAsUser && <View>
+                                                    <View style={styles.input}>
+                                                        <Item floatingLabel style={{ marginTop: 15, borderBottomColor: (touched.mail && errors.mail != null) ? 'red' : '#2069F3' }}>
+                                                            <Label style={{ color: (touched.mail && errors.mail != null) ? 'red' : '#959595' }}>Mail Adresi</Label>
+                                                            <Input
+                                                                value={values.mail}
+                                                                placeholderTextColor="#9A9A9A"
+                                                                autoCapitalize="words"
+                                                                onChangeText={handleChange("mail")}
+                                                                onBlur={handleBlur("mail")}
+                                                            />
+                                                        </Item>
+                                                        <Text style={{ color: 'red' }}>{errors.mail}</Text>
+                                                    </View>
+                                                    <View style={styles.input}>
+                                                        <Item floatingLabel style={{ marginTop: 15, borderBottomColor: (touched.password && errors.password != null) ? 'red' : '#2069F3' }}>
+                                                            <Label style={{ color: (touched.password && errors.password != null) ? 'red' : '#959595' }}>Sifre</Label>
+                                                            <Input
+                                                                secureTextEntry={true}
+
+                                                                placeholderTextColor="#9A9A9A"
+                                                                value={values.password}
+                                                                autoCapitalize="words"
+                                                                onChangeText={handleChange("password")}
+                                                                onBlur={handleBlur("password")}
+                                                            />
+                                                        </Item>
+                                                        <Text style={{ width: '100%', color: 'red' }}>{errors.phoneNumber}</Text>
+                                                    </View>
+                                                </View>
+                                            }
 
                                             <Button onPress={() => { handleSubmit() }}
                                                 style={{
@@ -303,9 +312,9 @@ class employeeEditScreen extends Component<Props, State> {
                                                     shadowOffset: { width: 3, height: 3 },
                                                     shadowOpacity: .5,
                                                 }}>
-                                                    {
-                                                        this.props.isLoading ?  <Spinner></Spinner>:<Text style={{ color: 'white', fontFamily: "Avenir Next", fontWeight: 'bold', fontSize: 16 }} >Kaydet</Text>
-                                                    }
+                                                {
+                                                    this.props.isLoading ? <Spinner></Spinner> : <Text style={{ color: 'white', fontFamily: "Avenir Next", fontWeight: 'bold', fontSize: 16 }} >Kaydet</Text>
+                                                }
 
                                             </Button>
                                         </View>
@@ -325,15 +334,15 @@ const mapStateToProps = (state: AppState) => ({
     isSuccees: state.editEmployeReducer.isSuccess,
     EmployeeUpdateMessage: state.editEmployeReducer.EmployeeUpdateMessage,
     isSucceesUser: state.addUser.isSuccess,
-    employee : state.editEmployeReducer.employee,
-    isLoading : state.editEmployeReducer.isLoading
+    employee: state.editEmployeReducer.employee,
+    isLoading: state.editEmployeReducer.isLoading
 })
 
 function bindToAction(dispatch: any) {
     return {
-        employeeEdit: (nameSurname: string, monthlySalary: number, mail: string, password: string, phoneNumber: string, identityNumber: string, address: string, dailyPriceFood: number,employeeId :number) =>
-            dispatch(employeeEdit(nameSurname, monthlySalary, mail, password, phoneNumber, identityNumber, address, dailyPriceFood, employeeId)),
-            getEmployeeById: (employeeId:number) =>
+        employeeEdit: (nameSurname: string, monthlySalary: number, mail: string, password: string, phoneNumber: string, identityNumber: string, address: string, dailyPriceFood: number, employeeId: number,active:boolean) =>
+            dispatch(employeeEdit(nameSurname, monthlySalary, mail, password, phoneNumber, identityNumber, address, dailyPriceFood, employeeId,active)),
+        getEmployeeById: (employeeId: number) =>
             dispatch(getEmployeeById(employeeId)),
     };
 }

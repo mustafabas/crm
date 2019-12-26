@@ -18,4 +18,5 @@ export interface IEmployeeItemBaseResponseModel{
     addAsUser :boolean;
     mail : string;
     password:string;
+    active : boolean;
 }
