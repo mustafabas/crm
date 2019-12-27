@@ -35,7 +35,7 @@ interface Props {
   GetProducts: () => void;
   AddOrder: (productId: number, customerId: number, unitPrice: number, count: number,isPaid:boolean) => void;
   isSuccees: boolean;
-
+  
   AddOrderMessage: string;
   GetProduct: (productId: number, customerId: number) => void;
   product: IProductForCustomerItem;

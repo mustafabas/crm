@@ -9,8 +9,9 @@ import { GetEmployees } from './employeeAction';
 import { reset } from './loginAction';
 
 
-export function employeeEdit(nameSurname:string, monthlySalary:number,email:string,password:string, phoneNumber:string, identityNumber:string, address:string, dailyPriceFood:number, employeeId :number) {
+export function employeeEdit(nameSurname:string, monthlySalary:number,email:string,password:string, phoneNumber:string, identityNumber:string, address:string, dailyPriceFood:number, employeeId :number, active:boolean, addAsAUser:boolean) {
 
+  console.log("active", addAsAUser ==true ?  email:"");
   return (dispatch : any) =>  {
     dispatch(employeEditLoading(true));
     AsyncStorage.multiGet(['userToken', 'userId']).then((res) => {
@@ -24,15 +25,15 @@ export function employeeEdit(nameSurname:string, monthlySalary:number,email:stri
       {
           nameSurname: nameSurname,
           monthlySalary: monthlySalary,
-          email: email,
-          password: password,
+          email: addAsAUser ==true ?  email : "",
+          password: addAsAUser ==true ?  password : "",
           phoneNumber: phoneNumber,
           identityNumber: identityNumber,
           address: address,
           dailyFoodPrice: dailyPriceFood,
           userId:userId,
           employeId: employeeId,
-          active: true,
+          active: active,
           
       },
       {
@@ -92,7 +93,8 @@ export function getEmployeeById(employeeId:number) {
                           active: employee.active,
                           addAsUser : response.data.result.addAsUser,
                           password : response.data.result.password,
-                          mail: response.data.result.email
+                          mail: response.data.result.email,
+                        
                       }                
                     dispatch(employe(employeeItem));
               }

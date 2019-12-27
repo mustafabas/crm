@@ -1,17 +1,17 @@
 import { IMAGE_DATA_FETCHED, DATA_LOADING, FETCH_MORE } from "../actions/fetch";
 import { Orders, Action } from "../states";
-import { ORDERS_GET, ORDER_LOADING,GET_REST_TOTAL_AMOUNT,GET_TAKE_TOTAL_AMOUNT,GET_TOOK_TOTAL_AMOUNT, ORDERS_GET_MORE, ORDER_LOADING_MORE } from "../types";
+import { ORDERS_GET, ORDER_LOADING,GET_REST_TOTAL_AMOUNT,GET_TAKE_TOTAL_AMOUNT,GET_TOOK_TOTAL_AMOUNT, ORDERS_GET_MORE, ORDER_LOADING_MORE, CUSTOMER_DETAIL, CUSTOMER_DETAIL_LOADING } from "../types";
 import { act } from "react-test-renderer";
 import customer from "../../pages/customer";
+import { ICustomerDetailItem } from "../models/homeModel";
 
 
 const initalState = {
     orders: [],
-    takeTotalAmount:0,
-    tookTotalAmount: 0,
-    restTotalAmount: 0,
     isOrderLoading: false,
-    loadingMore: false
+    loadingMore: false,
+    customerDetail :{}  as ICustomerDetailItem,
+    isCustomerDetailLoading:false
   };
 
 export default (state: Orders = initalState, action: Action) => {
@@ -60,6 +60,17 @@ export default (state: Orders = initalState, action: Action) => {
           customerId: action.payload,
           loadingMore: action.payload
         };
+        case CUSTOMER_DETAIL:
+          return {
+            ...state,
+            customerDetail:action.payload,
+            isCustomerDetailLoading:false
+          }
+      case CUSTOMER_DETAIL_LOADING:
+        return {
+          ...state,
+          isCustomerDetailLoading:true
+        }
     default:
       return state;
   }

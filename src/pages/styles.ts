@@ -600,10 +600,10 @@ const styles = StyleSheet.create({
     // paddingHorizontal:61,
     // margin:5,
     borderRadius: 5,
-    // flex:1,
     // justifyContent:"flex-end"
     marginBottom: 10,
-  
+    padding:5,
+    marginTop:10
 
   },
 
@@ -926,8 +926,8 @@ const styles = StyleSheet.create({
   employeeNameText:{
     color:'#2069F3',
     fontFamily: 'Avenir Next',
-    fontSize:18,
-    fontWeight:'800',
+    fontSize:16,
+    fontWeight:'600',
   },
   SheetContainer: {
     flex: 1, 

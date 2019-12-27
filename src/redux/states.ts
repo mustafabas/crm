@@ -1,4 +1,4 @@
-import { ICustomerItem } from "./models/homeModel";
+import { ICustomerItem, ICustomerDetailItem } from "./models/homeModel";
 import { IOrderItem } from "./models/orderModel";
 import { IProductItem} from "./models/productModel";
 import {ICustomerPriceProductItem} from "./models/customerPriceProductModel"
@@ -58,9 +58,9 @@ export interface State {
   {
     orders: IOrderItem[];
     isOrderLoading: boolean;
-    takeTotalAmount:number;
-    tookTotalAmount:number;
-    restTotalAmount:number;
+    customerDetail : ICustomerDetailItem;
+    isCustomerDetailLoading : boolean;
+    loadingMore:boolean;
   }
 
   export interface CustomerAdd

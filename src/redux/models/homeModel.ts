@@ -13,3 +13,12 @@ export interface ICustomerItem{
     dayOfWeeks?:string;
 
 }
+
+
+
+export interface ICustomerDetailItem extends  ICustomerItem{
+    adress?:string;
+    phoneNumber?:string;
+    totalOrderCount : string;
+    
+}

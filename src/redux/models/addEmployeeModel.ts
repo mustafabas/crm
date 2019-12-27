@@ -7,4 +7,5 @@ export interface IEmployeeItem
     address:string;
     dailyPriceFood:string ;
     AddAsUser:boolean;
+    Active : boolean;
 }

@@ -4,7 +4,8 @@ import { WATER_EMPLOYEE_GET } from './../constants'
 import { Dispatch } from "react";
 import { EMPLOYEE_GET, LOADING_EMPLOYEES } from './../types'
 import { Action } from '../states'
-import { IEmployeeItem } from "../models/employeeModel";
+import { IEmployeeItem, IEmployeeItemResponseModel } from "../models/employeeModel";
+import { employe } from "./editEmployeeAction";
 
 
 export function GetEmployees() {
@@ -23,15 +24,21 @@ export function GetEmployees() {
                 .then((response) => {
     
                     if (response.data.isSuccess) {
-                        var employeesModel: IEmployeeItem[] = [];
+                        var employeesModel: IEmployeeItemResponseModel[] = [];
     
                         response.data.result.forEach((employee: any) => {
-                            var employeeItem: IEmployeeItem = {
+                            var employeeItem: IEmployeeItemResponseModel = {
                                 employeeId: employee.employeeId,
                                 employeeName: employee.employeeName,
-                                monthlySalary: employee.monthlySalary,
+                                monthlySalaryDisplay: employee.monthlySalaryDisplay,
                                 createDate: employee.createDate,
                                 active: employee.active,
+                                addAsUser:employee.addAsUser,
+                                address:employee.address,
+                                dailyDecimalFoodDisplay:employee.dailyDecimalFoodDisplay,
+                                phoneNumber:employee.phoneNumber,
+                                fullShow:false
+
                             }
                             employeesModel.push(employeeItem);
                         });
@@ -56,7 +63,7 @@ export const loading = (loader: boolean) => ({
     payload: loader
 })
 
-export const employees = (employees: IEmployeeItem[]) => ({
+export const employees = (employees: IEmployeeItemResponseModel[]) => ({
     type: EMPLOYEE_GET,
     payload: employees
 })

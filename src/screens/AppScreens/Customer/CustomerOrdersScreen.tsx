@@ -1,18 +1,18 @@
 'use strict';
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
-    StyleSheet,
-    Text,
-    View,
-    Platform,
-    FlatList,
-    Animated,
-    ScrollView,
-    TouchableOpacity,
-    Image,
-    AsyncStorage,
-    ActivityIndicator,
-    Modal,
+  StyleSheet,
+  Text,
+  View,
+  Platform,
+  FlatList,
+  Animated,
+  ScrollView,
+  TouchableOpacity,
+  Image,
+  AsyncStorage,
+  ActivityIndicator,
+  Modal,
 } from 'react-native';
 
 import { Icon, Input, Item, Tabs, Tab, TabHeading, Button, ScrollableTab } from 'native-base';
@@ -23,60 +23,65 @@ import RBSheet from 'react-native-raw-bottom-sheet';
 import styles from "../../../pages/styles";
 import * as Yup from "yup";
 import { connect } from 'react-redux';
-import { GetOrders, GetOrdersMore } from '../../../redux/actions/orderAction';
+import { GetOrders, GetOrdersMore, GetCustomerDetail } from '../../../redux/actions/orderAction';
 import { AddCash } from '../../../redux/actions/addCashAction';
 import { orderDelete } from '../../../redux/actions/deleteOrderAction';
 import OrdersCustomer from '../../../pages/OrdersCustomer';
 import { AppState } from '../../../redux/store';
 import { Formik } from 'formik';
 import { showMessage } from 'react-native-flash-message';
-
+import { ICustomerDetailItem } from '../../../redux/models/homeModel';
+import customer from '../../../pages/customer';
+import {
+  Placeholder,
+  PlaceholderMedia,
+  PlaceholderLine,
+  Fade
+} from "rn-placeholder";
 
 const title = "Home Screen"
 
 
 interface Props {
-    navigation: NavigationScreenProp<NavigationState>;
-    orders: IOrderItem[];
-    takeTotalAmount: number;
-    tookTotalAmount: number;
-    restTotalAmount: number;
-    isOrderLoading: boolean;
-    loadingMore: boolean;
-    isSuccess :boolean;
-    GetOrders: (customerId: number, pageIndex: number, pageSize: number) => void;
-    GetOrdersMore: (customerId: number, pageIndex: number, pageSize: number) => void;
-    AddCash: (orderId: number, amount: string) => void;
-    orderDelete: (customerId : number,orderId: number) => void;
-    RbSheet: RBSheet;
-    Message: string;
-    isSuccessAddCash : boolean;
-    MessageAddCash : string;
+  navigation: NavigationScreenProp<NavigationState>;
+  orders: IOrderItem[];
+  customerDetailModel?: ICustomerDetailItem;
+  loadingMore: boolean;
+  isSuccess: boolean;
+  GetOrders: (customerId: number, pageIndex: number, pageSize: number) => void;
+  GetOrdersMore: (customerId: number, pageIndex: number, pageSize: number) => void;
+  AddCash: (orderId: number, customerId: number, amount: string) => void;
+  orderDelete: (customerId: number, orderId: number) => void;
+  GetCustomerDetail: (customerId: number) => void;
+  RbSheet: RBSheet;
+  Message: string;
+  isSuccessAddCash: boolean;
+  MessageAddCash: string;
+  isCustomerDetailLoading: boolean;
+  isOrderLoading: boolean;
+
+}
 
 
-  
-  }
-  
+interface amountData {
+  amount: string
+}
 
-  interface amountData {
-    amount: string
-  }
-  
-  interface State {
-    refreshing: boolean;
-    modalVisible: boolean;
-    orderId: number;
-    amount: number;
-    modalAmountVisible: boolean;
-    modalPriceVisible: boolean;
-    unitPrice: number;
-    count: number;
-    productId: number;
-    productName: string;
-    page: number;
-    isPaid:boolean;
-  }
-  
+interface State {
+  refreshing: boolean;
+  modalVisible: boolean;
+  orderId: number;
+  amount: number;
+  modalAmountVisible: boolean;
+  modalPriceVisible: boolean;
+  unitPrice: number;
+  count: number;
+  productId: number;
+  productName: string;
+  page: number;
+  isPaid: boolean;
+}
+
 const girdiler = Yup.object().shape({
 
 });
@@ -87,13 +92,13 @@ const initialValues: amountData = {
 
 
 
-  function shouldShowBackButton(stackRouteNavigation) {
-    let parent = stackRouteNavigation.dangerouslyGetParent();
-    return parent.state.routes.indexOf(stackRouteNavigation.state) > 0;
-  }
+function shouldShowBackButton(stackRouteNavigation: any) {
+  let parent = stackRouteNavigation.dangerouslyGetParent();
+  return parent.state.routes.indexOf(stackRouteNavigation.state) > 0;
+}
 
 
-class CustomerOrdersScreen extends Component<Props,State>{
+class CustomerOrdersScreen extends Component<Props, State>{
 
   showSimpleMessage() {
 
@@ -106,7 +111,7 @@ class CustomerOrdersScreen extends Component<Props,State>{
       }
       );
     }
-    if(this.props.MessageAddCash) {
+    if (this.props.MessageAddCash) {
       showMessage({
         message: this.props.MessageAddCash,
         type: this.props.isSuccessAddCash ? "success" : "danger",
@@ -114,315 +119,321 @@ class CustomerOrdersScreen extends Component<Props,State>{
       }
       );
     }
-  
+
   }
 
 
 
-    componentWillMount() {
-        this.props.GetOrders(this.props.navigation.getParam("customerId"), 1, 10);
-        this.setState({ refreshing: false });
-      }
+  componentWillMount() {
+    const customerId = this.props.navigation.getParam("customerId");
+    this.props.GetCustomerDetail(customerId);
+    this.props.GetOrders(customerId, 1, 10);
 
-      static navigationOptions = ({navigation}) => ({
-        title: 'Müşteri Siparişleri',
-        headerRight : () => {
-          return(
-            <TouchableOpacity onPress={()=> navigation.navigate("orderAdd", { customerId: navigation.getParam("customerId")})} style={{marginRight:20}}>
- <Icon  style={{color:'white'}}  name="ios-add-circle" />
-   
-            </TouchableOpacity>
-           
-          )
-         }
-    })
+    this.setState({ refreshing: false });
 
-//     static navigationOptions = ({ navigation }) => ({
-//         header: () => <SafeAreaView forceInset={{horizontal:'never'}}  style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between',height:Platform.OS === 'ios' ? '100%' : 56,backgroundColor:'#216AF4',paddingHorizontal:10}}>
+  }
 
-// <TouchableOpacity
+  static navigationOptions = ({ navigation }) => ({
+    title: 'Müşteri Siparişleri',
+    headerRight: () => {
+      return (
+        <TouchableOpacity onPress={() => navigation.navigate("orderAdd", { customerId: navigation.getParam("customerId") })} style={{ marginRight: 20 }}>
+          <Icon style={{ color: 'white' }} name="ios-add-circle" />
 
-//              onPress={()=>navigation.popToTop()}
+        </TouchableOpacity>
 
-//             ><Image  style={{height:24,width:15,marginBottom:5}}  source={require('../../../images/Vector3.png')} /></TouchableOpacity>
-//             <Text style={{fontWeight: '600',
-//         fontFamily:'Avenir Next',
-//         fontSize:18,color:'white'}}>
-//               Müşteri Siparişleri
-//             </Text>
-
-// <TouchableOpacity
-
-             
-
-// ><Icon  style={{color:'white'}}  name="ios-add-circle" /></TouchableOpacity>
-//         </SafeAreaView>,
-//       });
-
-
-
-    // static navigationOptions = {
-    //     title: 'Müşteri Siparişleri',
-    
-    //     // headerStyle: {
-    //     //   backgroundColor: '#e83537',
-    //     // },
-    //     // headerTintColor: '#fff',
-    //     // headerTitleStyle: {
-    //     //   fontWeight: 'bold',
-    //     // },
-
-    //       headerLeft: shouldShowBackButton(navigation) ? (
-    //         <TouchableOpacity
-
-             
-
-    //         ><Icon style={{color:'white'}}  name="ios-add-circle" /></TouchableOpacity>
-    //       ) : null,
-
-
-
-    //     headerRight: () => (
-    //         <TouchableOpacity
-
-             
-
-    //         ><Icon style={{color:'white'}}  name="ios-add-circle" /></TouchableOpacity>
-    //       ),
-
-
-    //   };
-    
-
-    OrderSheet: any;
-    CustomerSheet: any;
-    AmountSheet: any;
-  
-    constructor(props: Props) {
-      super(props);
-      this.state = {
-        refreshing: false,
-        modalVisible: false,
-        orderId: 0,
-        amount: 0,
-        modalAmountVisible: false,
-        modalPriceVisible: false,
-        unitPrice: 0,
-        count: 0,
-        productId: 0,
-        productName: "",
-        page: 0,
-        isPaid:false,
-      };
+      )
     }
+  })
 
-    deleteOrderAlert() {
-        //function to make three option alert
-        AsyncStorage.getItem("UserType").then((value) => {
-          if (value === "2") {
-    
-            Alert.alert(
-              //title
-              'Hata',
-              //body
-              'Sipariş silme yetkiniz bulunmamaktadır',
-              [
-                { text: 'Tamam' },
-              ],
-              { cancelable: false }
-            );
-            this.closeModal();
-    
-    
-          }
-          else {
-            Alert.alert(
-              //title
-              'Sipariş Silme İşlemi',
-              //body
-              'Siparişi silmek istiyor musunuz?',
-              [
-                { text: 'Geri Gel' },
-                { text: 'Evet', onPress: () => this.deleteSelectedOrder() },
-              ],
-              { cancelable: false }
-            );
-          }
-    
-    
-        });
-    
-    
-      }
+  //     static navigationOptions = ({ navigation }) => ({
+  //         header: () => <SafeAreaView forceInset={{horizontal:'never'}}  style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between',height:Platform.OS === 'ios' ? '100%' : 56,backgroundColor:'#216AF4',paddingHorizontal:10}}>
 
-      editOrder() {
+  // <TouchableOpacity
+
+  //              onPress={()=>navigation.popToTop()}
+
+  //             ><Image  style={{height:24,width:15,marginBottom:5}}  source={require('../../../images/Vector3.png')} /></TouchableOpacity>
+  //             <Text style={{fontWeight: '600',
+  //         fontFamily:'Avenir Next',
+  //         fontSize:18,color:'white'}}>
+  //               Müşteri Siparişleri
+  //             </Text>
+
+  // <TouchableOpacity
+
+
+
+  // ><Icon  style={{color:'white'}}  name="ios-add-circle" /></TouchableOpacity>
+  //         </SafeAreaView>,
+  //       });
+
+
+
+  // static navigationOptions = {
+  //     title: 'Müşteri Siparişleri',
+
+  //     // headerStyle: {
+  //     //   backgroundColor: '#e83537',
+  //     // },
+  //     // headerTintColor: '#fff',
+  //     // headerTitleStyle: {
+  //     //   fontWeight: 'bold',
+  //     // },
+
+  //       headerLeft: shouldShowBackButton(navigation) ? (
+  //         <TouchableOpacity
+
+
+
+  //         ><Icon style={{color:'white'}}  name="ios-add-circle" /></TouchableOpacity>
+  //       ) : null,
+
+
+
+  //     headerRight: () => (
+  //         <TouchableOpacity
+
+
+
+  //         ><Icon style={{color:'white'}}  name="ios-add-circle" /></TouchableOpacity>
+  //       ),
+
+
+  //   };
+
+
+  OrderSheet: any;
+  CustomerSheet: any;
+  AmountSheet: any;
+
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      refreshing: false,
+      modalVisible: false,
+      orderId: 0,
+      amount: 0,
+      modalAmountVisible: false,
+      modalPriceVisible: false,
+      unitPrice: 0,
+      count: 0,
+      productId: 0,
+      productName: "",
+      page: 0,
+      isPaid: false,
+    };
+  }
+
+  deleteOrderAlert() {
+    //function to make three option alert
+    AsyncStorage.getItem("UserType").then((value) => {
+      if (value === "2") {
+
+        Alert.alert(
+          //title
+          'Hata',
+          //body
+          'Sipariş silme yetkiniz bulunmamaktadır',
+          [
+            { text: 'Tamam' },
+          ],
+          { cancelable: false }
+        );
         this.closeModal();
-        this.props.navigation.navigate("EditOrder", {
-          customerId: this.props.navigation.getParam("customerId")
-          , orderId: this.state.orderId,
-          unitPrice: this.state.unitPrice,
-          count: this.state.count,
-          productId: this.state.productId,
-          productName: this.state.productName
-        });
-      }
-    
-      addCash() {
-        this.OrderSheet.close();
-        this.AmountSheet.open();
-    
-      }
-
-      openModal(orderId: number, unitPrice: number, count: number, productId: number, productName: string,isPaid:boolean) {
-        this.setState({
-          orderId: orderId,
-          unitPrice: unitPrice,
-          count: count,
-          productId: productId,
-          productName: productName,
-          isPaid: isPaid,
-        });
-        this.OrderSheet.open();
-      }
-    
-      closeModal() {
-        this.setState({ modalVisible: false });
-      }
-    
-      openAmountModal() {
-        this.setState({ modalAmountVisible: true });
-      }
-    
-      closeAmountModal() {
-        this.setState({ modalAmountVisible: false });
-      }
-    
-      closePriceModal() {
-        this.setState({ modalPriceVisible: false });
-      }
-    
-      openPriceModal() {
-        this.setState({ modalPriceVisible: true });
-      }
-    
-      goToNewPricePage() {
-        this.closePriceModal();
-        this.props.navigation.navigate("NewPricePage", { customerId: this.props.navigation.getParam("customerId") });
-      }
-    
-      goToDefinedPrice() {
-        this.closePriceModal();
-        this.props.navigation.navigate("CustomerDefinedPricePage", { customerId: this.props.navigation.getParam("customerId") });
-      }
-    
-      odemeAl(values: amountData) {
-
-        this.props.AddCash(this.props.navigation.getParam("customerId"),this.state.orderId, values.amount.replace(",","."));
-        this.AmountSheet.close();
-        // this.onRefresh();
-    
-      }
-    
-      deleteSelectedOrder() {
-        const { orderDelete } = this.props;
-        this.closeModal();
-        this.OrderSheet.close();
-        orderDelete(this.props.navigation.getParam("customerId"),this.state.orderId);
-        // this.props.GetOrders(this.props.navigation.getParam("customerId"), 1, 8);
-        this.setState({ refreshing: false });
-        // this.onRefresh();
-      }
-    
 
 
-
-
-      renderSeparator = () => (
-        <View
-          style={{
-
-            height: 20,
-          }}
-        />
-      );
-
-    onRefresh() {
-        this.setState({ refreshing: true });
-        this.setState({ page: 1 });
-        this.props.GetOrders(this.props.navigation.getParam("customerId"), 1, 10);
-        this.setState({ refreshing: false });
+      }
+      else {
+        Alert.alert(
+          //title
+          'Sipariş Silme İşlemi',
+          //body
+          'Siparişi silmek istiyor musunuz?',
+          [
+            { text: 'Geri Gel' },
+            { text: 'Evet', onPress: () => this.deleteSelectedOrder() },
+          ],
+          { cancelable: false }
+        );
       }
 
-      _renderCustomerSheetContent(){
-        return ( <View style={styles.SheetContainer}>
-          <TouchableOpacity style={styles.SheetItemContainer}    onPress={() => {
-                    this.CustomerSheet.close();
-            this.goToNewPricePage();}}>
-            <Icon name="ios-add" size={30} style={styles.SheetItemIcon}></Icon>
-            <Text style={styles.SheetItemText}>
-              Yeni Fiyat Ekle
+
+    });
+
+
+  }
+
+  editOrder() {
+    this.closeModal();
+    this.props.navigation.navigate("EditOrder", {
+      customerId: this.props.navigation.getParam("customerId")
+      , orderId: this.state.orderId,
+      unitPrice: this.state.unitPrice,
+      count: this.state.count,
+      productId: this.state.productId,
+      productName: this.state.productName
+    });
+  }
+
+  addCash() {
+    this.OrderSheet.close();
+    this.AmountSheet.open();
+
+  }
+
+  openModal(orderId: number, unitPrice: number, count: number, productId: number, productName: string, isPaid: boolean) {
+    this.setState({
+      orderId: orderId,
+      unitPrice: unitPrice,
+      count: count,
+      productId: productId,
+      productName: productName,
+      isPaid: isPaid,
+    });
+    this.OrderSheet.open();
+  }
+
+  closeModal() {
+    this.setState({ modalVisible: false });
+  }
+
+  openAmountModal() {
+    this.setState({ modalAmountVisible: true });
+  }
+
+  closeAmountModal() {
+    this.setState({ modalAmountVisible: false });
+  }
+
+  closePriceModal() {
+    this.setState({ modalPriceVisible: false });
+  }
+
+  openPriceModal() {
+    this.setState({ modalPriceVisible: true });
+  }
+
+  goToNewPricePage() {
+    this.closePriceModal();
+    this.props.navigation.navigate("NewPricePage", { customerId: this.props.navigation.getParam("customerId") });
+  }
+
+  goToDefinedPrice() {
+    this.closePriceModal();
+    this.props.navigation.navigate("CustomerDefinedPricePage", { customerId: this.props.navigation.getParam("customerId") });
+  }
+
+  odemeAl(values: amountData) {
+
+    this.props.AddCash(this.props.navigation.getParam("customerId"), this.state.orderId, values.amount.replace(",", '.'));
+    this.AmountSheet.close();
+    // this.onRefresh();
+
+  }
+
+  deleteSelectedOrder() {
+    const { orderDelete } = this.props;
+    this.closeModal();
+    this.OrderSheet.close();
+    orderDelete(this.props.navigation.getParam("customerId"), this.state.orderId);
+    // this.props.GetOrders(this.props.navigation.getParam("customerId"), 1, 8);
+    this.setState({ refreshing: false });
+    // this.onRefresh();
+  }
+
+
+
+
+
+  renderSeparator = () => (
+    <View
+      style={{
+
+        height: 20,
+      }}
+    />
+  );
+
+  onRefresh() {
+    this.setState({ refreshing: true });
+    this.setState({ page: 1 });
+    this.props.GetOrders(this.props.navigation.getParam("customerId"), 1, 10);
+    this.setState({ refreshing: false });
+  }
+
+  _renderCustomerSheetContent() {
+    return (<View style={styles.SheetContainer}>
+      <TouchableOpacity style={styles.SheetItemContainer} onPress={() => {
+        this.CustomerSheet.close();
+        this.goToNewPricePage();
+      }}>
+        <Icon name="ios-add" size={30} style={styles.SheetItemIcon}></Icon>
+        <Text style={styles.SheetItemText}>
+          Yeni Fiyat Ekle
             </Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.SheetItemContainer}   onPress={() => {
-            this.CustomerSheet.close();
-            this.goToDefinedPrice();}}>
-            <Icon name="ios-list" size={30} style={styles.SheetItemIcon}></Icon>
-            <Text style={styles.SheetItemText}>
-              Tanımlı Fiyatlar
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.SheetItemContainer} onPress={() => {
+        this.CustomerSheet.close();
+        this.goToDefinedPrice();
+      }}>
+        <Icon name="ios-list" size={30} style={styles.SheetItemIcon}></Icon>
+        <Text style={styles.SheetItemText}>
+          Tanımlı Fiyatlar
             </Text>
-          </TouchableOpacity>
-    
-        </View>);
-      }
-    
-      _renderAddAmountSheetContent(){
-        return(<View style={styles.SheetAmountContainer}>
-              <Formik
-                initialValues={initialValues}
-                validationSchema={girdiler}
-                onSubmit={values => this.odemeAl(values)}
-              >
-                {props => {
-                  return (
-                    <View style={{flexDirection:"row",justifyContent:'flex-start'}}>
+      </TouchableOpacity>
 
-                        <Input
-                          //containerStyle={{ width: '80%' }}
-                          style={styles.input}
-                          placeholder="Ürün Fiyatı"
-                          placeholderTextColor="#9A9A9A"
-                          value={props.values.amount + ""}
-                          autoCapitalize="none"
-                          keyboardType="numeric"
-                          onChangeText={props.handleChange("amount")}
-                          onBlur={props.handleBlur("amount")}
-                        />
+    </View>);
+  }
 
-                      <Button onPress={()=>props.handleSubmit()}  style={styles.SheetButtonContainer}>
-                       <Text  style={{color:'white',fontFamily:"Avenir Next",fontWeight:'bold',fontSize:16}} >Ekle</Text>
-                       
-           
-          </Button>
-                    </View>
-                  );
-                }}
-              </Formik>
-        </View>);
-    
-      }
-    
-      _renderOrderSheetContent(){
-        return ( <View style={styles.SheetContainer}>
-                    <TouchableOpacity style={styles.SheetItemContainer}
-                      onPress={() => {
-                        this.OrderSheet.close();
-                        this.addCash();
-                      }}>
-                        <Icon name="ios-add" size={30} style={styles.SheetItemIcon}></Icon>
-                      <Text style={styles.SheetItemText}
-                      >Ödeme Ekle</Text>
-                    </TouchableOpacity>
-                    {/* <TouchableOpacity style={styles.SheetItemContainer}
+  _renderAddAmountSheetContent() {
+    return (<View style={styles.SheetAmountContainer}>
+      <Formik
+        initialValues={initialValues}
+        validationSchema={girdiler}
+        onSubmit={values => this.odemeAl(values)}
+      >
+        {props => {
+          return (
+            <View style={{ flexDirection: "row", justifyContent: 'flex-start' }}>
+
+              <Input
+                //containerStyle={{ width: '80%' }}
+                style={styles.input}
+                placeholder="Ürün Fiyatı"
+                placeholderTextColor="#9A9A9A"
+                value={props.values.amount + ""}
+                autoCapitalize="none"
+                keyboardType="numeric"
+                onChangeText={props.handleChange("amount")}
+                onBlur={props.handleBlur("amount")}
+              />
+
+              <Button onPress={() => props.handleSubmit()} style={styles.SheetButtonContainer}>
+                <Text style={{ color: 'white', fontFamily: "Avenir Next", fontWeight: 'bold', fontSize: 16 }} >Ekle</Text>
+
+
+              </Button>
+            </View>
+          );
+        }}
+      </Formik>
+    </View>);
+
+  }
+
+  _renderOrderSheetContent() {
+    return (<View style={styles.SheetContainer}>
+      <TouchableOpacity style={styles.SheetItemContainer}
+        onPress={() => {
+          this.OrderSheet.close();
+          this.addCash();
+        }}>
+        <Icon name="ios-add" size={30} style={styles.SheetItemIcon}></Icon>
+        <Text style={styles.SheetItemText}
+        >Ödeme Ekle</Text>
+      </TouchableOpacity>
+      {/* <TouchableOpacity style={styles.SheetItemContainer}
                       onPress={() => {
                         this.OrderSheet.close();
                         this.editOrder();
@@ -431,401 +442,381 @@ class CustomerOrdersScreen extends Component<Props,State>{
                       <Text style={styles.SheetItemText}
                       >Düzenle</Text>
                     </TouchableOpacity> */}
-                    <TouchableOpacity style={styles.SheetItemContainer}
-                      onPress={() => {
-                        // this.OrderSheet.close();
-                        // this.OrderSheet.close();
-                        this.deleteOrderAlert();
-                      }}>
-                             <Icon name="ios-trash" size={30} style={styles.SheetItemIcon}></Icon>
-                      <Text style={styles.SheetItemText}
-                      >Sil</Text>
-                    </TouchableOpacity>
-        </View>);
-      }
-    
+      <TouchableOpacity style={styles.SheetItemContainer}
+        onPress={() => {
+          // this.OrderSheet.close();
+          // this.OrderSheet.close();
+          this.deleteOrderAlert();
+        }}>
+        <Icon name="ios-trash" size={30} style={styles.SheetItemIcon}></Icon>
+        <Text style={styles.SheetItemText}
+        >Sil</Text>
+      </TouchableOpacity>
+    </View>);
+  }
 
+
+
+
+  _renderView() {
+    const { orders, isOrderLoading, navigation } = this.props;
+    if (isOrderLoading) {
+      var dataArray:any[] = [1,2,3];
+
+      return (
+      <FlatList    renderItem={({ item }) =>
+      <Placeholder    
       
+      style={{borderBottomColor:'#e1e1e1',borderBottomWidth:1, marginBottom:20}}
+    >
+      <PlaceholderLine />
+      <PlaceholderLine  />
+      <PlaceholderLine />
+    </Placeholder>
+    }
+      data={dataArray}
+      keyExtractor={(item, index) => String(index)}
+      ></FlatList>);
+    }
+    else {
+      return (<FlatList
+        refreshing={this.state.refreshing}
+        onRefresh={() => this.onRefresh()}
+        data={this.props.orders}
+        ItemSeparatorComponent={this.renderSeparator}
 
-      _renderView() {
-        const { orders, isOrderLoading, navigation } = this.props;
-        if (isOrderLoading) {
-          return (<ActivityIndicator></ActivityIndicator>);
-        }
-        else {
-          return (<FlatList
-            refreshing={this.state.refreshing}
-            onRefresh={() => this.onRefresh()}
-            data={this.props.orders}
-            ItemSeparatorComponent = {this.renderSeparator}
 
-            
-            renderItem={({ item }) =>
-              
-        
-<View style={{marginHorizontal:0,flexDirection:'column',backgroundColor:'#EFF3F9',paddingVertical:10,paddingHorizontal:10,justifyContent:'space-between',borderRadius:15}}>
-            
-            <View style={{flexDirection:'row',justifyContent:'space-between'}}>
- 
-            <View style={{justifyContent:'center'}}>
-                 
-                 <Text style={{color:'#2069F3',fontWeight:'600',fontSize:20,fontFamily:'Avenir Next'}}>
+        renderItem={({ item }) =>
 
-                        {item.productName}
-                 </Text>
-             </View>
-             {/* <View style={{width:1,height:'80%',backgroundColor:'#CFD3D7'}} /> */}
-             <View style={{alignItems:'flex-end'}}>
-               <TouchableOpacity onPress={() => this.openModal(item.orderId, item.unitPrice, item.count, item.productId, item.productName,item.isPaid)}>
-                 <Icon style={{color:"#2069F3"}} name="ios-more" />
-               </TouchableOpacity>
-                 <Text style={{color:'#404243',fontSize:14,fontFamily:'Avenir Next'}}>
-                 {item.dateTime.slice(8, 10) + "/" + item.dateTime.slice(5, 7) + "/" + item.dateTime.slice(0, 4)
-                  }
-                 </Text> 
-                 <Text style={{color:'#404243',fontSize:14,fontFamily:'Avenir Next'}}>
-                    {item.dateTime.slice(11, 16)}
-                 </Text>
-                 </View>
-             
-             
+
+          <View style={{ marginHorizontal: 0, flexDirection: 'column', backgroundColor: '#EFF3F9', paddingVertical: 10, paddingHorizontal: 10, justifyContent: 'space-between', borderRadius: 15 }}>
+
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+
+              <View style={{ justifyContent: 'center' }}>
+
+                <Text style={{ color: '#2069F3', fontWeight: '600', fontSize: 20, fontFamily: 'Avenir Next' }}>
+
+                  {item.productName}
+                </Text>
               </View>
- 
- 
-              <View style={{width:"100%",height:1,backgroundColor:'#CFD3D7',marginVertical:10}} />
-             <View style={{flexDirection:'row',justifyContent:'space-between'}}>
-             <View>
-                 <View style={{flexDirection:'row'}}>
-                 <Text style={{color:'#404243',fontSize:16,fontFamily:'Avenir Next'}}>
-                     Adet: 
+              {/* <View style={{width:1,height:'80%',backgroundColor:'#CFD3D7'}} /> */}
+              <View style={{ alignItems: 'flex-end' }}>
+                <TouchableOpacity onPress={() => this.openModal(item.orderId, item.unitPrice, item.count, item.productId, item.productName, item.isPaid)}>
+                  <Icon style={{ color: "#2069F3" }} name="ios-more" />
+                </TouchableOpacity>
+                <Text style={{ color: '#404243', fontSize: 14, fontFamily: 'Avenir Next' }}>
+                  {item.dateTime.slice(8, 10) + "/" + item.dateTime.slice(5, 7) + "/" + item.dateTime.slice(0, 4)
+                  }
+                </Text>
+                <Text style={{ color: '#404243', fontSize: 14, fontFamily: 'Avenir Next' }}>
+                  {item.dateTime.slice(11, 16)}
+                </Text>
+              </View>
+
+
+            </View>
+
+
+            <View style={{ width: "100%", height: 1, backgroundColor: '#CFD3D7', marginVertical: 10 }} />
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+              <View>
+                <View style={{ flexDirection: 'row' }}>
+                  <Text style={{ color: '#404243', fontSize: 16, fontFamily: 'Avenir Next' }}>
+                    Adet:
                  </Text>
-                 <Text style={{color:'#404243',fontSize:16,fontWeight:'600',fontFamily:'Avenir Next'}}>
-                     {item.count}
+                  <Text style={{ color: '#404243', fontSize: 16, fontWeight: '600', fontFamily: 'Avenir Next' }}>
+                    {item.count}
+                  </Text>
+
+                </View>
+
+                <View style={{ flexDirection: 'row' }}>
+                  <Text style={{ color: '#404243', fontSize: 16, fontFamily: 'Avenir Next' }}>
+                    Birim Fiyat:
                  </Text>
- 
-                 </View>
- 
-                 <View style={{flexDirection:'row'}}>
-                 <Text style={{color:'#404243',fontSize:16,fontFamily:'Avenir Next'}}>
-                     Birim Fiyat: 
+                  <Text style={{ color: '#404243', fontSize: 16, fontWeight: '600', fontFamily: 'Avenir Next' }}>
+                    {item.unitPrice} TL
                  </Text>
-                 <Text style={{color:'#404243',fontSize:16,fontWeight:'600',fontFamily:'Avenir Next'}}>
-                     {item.unitPrice} TL
+
+                </View>
+
+                <View style={{ flexDirection: 'row' }}>
+                  <Text style={{ color: '#404243', fontSize: 16, fontFamily: 'Avenir Next' }}>
+                    Toplam Fiyat:
                  </Text>
- 
-                 </View>
- 
-                 <View style={{flexDirection:'row'}}>
-                 <Text style={{color:'#404243',fontSize:16,fontFamily:'Avenir Next'}}>
-                     Toplam Fiyat: 
-                 </Text>
-                 <Text style={{color:'#404243',fontSize:16,fontWeight:'600',fontFamily:'Avenir Next'}}>
+                  <Text style={{ color: '#404243', fontSize: 16, fontWeight: '600', fontFamily: 'Avenir Next' }}>
                     {item.totalPrice} TL
                  </Text>
- 
-                 </View>
- 
- 
-               
-             </View>
-             {/* <View style={{width:1,height:'80%',backgroundColor:'#CFD3D7'}} /> */}
- 
-             <View>
-             <View style={{flexDirection:'row',justifyContent:'flex-end'}}>
-                 <Text style={{color:'#404243',fontSize:16,fontFamily:'Avenir Next'}}>
-                     Alınan: 
+
+                </View>
+
+
+
+              </View>
+              {/* <View style={{width:1,height:'80%',backgroundColor:'#CFD3D7'}} /> */}
+
+              <View>
+                <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
+                  <Text style={{ color: '#404243', fontSize: 16, fontFamily: 'Avenir Next' }}>
+                    Alınan:
                  </Text>
-                 <Text style={{color:'#404243',fontSize:16,fontWeight:'600',fontFamily:'Avenir Next'}}>
-                     {item.tookTotalPrice} TL
+                  <Text style={{ color: '#404243', fontSize: 16, fontWeight: '600', fontFamily: 'Avenir Next' }}>
+                    {item.tookTotalPrice} TL
                  </Text>
- 
-                 </View>
-                 <View style={{flexDirection:'row',justifyContent:'flex-end'}}>
-                 <Text style={{color:'#404243',fontSize:16,fontFamily:'Avenir Next',textAlign:"right"}}>
-                     Kalan: 
+
+                </View>
+                <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
+                  <Text style={{ color: '#404243', fontSize: 16, fontFamily: 'Avenir Next', textAlign: "right" }}>
+                    Kalan:
                  </Text>
-                 <Text style={{color:'#404243',fontSize:16,fontWeight:'600',fontFamily:'Avenir Next'}}>
+                  <Text style={{ color: '#404243', fontSize: 16, fontWeight: '600', fontFamily: 'Avenir Next' }}>
                     {item.restAmount} TL
                  </Text>
- 
-                 </View>
- 
- 
-             </View>
-             </View>
-            </View>
- 
- 
- 
- 
-        }
-            keyExtractor={(item, index) => String(index)}
-            onEndReached={() => {
-              var pagenew = this.state.page + 1;
-              this.setState({ page: pagenew });
-              if (pagenew == 1) {
-                pagenew = pagenew + 1;
-                this.setState({ page: pagenew });
-              }
-              this.props.GetOrdersMore(this.props.navigation.getParam("customerId"), pagenew, 3);
-    
-            }}
-            onEndReachedThreshold={0.5}
-            initialNumToRender={8}
-            ListFooterComponent={
-              this.props.loadingMore ? (
-                <View>
-                  <ActivityIndicator />
+
                 </View>
-              ) : null
-            }
-          />);
-        }
-      }
 
 
-      
-    render() {
-
-        var nameSurname: string = this.props.navigation.getParam("nameSurname");
-        var companyName: string = this.props.navigation.getParam("companyName");
-
-        var restTotalAmount : string = this.props.navigation.getParam("restTotalAmount");
-        var displayTookTotalAmount : string = this.props.navigation.getParam("displayTookTotalAmount");
-        var totalAmount : string = this.props.navigation.getParam("totalAmount");
-        return (
-            <View style={{}}>
-               <ScrollView style={{paddingHorizontal:10}}>
-
-               <View style={{marginHorizontal:5,paddingTop:20,paddingHorizontal:5,justifyContent:'space-between',borderRadius:15}}>
-
-            <View style={{flexDirection:'row',justifyContent:'space-between'}}>
-               
-                <Text style={{alignSelf:'center',color:'#2069F3',fontWeight:'600',fontSize:24,fontFamily:'Avenir Next'}}>
-                    {nameSurname}
-                </Text>
-                <View>
-                <Text style={{color:'#404243',fontSize:16,fontFamily:'Avenir Next'}}>
-                    Toplam Siparis
-                </Text>
-                <View style={{flexDirection:'row',justifyContent:'flex-end'}}>
-                <Text style={{color:'#404243',fontSize:16,fontFamily:'Avenir Next',textAlign:'right'}}>
-                    Adet: 
-                </Text>
-                <Text style={{color:'#404243',fontWeight:'600',fontSize:16,fontFamily:'Avenir Next',textAlign:'right'}}>
-                     22
-                </Text>
-            </View>
-            </View>
-            </View>
-
-
-            <View style={{alignSelf:'center',width:'100%',height:1,backgroundColor:'#CFD3D7',marginVertical:5}} />
-
-
-            <View style={{}}>
-            <View style={{flexDirection:'row',flex:1}}>
-                <Icon name="ios-call" style={{fontSize:20}}/>
-                <Text style={{color:'#404243',fontSize:16,marginLeft:5,fontFamily:'Avenir Next',flex:.5}}>
-                    0555 555 55 55
-                </Text>
-
-               <View style={{flexDirection:'row',flex:.5,justifyContent:'flex-end'}}>
-               <Text style={{color:'#404243',fontSize:16,fontFamily:'Avenir Next'}}>
-                    Alınan:
-                </Text>
-                <Text style={{color:'#404243',fontWeight:'600',fontSize:16,fontFamily:'Avenir Next'}}>
-                    {displayTookTotalAmount}
-                </Text>
-               </View>
-
-            </View>
-            <View style={{flexDirection:'row',flex:1}}>
-                <Icon name="ios-pin" style={{fontSize:20}}/>
-                <Text style={{color:'#404243',fontSize:16,marginLeft:5,fontFamily:'Avenir Next',flex:.6}}>
-                    Erzene, Gençlik Cd. no:25, 35200 Bornova/İzmir
-                </Text>
-            <View style={{flex:.5,justifyContent:'flex-end'}}>
-
-          
-               <View style={{flexDirection:'row',justifyContent:'flex-end'}}>
-               <Text style={{color:'#404243',fontSize:16,fontFamily:'Avenir Next'}}>
-                    Kalan:
-                </Text>
-                <Text style={{color:'#404243',fontWeight:'600',fontSize:16,fontFamily:'Avenir Next'}}>
-                    {restTotalAmount}
-                </Text>
-               </View>
-               <View style={{flexDirection:'row',flex:.4,justifyContent:'flex-end'}}>
-               <Text style={{color:'#404243',fontSize:16,fontFamily:'Avenir Next'}}>
-                    Toplam:
-                </Text>
-                <Text style={{color:'#404243',fontWeight:'600',fontSize:16,fontFamily:'Avenir Next'}}>
-                    {totalAmount}
-                </Text>
-               </View>
-               </View>
-
-            </View>
-            {/* <View style={{width:1,height:'80%',backgroundColor:'#CFD3D7'}} /> */}
-            </View>
-            </View>
-            
-{/* Other Components */}
-
-<View style={{height:30}}/>
-
-<RBSheet
-          ref={ref => {
-            this.CustomerSheet = ref;
-          }}
-            height={250}
-            duration={200}
-            customStyles={{
-              container: {
-                justifyContent: "flex-start",
-                alignItems: "flex-start",
-                paddingLeft:20
-              }
-            }}
-          >
-           {this._renderCustomerSheetContent()}
-          </RBSheet>
-
-          <RBSheet
-          ref={ref => {
-            this.OrderSheet = ref;
-          }}
-            height={250}
-            duration={200}
-            customStyles={{
-              container: {
-                justifyContent: "flex-start",
-                alignItems: "flex-start",
-                paddingLeft:20
-              }
-            }}
-          >
-           {this._renderOrderSheetContent()}
-          </RBSheet>
-
-          
-          <RBSheet
-          ref={ref => {
-            this.AmountSheet = ref;
-          }}
-            height={100}
-            duration={200}
-            customStyles={{
-              container: {
-                justifyContent: "flex-start",
-                alignItems: "flex-start",
-                paddingLeft:20
-              }
-            }}
-          >
-           {this._renderAddAmountSheetContent()}
-          </RBSheet>
-
-
-          <Modal
-            visible={this.state.modalAmountVisible}
-            animationType={'slide'}
-            onRequestClose={() => this.closeAmountModal()}
-            transparent={true}
-          >
-            <View style={styles.modalContainer}>
-              <View style={styles.innerContainer}>
-                <TouchableOpacity style={styles.modalCancelButtonContainer}
-                  onPress={() => this.closeAmountModal()}>
-                  <Icon name="md-close" size={30} color={"#6E6E6E"} />
-                </TouchableOpacity>
-                <ScrollView bounces={false}>
-                  <Formik
-                    initialValues={initialValues}
-                    validationSchema={girdiler}
-                    onSubmit={values => this.odemeAl(values)}
-                  >
-                    {props => {
-                      return (
-                        <View>
-                          <View style={styles.inputFiyatContainer}>
-                            <Input
-                              containerStyle={{ width: '70%' }}
-                              style={styles.inputFiyat}
-                              placeholder="Ürün Fiyatı"
-                              placeholderTextColor="#9A9A9A"
-                              value={props.values.amount + ""}
-                              autoCapitalize="none"
-                              keyboardType="numeric"
-                              onChangeText={props.handleChange("amount")}
-                              onBlur={props.handleBlur("amount")}
-                            />
-                            <Text style={styles.inputFiyatText}>TL</Text>
-                          </View>
-                          <TouchableOpacity
-                            style={styles.amountButtonContainer}
-                            onPress={props.handleSubmit}>
-                            <Text style={styles.amountButtonText}> Ekle </Text>
-                          </TouchableOpacity>
-                        </View>
-                      );
-                    }}
-                  </Formik>
-                </ScrollView>
               </View>
             </View>
-          </Modal>
+          </View>
 
+
+
+
+        }
+        keyExtractor={(item, index) => String(index)}
+        onEndReached={() => {
+          var pagenew = this.state.page + 1;
+          this.setState({ page: pagenew });
+          if (pagenew == 1) {
+            pagenew = pagenew + 1;
+            this.setState({ page: pagenew });
+          }
+          this.props.GetOrdersMore(this.props.navigation.getParam("customerId"), pagenew, 3);
+
+        }}
+        onEndReachedThreshold={0.5}
+        initialNumToRender={8}
+        ListFooterComponent={
+          this.props.loadingMore ? (
+            <View>
+              <ActivityIndicator />
+            </View>
+          ) : null
+        }
+      />);
+    }
+  }
+
+
+  render() {
+    console.log("customerDetialCome", this.props.customerDetailModel);
+
+    return (
+      <View style={{}}>
+        <ScrollView style={{ paddingHorizontal: 10 }}>
+
+          <View style={{ marginHorizontal: 5, paddingTop: 20, paddingHorizontal: 5, borderRadius: 15 }}>
+
+            <View style={{ flexDirection: 'row', justifyContent:'space-between', borderBottomColor:'#CFD3D7', paddingBottom:5, borderBottomWidth:1 }}>
+
+            {this.props.isCustomerDetailLoading && <PlaceholderLine  width={10} />}
+            <View>
+              {this.props.customerDetailModel?.nameSurname && !this.props.isCustomerDetailLoading && 
    
-         
-{this._renderView()}
+                <Text style={{ alignSelf: 'center', color: '#2069F3', fontWeight: '600', fontSize: 24, fontFamily: 'Avenir Next' }}>
+                  {this.props.customerDetailModel.nameSurname}
+                </Text>
+               
+              }
+            </View>
+              <View style={{ flexDirection: 'row' }}>
+              <Text style={{ color: '#404243', fontSize: 16, fontFamily: 'Avenir Next' }}>
+                    Toplam Sipariş:
+                                     </Text>
+              {this.props.customerDetailModel && this.props.customerDetailModel.totalOrderCount && !this.props.isCustomerDetailLoading &&
+                  <Text style={{ color: '#404243', fontWeight: '600', fontSize: 16, fontFamily: 'Avenir Next', textAlign: 'right' }}>
+                    {this.props.customerDetailModel.totalOrderCount}
 
-{/*  */}
+                  </Text>
              
-          
-{/*  */}
+              }
+                 </View>
+            </View>
+            <View style={{ flexDirection: 'row', justifyContent:'space-between', marginTop:5 }}>
 
-               </ScrollView>
-               {this.showSimpleMessage()}
+              <View style={{ flexDirection: 'column'}}>
+
+                {this.props.isCustomerDetailLoading && <PlaceholderLine width={10} />}
+                
+                {this.props.customerDetailModel && this.props.customerDetailModel.phoneNumber && !this.props.isCustomerDetailLoading &&
+                  <View style={{ flexDirection: 'row', flex: 1 }}>
+                    <Icon name="ios-call" style={{ fontSize: 20 }} />
+                    <Text style={{ color: '#404243', fontSize: 16, marginLeft: 5, fontFamily: 'Avenir Next' }}>
+                      {this.props.customerDetailModel.phoneNumber}
+                    </Text>
+                  </View>
+                }
+                            <View style={{  flex: 1 }}>
+                {this.props.isCustomerDetailLoading && <PlaceholderLine width={20} />}
+                {this.props.customerDetailModel && this.props.customerDetailModel.adress != null && !this.props.isCustomerDetailLoading &&
+                    <View style={{flexDirection: 'row',}}>
+                    <Icon name="ios-pin" style={{ fontSize: 20 }} />
+
+                    <Text style={{ color: '#404243', fontSize: 16, fontWeight: '600', marginLeft: 5, fontFamily: 'Avenir Next' }}>
+                      {this.props.customerDetailModel.adress}
+                    </Text>
+                    </View>
+
+              
+                }
+            </View>
+
+
+              </View>
+              <View style={{ flexDirection: 'column' }}>
+
+              <View style={{ flexDirection: 'row' }}>
+                  <Text style={{ color: '#404243', fontSize: 16, fontFamily: 'Avenir Next' }}>
+                    Alınan:
+                </Text>
+                  {this.props.isCustomerDetailLoading && <PlaceholderLine width={20} />}
+                  {this.props.customerDetailModel && this.props.customerDetailModel.displayTookTotalAmount &&
+                    <Text style={{ color: '#404243', fontWeight: '600', fontSize: 16, fontFamily: 'Avenir Next' }}>{this.props.customerDetailModel.displayTookTotalAmount} </Text>
+                  }
+
+
+                </View>
+                <View style={{ flexDirection: 'row' }}>
+                  <Text style={{ color: '#404243', fontSize: 16, fontFamily: 'Avenir Next' }}>
+                    Kalan:
+                </Text>
+                  {this.props.isCustomerDetailLoading && <PlaceholderLine width={20} />}
+                  {this.props.customerDetailModel && this.props.customerDetailModel.displayRestTotalAmount &&
+                    <Text style={{ color: '#404243', fontWeight: '600', fontSize: 16, fontFamily: 'Avenir Next' }}>{this.props.customerDetailModel.displayRestTotalAmount} </Text>
+                  }
+
+
+                </View>
+                <View style={{ flexDirection: 'row', flex: .4 }}>
+                  <Text style={{ color: '#404243', fontSize: 16, fontFamily: 'Avenir Next' }}>
+                    Toplam:
+                </Text>
+                  {this.props.isCustomerDetailLoading && <PlaceholderLine width={20} />}
+                  {this.props.customerDetailModel && this.props.customerDetailModel.displayTotalAmount &&
+                    <Text style={{ color: '#404243', fontWeight: '600', fontSize: 16, fontFamily: 'Avenir Next' }}>{this.props.customerDetailModel.displayTotalAmount} </Text>
+                  }
+
                 </View>
 
-        )
-    }
+
+              </View>
+
+            </View>
+            <View>       
+
+              <View style={{ height: 30 }} />
+
+              <RBSheet
+                ref={ref => {
+                  this.CustomerSheet = ref;
+                }}
+                height={250}
+                duration={200}
+                customStyles={{
+                  container: {
+                    justifyContent: "flex-start",
+                    alignItems: "flex-start",
+                    paddingLeft: 20
+                  }
+                }}
+              >
+                {this._renderCustomerSheetContent()}
+              </RBSheet>
+
+              <RBSheet
+                ref={ref => {
+                  this.OrderSheet = ref;
+                }}
+                height={250}
+                duration={200}
+                customStyles={{
+                  container: {
+                    justifyContent: "flex-start",
+                    alignItems: "flex-start",
+                    paddingLeft: 20
+                  }
+                }}
+              >
+                {this._renderOrderSheetContent()}
+              </RBSheet>
+
+
+              <RBSheet
+                ref={ref => {
+                  this.AmountSheet = ref;
+                }}
+                height={100}
+                duration={200}
+                customStyles={{
+                  container: {
+                    justifyContent: "flex-start",
+                    alignItems: "flex-start",
+                    paddingLeft: 20
+                  }
+                }}
+              >
+                {this._renderAddAmountSheetContent()}
+              </RBSheet>
+
+              {this._renderView()}
+
+            </View>
+          </View>
+        </ScrollView>
+        {this.showSimpleMessage()}
+      </View>
+
+    )
+  }
 }
 
 const mapStateToProps = (state: AppState) => ({
-    isOrderLoading: state.orders.isOrderLoading,
-    orders: state.orders.orders,
-    takeTotalAmount: state.orders.takeTotalAmount,
-    tookTotalAmount: state.orders.tookTotalAmount,
-    restTotalAmount: state.orders.restTotalAmount,
-    Message: state.deleteOrder.Message,
-    isSuccess : state.deleteOrder.isSuccess,
-    isSuccessAddCash : state.addCash.isSuccess,
-    MessageAddCash : state.addCash.AddCashMessage
-  
-  });
-  
-  function bindToAction(dispatch: any, ) {
-    return {
-      GetOrders: (customerId: number, pageIndex: number, pageSize: number) =>
-        dispatch(GetOrders(customerId, pageIndex, pageSize)),
-      GetOrdersMore: (customerId: number, pageIndex: number, pageSize: number) =>
-        dispatch(GetOrdersMore(customerId, pageIndex, pageSize)),
-      AddCash: (customerId : number,orderId: number, amount: string) =>
-        dispatch(AddCash(customerId,orderId, Number(amount))),
-      orderDelete: (customerId : number,orderId: number) =>
-        dispatch(orderDelete(customerId, orderId)),
-    };
-  }
-  
+
+  isOrderLoading: state.orders.isOrderLoading,
+  orders: state.orders.orders,
+  customerDetailModel: state.orders.customerDetail,
+  isCustomerDetailLoading: state.orders.isCustomerDetailLoading,
+  Message: state.deleteOrder.Message,
+  isSuccess: state.deleteOrder.isSuccess,
+  isSuccessAddCash: state.addCash.isSuccess,
+  MessageAddCash: state.addCash.AddCashMessage,
+
+}
+);
+
+function bindToAction(dispatch: any) {
+  return {
+    GetOrders: (customerId: number, pageIndex: number, pageSize: number) =>
+      dispatch(GetOrders(customerId, pageIndex, pageSize)),
+    GetOrdersMore: (customerId: number, pageIndex: number, pageSize: number) =>
+      dispatch(GetOrdersMore(customerId, pageIndex, pageSize)),
+    AddCash: (customerId: number, orderId: number, amount: string) =>
+      dispatch(AddCash(customerId, orderId, Number(amount))),
+    orderDelete: (customerId: number, orderId: number) =>
+      dispatch(orderDelete(customerId, orderId)),
+    GetCustomerDetail: (customerId: number) =>
+      dispatch(GetCustomerDetail(customerId)),
+  };
+}
+
 
 
 export default connect(
-    mapStateToProps,
-    bindToAction
-  )(CustomerOrdersScreen);
+  mapStateToProps,
+  bindToAction
+)(CustomerOrdersScreen);
 
 
 

@@ -6,6 +6,19 @@ export interface IEmployeeItem{
     active:boolean;
     
 }
+export interface IEmployeeItemResponseModel{
+    employeeId : number;
+    employeeName :string;
+    monthlySalaryDisplay :string;
+    createDate: string;
+    active:boolean;
+    address:string;
+    addAsUser:boolean;
+    dailyDecimalFoodDisplay:string;
+    phoneNumber:string;
+    fullShow : boolean,
+}
+
 export interface IEmployeeItemBaseResponseModel{
     employeeId : number;
     employeeName :string;
@@ -18,4 +31,5 @@ export interface IEmployeeItemBaseResponseModel{
     addAsUser :boolean;
     mail : string;
     password:string;
+
 }
