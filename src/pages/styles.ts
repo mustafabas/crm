@@ -11,8 +11,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     justifyContent: "flex-start",
-    marginLeft:20,
-    marginRight:20
+
   },
   addCustomerContainer: {
     flex: 1,
