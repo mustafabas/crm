@@ -363,13 +363,16 @@ class Employee extends Component<Props, State> {
   }
   _renderView() {
     const { isLoading, navigation } = this.props;
-    if (isLoading) {
-      return (<ActivityIndicator></ActivityIndicator>);
-    }
-    else {
+
+
       if (this.props.employees.length > 0) {
 
-        return (<View>
+        return (<View style={{padding: 10}}> 
+        {
+          this.props.isLoading &&    
+          <ActivityIndicator style={{position:"absolute"}}></ActivityIndicator>
+          
+        }
           <Button style={styles.employeeCostContainer} iconLeft onPress={() => this.props.navigation.navigate("EmployeeCost")}>
             <Icon name="ios-list"></Icon>
             <Text style={styles.employeeCostButtonText}>Çalışan Giderleri</Text>
@@ -380,14 +383,14 @@ class Employee extends Component<Props, State> {
             onRefresh={() => this.onRefresh()}
             data={this.state.employeeList}
             renderItem={({ item }) => (
-              <View style={{ padding: 20, flex: 1, borderBottomColor: '#ccc', borderBottomWidth: 1 }}>
-                <View style={{ flexDirection: 'row', flex: 1, borderBottomColor: '#000' }}>
-                  <View style={{ flex: 0.1 }} >
+              <View style={{  flex: 1, borderBottomColor: '#ccc', borderBottomWidth: 1,paddingTop:10  }}>
+                <View style={{ flexDirection: 'row', flex: 1, borderBottomColor: '#000'}}>
+                  <View style={{ flex: 0.17 }} >
                     <View style={{ width: 33, height: 33, borderRadius: 16.5, backgroundColor: '#2069F3', justifyContent: 'center', alignItems: 'center' }}>
                       <Text style={{ color: 'white' }}>{item.employeeName.substring(0, 1)}</Text>
                     </View>
                   </View>
-                  <View style={{ flex: 0.5 }}>
+                  <View style={{ flex: 0.43 }}>
                     <Text style={styles.employeeNameText}>{item.employeeName}</Text>
                     <Text note>{item.createDate}</Text>
                   </View>
@@ -451,7 +454,7 @@ class Employee extends Component<Props, State> {
 
         </View>);
       }
-    }
+    
   }
   render() {
     if (this.state.UserType === "2") {
