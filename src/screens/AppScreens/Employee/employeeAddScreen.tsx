@@ -60,8 +60,6 @@ const girdiler = Yup.object().shape({
         .required("*Zorunlu Alan"),
         mail: Yup.string()
         .email("E-posta Giriniz!"),
-        password: Yup.string()
-        .required("*Zorunlu Alan"),  
     monthlySalary: Yup.number()
         .positive("Pozitif değer giriniz!")
         .moreThan(0, "Sıfırdan büyük olmalıdır!"),
@@ -88,7 +86,7 @@ class employeeAddSceen extends Component<Props, State> {
             },
         }
     };
-
+        
 
     constructor(props: Props) {
         super(props);

@@ -27,12 +27,12 @@ export const WATER_ADD_USER = WATER_BASE_URL+"/User"
 export const WATER_EDIT_EMPLOYEE = WATER_BASE_URL_NEW+"/api/employe/Update";
 export const WATER_GET_EMPLOYEEBYID = WATER_BASE_URL_NEW+"/api/employe/GetEmployeeById";
 export const WATER_DELETE_EMPLOYEE = WATER_BASE_URL_NEW+"/api/employe/Delete";
-export const WATER_GET_USER = WATER_BASE_URL+"/User?employeId=";
-export const WATER_ADD_EMPLOYEE_COST = WATER_BASE_URL+"/employeCost";
-export const WATER_GET_REPORT = WATER_BASE_URL+"/Report?StartDate=";
-export const WATER_GETEMPLOYEECOST = WATER_BASE_URL+"/employeCost";
-export const WATER_EMPLOYEECOST_EDIT = WATER_BASE_URL+"/employeCost/Update";
-export const WATER_EMPLOYEECOST_DELETE = WATER_BASE_URL+"/employeCost/Delete";
+export const WATER_GET_USER = WATER_BASE_URL_NEW+"/api/User?employeId=";
+export const WATER_ADD_EMPLOYEE_COST = WATER_BASE_URL_NEW+"/api/employeCost";
+export const WATER_GET_REPORT = WATER_BASE_URL_NEW+"/api/Report?StartDate=";
+export const WATER_GETEMPLOYEECOST = WATER_BASE_URL_NEW+"/api/employeCost";
+export const WATER_EMPLOYEECOST_EDIT = WATER_BASE_URL_NEW+"/api/employeCost/Update";
+export const WATER_EMPLOYEECOST_DELETE = WATER_BASE_URL_NEW+"/api/employeCost/Delete";
 
 
 export const  WATER_USER_CREATE = WATER_BASE_URL_NEW +"/SignUp"

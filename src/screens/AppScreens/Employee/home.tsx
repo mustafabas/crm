@@ -12,11 +12,11 @@ import {
   AsyncStorage,
   Image,
 } from "react-native";
-import { Icon, Input, Item, Tabs, Tab, TabHeading, Text, Button, ScrollableTab, ListItem, Left, Thumbnail, Body, Right, Form, Label, Content } from 'native-base';
+import { Icon, Input, Item, Tabs, Tab, TabHeading, Text, Button, ScrollableTab, ListItem, Left, Thumbnail, Body, Right, Form, Label, Content, Card, CardItem, Accordion } from 'native-base';
 import { NavigationScreenProp, NavigationState, ScrollView, } from "react-navigation";
 import { connect } from "react-redux";
 import { AppState } from "../../../redux/store";
-import { IEmployeeItem } from "../../../redux/models/employeeModel";
+import { IEmployeeItem, IEmployeeItemResponseModel } from "../../../redux/models/employeeModel";
 import { employeeDelete } from "../../../redux/actions/deleteEmployeeAction";
 import { GetEmployees } from "../../../redux/actions/employeeAction";
 import { Formik } from "formik";
@@ -30,20 +30,21 @@ import { stat } from "fs";
 import SvgIcon from 'react-native-svg-icon';
 import svgs from '../../../images/icomoon/SVG/svgs';
 import { showMessage } from "react-native-flash-message";
+import { employe } from "../../../redux/actions/editEmployeeAction";
 
-const IconNew = (props) => <SvgIcon {...props}  svgs={svgs} />
+const IconNew = (props) => <SvgIcon {...props} svgs={svgs} />
 
 interface Props {
   navigation: NavigationScreenProp<NavigationState>;
   isLoading: boolean;
-  employees: IEmployeeItem[];
+  employees: IEmployeeItemResponseModel[];
   employeeDelete: (employeeId: number) => void;
   employeeDeleteIsSuccess: boolean;
   GetEmployees: () => void;
   employeeCost: (employeId: number, cost: number) => void;
-  employeeAddCostLoading:boolean;
-  employeeCostAddMessage:string;
-  isSuccess:boolean;
+  employeeAddCostLoading: boolean;
+  employeeCostAddMessage: string;
+  isSuccess: boolean;
 }
 
 interface State {
@@ -55,6 +56,7 @@ interface State {
   active: boolean;
   UserType: string | null;
   modalAmountVisible: boolean;
+  employeeList: IEmployeeItemResponseModel[];
 }
 
 interface amountData {
@@ -85,6 +87,7 @@ class Employee extends Component<Props, State> {
       active: false,
       UserType: "",
       modalAmountVisible: false,
+      employeeList: []
     };
 
     AsyncStorage.getItem("UserType").then((value) => {
@@ -97,10 +100,10 @@ class Employee extends Component<Props, State> {
   static navigationOptions = ({ navigation }: Props) => {
     if (navigation.getParam("Type") === "2") {
       return {
-        title: <Text style={{justifyContent:"center"}}>>Çalışanlar</Text>,
+        title: 'Çalışanlar',
         headerStyle: {
           backgroundColor: '#216AF4',
-          justifyContent:'center'
+          justifyContent: 'center'
         },
         headerTintColor: '#fff',
         headerTitleStyle: {
@@ -126,7 +129,7 @@ class Employee extends Component<Props, State> {
     }
   };
 
-  componentWillMount() {  
+  componentWillMount() {
     this.props.GetEmployees();
     this.setState({ refreshing: false });
     this.getUserType();
@@ -158,7 +161,7 @@ class Employee extends Component<Props, State> {
     employeeDelete(this.state.employeeId);
     this.OrderSheet.close();
     this.onRefresh();
-    this.componentWillMount();
+
   }
 
   deleteEmployeeAlert() {
@@ -184,30 +187,36 @@ class Employee extends Component<Props, State> {
       })
 
   }
-  openModal(employeeId: number, nameSurname: string, monthlySalary: number, active: boolean) {
+  openModal(employeeId: number) {
     this.setState({
       employeeId: employeeId,
-      nameSurname: nameSurname,
-      monthlySalary: monthlySalary,
-      active: active,
     });
     this.OrderSheet.open();
   }
   giderEkle(values: amountData) {
-    this.props.employeeCost(this.state.employeeId, Number(values.amount));  
+    this.props.employeeCost(this.state.employeeId, Number(values.amount));
     this.AmountSheet.close();
     this.onRefresh();
 
   }
+  mapToPropsToState() {
+    var employeList: IEmployeeItemResponseModel[] = [];
 
+    this.props.employees.map((item) => {
+      employeList.push(item);
+    })
+    this.setState({ employeeList: employeList });
+  }
   onRefresh() {
     this.setState({ refreshing: true });
     this.props.GetEmployees();
     this.setState({ refreshing: false });
     this.getUserType();
+    this.mapToPropsToState();
+
   }
   showSimpleMessage() {
-    if (this.props.employeeCostAddMessage.length>0) {
+    if (this.props.employeeCostAddMessage.length > 0) {
       showMessage({
         message: this.props.employeeCostAddMessage,
         type: this.props.isSuccess ? "success" : "danger",
@@ -215,7 +224,7 @@ class Employee extends Component<Props, State> {
       }
       );
     }
-  
+
   }
 
   getUserType() {
@@ -244,7 +253,7 @@ class Employee extends Component<Props, State> {
             this.OrderSheet.close();
             this.addCash();
           }}>
-              <Icon name="ios-add"  style={styles.SheetItemIcon}></Icon>
+          <Icon name="ios-add" style={styles.SheetItemIcon}></Icon>
           <Text style={styles.SheetItemText}
           >Ödeme Ekle</Text>
         </TouchableOpacity>
@@ -253,7 +262,7 @@ class Employee extends Component<Props, State> {
             this.OrderSheet.close();
             this.editEmployee();
           }}>
-            <Icon type="FontAwesome" name="pencil"  style={[styles.SheetItemIcon,{ fontSize:22}]} ></Icon>
+          <Icon type="FontAwesome" name="pencil" style={[styles.SheetItemIcon, { fontSize: 22 }]} ></Icon>
           <Text style={styles.SheetItemText}
           >Düzenle</Text>
         </TouchableOpacity>
@@ -262,8 +271,8 @@ class Employee extends Component<Props, State> {
             this.OrderSheet.close();
             this.deleteEmployeeAlert();
           }}>
-            <Icon type="FontAwesome" name="trash-o" style={[styles.SheetItemIcon,{ fontSize:25}]}></Icon>
-        
+          <Icon type="FontAwesome" name="trash-o" style={[styles.SheetItemIcon, { fontSize: 25 }]}></Icon>
+
           <Text style={styles.SheetItemText}
           >Sil</Text>
         </TouchableOpacity>
@@ -271,6 +280,9 @@ class Employee extends Component<Props, State> {
     );
   }
 
+  componentDidMount() {
+          this.mapToPropsToState();       
+  }
   _renderEmployeeCostSheetContent() {
     return (<View style={styles.SheetAmountContainer}>
       <Formik
@@ -281,56 +293,72 @@ class Employee extends Component<Props, State> {
         {props => {
           return (
             <KeyboardAvoidingView
-            behavior={Platform.OS === "ios" ? "padding" : "height"}
-          >
-            <View style={{ flexDirection: "column" }}>
-              <TouchableOpacity style={[styles.SheetItemContainer, { justifyContent: 'flex-end', padding: 10 }]}
-                onPress={() => {
-                  this.AmountSheet.close();
-                }}>
-                <Icon name="ios-close" style={[{ fontSize: 40, marginRight: 10 }, styles.SheetItemIcon]}></Icon>
-              </TouchableOpacity>
-            
-              <Content style={{padding:0, margin:0}} >
-                <Form style={{flexDirection:'row', flex:1}}>
-                  <Item floatingLabel style={{width:'60%', borderBottomColor: props.touched.amount && props.errors.amount!=null ? 'red':'#216AF4'}}>
-                    <Label style={{ color:props.touched.amount && props.errors.amount!=null ? 'red':'#000'}}>Miktar</Label>
-                    <Input       
-                     onBlur={ (props.touched.amount && props.errors.amount) ? ()=> {
-             props.setFieldValue('amount',"") 
-             props.handleChange("amount")
-            }             
-              :  props.handleBlur("amount")}   
-              onChangeText={props.handleChange("amount")} 
-              />
-                  </Item>
-                  <Button onPress={()=>props.handleSubmit()} primary style={{width:'20%', marginLeft:'10%', marginTop:20,backgroundColor:'#01C3E3', borderRadius:5}}>
-                    {this._renderEmployeeCostAddButtonText()}
-            
+              behavior={Platform.OS === "ios" ? "padding" : "height"}
+            >
+              <View style={{ flexDirection: "column" }}>
+                <TouchableOpacity style={[styles.SheetItemContainer, { justifyContent: 'flex-end', padding: 10 }]}
+                  onPress={() => {
+                    this.AmountSheet.close();
+                  }}>
+                  <Icon name="ios-close" style={[{ fontSize: 40, marginRight: 10 }, styles.SheetItemIcon]}></Icon>
+                </TouchableOpacity>
+
+                <Content style={{ padding: 0, margin: 0 }} >
+                  <Form style={{ flexDirection: 'row', flex: 1 }}>
+                    <Item floatingLabel style={{ width: '60%', borderBottomColor: props.touched.amount && props.errors.amount != null ? 'red' : '#216AF4' }}>
+                      <Label style={{ color: props.touched.amount && props.errors.amount != null ? 'red' : '#000' }}>Miktar</Label>
+                      <Input
+                        onBlur={(props.touched.amount && props.errors.amount) ? () => {
+                          props.setFieldValue('amount', "")
+                          props.handleChange("amount")
+                        }
+                          : props.handleBlur("amount")}
+                        onChangeText={props.handleChange("amount")}
+                      />
+                    </Item>
+                    <Button onPress={() => props.handleSubmit()} primary style={{ width: '20%', marginLeft: '10%', marginTop: 20, backgroundColor: '#01C3E3', borderRadius: 5 }}>
+                      {this._renderEmployeeCostAddButtonText()}
+
                     </Button>
-                </Form>
+                  </Form>
                 </Content>
 
-            </View>
-            </KeyboardAvoidingView> 
+              </View>
+            </KeyboardAvoidingView>
           );
         }}
       </Formik>
     </View>
- 
+
     );
 
   }
-
-  _renderEmployeeCostAddButtonText(){
-    if(this.props.employeeAddCostLoading){
+  _showMore(employeeId: number, value: boolean) {
+    var employess = this.state.employeeList;
+    for (var i in employess) {
+      if (employess[i].employeeId == employeeId) {
+        employess[i].fullShow = value;
+        this.setState({ employeeList: employess });
+        break; //Stop this loop, we found it!
+      }
+    }
+  }
+  _renderEmployeeCostAddButtonText() {
+    if (this.props.employeeAddCostLoading) {
       return (
         <ActivityIndicator></ActivityIndicator>
       );
     }
-    return(
+    return (
       <Text>Ekle</Text>
-      );
+    );
+
+  }
+  _renderArrowButton(item: any) {
+    if (item.fullShow) {
+      return (<Icon style={{ fontSize: 50 }} name="chevron-up" type="EvilIcons"></Icon>);
+    }
+    return (<Icon style={{ fontSize: 50, color: "green" }} name="chevron-down" type="EvilIcons"></Icon>);
 
   }
   _renderView() {
@@ -339,89 +367,154 @@ class Employee extends Component<Props, State> {
       return (<ActivityIndicator></ActivityIndicator>);
     }
     else {
-      return (<View>
-        <FlatList
-        style={{marginBottom:40}}
-          refreshing={this.state.refreshing}
-          onRefresh={() => this.onRefresh()}
-          data={this.props.employees}
-          renderItem={({ item }) => (
-            <ListItem >
-              <Left style={{ flex: 0.2 }}>
-                <View style={{ width: 33, height: 33, borderRadius: 16.5, backgroundColor: '#2069F3', justifyContent: 'center', alignItems: 'center' }}>
-                  <Text style={{ color: 'white' }}>{item.employeeName.substring(0, 1)}</Text>
+      if (this.props.employees.length > 0) {
+
+        return (<View>
+          <Button style={styles.employeeCostContainer} iconLeft onPress={() => this.props.navigation.navigate("EmployeeCost")}>
+            <Icon name="ios-list"></Icon>
+            <Text style={styles.employeeCostButtonText}>Çalışan Giderleri</Text>
+          </Button>
+          <FlatList
+            style={{ marginBottom: 40 }}
+            refreshing={this.state.refreshing}
+            onRefresh={() => this.onRefresh()}
+            data={this.state.employeeList}
+            renderItem={({ item }) => (
+              <View style={{ padding: 20, flex: 1, borderBottomColor: '#ccc', borderBottomWidth: 1 }}>
+                <View style={{ flexDirection: 'row', flex: 1, borderBottomColor: '#000' }}>
+                  <View style={{ flex: 0.1 }} >
+                    <View style={{ width: 33, height: 33, borderRadius: 16.5, backgroundColor: '#2069F3', justifyContent: 'center', alignItems: 'center' }}>
+                      <Text style={{ color: 'white' }}>{item.employeeName.substring(0, 1)}</Text>
+                    </View>
+                  </View>
+                  <View style={{ flex: 0.5 }}>
+                    <Text style={styles.employeeNameText}>{item.employeeName}</Text>
+                    <Text note>{item.createDate}</Text>
+                  </View>
+                  <View style={{ flex: 0.3, flexDirection: "row" }}>
+                    <Text note style={{ fontFamily: 'Avenir Next' }}>Maaş:</Text>
+                    <Text style={{ color: '#2069F3' }}>{item.monthlySalaryDisplay}</Text>
+
+                  </View>
+                  <View style={{ flex: 0.3, justifyContent: "flex-end", flexDirection: "row" }}>
+                    <View style={{ justifyContent: "flex-end" }}>
+                      <TouchableOpacity onPress={() => this.openModal(item.employeeId)}>
+
+                        <Icon name="ios-more" style={{ color: '#2069F3', fontSize: 30 }}></Icon>
+                      </TouchableOpacity>
+
+                      <TouchableOpacity onPress={() => this._showMore(item.employeeId, !item.fullShow)}>
+                        {this._renderArrowButton(item)}
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+
+
                 </View>
-              </Left>
-              <Body style={{ borderBottomColor: '#fff' }}>
-                <Text style={styles.employeeNameText}>{item.employeeName}</Text>
-                <Text note>{item.createDate.slice(8, 10) + "/" + item.createDate.slice(5, 7) + "/" + item.createDate.slice(0, 4)}</Text>
+                {item.fullShow &&
+                  <View style={{flexDirection:"row", justifyContent:"space-between"}}>
+                    <View style={{ flexDirection: "column" }}>
+                      <Text note>Günlük Yemek Ücreti:</Text>
+                      <Text>{item.dailyDecimalFoodDisplay}</Text>
+                    </View>
+                    <View style={{ flexDirection: "column" }}>
+                      <Text note>Telefon Numarası:</Text>
+                      <Text>{item.phoneNumber}</Text>
+                    </View>
+                    <View style={{ flexDirection: "column" }}>
+                      <Text note>Adres:</Text>
+                      <Text>{item.address}</Text>
+                    </View>
+                  </View>
+                }
+
+              </View>
+            )}
+            keyExtractor={item => item.employeeId.toString()}
+          />
+        </View>);
+      } else {
+        return (<View >
+
+          <Card style={{ borderColor: '#f5f5f5' }}>
+
+            <CardItem>
+              <Body style={{ flexDirection: "column", justifyContent: "center", alignItems: "center" }} >
+                <Icon name="ios-information-circle-outline" style={{ fontSize: 40, }} ></Icon>
+                <Text>
+
+                  Sisteme eklediğiniz çalışan bulunmakatadır. Çalışanlarınızı yönetmek için eklemeye şimdi başlayın!
+                </Text>
               </Body>
-              <Right style={{ borderBottomColor: '#fff' }}>
-                <TouchableOpacity onPress={() => this.openModal(item.employeeId, item.employeeName, item.monthlySalary, item.active)}>
-                  <Icon name="ios-more" style={{ color: '#2069F3', fontSize: 30 }}></Icon>
-                </TouchableOpacity>
-                <Text note style={{ fontFamily: 'Avenir Next' }}>Maaş</Text>
-                <Text style={{ color: '#2069F3' }}>{item.monthlySalary} ₺</Text>
-              </Right>
-            </ListItem>
-          )}
-          keyExtractor={item => item.employeeId.toString()}
-        />
-      </View>);
+            </CardItem>
+          </Card>
+
+        </View>);
+      }
     }
   }
   render() {
     if (this.state.UserType === "2") {
-      return (<View style={styles.musteribulunamadiContainer}>
-        <Text style={styles.musteribulunamadiText}>Bu Sayfaya Erişim İzniniz Yok</Text>
-      </View>);
+      return (
+
+        <View >
+          <Card style={{ borderColor: '#f5f5f5' }}>
+            <CardItem>
+              <Body style={{ flexDirection: "column", justifyContent: "center", alignItems: "center" }} >
+                <Icon name="ios-information-circle-outline" style={{ fontSize: 40, }} ></Icon>
+                <Text>
+                  Sayfaya erişiminiz bulunmamaktadır.
+                </Text>
+              </Body>
+            </CardItem>
+          </Card>
+        </View>
+      );
     }
     else {
       return (
         <View style={styles.containerNew}>
           <StatusBar backgroundColor="#2B6EDC" />
-          <Button style={styles.employeeCostContainer} onPress={() => this.props.navigation.navigate("EmployeeCost")}>
-          <Text style={styles.employeeCostButtonText}>Çalışan Giderleri</Text>
-          </Button>
-            <RBSheet
-              ref={ref => {
-                this.OrderSheet = ref;
-              }}
-              height={230}
-              duration={200}
-              customStyles={{
-                container: {
-                  justifyContent: "flex-start",
-                  alignItems: "flex-start",
-                  paddingLeft: 20,
-                  backgroundColor: '#EFF3F9',
-                  borderTopLeftRadius: 15,
-                  borderTopRightRadius: 15
-                }
-              }
-              }>
-              {this._renderEmployeeSheetContent()}
-            </RBSheet>
 
-            <RBSheet
-              ref={ref => {
-                this.AmountSheet = ref;
-              }}
-              height={200}
-              duration={200}
-              customStyles={{
-                container: {
-                  justifyContent: "flex-start",
-                  alignItems: "flex-start",
-                  paddingLeft: 20,
-                  backgroundColor: '#EFF3F9',
-                  borderTopLeftRadius: 15,
-                  borderTopRightRadius: 15
-                }
-              }}
-            >
-              {this._renderEmployeeCostSheetContent()}
-            </RBSheet>
+          <RBSheet
+            ref={ref => {
+              this.OrderSheet = ref;
+            }}
+            height={230}
+            duration={200}
+            customStyles={{
+              container: {
+                justifyContent: "flex-start",
+                alignItems: "flex-start",
+                paddingLeft: 20,
+                backgroundColor: '#EFF3F9',
+                borderTopLeftRadius: 15,
+                borderTopRightRadius: 15
+              }
+            }
+            }>
+            {this._renderEmployeeSheetContent()}
+          </RBSheet>
+
+          <RBSheet
+            ref={ref => {
+              this.AmountSheet = ref;
+            }}
+            height={200}
+            duration={200}
+            customStyles={{
+              container: {
+                justifyContent: "flex-start",
+                alignItems: "flex-start",
+                paddingLeft: 20,
+                backgroundColor: '#EFF3F9',
+                borderTopLeftRadius: 15,
+                borderTopRightRadius: 15
+              }
+            }}
+          >
+            {this._renderEmployeeCostSheetContent()}
+          </RBSheet>
           {this._renderView()}
           {this.showSimpleMessage()}
         </View>
@@ -434,9 +527,9 @@ const mapStateToProps = (state: AppState) => ({
   isLoading: state.employee.isLoading,
   employees: state.employee.employees,
   employeeDeleteIsSuccess: state.deleteEmployee.isSuccess,
-  employeeAddCostLoading : state.employeeAddCost.EmployeAddCostLoading,
-  employeeCostAddMessage:state.employeeAddCost.EmployeeCostAddMessage,
-  isSuccess:state.employeeAddCost.isSuccess
+  employeeAddCostLoading: state.employeeAddCost.EmployeAddCostLoading,
+  employeeCostAddMessage: state.employeeAddCost.EmployeeCostAddMessage,
+  isSuccess: state.employeeAddCost.isSuccess
 })
 function bindToAction(dispatch: any) {
   return {
@@ -444,9 +537,9 @@ function bindToAction(dispatch: any) {
       dispatch(GetEmployees()),
     employeeDelete: (employeeId: number) =>
       dispatch(employeeDelete(employeeId)),
-      employeeCost: (employeeId: number, cost: number) =>
+    employeeCost: (employeeId: number, cost: number) =>
       dispatch(employeeCost(employeeId, cost)),
-     
+
   };
 }
 

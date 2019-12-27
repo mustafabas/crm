@@ -38,6 +38,7 @@ import employeeEditScreen from '../screens/AppScreens/Employee/employeeEditScree
 import addCustomer from "../screens/AppScreens/Customer/addCustomer";
 import productAdd from "../screens/AppScreens/Product/productAdd";
 import ProfileScreen from "../screens/AppScreens/Profile/ProfileScreen";
+import employeeCostScreen from "../screens/AppScreens/Employee/employeeCostScreen";
 // import OrdersCustomer from "../pages/OrdersCustomer";
 // import addOrder from "../pages/addOrder";
 // import editCustomer from "../pages/editCustomer";
@@ -59,7 +60,7 @@ import ProfileScreen from "../screens/AppScreens/Profile/ProfileScreen";
      Employee: { screen: employee },
     AddEmployee: { screen: employeeAddScreen },
     EditEmployee: { screen: employeeEditScreen },
-//     EmployeeCost: { screen: employeeCost },
+    EmployeeCost: { screen: employeeCostScreen },
 //     EditEmployeeCost: { screen: editEmployeeCost },
 
   },

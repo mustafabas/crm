@@ -10,7 +10,7 @@ import {
     Alert,
     AsyncStorage,
 } from "react-native";
-import { NavigationScreenProp, NavigationState, } from "react-navigation";
+import { NavigationScreenProp, NavigationState, NavigationEvents, } from "react-navigation";
 import { Formik, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import styles from "../../../pages/styles";
@@ -31,7 +31,7 @@ interface Props {
     EmployeeUpdateMessage: string;
     employee: IEmployeeItemBaseResponseModel;
     user: IUserItem;
-    employeeEdit: (nameSurname: string, monthlySalary: number, email: string, password: string, phoneNumber: string, identityNumber: string, address: string, dailyPriceFood: number, employeeId: number, active:boolean) => void;
+    employeeEdit: (nameSurname: string, monthlySalary: number, email: string, password: string, phoneNumber: string, identityNumber: string, address: string, dailyPriceFood: number, employeeId: number, active:boolean,addAsAUser:boolean) => void;
     AddUser: (nameSurname: string, mail: string, password: string) => void;
     isLoading: boolean;
     GetEmployees: () => void;
@@ -59,8 +59,6 @@ const girdiler = Yup.object().shape({
         .positive("Pozitif değer giriniz!"),
     dailyPriceFood: Yup.number()
         .positive("Pozitif değer giriniz!"),
-    mail: Yup.string()
-        .email("E-posta Giriniz!"),
     phoneNumber: Yup.number()
         .positive("Pozitif değer giriniz!")
 });
@@ -95,11 +93,15 @@ class employeeEditScreen extends Component<Props, State> {
         console.log(this.props.employee);
 
     }
+    componentDidMount(){
+        const employeeId: number = Number(this.props.navigation.getParam('employeeId'));
+        this.props.getEmployeeById(employeeId);
+    }
 
     handleAddEmployee(values: multi) {
         const { employeeEdit, AddUser } = this.props;
         const employeeId: number = Number(this.props.navigation.getParam('employeeId'));
-        employeeEdit(values.nameSurname, Number(values.monthlySalary), values.mail, values.password, values.phoneNumber, values.identityNumber, values.address, Number(values.dailyPriceFood), employeeId, values.Active);
+        employeeEdit(values.nameSurname, Number(values.monthlySalary), values.mail, values.password, values.phoneNumber, values.identityNumber, values.address, Number(values.dailyPriceFood), employeeId, values.Active,values.AddAsUser);
         // if (values.mail != "" && values.password != "") {
         //     AddUser(values.nameSurname, values.mail, values.password);
         // }     
@@ -158,6 +160,9 @@ class employeeEditScreen extends Component<Props, State> {
                     <KeyboardAvoidingView
                         behavior={Platform.OS === "ios" ? "padding" : "height"}
                     >
+                                <NavigationEvents
+          onWillFocus={()=> this.props.getEmployeeById(this.props.navigation.getParam("employeeId"))}
+        />
                         <ScrollView bounces={false} >
                             <Formik
                                 initialValues={initialValues}
@@ -340,8 +345,8 @@ const mapStateToProps = (state: AppState) => ({
 
 function bindToAction(dispatch: any) {
     return {
-        employeeEdit: (nameSurname: string, monthlySalary: number, mail: string, password: string, phoneNumber: string, identityNumber: string, address: string, dailyPriceFood: number, employeeId: number,active:boolean) =>
-            dispatch(employeeEdit(nameSurname, monthlySalary, mail, password, phoneNumber, identityNumber, address, dailyPriceFood, employeeId,active)),
+        employeeEdit: (nameSurname: string, monthlySalary: number, mail: string, password: string, phoneNumber: string, identityNumber: string, address: string, dailyPriceFood: number, employeeId: number,active:boolean,addAsAUser:boolean) =>
+            dispatch(employeeEdit(nameSurname, monthlySalary, mail, password, phoneNumber, identityNumber, address, dailyPriceFood, employeeId,active,addAsAUser)),
         getEmployeeById: (employeeId: number) =>
             dispatch(getEmployeeById(employeeId)),
     };
