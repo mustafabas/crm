@@ -165,6 +165,7 @@ class employeeEditScreen extends Component<Props, State> {
         />
                         <ScrollView bounces={false} >
                             <Formik
+                            enableReinitialize
                                 initialValues={initialValues}
                                 validationSchema={girdiler}
                                 onSubmit={values => this.handleAddEmployee(values)}

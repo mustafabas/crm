@@ -6,8 +6,9 @@ export const ORDERS_GET = "OrdersGet";
 export const ORDERS_GET_MORE = "OrdersGetMore";
 export const ORDER_LOADING = "OrderLoading";
 export const ORDER_LOADING_MORE = "OrderLoadingMORE";
+export const CUSTOMER_DETAIL_LOADING ="CustomerDetailLoading";
 export const ORDER_GET_CUSTOMERID = "GetCustomerId";
-
+export const CUSTOMER_DETAIL = "CustomerDetail";
 export const CUSTOMER_ADD_SUCCEED ="CustomerAddSucceed";
 export const CUSTOMER_ADD_LOADING = "CustomerAddLoading"
 export const CUSTOMER_ADD_FAILED ="CustomerAddFailed";

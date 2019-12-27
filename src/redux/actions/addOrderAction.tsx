@@ -4,7 +4,7 @@ import { Dispatch } from "react";
 import {ADD_ORDER_SUCCEED,ADD_ORDER_FAILED, ADD_ORDER_IS_LOADING} from './../types'
 import {Action} from '../states'
 import { AsyncStorage } from 'react-native';
-import { GetOrders } from './orderAction';
+import { GetOrders, GetCustomerDetail } from './orderAction';
 import { navigate } from '../services/Navigator';
 import { reset, loading } from './loginAction';
 
@@ -39,6 +39,7 @@ dispatch(isLoading(true))
           dispatch(addOrder(true, "Sipariş Alındı!"));
           dispatch(reset())
           dispatch(GetOrders(customerId, 1, 10))
+          dispatch(GetCustomerDetail(customerId));
 
         }
       }
