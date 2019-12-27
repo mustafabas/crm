@@ -5,7 +5,8 @@ import { CUSTOMER_GET, HOME_LOADING_CUSTOMERS, CUSTOMER_GET_MORE } from "../type
 
 const intialState = {
   customers: [],
-  isHomeLoading: false
+  isHomeLoading: false,
+  totalRecords : 0
 };
 
 export default (state: HomeState = intialState, action: Action) => {
@@ -14,7 +15,8 @@ export default (state: HomeState = intialState, action: Action) => {
         
       return {
         ...state,
-        customers: action.payload,
+        customers: action.payload[0],
+        totalRecords : action.payload[1],
         isHomeLoading:false
       };
       case CUSTOMER_GET_MORE:

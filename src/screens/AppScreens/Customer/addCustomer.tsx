@@ -178,7 +178,7 @@ class addCustomer extends Component<Props, CustomerInserState> {
 
   handleAddCustomer(values: customerData) {
     var gunler: string = "";
-    if(!(!values.AllDays) &&(!values.monday) && (!values.tuesday) && (!values.wednesday) &&(!values.thusday) && (!values.friday) &&  (!values.saturday) &&(!values.sunday)){
+    if(!((!values.AllDays) &&(!values.monday) && (!values.tuesday) && (!values.wednesday) &&(!values.thusday) && (!values.friday) &&  (!values.saturday) &&(!values.sunday))){
       if (values.AllDays) {
         gunler += "0";
       }
@@ -213,11 +213,9 @@ class addCustomer extends Component<Props, CustomerInserState> {
   };
 
   render() {
-    // const placeHolderDay = {
-    //   label: 'Tümü',
-    //   value: 0,
-    //   color: '#2B6EDC',
-    // }
+    if(this.props.isSuccees) {
+      this.props.navigation.goBack()
+    }
     return (
       <View style={styles.addCustomerContainer}>
         <StatusBar backgroundColor="#2B6EDC" />

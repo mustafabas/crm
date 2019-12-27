@@ -47,15 +47,16 @@ export function GetOrders(customerId:number,pageIndex:number,pageSize:number) {
       dispatch(takeTotalAmount(takeTotal));
       dispatch(tookTotalAmount(tookTotal));
       dispatch(restTotalAmount(restTotal));
+      dispatch(loading(false));
     }
    
   
   else {
-
+    dispatch(loading(false));
   }
   })
   .catch((err) => {
-
+    dispatch(loading(false));
   });
 
 

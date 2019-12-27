@@ -5,39 +5,57 @@ import { Dispatch } from "react";
 import {PRODUCT_FOR_CUSTOMER_GET,PRODUCT_FOR_CUSTOMER_LOADING } from './../types'
 import {Action} from '../states'
 import { IProductForCustomerItem } from "../models/productForCustomerModel";
+import { reset } from "./loginAction";
+
+
 
 
 export function GetProduct(productId:number,customerId:number) {
 
   return (dispatch : Dispatch<Action>) =>  {
+
+    AsyncStorage.getItem("userToken").then((res) => {
+      let userToken = res
+      var WATER_PRODUCT_FOR_CUSTOMER_WITH_PROID_CUSID = WATER_PRODUCT_FOR_CUSTOMER+productId+"&customerId="+customerId;
+      console.log(WATER_PRODUCT_FOR_CUSTOMER_WITH_PROID_CUSID)
+      dispatch(loading(true));
   
-    dispatch(loading(true));
-
-    var WATER_PRODUCT_FOR_CUSTOMER_WITH_PROID_CUSID = WATER_PRODUCT_FOR_CUSTOMER+productId+"&customerId="+customerId;
-
-  axios.get(WATER_PRODUCT_FOR_CUSTOMER_WITH_PROID_CUSID,
-    
-    )
-  .then((response) =>{
-    
-  if(response.data.isSuccess){
-      var productModel : IProductForCustomerItem={
-        productId:response.data.result.productId,
-        productName:response.data.result.productName,
-        unitPrice:response.data.result.unitPrice,
-        productCode:response.data.result.productCode,
-      }
-      dispatch(products(productModel));
-    }
    
-  
-  else {
+      const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${userToken}`
+    }
 
-  }
-  })
-  .catch((err) => {
-    // dispatch(loading(false));
-  });
+    axios.get(WATER_PRODUCT_FOR_CUSTOMER_WITH_PROID_CUSID,{
+      headers: headers
+    }
+      
+      )
+    .then((response) =>{
+      
+    if(response.data.isSuccess){
+        var productModel : IProductForCustomerItem={
+          productId:response.data.result.productId,
+          productName:response.data.result.productName,
+          unitPrice:response.data.result.unitPrice,
+          productCode:response.data.result.productCode,
+        }
+        dispatch(products(productModel));
+      }
+     
+    
+    else {
+      console.log("Hata")
+      dispatch(loading(false))
+    }
+    })
+    .catch((err) => {
+      console.log(err)
+      dispatch(loading(false));
+    });
+
+    })
+    
   }
 }
 export const loading = (loader : boolean) => ({

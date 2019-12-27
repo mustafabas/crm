@@ -13,15 +13,26 @@ export function GetCustomers(orderType: number, searchText: string, dayOfWeek: n
 
     dispatch(loading(true));
 
-    var WATER_CUSTOMERS_HOME_GET_ORDER_TYPE_SEARCH_TEXT = WATER_CUSTOMERS_HOME_GET + orderType + "&searchText=" + searchText + "&pageIndex=" + pageIndex + "&pageSize=15&dayOfWeek=" + dayOfWeek;
-
-    axios.get(WATER_CUSTOMERS_HOME_GET_ORDER_TYPE_SEARCH_TEXT,
+    AsyncStorage.multiGet(['userToken', 'userId']).then((res) => {
+      let token = res[0][1];
+      let userId = res[1][1];
+      
+      const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+    }
+    var WATER_CUSTOMERS_HOME_GET_ORDER_TYPE_SEARCH_TEXT = WATER_CUSTOMERS_HOME_GET + orderType + "&searchText=" + searchText + "&pageIndex=" + pageIndex + "&pageSize=15&dayOfWeek=" + dayOfWeek + `&userId=${userId}`;
+console.log(WATER_CUSTOMERS_HOME_GET_ORDER_TYPE_SEARCH_TEXT)
+    axios.get(WATER_CUSTOMERS_HOME_GET_ORDER_TYPE_SEARCH_TEXT,{
+      headers: headers 
+    }
 
     )
       .then((response) => {
 
         if (response.data.isSuccess) {
           var customersModel: ICustomerItem[] = [];
+          var totalRecords = response.data.result.totalRecords
 
           response.data.result.homeCustomerItemModels.forEach((customer: any) => {
             var customerItem: ICustomerItem = {
@@ -40,21 +51,24 @@ export function GetCustomers(orderType: number, searchText: string, dayOfWeek: n
             customersModel.push(customerItem);
           });
 
-          dispatch(customers(customersModel));
-
+          dispatch(customers(customersModel,totalRecords));
+          dispatch(loading(false));
         }
 
 
         else {
-
+          dispatch(loading(false));
         }
       })
       .catch((err) => {
-        // dispatch(loading(false));
+        dispatch(loading(false));
 
       });
 
 
+  })
+
+   
   }
 
 }
@@ -65,7 +79,7 @@ export function GetCustomerMore(orderType: number, searchText: string, dayOfWeek
 
 
     var WATER_CUSTOMERS_HOME_GET_ORDER_TYPE_SEARCH_TEXT = WATER_CUSTOMERS_HOME_GET + orderType + "&searchText=" + searchText + "&pageIndex=" + pageIndex + "&pageSize=10&dayOfWeek=" + dayOfWeek;
-    console.log(WATER_CUSTOMERS_HOME_GET_ORDER_TYPE_SEARCH_TEXT)
+
     axios.get(WATER_CUSTOMERS_HOME_GET_ORDER_TYPE_SEARCH_TEXT,
 
     )
@@ -90,8 +104,7 @@ export function GetCustomerMore(orderType: number, searchText: string, dayOfWeek
             }
             customersModel.push(customerItem);
           });
-          console.log('Ekstra')
-          console.log(customersModel)
+     
           dispatch(customersMore(customersModel));
 
         }
@@ -115,9 +128,9 @@ export const loading = (loader: boolean) => ({
   payload: loader
 })
 
-export const customers = (customers: ICustomerItem[]) => ({
+export const customers = (customers: ICustomerItem[],totalRecords : number) => ({
   type: CUSTOMER_GET,
-  payload: customers
+  payload: [customers,totalRecords]
 })
 export const customersMore = (customers: ICustomerItem[]) => ({
   type: CUSTOMER_GET_MORE,

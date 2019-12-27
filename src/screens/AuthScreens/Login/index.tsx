@@ -59,6 +59,7 @@ const loginSchema = Yup.object().shape({
 class Login extends Component<Props, {}> {
 
   handleLogin = (values: userData) => {
+
     const { loginUserService, isSucceed } = this.props;
     loginUserService(values.email, values.password);
   };
@@ -82,7 +83,7 @@ class Login extends Component<Props, {}> {
 
   render() {
     if(this.props.isSucceed) {
-      this.props.navigation.navigate('HomeStack')
+      this.props.navigation.navigate('MainStack')
     }
     
     return (

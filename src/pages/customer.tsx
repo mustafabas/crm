@@ -281,7 +281,7 @@ class Customer extends Component<Props, State> {
     }
     else {
       if ((this.props.customers.length > 0 || (this.props.isHomeLoading===false && this.state.page > 1) && this.props.isLoadingCustomerDelete===false)) {
-        console.log(this.props.isLoadingCustomerDelete, "çek "); 
+
         return (
           <View>
             {this._renderActivity()}

@@ -7,6 +7,13 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
 
   },
+  containerNew:{
+    flex: 1,
+    backgroundColor: "#fff",
+    justifyContent: "flex-start",
+    marginLeft:20,
+    marginRight:20
+  },
   addCustomerContainer: {
     flex: 1,
     backgroundColor: "white",
@@ -63,15 +70,16 @@ const styles = StyleSheet.create({
     backgroundColor: "#A1A9EF",
   },
   input: {
+    fontFamily:'Avenir Next',fontSize:18,
     elevation: 2,
-    backgroundColor: '#fff',
+    // backgroundColor: '#fff',
     //marginHorizontal: 5,
     //paddingHorizontal: 20,
     color: 'black',
     //marginBottom:5,
     paddingTop: 0,
     // height: 50,
-    marginTop: 10,
+    marginTop: 5,
     //flex:1,
   },
   inputFiyat: {
@@ -433,6 +441,7 @@ const styles = StyleSheet.create({
     flex: 1.1,
     fontSize: 18,
     fontWeight: "bold",
+    marginTop:20
   },
 
   searchInput: {
@@ -594,8 +603,8 @@ const styles = StyleSheet.create({
     // flex:1,
     // justifyContent:"flex-end"
     marginBottom: 10,
-    paddingVertical: 10,
-    marginHorizontal: 5,
+  
+
   },
 
   logoutButtonText: {
@@ -840,17 +849,17 @@ const styles = StyleSheet.create({
   },
 
   rnpickerselect: {
-    height: 50,
-    elevation: 2,
+
+
     backgroundColor: '#fff',
-    marginHorizontal: 5,
-    paddingHorizontal: 20,
-    justifyContent: 'center',
-    color: 'black',
-    marginBottom: 10,
-    borderRadius: 4,
-    borderColor: "#333",
-    flex: 1
+    // marginHorizontal: 5,
+    // paddingHorizontal: 20,
+    // justifyContent: 'center',
+    // color: 'black',
+    // marginBottom: 10,
+    // borderRadius: 4,
+    // borderColor: "#333",
+    // flex: 1
   },
 
 
@@ -872,22 +881,6 @@ const styles = StyleSheet.create({
     includeFontPadding: false,
     flex: 0,
     fontSize: 15,
-  },
-  SheetContainer: {
-    flex: 1, justifyContent: 'flex-start', alignItems: 'flex-start', flexDirection: 'column', paddingTop: 10
-  },
-  SheetAmountContainer: {
-    flex: 1, justifyContent: 'flex-start', alignItems: 'flex-start', flexDirection: 'column', paddingTop: 10
-  },
-  SheetItemContainer: {
-    borderBottomColor: "#ccc", flexDirection: 'row', paddingTop: 10, borderBottomWidth: 1, paddingBottom: 15, width: '100%'
-  },
-  SheetItemIcon: {
-    color: "#333"
-  },
-  SheetItemText: {
-    fontSize: 20, width: '100%', color: '#000',
-    marginLeft: 20
   },
   FormLabel: {
     fontSize: 17,
@@ -929,7 +922,45 @@ const styles = StyleSheet.create({
   reportDateText2:{
     fontSize:15,
     fontWeight:'bold'
-  }
+  },
+  employeeNameText:{
+    color:'#2069F3',
+    fontFamily: 'Avenir Next',
+    fontSize:18,
+    fontWeight:'800',
+  },
+  SheetContainer: {
+    flex: 1, 
+    justifyContent: 'flex-start',
+     alignItems: 'flex-start', 
+     flexDirection: 'column', 
+    // paddingTop: 10
+  },
+  SheetAmountContainer: {
+    flex: 1, justifyContent: 'flex-start', alignItems: 'flex-start', flexDirection: 'column', paddingTop: 10,
+    backgroundColor:'#EFF3F9'
+  },
+  SheetItemContainer: {
+    borderBottomColor: "#D7DBE0", 
+    flexDirection: 'row', 
+    paddingTop: 10, 
+    borderBottomWidth: 1, 
+    paddingBottom: 15, 
+    width: '100%',
+    fontFamily:'Avenir Next',
+    fontSize:20,
+  },
+  SheetItemIcon: {
+    color: "#404243",
+    fontSize:30
+  },
+  SheetItemText: {
+    fontSize: 20, 
+    width: '100%', 
+    color: '#404243',
+    fontFamily:'Avenir Next',
+    marginLeft: 20
+  },
 });
 
 export default styles;

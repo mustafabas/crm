@@ -18,11 +18,10 @@ import { employeeEdit } from "../redux/actions/editEmployeeAction";
 import { AppState } from '../redux/store'
 import { connect } from "react-redux";
 import { IEmployeeItem } from "../redux/models/addEmployeeModel";
-import { IUserItem } from "../redux/models/addUserModel";
-import { Input } from "react-native-elements";
 import { AddUser } from "../redux/actions/addUserAction"
 import { GetUser } from "../redux/actions/getUserAction"
 import {IGetUserItem} from "../redux/models/userModel"
+import { IUserItem } from "../redux/models/addUserModel";
 
 interface Props {
     navigation: NavigationScreenProp<NavigationState>;
@@ -64,9 +63,6 @@ interface state {
 
 
 class addEmployee extends Component<Props, state> {
-
-
-    
 
 
     constructor(props: Props) {

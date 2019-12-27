@@ -9,7 +9,7 @@ import {
 import {createStackNavigator} from 'react-navigation-stack'
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { Dimensions, TouchableOpacity, View } from "react-native";
-import { createIconSetFromIcoMoon } from 'react-native-vector-icons'
+
 const { width } = Dimensions.get("window");
 // import { createIconSetFromIcoMoon } from 'react-native-vector-icons'
 
@@ -26,20 +26,25 @@ import HomeScreen from '../screens/AppScreens/Home/HomeScreen'
 import { Icon, Image, Text } from "native-base";
 import CustomerOrdersScreen from '../screens/AppScreens/Customer/CustomerOrdersScreen'
 import AuthLoading from "../screens/AuthLoading";
+import orderAdd from "../screens/AppScreens/Customer/orderAdd"
 import svgs from '../images/icomoon/SVG/svgs'
 import SvgIcon from 'react-native-svg-icon';
-
-import EmployeeScreen from '../screens/AppScreens/Employee/EmployeeScreen'
+import employee from '../screens/AppScreens/Employee/home';
+import employeeAddScreen from '../screens/AppScreens/Employee/employeeAddScreen';
+import employeeEditScreen from '../screens/AppScreens/Employee/employeeEditScreen';
 // import Customer from "../pages/customer";
 // import Employee from "../pages/employee";
 // import Settings from "../pages/settings";
 import addCustomer from "../screens/AppScreens/Customer/addCustomer";
+import productAdd from "../screens/AppScreens/Product/productAdd";
+import ProfileScreen from "../screens/AppScreens/Profile/ProfileScreen";
 // import OrdersCustomer from "../pages/OrdersCustomer";
 // import addOrder from "../pages/addOrder";
 // import editCustomer from "../pages/editCustomer";
 // import addProduct from "../pages/addProduct";
-// import products from "../pages/products";
-// import editProduct from "../pages/editProduct";
+import products from "../screens/AppScreens/Product/produts";
+import productEditScreen from "../screens/AppScreens/Product/productEdit";
+import CustomerEditScreen from '../screens/AppScreens/Customer/CustomerEditScreen'
 // import newPricePage from "../pages/newPricePage";
 // import customerDefinedPricePage from "../pages/CustomerDefinedPrice"
 // import editOrder from "../pages/editOrder";
@@ -50,18 +55,48 @@ import addCustomer from "../screens/AppScreens/Customer/addCustomer";
 // import employeeCost from "../pages/employeeCost";
 // import editEmployeeCost from "../pages/editEmployeeCost";
 
-// const EmployeeApp = createStackNavigator(
-//   {
-//     Employee: { screen: employee },
-//     AddEmployee: { screen: addEmployee },
-//     EditEmployee: { screen: editEmployee },
+ const EmployeeApp = createStackNavigator(
+   {
+     Employee: { screen: employee },
+    AddEmployee: { screen: employeeAddScreen },
+    EditEmployee: { screen: employeeEditScreen },
 //     EmployeeCost: { screen: employeeCost },
 //     EditEmployeeCost: { screen: editEmployeeCost },
 
-//   },
-//   {
+  },
+  {
+    initialRouteName:"Employee"
 //     // headerMode:"none"
-//   })
+  });
+
+  const ProfileStack = createStackNavigator(
+    {
+      ProfileScreen : ProfileScreen,
+      products : products,
+      productEditScreen : productEditScreen,
+
+      AddProduct: { screen: productAdd },
+     //AddEmployee: { screen: employeeAdd },
+ //     EditEmployee: { screen: editEmployee },
+ //     EmployeeCost: { screen: employeeCost },
+ //     EditEmployeeCost: { screen: editEmployeeCost },
+ 
+   },
+   {
+    // headerMode: "none"
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: '#216AF4',
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: '600',
+        fontFamily:'Avenir Next',
+        fontSize:18
+      },
+    },
+  });
+  
 // const IconNew = createIconSetFromIcoMoon(icoMoonConfig)
 const CustomerStack = createStackNavigator(
   {
@@ -92,22 +127,7 @@ const CustomerStack = createStackNavigator(
 
 );
 
-const EmployeeStack = createStackNavigator({
-  Employee : EmployeeScreen
-  
-},
-{
-  defaultNavigationOptions: {
-    headerStyle: {
-      backgroundColor: '#2069F3',
-      fontFamily : 'Avenir Next'
-    },
-    headerTintColor: '#fff',
-    headerTitleStyle: {
-      fontWeight: 'bold',
-    },
-  },
-})
+
 
 // const SettingsApp = createStackNavigator(
 //   {
@@ -124,11 +144,12 @@ const EmployeeStack = createStackNavigator({
 // )
 
 
-
 const HomeStack = createStackNavigator({
   Home : HomeScreen,
   Customer : CustomerOrdersScreen,
-  addCustomer : addCustomer
+  addCustomer : addCustomer,
+  orderAdd : orderAdd,
+  CustomerEdit : CustomerEditScreen
 
 },{
   defaultNavigationOptions: {
@@ -156,18 +177,14 @@ const MainStack = createBottomTabNavigator(
         tabBarIcon: ({ focused }) => {
 
           return (
-        
-              
             <IconNew stroke={focused ? '#2069F3' :'black' }  strokeWidth={3} fill={focused ? '#2069F3' :'black' } width="80" height="80" name="User" svgs={svgs} />
-          
-        
           )
         }
       }
     },
     Employee: {
-      screen: EmployeeStack,
-      
+      screen: EmployeeApp,
+
       navigationOptions: {
         tabBarLabel: 'Çalışanlar',
         // tabBarLabel: 'Çalışanlar',
@@ -204,28 +221,19 @@ tabBarIcon: ({ focused }) => {
       }
     },
     Profile: {
-      screen: HomeScreen,
+      screen: ProfileStack,
       navigationOptions: {
       tabBarLabel: 'Profil',
-
 tabBarIcon: ({ focused }) => {
-
   return (
-
-      
     <IconNew stroke={focused ? '#2069F3' :'black' } strokeWidth={3} fill={focused ? '#2069F3' :'black' } width="80" height="80" name="Profile" svgs={svgs} />
-          
-
   )
 }
-
       }
     },
-
   },
   {
     initialRouteName: "Customer",
-
   }
 );
 

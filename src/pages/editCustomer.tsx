@@ -110,7 +110,7 @@ class editCustomer extends Component<Props, State> {
 
   componentWillMount(){
     var musteriAdiSoyadi: string = this.props.navigation.getParam("dayOfWeeks");
-    console.log(musteriAdiSoyadi)
+
     musteriAdiSoyadi.split(",").forEach(value=> {
       if(value==="0"){
         this.setState({

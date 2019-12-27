@@ -46,5 +46,19 @@ export default {
         </G>,
           viewBox: '0 0 120 120',
     },
+    OrderSheetClose:{
+        svg:<G>
+            <Path d="M21.75 7.25L7.25 21.75" stroke="#404243" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<Path d="M7.25 7.25L21.75 21.75" stroke="#404243" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+        </G>,
+         viewBox: '0 0 120 120',
+    },
+    OrderSheetUpdate:{
+        svg:<G>
+            <Path d="M13.4584 2.62502C13.6663 2.39521 13.9131 2.21291 14.1848 2.08853C14.4565 1.96416 14.7477 1.90015 15.0417 1.90015C15.3358 1.90015 15.6269 1.96416 15.8986 2.08853C16.1703 2.21291 16.4171 2.39521 16.625 2.62502C16.833 2.85483 16.9979 3.12766 17.1104 3.42793C17.223 3.72819 17.2809 4.05002 17.2809 4.37502C17.2809 4.70003 17.223 5.02185 17.1104 5.32211C16.9979 5.62238 16.833 5.89521 16.625 6.12502L5.93754 17.9375L1.58337 19.25L2.77087 14.4375L13.4584 2.62502Z" stroke="#F1F6FE" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </G>,
+        viewBox: '0 0 120 120',
+    }
     
 }

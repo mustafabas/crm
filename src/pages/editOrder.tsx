@@ -283,7 +283,7 @@ const mapStateToProps = (state : AppState) => ({
   isProductLoading : state.products.isProductLoading,
   products : state.products.products,
   isSuccees: state.editOrder.isSuccess,
-  product: state.productForCustomer.product,
+  // product: state.productForCustomer.product,
 })
 function bindToAction(dispatch: any) {
   return {
