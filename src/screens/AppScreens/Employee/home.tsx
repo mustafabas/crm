@@ -383,14 +383,14 @@ class Employee extends Component<Props, State> {
             onRefresh={() => this.onRefresh()}
             data={this.state.employeeList}
             renderItem={({ item }) => (
-              <View style={{  flex: 1, borderBottomColor: '#ccc', borderBottomWidth: 1,paddingTop:10  }}>
-                <View style={{ flexDirection: 'row', flex: 1, borderBottomColor: '#000'}}>
-                  <View style={{ flex: 0.17 }} >
+              <View style={{ padding: 20, flex: 1, borderBottomColor: '#ccc', borderBottomWidth: 1 }}>
+                <View style={{ flexDirection: 'row', flex: 1, borderBottomColor: '#000' }}>
+                  <View style={{ flex: 0.2 }} >
                     <View style={{ width: 33, height: 33, borderRadius: 16.5, backgroundColor: '#2069F3', justifyContent: 'center', alignItems: 'center' }}>
                       <Text style={{ color: 'white' }}>{item.employeeName.substring(0, 1)}</Text>
                     </View>
                   </View>
-                  <View style={{ flex: 0.43 }}>
+                  <View style={{ flex: 0.4 }}>
                     <Text style={styles.employeeNameText}>{item.employeeName}</Text>
                     <Text note>{item.createDate}</Text>
                   </View>
