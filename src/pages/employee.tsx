@@ -12,7 +12,7 @@ import {
   Alert,
   AsyncStorage,
 } from "react-native";
-import { NavigationScreenProp, NavigationState, ScrollView, } from "react-navigation";
+import { NavigationScreenProp, NavigationState, ScrollView, SafeAreaView} from "react-navigation";
 import { connect } from "react-redux";
 import { Header } from "../components";
 import styles from "./styles";
@@ -28,6 +28,7 @@ import { employeeCost } from "../redux/actions/employeeCostAction"
 import { timingSafeEqual } from "crypto";
 import { type } from "os";
 import RBSheet from "react-native-raw-bottom-sheet";
+
 
 
 interface Props {
@@ -153,7 +154,7 @@ class Employee extends Component<Props, State> {
   }
 
   deleteSelectedEmployee() {
-    console.log("fsafafsfas")
+
     const { employeeDelete } = this.props;
     employeeDelete(this.state.employeeId);
     this.OrderSheet.close();
@@ -213,7 +214,7 @@ class Employee extends Component<Props, State> {
   _renderEmployeeSheetContent() {
     return (
 
-      <View style={styles.SheetContainer}>
+      <SafeAreaView style={styles.SheetContainer}>
         <TouchableOpacity style={styles.SheetItemContainer}
           onPress={() => {
             this.OrderSheet.close();
@@ -241,7 +242,7 @@ class Employee extends Component<Props, State> {
           <Text style={styles.SheetItemText}
           >Sil</Text>
         </TouchableOpacity>
-      </View>
+      </SafeAreaView>
     );
   }
 

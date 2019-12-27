@@ -11,16 +11,18 @@ import {
   ActivityIndicator,
   ImageBackground,
 } from "react-native";
-import { Container, Header, Content, Form, Item, Input, Label,Icon, Button } from 'native-base';
+import { Container, Header, Content, Form, Item, Input, Label,Icon, Button, Spinner } from 'native-base';
 
 import { NavigationScreenProp, NavigationState, SafeAreaView } from "react-navigation";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { loginUserService } from "../../../redux/actions/loginAction";
+import { createBaseUser, BaseUser } from "../../../redux/actions/signUpActions";
 import styles from "../Login/styles";
 import { connect } from "react-redux";
 import { AppState } from '../../../redux/store'
 import Hr from "react-native-hr-component";
+import { UserFirstData } from "../../../redux/reducers/signUpReducers";
+import { showMessage } from "react-native-flash-message";
 
 // import Icon from 'react-native-vector-icons/Ionicons'
 // import { Input } from "react-native-elements";
@@ -29,16 +31,19 @@ import Hr from "react-native-hr-component";
 
 interface Props {
   navigation: NavigationScreenProp<NavigationState>;
-  isFinished: boolean;
-  isSucceed: boolean;
-  isLoading: boolean;
+  isSecondFinished: boolean;
+  isSecondSucceed: boolean;
+  isSecondLoading: boolean;
   loginErrorMessage: string;
-  loginUserService: (email: string, password: string) => void;
+  createBaseUser: (user : BaseUser) => void;
+  userFirstData : UserFirstData;
 }
 
 interface userData {
-  username: string;
-  password: string;
+  phoneNumber: string;
+   companyName:string;
+  adress:string;
+
 }
 
 const loginSchema = Yup.object().shape({
@@ -57,15 +62,43 @@ const loginSchema = Yup.object().shape({
     .required()
 });
 
-export default class SignUpSecondScreen extends Component<Props, {}> {
+class SignUpSecondScreen extends Component<Props, {}> {
+
+
+  showSimpleMessage() {
+
+    if (this.props.isSecondFinished && (!this.props.isSecondSucceed)) {
+
+      showMessage({
+        message: this.props.loginErrorMessage,
+        type: "danger",
+        icon: 'auto'
+      }
+      );
+    }
+  
+  }
+
+
 
   handleLogin = (values: userData) => {
-    const { loginUserService, isSucceed } = this.props;
-    // loginUserService(values.username, values.password);
+    const { isSucceed,navigation } = this.props;
+    var  user = {} as BaseUser
+    user.nameSurname  = this.props.userFirstData.NameSurname
+    user.email  = this.props.userFirstData.email
+    user.password  = this.props.userFirstData.password
+    user.address = values.adress
+    user.companyName = values.companyName
+    user.phoneNumber = values.phoneNumber
+
+    this.props.createBaseUser(user)
   };
 
   render() {
-   
+    if(this.props.isSecondSucceed) {
+      this.props.navigation.navigate('MainStack')
+    }
+
     return (
       <ImageBackground  source={require('../../../images/background.png')} style={[styles.container,{justifyContent:'flex-start'}]}>
 <SafeAreaView>
@@ -76,7 +109,7 @@ export default class SignUpSecondScreen extends Component<Props, {}> {
           <ScrollView bounces={false} contentContainerStyle={{flexGrow:1}}>
             <Formik
               initialValues={{ phoneNumber: "", companyName: "" ,adress:""}}
-              validationSchema={loginSchema}
+              // validationSchema={loginSchema}
               onSubmit={values => this.handleLogin(values)}
             >
               {props => {
@@ -238,18 +271,21 @@ shadowOpacity: .5,}}>
                       </View>
 </View>                      
          
-          <Button onPress={()=>this.props.navigation.navigate('PhoneVerification')}  style={{justifyContent:'center',marginTop:30,marginBottom:30,marginHorizontal:40,borderRadius:20,backgroundColor:'#01C3E3',
+          <Button  onPress={()=> props.handleSubmit()}  style={{justifyContent:'center',marginTop:30,marginBottom:30,marginHorizontal:40,borderRadius:20,backgroundColor:'#01C3E3',
                     shadowRadius: 5.00,
-                    
                     elevation: 12,
-
                     shadowColor: "#006c7e",
     shadowOffset: {width: 3, height: 3 },
     shadowOpacity: .5,
 
     
                     }}>
-            <Text  style={{color:'white',fontFamily:"Avenir Next",fontWeight:'bold',fontSize:16}} >Devam Et</Text>
+
+{this.props.isSecondLoading ? <Spinner  color='01C3E3' /> :   <Text  style={{color:'white',fontFamily:"Avenir Next",fontWeight:'bold',fontSize:16}} >Devam Et</Text>}
+                       
+           
+
+            {/* <Text  style={{color:'white',fontFamily:"Avenir Next",fontWeight:'bold',fontSize:16}} >Devam Et</Text> */}
           </Button>
 
 
@@ -263,6 +299,7 @@ shadowOpacity: .5,}}>
         </KeyboardAvoidingView>
 
         </SafeAreaView>
+        {this.showSimpleMessage()}
       </ImageBackground>
     );
   }
@@ -271,19 +308,20 @@ shadowOpacity: .5,}}>
 
 
 const mapStateToProps = (state: AppState) => ({
-  isFinished: state.login.isFinished,
-  isSucceed: state.login.isSucceed,
-  isLoading: state.login.isLoading,
-  loginErrorMessage: state.login.loginErrorMessage
+  isSecondFinished: state.signUp.isSecondFinished,
+  isSecondSucceed: state.signUp.isSecondSucceed,
+  isSecondLoading: state.signUp.isSecondLoading,
+  loginErrorMessage: state.signUp.loginErrorMessage,
+  userFirstData : state.signUp.userFirstData
 })
 
 function bindToAction(dispatch: any) {
   return {
-    loginUserService: (email: string, password: string) =>
-      dispatch(loginUserService(email, password))
+    createBaseUser: (user: BaseUser) =>
+      dispatch(createBaseUser(user))
   };
 
 }
 
 
-// export default connect(mapStateToProps, bindToAction)(Login);
+export default connect(mapStateToProps, bindToAction)(SignUpSecondScreen);

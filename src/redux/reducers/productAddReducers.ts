@@ -1,10 +1,11 @@
 import { ProductAdd, Action } from "../states";
-import {PRODUCT_ADD_SUCCEED,PRODUCT_ADD_FAILED} from "../types";
+import {PRODUCT_ADD_SUCCEED,PRODUCT_ADD_FAILED, PRODUCT_ADD_LOADING, RESET_PROPS} from "../types";
 
 
 const initalState = {
-    isSuccess: false,
+    isSuccess: null,
     ProductAddMessage: "",
+    isAddLoading:false
   };
 
 export default (state: ProductAdd = initalState, action: Action) => {
@@ -19,8 +20,20 @@ export default (state: ProductAdd = initalState, action: Action) => {
       return {
         ...state,
         isSuccess:false,
-        ProductAddMessage:"Ürün Oluşturulamadı!",
+         ProductAddMessage:"Ürün Oluşturulamadı!",
       };
+      case PRODUCT_ADD_LOADING:
+        return {
+          ...state,
+          isAddLoading:action.payload
+
+        }
+        case RESET_PROPS:
+         return {
+            ...state,
+            isAddLoading:false,
+            ProductAddMessage:"",
+          }
     default:
       return state;
   }

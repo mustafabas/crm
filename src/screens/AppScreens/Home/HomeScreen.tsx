@@ -6,25 +6,22 @@ import {
     View,
     Platform,
     FlatList,
-
     ScrollView,
-
     Image,
     Animated
 ,TouchableOpacity,
-ActivityIndicator
+ActivityIndicator,Picker
 } from 'react-native';
 import {
     statusBarHeight,
     headerHeight,
     SafeAreaWithHeader,
 } from './DimensionsHelper';
-
-// import {} from 'react-native-gesture-handler'
+import stylesNew from "../../../pages/styles";
 
 import { Icon, Input, Item, Tabs, Tab, TabHeading, Button, ScrollableTab } from 'native-base';
 import { Alert } from 'react-native';
-import { NavigationScreenProp, NavigationState } from 'react-navigation';
+import { NavigationScreenProps, NavigationState } from 'react-navigation';
 import { Dimensions } from 'react-native';
 import { ICustomerItem } from '../../../redux/models/homeModel';
 import { connect } from 'react-redux';
@@ -34,7 +31,9 @@ import { AppState } from '../../../redux/store';
 
 import RBSheet from "react-native-raw-bottom-sheet";
 
-import {Picker} from '@react-native-community/picker';
+// import {} from '@react-native-community/picker';
+import { logoutUserService } from '../../../redux/actions/loginAction';
+import { showMessage } from 'react-native-flash-message';
 
 
 
@@ -64,6 +63,8 @@ interface Props {
     customerDelete: (customerId: number) =>  void;
     CustomerDeleteIsSuccess: boolean;
     isLoadingCustomerDelete:boolean;
+    message : string;
+    totalRecords : number;
   }
 
 
@@ -100,6 +101,45 @@ interface Props {
 class HomeScreen extends Component<Props,State>{
 
 
+
+    showSimpleMessage() {
+
+        if (this.props.message) {
+    
+          showMessage({
+            message: this.props.message,
+            type: this.props.CustomerDeleteIsSuccess ? "success" : "danger",
+            icon: 'auto'
+          }
+          );
+        }
+      
+      }
+
+      
+    openModal(item  : ICustomerItem) {
+        
+        this.setState({
+          customerId : item.customerId
+        });
+        this.customerEdit.open()
+      }
+
+
+    static navigationOptions = (
+        screenProps: NavigationScreenProps
+      ) => {
+    
+        return {
+    
+          headerStyle: {
+            // height : screenProps.navigation.getParam('headerHeight'),
+            // backgroundColor:'#d67676'
+          },
+          header: null
+        }
+      }
+
     
 
 
@@ -107,8 +147,8 @@ class HomeScreen extends Component<Props,State>{
         super(props);
   
         this.state = {
-            scrollY: new Animated.Value(0),
-            scrollYNew : new Animated.Value(0),
+            scrollY: new Animated.Value(0.001),
+            scrollYNew : new Animated.Value(0.001),
             HeaderTitle : "Müşteriler",
             selectedState :1,
             modalVisible: false,
@@ -171,11 +211,15 @@ class HomeScreen extends Component<Props,State>{
 
 
                 return (
-                    <Animated.View style={[styles.iOSTitleContainer, {
+                    <Animated.View
+                    useNativeDriver ={true}
+                     style={[styles.iOSTitleContainer, {
                         height: Platform.OS === "ios" ? this.headerHeight : this.headerHeight -30,
                         opacity: titleOpacity,
                         borderBottomColor: borderBottomColor,
-                        zIndex:1
+                        zIndex:1,
+                        borderBottomWidth:2
+
                     }]}>
                         <View>
 
@@ -185,7 +229,7 @@ class HomeScreen extends Component<Props,State>{
                             {this.state.HeaderTitle}
                         </Text>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={()=>this.props.navigation.navigate('Customer')}  style={{zIndex:-1,marginLeft:-40,marginRight:20,marginBottom:8}}>
+                        <TouchableOpacity onPress={()=>this.props.navigation.navigate('addCustomer')}  style={{zIndex:-1,marginLeft:-40,marginRight:20,marginBottom:8}}>
                             <Icon style={{color:'#216AF4'}}  name="ios-add-circle" />
                         </TouchableOpacity>
                     </Animated.View>
@@ -203,8 +247,8 @@ class HomeScreen extends Component<Props,State>{
                 title = title.substr(0, 17) + "...";
             }
             const fontSize = this.state.scrollY.interpolate({
-                inputRange: [-30,-15, 0],
-                outputRange: [40,40, 34],
+                inputRange: [-15, 0,30],
+                outputRange: [40,34, 30],
                 extrapolate: 'clamp'
             });
             const top = this.state.scrollY.interpolate({
@@ -212,9 +256,12 @@ class HomeScreen extends Component<Props,State>{
                 outputRange: [0,0,-15,-35,-45, -45,-90]
             });
             return (
-                <Animated.View style={ [styles.iOSBigTitleContainer, {backgroundColor:'clear',zIndex:1,transform: [{translateY: top}]}]}
+                <Animated.View
+                useNativeDriver ={true}
+                 style={ [styles.iOSBigTitleContainer, {backgroundColor:'clear',zIndex:1,transform: [{translateY: top}]}]}
                                key="iosBigTitle">
                     <Animated.Text
+                    useNativeDriver ={true}
                         allowFontScaling={false}
                         style={[styles.iOSBigTitle, {fontSize: fontSize}]}>
                         {this.state.HeaderTitle}
@@ -222,7 +269,7 @@ class HomeScreen extends Component<Props,State>{
                     
 
 
-  <TouchableOpacity style={{}} onPress={()=>this.props.navigation.navigate('CustomerOrders')}>
+  <TouchableOpacity style={{}} onPress={()=>this.props.navigation.navigate('addCustomer')}>
   <Icon style={[styles.iOSBigTitle,{marginRight:20,fontSize:40}]}  name="ios-add-circle"/>
   </TouchableOpacity>
 
@@ -247,14 +294,12 @@ class HomeScreen extends Component<Props,State>{
         this.setState({
             orderType : page ,
             selectedState : page,
-            scrollY :  new Animated.Value(0)})
+            scrollY :  new Animated.Value(0.001)})
 
         // this.forceUpdate()
             
         this._getCustomerList(page, this.state.searchText, this.state.dayOfWeek, 1);
-        console.log(this.state.orderType)
-        console.log(page)
-        console.log("hey")
+
         
     }
 
@@ -280,10 +325,10 @@ class HomeScreen extends Component<Props,State>{
 
         
         return(
-
+//paddingBottom basta olmali sonra azaltilacak animasyonla
             <Animated.FlatList
-            
-            style={{ marginBottom:-60,transform: [{translateY: top}]}}
+            useNativeDriver ={true}
+            style={{ marginBottom:Platform.OS === "ios" ? -60 : -220,paddingTop:10,transform: [{translateY: top}]}}
             
            //  onScroll={
            //     Animated.event(
@@ -296,10 +341,19 @@ class HomeScreen extends Component<Props,State>{
              ref={(ref) => { this.flatListRef = ref; }}
 
            data={this.props.customers}
-        ListHeaderComponent= {()=> <View style={{alignItems:'center',marginTop:-5,marginBottom:5}}><Text style={{fontFamily:'Avenir Next',fontWeight:"600",fontSize:16,color: this.state.selectedState === 1 ? 'black': '#8F9599'}}>{this.state.orderType === 3 ? this.state.dayList[this.state.today.getDay()]  : this.state.dayList[this.state.dayOfWeek]}</Text>
-           <View style={{backgroundColor: this.state.selectedState === 1 ? 'black': '#8F9599',width:20,height:1,alignSelf:'center'}}></View></View>}
+        ListHeaderComponent= {()=> <View style={{justifyContent:'space-between',flexDirection:'row',marginTop:-5,marginBottom:5,marginHorizontal:20}}><Text style={{fontWeight:"600",fontSize:14,color:  '#8F9599'}}>{this.state.orderType === 3 ? this.state.dayList[this.state.today.getDay()]  : this.state.dayList[this.state.dayOfWeek]}</Text>
+        <Text style={{fontWeight:"600",fontSize:14,color:  '#8F9599'}}>{this.props.totalRecords}</Text>
+       </View>}
              ItemSeparatorComponent = {({}) => <View style={{height:10}}></View>}
-           renderItem={({ item }) => <View style={{ marginHorizontal: 5, flexDirection: 'row', backgroundColor: '#EFF3F9', paddingVertical: 20, paddingHorizontal: 5,flex:1, justifyContent: 'space-between', borderRadius: 15 }}>
+           renderItem={({ item }) => <TouchableOpacity onPress={()=>this.props.navigation.navigate("Customer", { customerId: item.customerId, nameSurname: item.nameSurname, companyName: item.companyName, displayTookTotalAmount: item.displayTookTotalAmount, restTotalAmount: item.displayRestTotalAmount, totalAmount: item.displayTotalAmount })} style={{ marginHorizontal: 5, backgroundColor: '#EFF3F9', paddingVertical: 10,paddingBottom:20, paddingHorizontal: 5,paddingRight:10,flex:1, justifyContent: 'space-between', borderRadius: 15 }}>
+               <TouchableOpacity onPress={()=>this.openModal(item)}
+                //    ()=> this.props.navigation.navigate('CustomerEdit',{customerId: item.customerId})
+                   
+                
+                    style={{alignSelf:'flex-end',marginRight:10,marginBottom:10}}>
+                   <Icon name="ios-more" />
+               </TouchableOpacity>
+               <View style={{ flexDirection: 'row', justifyContent: 'space-between'}}>
                <View style={{ width: 33, height: 33, borderRadius: 16.5, backgroundColor: '#2069F3', justifyContent: 'center', alignItems: 'center' }}>
                    <Text style={{ color: 'white' }}>{item.nameSurname.substring(0, 1)}</Text>
                </View>
@@ -338,7 +392,11 @@ class HomeScreen extends Component<Props,State>{
                        {item.displayTotalAmount}
                    </Text>
                </View>
-           </View>}
+           
+               </View>
+               
+           
+           </TouchableOpacity>}
            
            keyExtractor={(item, index) => String(index)}
            onEndReached={() => {
@@ -383,6 +441,71 @@ class HomeScreen extends Component<Props,State>{
 
                
     }
+    deleteSelectedCustomer() {
+        this.customerEdit.close()
+         this.props.customerDelete(this.state.customerId);
+        // this.setState({ page: 1 });
+
+        //   this.props.GetCustomers(this.state.orderType, this.state.searchText, this.state.dayOfWeek, 1);
+          
+
+    
+      }
+    deleteCustomerAlert() {
+
+
+            Alert.alert(
+              //title
+              'Müşteri Silme İşlemi',
+              //body
+              'Müşteriyi silmek istiyor musunuz?',
+              [
+                { text: 'Vazgeç' , onPress: () => this.customerEdit.close() },
+                { text: 'Evet', onPress: () => this.deleteSelectedCustomer() },
+              ],
+              { cancelable: false }
+            );
+        
+
+    }
+
+    _renderCustomerSheetContent() {
+        return (
+    
+          <View style={stylesNew.SheetContainer}>
+            <TouchableOpacity style={[stylesNew.SheetItemContainer, { justifyContent: 'flex-end', padding: 5 }]}
+              onPress={() => {
+                this.customerEdit.close();
+              }}>
+              <Icon name="ios-close" style={[{ fontSize: 40, marginRight: 10 }, stylesNew.SheetItemIcon]}></Icon>
+    
+            </TouchableOpacity>
+        
+            <TouchableOpacity style={stylesNew.SheetItemContainer}
+              onPress={() => {
+                this.customerEdit.close();
+                this.props.navigation.navigate('CustomerEdit',{customerId: this.state.customerId})
+              }}>
+                <Icon type="FontAwesome" name="pencil"  style={[stylesNew.SheetItemIcon,{ fontSize:22}]} ></Icon>
+              <Text style={stylesNew.SheetItemText}
+              >Düzenle</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={stylesNew.SheetItemContainer}
+              onPress={() => {
+             
+                this.deleteCustomerAlert()
+                // this.customerEdit.close();
+              }}>
+                <Icon type="FontAwesome" name="trash-o" style={[stylesNew.SheetItemIcon,{ fontSize:25}]}></Icon>
+            
+              <Text style={stylesNew.SheetItemText}
+              >Sil</Text>
+            </TouchableOpacity>
+          </View>
+        );
+      }
+
+
 
     search() {
         this._getCustomerList(this.state.orderType, this.state.searchText, this.state.dayOfWeek, 1);
@@ -391,7 +514,7 @@ class HomeScreen extends Component<Props,State>{
      renderContentArea = () => {
         const top = this.state.scrollY.interpolate({
             inputRange: [-15,0 ,35, 70,90],
-            outputRange: [0,0,-35, -75,-75]
+            outputRange: [0,0,-35, -105,-105]
         });
 
         const topSecond = this.state.scrollY.interpolate({
@@ -399,14 +522,15 @@ class HomeScreen extends Component<Props,State>{
             outputRange: [1,1, 0,0]
         });
         const topThird = this.state.scrollY.interpolate({
-            inputRange: [-15,0 ,35, 70,90],
-            outputRange: [0,0,0, -40,-40]
+            inputRange: [-15,0 ,35, 70,90,500],
+            outputRange: [0,0,0, -10,-10,-10]
         });
 
 
             let padding =  66
             return (
                 <Animated.View
+                useNativeDriver ={true}
                     showsVerticalScrollIndicator={false}
                     scrollEventThrottle={16}
                     style={{paddingTop: padding, transform: [{translateY: top}]}}
@@ -416,14 +540,14 @@ class HomeScreen extends Component<Props,State>{
                     //     )}
                         
                 >
-                    <View style={[styles.contentContainer, {paddingBottom: 0}]}>
+                    <View style={[styles.contentContainer, {paddingBottom: 0,marginBottom:-20}]}>
                            <View >
                           <Animated.View 
-
+useNativeDriver ={true}
             style={{ transform: [{scaleY: topSecond}]}}
 
             >
-                          <Item style={{borderBottomWidth:0,backgroundColor:'#EFF3F9',paddingVertical:0,paddingLeft:10,marginLeft:20,marginRight:20,borderRadius:15}}>
+                          <Item style={{borderBottomWidth:0,backgroundColor:'#EFF3F9',paddingVertical:0,paddingLeft:10,marginLeft:20,marginRight:20,borderRadius:15,height:40,marginBottom:-10}}>
                             <Icon name="ios-search" />
                             <Input onChangeText={e => 
     this.setState({ searchText: e })
@@ -431,14 +555,16 @@ class HomeScreen extends Component<Props,State>{
   returnKeyLabel='Go' returnKeyType='go' onSubmitEditing={()=>this.search()} 
 
                             value={this.state.searchText}
-                            placeholder="Search"  style={{fontFamily:'Avenir Next',fontSize:24}}>
+                            placeholder="Ara"  style={{fontFamily:'Avenir Next',fontSize:20}}>
                             
                             </Input>
                             </Item>
                           </Animated.View>
 
-                           <Animated.View style={{flexDirection:'row' , transform: [{translateY: topThird}]}}>
-                           <ScrollView alwaysBounceVertical={false} showsHorizontalScrollIndicator={false} alwaysBounceHorizontal={true} style={{flexDirection:'row',marginVertical:30}}>
+                           <Animated.View 
+                           useNativeDriver ={true}
+                           style={{flexDirection:'row' , transform: [{translateY: topThird}]}}>
+                           <ScrollView alwaysBounceVertical={false} horizontal={true} showsHorizontalScrollIndicator={false} alwaysBounceHorizontal={true} style={{flexDirection:'row',marginVertical:30}}>
                            <View style={{flexDirection:'row'}}>
                             <TouchableOpacity onPress={()=>this.changePage(2)} style={{marginHorizontal:10}}>
                                 <Text style={{fontFamily:'Avenir Next',fontWeight:"600",fontSize:16,color: this.state.selectedState === 2 ? 'black': '#8F9599'}}>Ödeme Alınacaklar</Text>
@@ -490,8 +616,13 @@ class HomeScreen extends Component<Props,State>{
     };
 
     getDayOfMusteri(value: number) {
-        this.flatListRef.getNode().scrollToOffset({animated: true, offset: 0})
-        console.log(value)
+        if(value === 8) {
+            logoutUserService()
+        }
+        if(this.props.customers.length > 0) {
+            this.flatListRef.getNode().scrollToOffset({animated: true, offset: 0})
+        }
+    
         this.setState({
           dayOfWeek: value,
         });
@@ -562,7 +693,7 @@ class HomeScreen extends Component<Props,State>{
     this.getDayOfMusteri(itemValue)
 
   }>
-<Picker.Item label="Tüm Günler" value={1} />
+<Picker.Item label="Tüm Günler" value={0} />
   <Picker.Item label="Pazartesi" value={1} />
   <Picker.Item label="Salı" value={2} />
   <Picker.Item label="Çarşamba" value={3}/>
@@ -570,10 +701,32 @@ class HomeScreen extends Component<Props,State>{
   <Picker.Item label="Cuma" value={5} />
   <Picker.Item label="Cumartesi" value={6} />
   <Picker.Item label="Pazar" value={7} />
+  <Picker.Item label="cıkıs" value={8} />
 </Picker>
                        </RBSheet>
                     }
+
+<RBSheet
+              ref={ref => {
+                this.customerEdit = ref;
+              }}
+              height={230}
+              duration={200}
+              customStyles={{
+                container: {
+                  justifyContent: "flex-start",
+                  alignItems: "flex-start",
+                  paddingLeft: 20,
+                  backgroundColor: '#EFF3F9',
+                  borderTopLeftRadius: 15,
+                  borderTopRightRadius: 15
+                }
+              }
+              }>
+                  {this._renderCustomerSheetContent()}
+                  </RBSheet>
                 </View>
+                {this.showSimpleMessage()}
             </View>
         )
     }
@@ -606,7 +759,7 @@ const styles = StyleSheet.create({
 
         marginBottom: 13,
         fontSize: 18,
-        lineHeight: 18,
+        // lineHeight: 20,
         // fontWeight: 'bold',
 
         fontWeight: "600",
@@ -686,7 +839,9 @@ const mapStateToProps = (state: AppState) => ({
     isHomeLoading: state.home.isHomeLoading,
     customers: state.home.customers,
     CustomerDeleteIsSuccess: state.customerDelete.isSuccessCustomerDelete,
-    isLoadingCustomerDelete : state.customerDelete.isLoadingCustomerDelete
+    isLoadingCustomerDelete : state.customerDelete.isLoadingCustomerDelete,
+    message : state.customerDelete.message,
+    totalRecords : state.home.totalRecords
   })
   function bindToAction(dispatch: any) {
     return {

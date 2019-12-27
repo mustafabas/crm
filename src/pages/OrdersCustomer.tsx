@@ -9,20 +9,17 @@ import { GetOrders, GetOrdersMore } from "../redux/actions/orderAction";
 import { AppState } from "../redux/store";
 import { IOrderItem } from "../redux/models/orderModel";
 import Icon from "react-native-vector-icons/Ionicons";
-
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { AddCash } from "../redux/actions/addCashAction";
 import { orderDelete } from "../redux/actions/deleteOrderAction"
 import RBSheet from "react-native-raw-bottom-sheet";
+import { ICustomerDetailItem } from "../redux/models/homeModel";
 
 interface Props {
   navigation: NavigationScreenProp<NavigationState>;
   orders: IOrderItem[];
-  takeTotalAmount: number;
-  tookTotalAmount: number;
-  restTotalAmount: number;
-  isOrderLoading: boolean;
+  customerDetailModel : ICustomerDetailItem;
   loadingMore: boolean;
   isSuccess :boolean;
   GetOrders: (customerId: number, pageIndex: number, pageSize: number) => void;

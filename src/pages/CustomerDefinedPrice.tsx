@@ -169,8 +169,7 @@ class Products extends Component<Props, State> {
   }
 
   odemeAl(values: priceData){
-    console.log(values.price)
-      console.log(this.state.customerPriceId)
+
     this.props.customerPriceEdit(Number(values.price.replace(",",".")),this.state.customerPriceId);
     // this.closeAmountModal();
     this.AmountSheet.close();

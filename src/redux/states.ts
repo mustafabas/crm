@@ -1,14 +1,17 @@
-import { ICustomerItem } from "./models/homeModel";
+import { ICustomerItem, ICustomerDetailItem } from "./models/homeModel";
 import { IOrderItem } from "./models/orderModel";
 import { IProductItem} from "./models/productModel";
 import {ICustomerPriceProductItem} from "./models/customerPriceProductModel"
 import {IDefinedCustomerPriceItem} from "./models/customerDefinedPriceModel"
 import {IProductForCustomerItem} from "./models/productForCustomerModel"
-import {IEmployeeItem} from "./models/employeeModel"
+import {IEmployeeItem, IEmployeeItemBaseResponseModel} from "./models/employeeModel"
 import { IUserItem } from "./models/addUserModel";
 import { IGetUserItem} from "./models/userModel";
 import {IReportItem } from "./models/reportModel"
 import {IEmployeeCostItem} from "./models/employeeCostModel"
+import { UserFirstData } from "./reducers/signUpReducers";
+import { IProduct } from "./actions/productEditAction";
+import { Customer } from "./actions/customerEditAction";
 
 export interface State {
     data: any[];
@@ -30,16 +33,34 @@ export interface State {
     isFinished: boolean;
     isSucceed: boolean;
     loginErrorMessage : string;
-  
+
+
   }
+
+
+  export interface UserCreate {
+    isLoading: boolean;
+    isFinished: boolean;
+    isSucceed: boolean;
+    loginErrorMessage : string;
+    isSecondLoading : boolean;
+    isSecondFinished : boolean;
+    isSecondSucceed : boolean;
+    isThirdLoading : boolean;
+    isThirdFinished : boolean;
+    isThirdSucceed : boolean;
+    userFirstData : UserFirstData;
+  }
+
+
 
   export interface Orders
   {
     orders: IOrderItem[];
     isOrderLoading: boolean;
-    takeTotalAmount:number;
-    tookTotalAmount:number;
-    restTotalAmount:number;
+    customerDetail : ICustomerDetailItem;
+    isCustomerDetailLoading : boolean;
+    loadingMore:boolean;
   }
 
   export interface CustomerAdd
@@ -52,18 +73,24 @@ export interface State {
   {
     isLoadingCustomerDelete:boolean;
     isSuccessCustomerDelete: boolean;
+    message : string;
+    
   }
 
   export interface CustomerEdit
   {
-    isSuccess: boolean,
-    CustomerEditMessage: string,
+    isSuccess: boolean;
+    CustomerEditMessage: string;
+    customer : Customer;
+    loading : boolean;
+
   }
 
   export interface ProductAdd
   {
-    isSuccess: boolean,
-    ProductAddMessage: string, 
+    isSuccess: boolean | null;
+    ProductAddMessage: string; 
+    isAddLoading:boolean;
   }
 
   export interface AddCash
@@ -79,14 +106,22 @@ export interface State {
 
 export interface AddOrder
   {
-    isSuccess: boolean,
-    AddOrderMessage: string,
+    isSuccess: boolean;
+    AddOrderMessage: string;
+    isTried : boolean;
+    isLoading : boolean;
+
   }
 
   export interface ProductEdit
   {
-    isSuccess: boolean,
+    
     ProductEditMessage: string,
+    product: IProduct;
+    loading : boolean;
+    isSuccess: boolean;
+    Secondloading : boolean;
+    SecondisSuccess: boolean;
   }
 
   export interface CustomerPriceProductState{
@@ -119,6 +154,8 @@ export interface ProductForCustomer{
 export interface OrderDelete
   {
     isSuccess: boolean;
+    Message: string;
+    
   }
 
   export interface EditOrder
@@ -135,10 +172,17 @@ export interface OrderDelete
 
 export interface EmployeeAdd
 {
-  isSuccess: boolean,
-  EmployeeAddMessage: string,
+  isSuccess: boolean;
+  EmployeeAddMessage: string;
+  isLoading:boolean;;
 }
-
+export interface EmployeeEditRedecurState
+{
+  isSuccess: boolean;
+  EmployeeUpdateMessage: string;
+  employee :IEmployeeItemBaseResponseModel | null;
+  isLoading : boolean;
+}
 export interface AddUser
   {
     isSuccess: boolean,
@@ -157,8 +201,9 @@ export interface AddUser
 
 export interface EmployeeCostAdd
 {
-  isSuccess: boolean,
-  EmployeeCostAddMessage: string,
+  isSuccess: boolean;
+  EmployeAddCostLoading:boolean;
+  EmployeeCostAddMessage: string;
 }
 
 export interface ReportState{

@@ -4,6 +4,7 @@ import { Dispatch } from "react";
 import { EMPLOYEECOST_GET, EMPLOYEECOST_LOADING } from '../types'
 import { Action } from '../states'
 import { IEmployeeCostItem } from "../models/employeeCostModel";
+import AsyncStorage from '@react-native-community/async-storage';
 
 
 export function GetEmployeeCost() {
@@ -11,38 +12,42 @@ export function GetEmployeeCost() {
     return (dispatch: Dispatch<Action>) => {
 
         dispatch(loading(true));
-        axios.get(WATER_GETEMPLOYEECOST,
 
-        )
-            .then((response) => {
-                if (response.data.isSuccess) {
-                    var employeeCostModel: IEmployeeCostItem[] = [];
-
-                    response.data.result.homeEmployeeCostItemModels.forEach((employeeCost: any) => {
-                        var employeeCostItem: IEmployeeCostItem = {
-                            cost: employeeCost.cost,
-                            employeId: employeeCost.employeId,
-                            employeName: employeeCost.employeName,
-                            createdDate: employeeCost.createdDate,
-                            id: employeeCost.id,
-                        }
-                        employeeCostModel.push(employeeCostItem);
-                    });
-
-                    dispatch(employeeCost(employeeCostModel));
-                }
-                else {
-
-                }
-            })
-            .catch((err) => {
-                // dispatch(loading(false));
-
-            });
-
-
+        AsyncStorage.multiGet(['userToken', 'userId']).then((res) => {
+            let token = res[0][1];
+            let userId = res[1][1]; 
+            const headers = {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+          }
+          axios.get(WATER_GETEMPLOYEECOST+"?userId="+userId,
+            )
+                .then((response) => {
+                    if (response.data.isSuccess) {
+                        var employeeCostModel: IEmployeeCostItem[] = [];
+    
+                        response.data.result.homeEmployeeCostItemModels.forEach((employeeCost: any) => {
+                            var employeeCostItem: IEmployeeCostItem = {
+                                cost: employeeCost.cost,
+                                employeId: employeeCost.employeId,
+                                employeName: employeeCost.employeName,
+                                createdDate: employeeCost.createdDate,
+                                id: employeeCost.id,
+                            }
+                            employeeCostModel.push(employeeCostItem);
+                        });
+                    console.log(employeeCostModel);
+                        dispatch(employeeCost(employeeCostModel));
+                    }
+                })
+                .catch((err) => {
+                    // dispatch(loading(false));
+    
+                });
+    
+    
+        });
     }
-
 }
 
 

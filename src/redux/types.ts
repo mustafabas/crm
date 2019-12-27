@@ -6,9 +6,11 @@ export const ORDERS_GET = "OrdersGet";
 export const ORDERS_GET_MORE = "OrdersGetMore";
 export const ORDER_LOADING = "OrderLoading";
 export const ORDER_LOADING_MORE = "OrderLoadingMORE";
+export const CUSTOMER_DETAIL_LOADING ="CustomerDetailLoading";
 export const ORDER_GET_CUSTOMERID = "GetCustomerId";
-
+export const CUSTOMER_DETAIL = "CustomerDetail";
 export const CUSTOMER_ADD_SUCCEED ="CustomerAddSucceed";
+export const CUSTOMER_ADD_LOADING = "CustomerAddLoading"
 export const CUSTOMER_ADD_FAILED ="CustomerAddFailed";
 
 export const CUSTOMER_DELETE_SUCCEED ="CustomerDeleteSucceed";
@@ -19,14 +21,39 @@ export const CUSTOMER_DELETE_LOADING= "CustomerDeleteLoading";
 
 export const CUSTOMER_EDIT_SUCCEED ="CustomerEditSucceed";
 export const CUSTOMER_EDIT_FAILED ="CustomerEditFailed";
+export const CUSTOMER_EDIT_LOADING = "CustomerEditLoading";
+
+
+export const CUSTOMER_GETBY_ID_LOADING = 'CustomerGetByIdLoading' ;
+export const CUSTOMER_GETBY_ID = 'CustomerGetById' ;
+export const CUSTOMER_GETBY_ID_FAILED = 'CustomerGetByIdFailed' ;
+
 
 export const LOGIN_STARTED = "loginStarted";
 export const LOGIN_SUCCEED = "loginSucceed";
 export const LOGIN_FAILED = "loginFailed";
+export const RESET_PROPS = "resetProps";
 
+
+export const  SIGNUP_STARTED = "SignUpStarted";
+export const SIGNUP_SUCCEED = "SignUpucceed";
+export const SIGNUP_FAILED = "SignUpFailed";
+
+export const  SIGNUP2_STARTED = "SignUp2Started";
+export const SIGNUP2_SUCCEED = "SignUp2Succeed";
+export const SIGNUP2_FAILED = "SignUp2Failed";
+
+export const  SIGNUP3_STARTED = "SignUp3Started";
+export const SIGNUP3_SUCCEED = "SignUp3Succeed";
+export const SIGNUP3_FAILED = "SignUp3Failed";
+
+
+
+export const USER_CREATE_FIRST_STEP = "userCreateFirstStep";
 export const SET_CURRENT_USER = 'SET_CURRENT_USER';
 
 export const PRODUCT_ADD_SUCCEED = "ProductAddSucceed";
+export const PRODUCT_ADD_LOADING = "ProductAddLoading";
 export const PRODUCT_ADD_FAILED = "ProductAddFailed";
 
 export const GET_TAKE_TOTAL_AMOUNT = "GetTakeTotalAmounts";
@@ -41,10 +68,16 @@ export const PRODUCT_LOADING = "ProductLoading";
 
 export const ADD_ORDER_SUCCEED ="AddOrderSucceed";
 export const ADD_ORDER_FAILED ="AddOrderFailed";
+export const ADD_ORDER_IS_LOADING = "AddOrderIsLoading";
+
 
 export const EDIT_PRODUCT_SUCCEED ="EditProductSucceed";
+export const EDIT_PRODUCT_LOADING ="EditProductLoading";
+
 export const EDIT_PRODUCT_FAILED ="EditProductFailed";
 
+export const GET_PRODUCT_BY_ID = "getProductById"
+export const GET_PRODUCT_BY_ID_LOADING = "getProductByIdLoading"
 export const CUSTOMERPICE_PRODUCT_GET ="CustomerPriceProductGet";
 export const CUSTOMERPICE_PRODUCT_LOADING ="CustomerPriceProductLoading";
 
@@ -71,12 +104,14 @@ export const LOADING_EMPLOYEES = "LoadingEmployees";
 
 export const EMPLOYEE_ADD_SUCCEED ="EmployeeAddSucceed";
 export const EMPLOYEE_ADD_FAILED ="EmployeeAddFailed";
-
+export const EMPLOYEE_ADD_LOADING  = "EmployeeAddLoading";
 export const ADD_USER_SUCCEED ="AddUserSucceed";
 export const ADD_USER_FAILED ="AddUserFailed";
 
 export const EMPLOYEE_EDIT_SUCCEED ="EmployeeEditSucceed";
 export const EMPLOYEE_EDIT_FAILED ="EmployeeEditFailed";
+export const EMPLOYEE_GET_ONE ="EmployeeGetOne";
+export const EMPLOYEE_EDIT_LOADING = "EmployeeEditLoading";
 
 export const EMPLOYEE_DELETE_SUCCEED ="EmployeeDeleteSucceed";
 export const EMPLOYEE_DELETE_FAILED ="EmployeeDeleteFailed";
@@ -86,6 +121,7 @@ export const USER_LOADING = "UserLoading";
 
 export const EMPLOYEE_COST_ADD_SUCCEED ="EmployeeCostAddSucceed";
 export const EMPLOYEE_COST_ADD_FAILED ="EmployeeCostAddFailed";
+export const EMPLOYE_COST_ADD_LOADING = "EmployeeCostAddLoading";
 
 export const REPORT_GET = "ReportGet";
 export const REPORT_LOADING = "ReportLoading";

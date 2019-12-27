@@ -22,7 +22,7 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import Icon from "react-native-vector-icons/Ionicons";
 import { customerDelete } from "../redux/actions/customerDeleteAction";
-import RNPickerSelect from 'react-native-picker-select';
+// import RNPickerSelect from 'react-native-picker-select';
 import { Input } from "react-native-elements";
 import RBSheet from "react-native-raw-bottom-sheet";
 import { stat } from "fs";
@@ -281,7 +281,7 @@ class Customer extends Component<Props, State> {
     }
     else {
       if ((this.props.customers.length > 0 || (this.props.isHomeLoading===false && this.state.page > 1) && this.props.isLoadingCustomerDelete===false)) {
-        console.log(this.props.isLoadingCustomerDelete, "çek "); 
+
         return (
           <View>
             {this._renderActivity()}

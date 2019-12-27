@@ -138,7 +138,7 @@ export default class PhoneVerificationScreen extends Component<Props, {}> {
 
             >
               {props => {
-                console.log(props, "fdsfsdfdsf");
+          
                 return (
                   <View style={{}}>
                     {/* <View style={styles.headStyle}>

@@ -7,7 +7,8 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "build:ios": "react-native bundle --entry-file='index.js' --bundle-output='./ios/main.jsbundle' --dev=false --platform='ios'"
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.6.3",
@@ -21,6 +22,9 @@
     "@types/redux-logger": "^3.0.7",
     "@types/yup": "^0.26.26",
     "add": "^2.0.6",
+    "appcenter": "2.6.1",
+    "appcenter-analytics": "2.6.1",
+    "appcenter-crashes": "2.6.1",
     "axios": "^0.19.0",
     "formik": "^2.0.6",
     "native-base": "^2.13.8",
@@ -34,6 +38,7 @@
     "react-native-raw-bottom-sheet": "^2.0.6",
     "react-native-reanimated": "^1.4.0",
     "react-native-svg": "^9.13.6",
+    "react-native-svg-icon": "^0.8.1",
     "react-navigation": "^4.0.10",
     "react-navigation-drawer": "^2.3.3",
     "react-navigation-stack": "^1.10.3",
@@ -43,6 +48,7 @@
     "redux-logger": "^3.0.6",
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.3.0",
+    "rn-placeholder": "^3.0.0",
     "typescript": "^3.7.3",
     "yarn": "^1.21.0",
     "yup": "^0.27.0"
@@ -52,6 +58,7 @@
     "@babel/runtime": "^7.7.5",
     "@react-native-community/eslint-config": "^0.0.5",
     "babel-jest": "^24.9.0",
+    "babel-plugin-transform-remove-console": "^6.9.4",
     "eslint": "^6.7.2",
     "jest": "^24.9.0",
     "metro-react-native-babel-preset": "^0.57.0",

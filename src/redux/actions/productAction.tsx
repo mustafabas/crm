@@ -4,6 +4,7 @@ import { Dispatch } from "react";
 import {PRODUCT_GET,PRODUCT_LOADING } from './../types'
 import {Action} from '../states'
 import { IProductItem } from "../models/productModel";
+import { AsyncStorage } from 'react-native';
 
 
 export function GetProducts() {
@@ -12,38 +13,54 @@ export function GetProducts() {
   
     dispatch(loading(true));
 
-  axios.get(WATER_GET_PRODUCT,
-    
-    )
-  .then((response) =>{
-    
-  if(response.data.isSuccess){
-      var productModel :IProductItem[] = [];
+
+    AsyncStorage.multiGet(['userToken', 'userId']).then((res) => {
+      let token = res[0][1];
+
       
-      response.data.result.homeProductItemModels.forEach((product:any) => {
-            var productItem : IProductItem={
-                productId :product.productId,
-                productName : product.productName,
-                productCode :product.productCode,
-                price :product.price,
-                productStatus: product.productStatus,
-            }
-            productModel.push(productItem);         
-      });
-   
-      dispatch(products(productModel));
-      
+      const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
     }
-   
+
+    axios.get(WATER_GET_PRODUCT,
+    
+      {headers: headers })
+    .then((response) =>{
+      
+    if(response.data.isSuccess){
+        var productModel :IProductItem[] = [];
+        
+        response.data.result.homeProductItemModels.forEach((product:any) => {
+              var productItem : IProductItem={
+                  productId :product.productId,
+                  productName : product.productName,
+                  productCode :product.productCode,
+                  price :product.price,
+                  productStatus: product.productStatus,
+              }
+              productModel.push(productItem);         
+        });
+     
+        dispatch(products(productModel));
+        dispatch(loading(false));
+      }
+     
+    
+    else {
+      dispatch(loading(false));
+    }
+    })
+    .catch((err) => {
+      dispatch(loading(false));
+    });
   
-  else {
-
-  }
+  }).catch(err => {
+    dispatch(loading(false));
   })
-  .catch((err) => {
 
-  });
 
+ 
 
   }
 

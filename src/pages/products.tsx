@@ -51,6 +51,7 @@ class Products extends Component<Props, State> {
 
 
       headerStyle: {
+
         backgroundColor: '#2B6EDC',
       },
       headerTintColor: '#fff',
@@ -144,7 +145,7 @@ class Products extends Component<Props, State> {
         onRefresh={() => this.onRefresh()}
         data={this.props.products}
         renderItem={({ item }) => (
-          <View style={styles.row}>
+          <View style={[styles.row,{backgroundColor:'white'}]}>
             <View style={styles.row_cell5}>
               <View style={styles.row_cell1}>
                 <Text style={styles.musteri_adi}>{item.productName}</Text>
