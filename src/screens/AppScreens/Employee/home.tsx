@@ -380,6 +380,7 @@ class Employee extends Component<Props, State> {
           <Text style={styles.employeeCostButtonText}>Çalışan Giderleri</Text>
         </Button>
         <FlatList
+          showsVerticalScrollIndicator={false}
           style={{ marginBottom: 40 }}
           refreshing={this.state.refreshing}
           onRefresh={() => this.onRefresh()}
