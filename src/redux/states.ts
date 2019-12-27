@@ -10,6 +10,8 @@ import { IGetUserItem} from "./models/userModel";
 import {IReportItem } from "./models/reportModel"
 import {IEmployeeCostItem} from "./models/employeeCostModel"
 import { UserFirstData } from "./reducers/signUpReducers";
+import { IProduct } from "./actions/productEditAction";
+import { Customer } from "./actions/customerEditAction";
 
 export interface State {
     data: any[];
@@ -71,12 +73,17 @@ export interface State {
   {
     isLoadingCustomerDelete:boolean;
     isSuccessCustomerDelete: boolean;
+    message : string;
+    
   }
 
   export interface CustomerEdit
   {
-    isSuccess: boolean,
-    CustomerEditMessage: string,
+    isSuccess: boolean;
+    CustomerEditMessage: string;
+    customer : Customer;
+    loading : boolean;
+
   }
 
   export interface ProductAdd
@@ -108,8 +115,13 @@ export interface AddOrder
 
   export interface ProductEdit
   {
-    isSuccess: boolean,
+    
     ProductEditMessage: string,
+    product: IProduct;
+    loading : boolean;
+    isSuccess: boolean;
+    Secondloading : boolean;
+    SecondisSuccess: boolean;
   }
 
   export interface CustomerPriceProductState{

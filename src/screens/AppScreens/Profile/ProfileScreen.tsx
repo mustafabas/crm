@@ -150,9 +150,9 @@ class ProfileScreen extends Component<Props,State>{
         
         <View style={styles.propsSeperator}></View>
 
-        <TouchableOpacity onPress={()=> this.props.navigation.navigate('UserGivenOrder')} style={styles.profileContainer}>
+        <TouchableOpacity onPress={()=> this.props.navigation.navigate('products')} style={styles.profileContainer}>
           <Icon name="ios-basket" type="ionicon" color={this.state.iconColor} size={25} />
-          <Text style={styles.profileTextStyle}>Siparişlerim</Text>
+          <Text style={styles.profileTextStyle}>Ürünlerim</Text>
           
         </TouchableOpacity>
         <View style={styles.propsSeperator}></View>

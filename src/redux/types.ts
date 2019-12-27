@@ -20,6 +20,13 @@ export const CUSTOMER_DELETE_LOADING= "CustomerDeleteLoading";
 
 export const CUSTOMER_EDIT_SUCCEED ="CustomerEditSucceed";
 export const CUSTOMER_EDIT_FAILED ="CustomerEditFailed";
+export const CUSTOMER_EDIT_LOADING = "CustomerEditLoading";
+
+
+export const CUSTOMER_GETBY_ID_LOADING = 'CustomerGetByIdLoading' ;
+export const CUSTOMER_GETBY_ID = 'CustomerGetById' ;
+export const CUSTOMER_GETBY_ID_FAILED = 'CustomerGetByIdFailed' ;
+
 
 export const LOGIN_STARTED = "loginStarted";
 export const LOGIN_SUCCEED = "loginSucceed";
@@ -64,8 +71,12 @@ export const ADD_ORDER_IS_LOADING = "AddOrderIsLoading";
 
 
 export const EDIT_PRODUCT_SUCCEED ="EditProductSucceed";
+export const EDIT_PRODUCT_LOADING ="EditProductLoading";
+
 export const EDIT_PRODUCT_FAILED ="EditProductFailed";
 
+export const GET_PRODUCT_BY_ID = "getProductById"
+export const GET_PRODUCT_BY_ID_LOADING = "getProductByIdLoading"
 export const CUSTOMERPICE_PRODUCT_GET ="CustomerPriceProductGet";
 export const CUSTOMERPICE_PRODUCT_LOADING ="CustomerPriceProductLoading";
 

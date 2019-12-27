@@ -42,8 +42,9 @@ import ProfileScreen from "../screens/AppScreens/Profile/ProfileScreen";
 // import addOrder from "../pages/addOrder";
 // import editCustomer from "../pages/editCustomer";
 // import addProduct from "../pages/addProduct";
-// import products from "../pages/products";
-// import editProduct from "../pages/editProduct";
+import products from "../screens/AppScreens/Product/produts";
+import productEditScreen from "../screens/AppScreens/Product/productEdit";
+import CustomerEditScreen from '../screens/AppScreens/Customer/CustomerEditScreen'
 // import newPricePage from "../pages/newPricePage";
 // import customerDefinedPricePage from "../pages/CustomerDefinedPrice"
 // import editOrder from "../pages/editOrder";
@@ -70,6 +71,10 @@ import ProfileScreen from "../screens/AppScreens/Profile/ProfileScreen";
 
   const ProfileStack = createStackNavigator(
     {
+      ProfileScreen : ProfileScreen,
+      products : products,
+      productEditScreen : productEditScreen,
+
       AddProduct: { screen: productAdd },
      //AddEmployee: { screen: employeeAdd },
  //     EditEmployee: { screen: editEmployee },
@@ -78,8 +83,19 @@ import ProfileScreen from "../screens/AppScreens/Profile/ProfileScreen";
  
    },
    {
- //     // headerMode:"none"
-   });
+    // headerMode: "none"
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: '#216AF4',
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: '600',
+        fontFamily:'Avenir Next',
+        fontSize:18
+      },
+    },
+  });
   
 // const IconNew = createIconSetFromIcoMoon(icoMoonConfig)
 const CustomerStack = createStackNavigator(
@@ -132,7 +148,8 @@ const HomeStack = createStackNavigator({
   Home : HomeScreen,
   Customer : CustomerOrdersScreen,
   addCustomer : addCustomer,
-  orderAdd : orderAdd
+  orderAdd : orderAdd,
+  CustomerEdit : CustomerEditScreen
 
 },{
   defaultNavigationOptions: {

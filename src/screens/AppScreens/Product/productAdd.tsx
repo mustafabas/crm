@@ -109,6 +109,9 @@ class productAdd extends Component<Props, {}> {
         return (<Spinner color='01C3E3' />)
     }
     render() {
+        if(this.props.isSuccees) {
+            this.props.navigation.goBack()
+        }
         return (
             <View style={styles.addCustomerContainer}>
                 <StatusBar backgroundColor="#2B6EDC" />

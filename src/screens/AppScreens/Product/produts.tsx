@@ -12,11 +12,11 @@ import {
 } from "react-native";
 import { NavigationScreenProp, NavigationState, ScrollView } from "react-navigation";
 import { connect } from "react-redux";
-import { HeaderLeftRight } from "../components";
-import styles from "./styles";
-import { GetProducts } from "../redux/actions/productAction";
-import { AppState } from "../redux/store";
-import { IProductItem } from "../redux/models/productModel";
+
+import styles from "../../styles";
+import { GetProducts } from "../../../redux/actions/productAction";
+import { AppState } from "../../..//redux/store";
+import { IProductItem } from "../../../redux/models/productModel";
 import Icon from "react-native-vector-icons/Ionicons";
 import RBSheet from "react-native-raw-bottom-sheet";
 
@@ -44,20 +44,11 @@ class Products extends Component<Props, State> {
   static navigationOptions = ({ navigation }: Props) => {
     return {
 
-      title: 'Ürünler Listesi',
+    title : 'Ürünlerim',
       headerRight: <TouchableOpacity style={{ marginRight: 20 }} onPress={() => navigation.navigate("AddProduct")}>
         <Icon name="ios-add" size={40} style={{ color: 'white' }} />
       </TouchableOpacity>,
 
-
-      headerStyle: {
-
-        backgroundColor: '#2B6EDC',
-      },
-      headerTintColor: '#fff',
-      headerTitleStyle: {
-        fontWeight: 'bold',
-      },
 
     }
 
@@ -118,13 +109,14 @@ class Products extends Component<Props, State> {
 
   editProduct() {
     this.closeModal();
-    this.props.navigation.navigate("EditProduct",
+    console.log(this.state.productStatus)
+    this.props.navigation.navigate("productEditScreen",
       {
         productId: this.state.productId,
-        productName: this.state.productName,
-        price: this.state.price,
-        productCode: this.state.productCode,
-        productStatus: this.state.productStatus
+        // productName: this.state.productName,
+        // price: this.state.price,
+        // productCode: this.state.productCode,
+        // productStatus: this.state.productStatus
       })
 
   }
@@ -145,23 +137,33 @@ class Products extends Component<Props, State> {
         onRefresh={() => this.onRefresh()}
         data={this.props.products}
         renderItem={({ item }) => (
-          <View style={[styles.row,{backgroundColor:'white'}]}>
-            <View style={styles.row_cell5}>
-              <View style={styles.row_cell1}>
+          <View style={[styles.row,{justifyContent:'space-between',backgroundColor:'#EFF3F9'}]}>
+
+              <View style={{justifyContent:'space-between'}} >
                 <Text style={styles.musteri_adi}>{item.productName}</Text>
-                <Text style={styles.alt_bilgi}>Ürün Kodu: {item.productCode}</Text>
+                <View style={{flexDirection:'row'}}>
+                <Text style={styles.alt_bilgi}>Ürün Kodu: </Text>
+                <Text style={[styles.alt_bilgi,{fontWeight:'600'}]} >{item.productCode}</Text>
+                </View>
               </View>
-              <View style={styles.row_cell2}>
-                <Text style={styles.productUrunfiyatText}>Birim Fiyat: {item.price} TL</Text>
-              </View>
-            </View>
-            <TouchableOpacity
-              style={styles.iconButtonCustomer}
+              <View style={{}} >
+              <TouchableOpacity
+              style={[styles.iconButtonCustomer,{alignSelf:'flex-end',marginBottom:30}]}
 
               onPress={() => this.openModal(item.productCode, item.productName, item.price, item.productId, item.productStatus)}>
 
-              <Icon name="md-more" size={24} color={"#C4B47B"} />
+              <Icon name="ios-more" size={25}  />
             </TouchableOpacity>
+               <View style={{flexDirection:'row'}}>
+               <Text style={styles.alt_bilgi}>Birim Fiyat: </Text>
+                <Text style={[styles.alt_bilgi,{fontWeight:'600'}]}>
+                {item.price} TL
+                </Text>
+                
+               </View>
+              </View>
+
+            
           </View>)}
         keyExtractor={item => item.productId.toString()}
       />);
@@ -169,7 +171,7 @@ class Products extends Component<Props, State> {
   }
   render() {
     return (
-      <View style={styles.container}>
+      <View style={[styles.container,{backgroundColor:''}]}>
         <StatusBar backgroundColor="#2B6EDC" />
 
         <KeyboardAvoidingView

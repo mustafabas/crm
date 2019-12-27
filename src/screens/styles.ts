@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    alignItems: 'center',
+    // alignItems: 'center',
     paddingTop: 10,
     paddingBottom: 10,
     paddingLeft: 18,
@@ -179,18 +179,21 @@ const styles = StyleSheet.create({
     fontSize: 24,
   },
   musteri_adi: {
-    color: "#131843",
-    textAlignVertical: 'bottom',
-    includeFontPadding: false,
-    flex: 0,
+    color: "#2069F3",
+    // textAlignVertical: 'bottom',
+    // includeFontPadding: false,
+
+    fontWeight:'600',
     fontSize: 20,
+    fontFamily:'Avenir Next'
   },
   alt_bilgi: {
-    color: "#0A157A",
-    textAlignVertical: 'top',
-    includeFontPadding: false,
-    flex: 0,
-    fontSize: 10,
+    color: "#404243",
+    // textAlignVertical: 'top',
+    // includeFontPadding: false,
+    // flex: 0,
+    fontSize: 16,
+    fontFamily:'Avenir Next'
   },
   detay_bilgi: {
     color: "#0A157A",

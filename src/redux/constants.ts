@@ -7,12 +7,14 @@ export const WATER_CUSTOMERS_HOME_GET = WATER_BASE_URL_NEW+"/api/customer?orderT
 export const WATER_USER_LOGIN = WATER_BASE_URL_NEW+"/api/User/login";
 export const WATER_CUSTOMER_ORDERS_GET = WATER_BASE_URL_NEW+"/api/customer/CustomerOrder?customerid=";
 export const WATER_CUSTOMER_ADD = WATER_BASE_URL+"/customer";
-export const WATER_CUSTOMER_DELETE = WATER_BASE_URL+"/customer/Delete";
-export const WATER_CUSTOMER_EDIT = WATER_BASE_URL+"/customer/Update";
+export const WATER_CUSTOMER_DELETE = WATER_BASE_URL_NEW+"/api/customer/Delete";
+export const WATER_CUSTOMER_EDIT = WATER_BASE_URL_NEW+"/api/customer/Update";
+export const WATER_CUSTOMER_GETBY_ID = WATER_BASE_URL_NEW + '/api/customer/GetCustomerById'
 export const WATER_PRODUCT_ADD = WATER_BASE_URL_NEW+"/api/Product";
 export const WATER_ADD_CASH = WATER_BASE_URL+"/Cash";
 export const WATER_GET_PRODUCT = WATER_BASE_URL_NEW+"/api/Product";
-export const WATER_EDIT_PRODUCT = WATER_BASE_URL+"/Product/Update";
+export const WATER_EDIT_PRODUCT = WATER_BASE_URL_NEW+"/api/Product/Update";
+export const WATER_GET_PRODUCT_BY_ID = WATER_BASE_URL_NEW  +'/api/Product/GetProductById'
 export const WATER_ADD_ORDER = WATER_BASE_URL_NEW+"/api/Order";
 export const WATER_CUSTOMER_PRICE_GET_PRODUCT = WATER_BASE_URL+"/CustomerPrice/Product?customerId=";
 export const WATER_CUSTOMER_PRICE_ADD = WATER_BASE_URL+"/CustomerPrice";

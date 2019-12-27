@@ -32,6 +32,7 @@ console.log(WATER_CUSTOMERS_HOME_GET_ORDER_TYPE_SEARCH_TEXT)
 
         if (response.data.isSuccess) {
           var customersModel: ICustomerItem[] = [];
+          var totalRecords = response.data.result.totalRecords
 
           response.data.result.homeCustomerItemModels.forEach((customer: any) => {
             var customerItem: ICustomerItem = {
@@ -50,7 +51,7 @@ console.log(WATER_CUSTOMERS_HOME_GET_ORDER_TYPE_SEARCH_TEXT)
             customersModel.push(customerItem);
           });
 
-          dispatch(customers(customersModel));
+          dispatch(customers(customersModel,totalRecords));
           dispatch(loading(false));
         }
 
@@ -127,9 +128,9 @@ export const loading = (loader: boolean) => ({
   payload: loader
 })
 
-export const customers = (customers: ICustomerItem[]) => ({
+export const customers = (customers: ICustomerItem[],totalRecords : number) => ({
   type: CUSTOMER_GET,
-  payload: customers
+  payload: [customers,totalRecords]
 })
 export const customersMore = (customers: ICustomerItem[]) => ({
   type: CUSTOMER_GET_MORE,

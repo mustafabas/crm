@@ -33,7 +33,6 @@
 		7A6946999DB647179E077646 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2991D973303940AD8C208545 /* EvilIcons.ttf */; };
 		8A7139A00BD64E9FA056CA08 /* FontAwesome5_Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4AEA28B6D8C044069EE89858 /* FontAwesome5_Regular.ttf */; };
 		9BEF0E60D67F4126A3360215 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 15A766A5A4F042F5B872C1EC /* MaterialCommunityIcons.ttf */; };
-		A22B63F323B4984900AA7794 /* AppCenter-Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = A22B63F223B4984900AA7794 /* AppCenter-Config.plist */; };
 		AE21BF785CBC469D8FF1447A /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E1344DE2D3FF4AC79AE3E5D8 /* MaterialIcons.ttf */; };
 		AF482F947F531A1B972FBC3E /* libPods-HostelApp-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DED29041650E0BF33FA14E25 /* libPods-HostelApp-tvOSTests.a */; };
 		BDC2D475578F94631C5089AB /* libPods-HostelAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8518382294C46642AFCDABDB /* libPods-HostelAppTests.a */; };
@@ -417,7 +416,6 @@
 				BDDFA1A0F090482CA28B0C0F /* FontAwesome.ttf in Resources */,
 				15E8FDF626CE4D11B76697A3 /* FontAwesome5_Brands.ttf in Resources */,
 				8A7139A00BD64E9FA056CA08 /* FontAwesome5_Regular.ttf in Resources */,
-				A22B63F323B4984900AA7794 /* AppCenter-Config.plist in Resources */,
 				6239521296F94CD2A291BD16 /* FontAwesome5_Solid.ttf in Resources */,
 				6F2ADEB02106495DA59749F9 /* Fontisto.ttf in Resources */,
 				08C8B320D34D4C53862C6231 /* Foundation.ttf in Resources */,

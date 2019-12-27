@@ -934,7 +934,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
      alignItems: 'flex-start', 
      flexDirection: 'column', 
-    paddingTop: 10
+    // paddingTop: 10
   },
   SheetAmountContainer: {
     flex: 1, justifyContent: 'flex-start', alignItems: 'flex-start', flexDirection: 'column', paddingTop: 10,

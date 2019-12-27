@@ -6,12 +6,13 @@ import { Action } from '../states'
 import { Alert, AsyncStorage } from 'react-native';
 import { reset } from './signUpActions';
 import {axiosBase} from '../services/HeaderConfig'
+import { GetCustomers } from './homeAction';
 
 export function customerAdd(nameSurname: string, companyName: string, dayOfWeek: number, fountainCount: string, dayOfWeeks: string,address:string,phoneNumber:string) {
 
 
 
-  return async (dispatch: Dispatch<Action>) => {
+  return async (dispatch: any) => {
 
     dispatch(customerAddIsLoading(true))
 
@@ -49,16 +50,7 @@ export function customerAdd(nameSurname: string, companyName: string, dayOfWeek:
             console.log(response.data.message)
             dispatch(customerAddIsSucceed(false, "Müşteri Zaten Var!"));
             dispatch(reset())
-            // Alert.alert(
-            //   //title
-            //   'Müşteri Zaten Var!',
-            //   //body
-            //   '',
-            //   [
-            //     { text: 'Tamam' }
-            //   ],
-            //   { cancelable: false }
-            // );
+            dispatch(GetCustomers(1,"",0,1))
           }
         })
         .catch(error => {

@@ -5,11 +5,12 @@ import {PRODUCT_ADD_SUCCEED,PRODUCT_ADD_FAILED, PRODUCT_ADD_LOADING} from './../
 import {Action} from '../states'
 import { reset } from './loginAction';
 import {AsyncStorage} from 'react-native';
+import { GetProducts } from './productAction';
 
 
 export function productAddAction(productName:string, productCode:string, price:string, productCount:number) {
 
-  return (dispatch : Dispatch<Action>) =>  {
+  return (dispatch : any) =>  {
     dispatch(productAddLoading(true));
     AsyncStorage.multiGet(['userToken', 'userId']).then((res) => {
       let token = res[0][1];
@@ -18,6 +19,7 @@ export function productAddAction(productName:string, productCode:string, price:s
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
     }
+
     axios.post(WATER_PRODUCT_ADD,
       {
           productName: productName,
@@ -26,12 +28,14 @@ export function productAddAction(productName:string, productCode:string, price:s
           productCount:productCount,
           photoPath:"",
           userId : userId
-      })
+      },{headers: headers})
       .then((response) =>{
         if(response.data.isSuccess){
             if(response.data.result){
               dispatch(productAddIsSucceed(true, "Ürün Oluşturuldu!"));
               dispatch(reset());
+              dispatch(GetProducts())
+             
             }
           }
         })
