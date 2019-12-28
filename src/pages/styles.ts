@@ -927,6 +927,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Avenir Next',
     fontSize:16,
     fontWeight:'600',
+    marginRight:50
   },
   SheetContainer: {
     flex: 1, 

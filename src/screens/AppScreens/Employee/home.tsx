@@ -11,8 +11,10 @@ import {
   Alert,
   AsyncStorage,
   Image,
+  Linking,
+  Dimensions
 } from "react-native";
-import { Icon, Input, Item, Tabs, Tab, TabHeading, Text, Button, ScrollableTab, ListItem, Left, Thumbnail, Body, Right, Form, Label, Content, Card, CardItem, Accordion } from 'native-base';
+import { Icon, Input, Item, Tabs, Tab, TabHeading, Text, Button, ScrollableTab, ListItem, Left, Thumbnail, Body, Right, Form, Label, Content, Card, CardItem, Accordion, Spinner } from 'native-base';
 import { NavigationScreenProp, NavigationState, ScrollView, } from "react-navigation";
 import { connect } from "react-redux";
 import { AppState } from "../../../redux/store";
@@ -281,7 +283,7 @@ class Employee extends Component<Props, State> {
   }
 
   componentDidMount() {
-          this.mapToPropsToState();       
+    this.mapToPropsToState();
   }
   _renderEmployeeCostSheetContent() {
     return (<View style={styles.SheetAmountContainer}>
@@ -356,105 +358,112 @@ class Employee extends Component<Props, State> {
   }
   _renderArrowButton(item: any) {
     if (item.fullShow) {
-      return (<Icon style={{ fontSize: 50 }} name="chevron-up" type="EvilIcons"></Icon>);
+      return (<Icon style={{ fontSize: 24, color: "" }} name="caret-up" type="FontAwesome5"></Icon>);
     }
-    return (<Icon style={{ fontSize: 50, color: "green" }} name="chevron-down" type="EvilIcons"></Icon>);
+    return (<Icon style={{ fontSize: 24 }} name="caret-down" type="FontAwesome5"></Icon>);
 
   }
   _renderView() {
     const { isLoading, navigation } = this.props;
 
 
-      if (this.props.employees.length > 0) {
+    if (this.props.employees.length > 0) {
 
-        return (<View style={{padding: 10}}> 
+      return (<View style={{ padding: 10 }}>
         {
-          this.props.isLoading &&    
-          <ActivityIndicator style={{position:"absolute"}}></ActivityIndicator>
-          
+          this.props.isLoading &&
+          <Spinner color='#333' style={{ position: "absolute",  left: (Dimensions.get('window').width / 2) - 25, top:100, zIndex:1000 }}></Spinner>
+
         }
-          <Button style={styles.employeeCostContainer} iconLeft onPress={() => this.props.navigation.navigate("EmployeeCost")}>
-            <Icon name="ios-list"></Icon>
-            <Text style={styles.employeeCostButtonText}>Çalışan Giderleri</Text>
-          </Button>
-          <FlatList
-            style={{ marginBottom: 40 }}
-            refreshing={this.state.refreshing}
-            onRefresh={() => this.onRefresh()}
-            data={this.state.employeeList}
-            renderItem={({ item }) => (
-              <View style={{  flex: 1, borderBottomColor: '#ccc', borderBottomWidth: 1,paddingTop:10  }}>
-                <View style={{ flexDirection: 'row', flex: 1, borderBottomColor: '#000'}}>
-                  <View style={{ flex: 0.17 }} >
-                    <View style={{ width: 33, height: 33, borderRadius: 16.5, backgroundColor: '#2069F3', justifyContent: 'center', alignItems: 'center' }}>
-                      <Text style={{ color: 'white' }}>{item.employeeName.substring(0, 1)}</Text>
+        <Button style={styles.employeeCostContainer} iconLeft onPress={() => this.props.navigation.navigate("EmployeeCost")}>
+          <Icon name="ios-list"></Icon>
+          <Text style={styles.employeeCostButtonText}>Çalışan Giderleri</Text>
+        </Button>
+        <FlatList
+          style={{ marginBottom: 40 }}
+          refreshing={this.state.refreshing}
+          onRefresh={() => this.onRefresh()}
+          data={this.props.employees}
+          renderItem={({ item }) => (
+            <Content padder>
+              <View style={{
+                shadowColor: "#000",
+                shadowOffset: {
+                  width: 0,
+                  height: 1,
+                },
+                shadowOpacity: 0.22,
+                shadowRadius: 2.22,
+                elevation: 3,
+              }}>
+                <CardItem header style={{ borderBottomColor: '#CFD3D7', borderBottomWidth: 1 }}>
+                  <View style={{ justifyContent: 'space-between', flexDirection: 'row', flex: 1 }}>
+                    <View style={{ flexDirection: 'row' }}>
+                      <View style={{ width: 33, height: 33, borderRadius: 16.5, backgroundColor: '#2069F3', justifyContent: 'center', alignItems: 'center' }}>
+                        <Text style={{ color: 'white' }}>{item.employeeName.substring(0, 1)}</Text>
+                      </View>
+                      <View style={{ flexDirection: 'column', marginLeft: 10 }}>
+                        <Text style={styles.employeeNameText}>{item.employeeName}</Text>
+                        <Text note style={{ fontFamily: 'Avenir Next', color: '#404243' }}>{item.createDate}</Text>
+                      </View>
                     </View>
-                  </View>
-                  <View style={{ flex: 0.43 }}>
-                    <Text style={styles.employeeNameText}>{item.employeeName}</Text>
-                    <Text note>{item.createDate}</Text>
-                  </View>
-                  <View style={{ flex: 0.3, flexDirection: "row" }}>
-                    <Text note style={{ fontFamily: 'Avenir Next' }}>Maaş:</Text>
-                    <Text style={{ color: '#2069F3' }}>{item.monthlySalaryDisplay}</Text>
-
-                  </View>
-                  <View style={{ flex: 0.3, justifyContent: "flex-end", flexDirection: "row" }}>
-                    <View style={{ justifyContent: "flex-end" }}>
+                    <View>
                       <TouchableOpacity onPress={() => this.openModal(item.employeeId)}>
-
                         <Icon name="ios-more" style={{ color: '#2069F3', fontSize: 30 }}></Icon>
                       </TouchableOpacity>
-
-                      <TouchableOpacity onPress={() => this._showMore(item.employeeId, !item.fullShow)}>
-                        {this._renderArrowButton(item)}
+                    </View>
+                  </View>
+                </CardItem>
+                <CardItem >
+                  <View style={{ justifyContent: 'space-between', flexDirection: 'row', flex: 1 }}>
+                    <View style={{ flexDirection: 'column' }}>
+                      {item.monthlySalaryDisplay != '' && <Text style={{ fontFamily: 'Avenir Next', color: '#404243' }}>Maaş</Text>}
+                      <Text style={{ color: '#2069F3' }}>{item.monthlySalaryDisplay}</Text>
+                      {item.dailyDecimalFoodDisplay != '' && <Text style={{ fontFamily: 'Avenir Next', color: '#404243' }}>Günlük Yemek Ücreti</Text>}
+                      <Text style={{ color: '#2069F3', fontFamily: 'Avenir Next' }}>{item.dailyDecimalFoodDisplay}</Text>
+                    </View>
+                    <View style={{ flexDirection: 'column', flex: 0.4 }}>
+                      {item.phoneNumber != "" &&
+                        <Text style={{ fontFamily: 'Avenir Next', color: '#404243' }}>Telefon</Text>}
+                      <TouchableOpacity onPress={() => Linking.openURL(`tel:${item.phoneNumber}`)}>
+                        <Text style={{ color: '#58595A', fontFamily: 'Avenir Next', textDecorationLine: 'underline' }}>
+                          {item.phoneNumber}
+                        </Text>
                       </TouchableOpacity>
+                      <View>
+                        {item.address != "" &&
+                          <Text style={{ fontFamily: 'Avenir Next', color: '#404243' }}>Adres</Text>}
+                        <Text style={{ color: '#58595A', fontFamily: 'Avenir Next' }}>
+                          {item.address}
+                        </Text>
+                      </View>
                     </View>
                   </View>
-
-
-                </View>
-                {item.fullShow &&
-                  <View style={{flexDirection:"row", justifyContent:"space-between"}}>
-                    <View style={{ flexDirection: "column" }}>
-                      <Text note>Günlük Yemek Ücreti:</Text>
-                      <Text>{item.dailyDecimalFoodDisplay}</Text>
-                    </View>
-                    <View style={{ flexDirection: "column" }}>
-                      <Text note>Telefon Numarası:</Text>
-                      <Text>{item.phoneNumber}</Text>
-                    </View>
-                    <View style={{ flexDirection: "column" }}>
-                      <Text note>Adres:</Text>
-                      <Text>{item.address}</Text>
-                    </View>
-                  </View>
-                }
-
+                </CardItem>
               </View>
-            )}
-            keyExtractor={item => item.employeeId.toString()}
-          />
-        </View>);
-      } else {
-        return (<View >
+            </Content>
+          )}
+          keyExtractor={item => item.employeeId.toString()}
+        />
+      </View>);
+    } else {
+      return (<View >
 
-          <Card style={{ borderColor: '#f5f5f5' }}>
+        <Card style={{ borderColor: '#f5f5f5' }}>
 
-            <CardItem>
-              <Body style={{ flexDirection: "column", justifyContent: "center", alignItems: "center" }} >
-                <Icon name="ios-information-circle-outline" style={{ fontSize: 40, }} ></Icon>
-                <Text>
-
-                  Sisteme eklediğiniz çalışan bulunmakatadır. Çalışanlarınızı yönetmek için eklemeye şimdi başlayın!
+          <CardItem>
+            <Body style={{ flexDirection: "column", justifyContent: "center", alignItems: "center" }} >
+              <Icon name="ios-information-circle-outline" style={{ fontSize: 40 }} ></Icon>
+              <Text>
+                Sisteme eklediğiniz çalışan bulunmakatadır. Çalışanlarınızı yönetmek için eklemeye şimdi başlayın!
                 </Text>
-              </Body>
-            </CardItem>
-          </Card>
+            </Body>
+          </CardItem>
+        </Card>
 
-        </View>);
-      }
-    
+      </View>);
+    }
+
   }
   render() {
     if (this.state.UserType === "2") {
