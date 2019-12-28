@@ -13,6 +13,7 @@ import {
   AsyncStorage,
   ActivityIndicator,
   Modal,
+  Linking,
 } from 'react-native';
 
 import { Icon, Input, Item, Tabs, Tab, TabHeading, Button, ScrollableTab } from 'native-base';
@@ -653,9 +654,11 @@ class CustomerOrdersScreen extends Component<Props, State>{
                 {this.props.customerDetailModel && this.props.customerDetailModel.phoneNumber && !this.props.isCustomerDetailLoading &&
                   <View style={{ flexDirection: 'row', flex: 1 }}>
                     <Icon name="ios-call" style={{ fontSize: 20 }} />
-                    <Text style={{ color: '#404243', fontSize: 16, marginLeft: 5, fontFamily: 'Avenir Next' }}>
+                    <TouchableOpacity onPress={() => Linking.openURL(`tel:${this.props.customerDetailModel?.phoneNumber}`)}>
+                    <Text style={{ color: '#404243',textDecorationLine:'underline', fontSize: 16, marginLeft: 5, fontFamily: 'Avenir Next' }}>
                       {this.props.customerDetailModel.phoneNumber}
                     </Text>
+                    </TouchableOpacity>
                   </View>
                 }
                             <View style={{  flex: 1 }}>
@@ -663,10 +666,11 @@ class CustomerOrdersScreen extends Component<Props, State>{
                 {this.props.customerDetailModel && this.props.customerDetailModel.adress != null && !this.props.isCustomerDetailLoading &&
                     <View style={{flexDirection: 'row',}}>
                     <Icon name="ios-pin" style={{ fontSize: 20 }} />
-
-                    <Text style={{ color: '#404243', fontSize: 16, fontWeight: '600', marginLeft: 5, fontFamily: 'Avenir Next' }}>
+                    <TouchableOpacity onPress={() => Linking.openURL('https://www.google.com/maps/search/?api=1&query=' + this.props.customerDetailModel?.adress)}>
+                    <Text style={{ color: '#404243', fontSize: 16, fontWeight: '600', textDecorationLine:'underline',  marginLeft: 5, fontFamily: 'Avenir Next' }}>
                       {this.props.customerDetailModel.adress}
                     </Text>
+                    </TouchableOpacity>
                     </View>
 
               

@@ -372,7 +372,7 @@ class Employee extends Component<Props, State> {
       return (<View style={{ padding: 10 }}>
         {
           this.props.isLoading &&
-          <Spinner color='#333' style={{ position: "absolute",  left: (Dimensions.get('window').width / 2) - 25, top:100, zIndex:1000 }}></Spinner>
+          <Spinner color='#333' style={{ position: "absolute", left: (Dimensions.get('window').width / 2) - 25, top: 100, zIndex: 1000 }}></Spinner>
 
         }
         <Button style={styles.employeeCostContainer} iconLeft onPress={() => this.props.navigation.navigate("EmployeeCost")}>
@@ -433,9 +433,11 @@ class Employee extends Component<Props, State> {
                       <View>
                         {item.address != "" &&
                           <Text style={{ fontFamily: 'Avenir Next', color: '#404243' }}>Adres</Text>}
-                        <Text style={{ color: '#58595A', fontFamily: 'Avenir Next' }}>
-                          {item.address}
-                        </Text>
+                        <TouchableOpacity onPress={() => Linking.openURL('https://www.google.com/maps/search/?api=1&query=' + item.address)}>
+                          <Text style={{ color: '#58595A', textDecorationLine: 'underline', fontFamily: 'Avenir Next' }}>
+                            {item.address}
+                          </Text>
+                        </TouchableOpacity>
                       </View>
                     </View>
                   </View>
