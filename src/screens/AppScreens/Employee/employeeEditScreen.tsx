@@ -20,7 +20,7 @@ import { connect } from "react-redux";
 import { IEmployeeItem } from "../../../redux/models/addEmployeeModel";
 import { IUserItem } from "../../../redux/models/addUserModel";
 import { AddUser } from "../../../redux/actions/addUserAction"
-import { Item, Label, Input, Textarea, Button, Spinner, Switch, CheckBox } from "native-base";
+import { Item, Label, Input, Textarea, Button, Spinner, Switch, CheckBox, Icon } from "native-base";
 import { stat } from "fs";
 import { showMessage } from "react-native-flash-message";
 import { getEmployeeById, employeeEdit, employe } from "../../../redux/actions/editEmployeeAction";
@@ -174,10 +174,11 @@ class employeeEditScreen extends Component<Props, State> {
 
                                     const propsNew = { trackColor: { true: "#2069F3", false: null } }
                                     return (
-                                        <View style={styles.containerNew} >
-                                            <View style={styles.input}>
-                                                <Item floatingLabel style={{ marginTop: 0, borderBottomColor: (touched.nameSurname && errors.nameSurname != null) ? 'red' : '#2069F3' }}>
-                                                    <Label style={{ color: (touched.nameSurname && errors.nameSurname != null) ? 'red' : '#959595' }}>Adı Soyadı</Label>
+                                        <View style={[styles.containerNew,{marginLeft:20,marginRight:20,marginTop:20}]} >
+                                            <View style={[styles.input]}>
+                                                <Item floatingLabel style={{ marginTop: 20, borderBottomColor: (touched.nameSurname && errors.nameSurname != null) ? 'red' : '#2069F3' }}>
+                                                <Icon name="ios-person" style={{color:'#a5a5a5'}}  />
+                                                    <Label style={{ marginTop:-10,color: (touched.nameSurname && errors.nameSurname != null) ? 'red' : '#959595' }}>Adı Soyadı</Label>
                                                     <Input
                                                         style={{ fontFamily: 'Avenir Next', fontSize: 18 }}
                                                         placeholderTextColor="#9A9A9A"
@@ -191,8 +192,9 @@ class employeeEditScreen extends Component<Props, State> {
 
                                             </View>
                                             <View style={styles.input}>
-                                                <Item floatingLabel style={{ marginTop: 15, borderBottomColor: (touched.identityNumber && errors.identityNumber != null) ? 'red' : '#2069F3' }}>
-                                                    <Label style={{ color: (touched.identityNumber && errors.identityNumber != null) ? 'red' : '#959595' }}>Kimlik Numarası</Label>
+                                                <Item floatingLabel style={{ marginTop: 20, borderBottomColor: (touched.identityNumber && errors.identityNumber != null) ? 'red' : '#2069F3' }}>
+                                                <Icon name="ios-menu" style={{color:'#a5a5a5'}}  />
+                                                    <Label style={{ marginTop:-10,color: (touched.identityNumber && errors.identityNumber != null) ? 'red' : '#959595' }}>Kimlik Numarası</Label>
                                                     <Input
                                                         value={values.identityNumber}
                                                         placeholderTextColor="#9A9A9A"
@@ -207,8 +209,9 @@ class employeeEditScreen extends Component<Props, State> {
                                             </View>
 
                                             <View style={styles.input}>
-                                                <Item floatingLabel style={{ marginTop: 15, borderBottomColor: (touched.monthlySalary && errors.monthlySalary != null) ? 'red' : '#2069F3' }}>
-                                                    <Label style={{ color: (touched.monthlySalary && errors.monthlySalary != null) ? 'red' : '#959595' }}>Aylik Maaş</Label>
+                                                <Item floatingLabel style={{ marginTop: 10, borderBottomColor: (touched.monthlySalary && errors.monthlySalary != null) ? 'red' : '#2069F3' }}>
+                                                <Icon name="ios-card" style={{color:'#a5a5a5'}}  />
+                                                    <Label style={{ marginTop:-10,color: (touched.monthlySalary && errors.monthlySalary != null) ? 'red' : '#959595' }}>Aylik Maaş</Label>
                                                     <Input
                                                         value={values.monthlySalary}
                                                         placeholderTextColor="#9A9A9A"
@@ -222,8 +225,9 @@ class employeeEditScreen extends Component<Props, State> {
                                                 <Text style={{ width: '100%', color: 'red' }}>{errors.monthlySalary}</Text>
                                             </View>
                                             <View style={styles.input}>
-                                                <Item floatingLabel style={{ marginTop: 15, borderBottomColor: (touched.dailyPriceFood && errors.dailyPriceFood != null) ? 'red' : '#2069F3' }}>
-                                                    <Label style={{ color: (touched.dailyPriceFood && errors.dailyPriceFood != null) ? 'red' : '#959595' }}>Günlük Yemek Ücreti</Label>
+                                                <Item floatingLabel style={{ marginTop: 10, borderBottomColor: (touched.dailyPriceFood && errors.dailyPriceFood != null) ? 'red' : '#2069F3' }}>
+                                                <Icon name="ios-pizza" style={{color:'#a5a5a5'}}  />
+                                                    <Label style={{marginTop:-10, color: (touched.dailyPriceFood && errors.dailyPriceFood != null) ? 'red' : '#959595' }}>Günlük Yemek Ücreti</Label>
                                                     <Input
                                                         placeholderTextColor="#9A9A9A"
                                                         value={values.dailyPriceFood}
@@ -236,8 +240,9 @@ class employeeEditScreen extends Component<Props, State> {
                                                 <Text style={{ width: '100%', color: 'red' }}>{errors.dailyPriceFood}</Text>
                                             </View>
                                             <View style={styles.input}>
-                                                <Item floatingLabel style={{ marginTop: 15, borderBottomColor: (touched.phoneNumber && errors.phoneNumber != null) ? 'red' : '#2069F3' }}>
-                                                    <Label style={{ color: (touched.phoneNumber && errors.phoneNumber != null) ? 'red' : '#959595' }}>0511 111 11 11</Label>
+                                                <Item floatingLabel style={{ marginTop: 10, borderBottomColor: (touched.phoneNumber && errors.phoneNumber != null) ? 'red' : '#2069F3' }}>
+                                                <Icon name="ios-call" style={{color:'#a5a5a5'}}  />
+                                                    <Label style={{ marginTop:-10,color: (touched.phoneNumber && errors.phoneNumber != null) ? 'red' : '#959595' }}>0511 111 11 11</Label>
                                                     <Input
                                                         maxLength={11}
                                                         placeholderTextColor="#9A9A9A"
@@ -250,23 +255,33 @@ class employeeEditScreen extends Component<Props, State> {
                                                 </Item>
                                                 <Text style={{ width: '100%', color: 'red' }}>{errors.phoneNumber}</Text>
                                             </View>
-                                            <Textarea style={{ marginTop: 15, borderBottomWidth: 1, borderBottomColor: (touched.address && errors.address != null) ? 'red' : '#2069F3' }} rowSpan={5}
-                                                // underline
-                                                value={values.address}
-                                                autoCapitalize="words"
+                                            <Item  floatingLabel style={{maxHeight:80,marginTop:20,borderBottomColor: (touched.adress && errors.adress != null) ? 'red' : '#2069F3'}}>
+                      
+                                            <Icon name="ios-home" style={{minHeight:60,color:'#a5a5a5'}}/>
+                         <Label style={{fontFamily:'Avenir Next',marginTop:-10,color:(touched.adress && errors.adress != null) ? 'red' : '#959595'}}>Adres</Label>
+                   
+<Input
 
-                                                placeholderTextColor={(touched.address && errors.address != null) ? 'red' : '#959595'}
-                                                onChangeText={handleChange("address")}
-                                                onBlur={handleBlur("address")}
+multiline
+style={{minHeight:100,maxHeight:100,fontFamily:'Avenir Next',fontSize:18}}
 
-                                                placeholder="Adres" />
+// underlineColorAndroid="transparent"
+
+placeholderTextColor="#9A9A9A"
+value={values.address}
+autoCapitalize="words"
+onChangeText={handleChange("address")}
+onBlur={handleBlur("address")}
+
+/>
+</Item>
 
                                             <View style={[styles.input, { flexDirection: 'row', paddingTop:10, paddingBottom:10 }]}>
                                                 <CheckBox checked={values.Active} onPress={() => { setFieldValue('Active', !values.Active)  }}
                         
                                                 />
 
-                                                <Text style={{marginLeft:20}}>Aktif Çalışan</Text>
+                                                <Text style={{marginLeft:20,fontFamily:'Avenir Next',fontSize:18,marginTop:-2}}>Aktif Çalışan</Text>
                                             </View>
                                             <View style={[styles.input, { flexDirection: 'row' }]}>
                                                 <Switch
@@ -274,13 +289,14 @@ class employeeEditScreen extends Component<Props, State> {
                                                     onChange={() => { { setFieldValue('AddAsUser', !values.AddAsUser) } }}
                                                     value={values.AddAsUser}
                                                 />
-                                                <Text>Sisteme Giris Bilgileri Ekle</Text>
+                                                <Text style={{fontFamily:'Avenir Next',fontSize:18,marginLeft:10,marginTop:-3}}>Sisteme Giris Bilgileri Ekle</Text>
                                             </View>
                                             {
-                                                values.AddAsUser && <View>
+                                                values.AddAsUser && <View style={{marginTop:15}}>
                                                     <View style={styles.input}>
                                                         <Item floatingLabel style={{ marginTop: 15, borderBottomColor: (touched.mail && errors.mail != null) ? 'red' : '#2069F3' }}>
-                                                            <Label style={{ color: (touched.mail && errors.mail != null) ? 'red' : '#959595' }}>Mail Adresi</Label>
+                                                        <Icon name="ios-mail" style={{color:'#a5a5a5'}} />
+                                                            <Label style={{ marginTop:-10,color: (touched.mail && errors.mail != null) ? 'red' : '#959595' }}>Mail Adresi</Label>
                                                             <Input
                                                                 value={values.mail}
                                                                 placeholderTextColor="#9A9A9A"
@@ -293,9 +309,11 @@ class employeeEditScreen extends Component<Props, State> {
                                                     </View>
                                                     <View style={styles.input}>
                                                         <Item floatingLabel style={{ marginTop: 15, borderBottomColor: (touched.password && errors.password != null) ? 'red' : '#2069F3' }}>
-                                                            <Label style={{ color: (touched.password && errors.password != null) ? 'red' : '#959595' }}>Sifre</Label>
+                                                        <Icon name="ios-lock" style={{color:'#a5a5a5'}} />
+                                                            <Label style={{marginTop:-10,color: (touched.password && errors.password != null) ? 'red' : '#959595' }}>Sifre</Label>
+                                                            
                                                             <Input
-                                                                secureTextEntry={true}
+
 
                                                                 placeholderTextColor="#9A9A9A"
                                                                 value={values.password}

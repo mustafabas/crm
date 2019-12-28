@@ -43,22 +43,19 @@ interface userData {
   phoneNumber: string;
    companyName:string;
   adress:string;
-
 }
 
+
 const loginSchema = Yup.object().shape({
-  NameSurname :Yup.string()
-  .min(4)
-  .max(30)
+  phoneNumber :Yup.string()
+  .min(9)
+
   .required(),
-  email: Yup.string()
-    .email()
-    .min(4)
+  companyName: Yup.string()
     .max(50)
     .required(),
-  password: Yup.string()
-    .min(6)
-    .max(16)
+    adress: Yup.string()
+    .max(100)
     .required()
 });
 
@@ -109,7 +106,7 @@ class SignUpSecondScreen extends Component<Props, {}> {
           <ScrollView bounces={false} contentContainerStyle={{flexGrow:1}}>
             <Formik
               initialValues={{ phoneNumber: "", companyName: "" ,adress:""}}
-              // validationSchema={loginSchema}
+              validationSchema={loginSchema}
               onSubmit={values => this.handleLogin(values)}
             >
               {props => {

@@ -647,7 +647,7 @@ class CustomerOrdersScreen extends Component<Props, State>{
             </View>
             <View style={{ flexDirection: 'row', justifyContent:'space-between', marginTop:5 }}>
 
-              <View style={{ flexDirection: 'column'}}>
+              <View style={{ flexDirection: 'column',flex:.6 }}>
 
                 {this.props.isCustomerDetailLoading && <PlaceholderLine width={10} />}
                 
@@ -666,7 +666,11 @@ class CustomerOrdersScreen extends Component<Props, State>{
                 {this.props.customerDetailModel && this.props.customerDetailModel.adress != null && !this.props.isCustomerDetailLoading &&
                     <View style={{flexDirection: 'row',}}>
                     <Icon name="ios-pin" style={{ fontSize: 20 }} />
-                    <TouchableOpacity onPress={() => Linking.openURL('https://www.google.com/maps/search/?api=1&query=' + this.props.customerDetailModel?.adress)}>
+                    <TouchableOpacity onPress={() => {
+                     Platform.OS === "ios" ? Linking.openURL('http://maps.apple.com/maps?daddr='  + this.props.customerDetailModel?.adress) : Linking.openURL('http://maps.google.com/maps?daddr='+this.props.customerDetailModel?.adress)
+                     
+                      
+                      }}>
                     <Text style={{ color: '#404243', fontSize: 16, fontWeight: '600', textDecorationLine:'underline',  marginLeft: 5, fontFamily: 'Avenir Next' }}>
                       {this.props.customerDetailModel.adress}
                     </Text>
@@ -679,20 +683,20 @@ class CustomerOrdersScreen extends Component<Props, State>{
 
 
               </View>
-              <View style={{ flexDirection: 'column' }}>
+              <View style={{ flexDirection: 'column',flex:.4 }}>
 
-              <View style={{ flexDirection: 'row' }}>
+              <View style={{ flexDirection: 'row',alignSelf:'flex-end' }}>
                   <Text style={{ color: '#404243', fontSize: 16, fontFamily: 'Avenir Next' }}>
                     Alınan:
                 </Text>
                   {this.props.isCustomerDetailLoading && <PlaceholderLine width={20} />}
                   {this.props.customerDetailModel && this.props.customerDetailModel.displayTookTotalAmount &&
-                    <Text style={{ color: '#404243', fontWeight: '600', fontSize: 16, fontFamily: 'Avenir Next' }}>{this.props.customerDetailModel.displayTookTotalAmount} </Text>
+                    <Text style={{ color: '#404243', fontWeight: '600', fontSize: 16, fontFamily: 'Avenir Next'}}>{this.props.customerDetailModel.displayTookTotalAmount} </Text>
                   }
 
 
                 </View>
-                <View style={{ flexDirection: 'row' }}>
+                <View style={{ flexDirection: 'row',alignSelf:'flex-end' }}>
                   <Text style={{ color: '#404243', fontSize: 16, fontFamily: 'Avenir Next' }}>
                     Kalan:
                 </Text>
@@ -703,7 +707,7 @@ class CustomerOrdersScreen extends Component<Props, State>{
 
 
                 </View>
-                <View style={{ flexDirection: 'row', flex: .4 }}>
+                <View style={{ flexDirection: 'row', flex: .4 ,alignSelf:'flex-end'}}>
                   <Text style={{ color: '#404243', fontSize: 16, fontFamily: 'Avenir Next' }}>
                     Toplam:
                 </Text>
