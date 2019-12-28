@@ -350,7 +350,7 @@ class HomeScreen extends Component<Props,State>{
                 //    ()=> this.props.navigation.navigate('CustomerEdit',{customerId: item.customerId})
                    
                 
-                    style={{alignSelf:'flex-end',marginRight:10,marginBottom:10}}>
+                    style={{alignSelf:'flex-end',marginRight:10,marginBottom:0}}>
                    <Icon name="ios-more" />
                </TouchableOpacity>
                <View style={{ flexDirection: 'row', justifyContent: 'space-between'}}>

@@ -385,18 +385,16 @@ class Employee extends Component<Props, State> {
           onRefresh={() => this.onRefresh()}
           data={this.props.employees}
           renderItem={({ item }) => (
-            <Content padder>
+            <View style={{padding:5}}>
               <View style={{
-                shadowColor: "#000",
-                shadowOffset: {
-                  width: 0,
-                  height: 1,
-                },
-                shadowOpacity: 0.22,
-                shadowRadius: 2.22,
+
+                borderRadius:15,
+                borderColor:'#CFD3D7',
+                
+                borderWidth:1,
                 elevation: 3,
               }}>
-                <CardItem header style={{ borderBottomColor: '#CFD3D7', borderBottomWidth: 1 }}>
+                <View  style={{ borderBottomColor: '#CFD3D7',padding:10, borderBottomWidth: 1 }}>
                   <View style={{ justifyContent: 'space-between', flexDirection: 'row', flex: 1 }}>
                     <View style={{ flexDirection: 'row' }}>
                       <View style={{ width: 33, height: 33, borderRadius: 16.5, backgroundColor: '#2069F3', justifyContent: 'center', alignItems: 'center' }}>
@@ -413,8 +411,8 @@ class Employee extends Component<Props, State> {
                       </TouchableOpacity>
                     </View>
                   </View>
-                </CardItem>
-                <CardItem >
+                </View>
+                <View style={{padding:10}} >
                   <View style={{ justifyContent: 'space-between', flexDirection: 'row', flex: 1 }}>
                     <View style={{ flexDirection: 'column' }}>
                       {item.monthlySalaryDisplay != '' && <Text style={{ fontFamily: 'Avenir Next', color: '#404243' }}>Maaş</Text>}
@@ -422,28 +420,28 @@ class Employee extends Component<Props, State> {
                       {item.dailyDecimalFoodDisplay != '' && <Text style={{ fontFamily: 'Avenir Next', color: '#404243' }}>Günlük Yemek Ücreti</Text>}
                       <Text style={{ color: '#2069F3', fontFamily: 'Avenir Next' }}>{item.dailyDecimalFoodDisplay}</Text>
                     </View>
-                    <View style={{ flexDirection: 'column', flex: 0.4 }}>
+                    <View style={{ flexDirection: 'column', flex: 0.6 }}>
                       {item.phoneNumber != "" &&
-                        <Text style={{ fontFamily: 'Avenir Next', color: '#404243' }}>Telefon</Text>}
+                        <Text style={{ fontFamily: 'Avenir Next', color: '#404243' ,textAlign:'right'}}>Telefon</Text>}
                       <TouchableOpacity onPress={() => Linking.openURL(`tel:${item.phoneNumber}`)}>
-                        <Text style={{ color: '#58595A', fontFamily: 'Avenir Next', textDecorationLine: 'underline' }}>
+                        <Text style={{ color: '#58595A',textAlign:'right', fontFamily: 'Avenir Next', textDecorationLine: 'underline' }}>
                           {item.phoneNumber}
                         </Text>
                       </TouchableOpacity>
                       <View>
                         {item.address != "" &&
-                          <Text style={{ fontFamily: 'Avenir Next', color: '#404243' }}>Adres</Text>}
+                          <Text style={{ fontFamily: 'Avenir Next', color: '#404243',textAlign:'right'}}>Adres</Text>}
                         <TouchableOpacity onPress={() => Linking.openURL('https://www.google.com/maps/search/?api=1&query=' + item.address)}>
-                          <Text style={{ color: '#58595A', textDecorationLine: 'underline', fontFamily: 'Avenir Next' }}>
+                          <Text style={{ color: '#58595A',textAlign:'right', textDecorationLine: 'underline', fontFamily: 'Avenir Next' }}>
                             {item.address}
                           </Text>
                         </TouchableOpacity>
                       </View>
                     </View>
                   </View>
-                </CardItem>
+                </View>
               </View>
-            </Content>
+            </View>
           )}
           keyExtractor={item => item.employeeId.toString()}
         />

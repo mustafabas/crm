@@ -603,7 +603,8 @@ const styles = StyleSheet.create({
     // justifyContent:"flex-end"
     marginBottom: 10,
     padding:5,
-    marginTop:10
+    marginTop:10,
+    marginHorizontal:5
 
   },
 
