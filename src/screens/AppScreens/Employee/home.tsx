@@ -375,6 +375,7 @@ class Employee extends Component<Props, State> {
           <Spinner color='#333' style={{ position: "absolute", left: (Dimensions.get('window').width / 2) - 25, top: 100, zIndex: 1000 }}></Spinner>
 
         }
+<<<<<<< HEAD
         <Button style={styles.employeeCostContainer} iconLeft onPress={() => this.props.navigation.navigate("EmployeeCost")}>
           <Icon name="ios-list"></Icon>
           <Text style={styles.employeeCostButtonText}>Çalışan Giderleri</Text>
@@ -408,6 +409,36 @@ class Employee extends Component<Props, State> {
                       </View>
                     </View>
                     <View>
+=======
+          <Button style={styles.employeeCostContainer} iconLeft onPress={() => this.props.navigation.navigate("EmployeeCost")}>
+            <Icon name="ios-list"></Icon>
+            <Text style={styles.employeeCostButtonText}>Çalışan Giderleri</Text>
+          </Button>
+          <FlatList
+            style={{ marginBottom: 40 }}
+            refreshing={this.state.refreshing}
+            onRefresh={() => this.onRefresh()}
+            data={this.state.employeeList}
+            renderItem={({ item }) => (
+              <View style={{ padding: 20, flex: 1, borderBottomColor: '#ccc', borderBottomWidth: 1 }}>
+                <View style={{ flexDirection: 'row', flex: 1, borderBottomColor: '#000' }}>
+                  <View style={{ flex: 0.2 }} >
+                    <View style={{ width: 33, height: 33, borderRadius: 16.5, backgroundColor: '#2069F3', justifyContent: 'center', alignItems: 'center' }}>
+                      <Text style={{ color: 'white' }}>{item.employeeName.substring(0, 1)}</Text>
+                    </View>
+                  </View>
+                  <View style={{ flex: 0.4 }}>
+                    <Text style={styles.employeeNameText}>{item.employeeName}</Text>
+                    <Text note>{item.createDate}</Text>
+                  </View>
+                  <View style={{ flex: 0.3, flexDirection: "row" }}>
+                    <Text note style={{ fontFamily: 'Avenir Next' }}>Maaş:</Text>
+                    <Text style={{ color: '#2069F3' }}>{item.monthlySalaryDisplay}</Text>
+
+                  </View>
+                  <View style={{ flex: 0.3, justifyContent: "flex-end", flexDirection: "row" }}>
+                    <View style={{ justifyContent: "flex-end" }}>
+>>>>>>> 19c907267758bfb53619b869ab507621d32dd233
                       <TouchableOpacity onPress={() => this.openModal(item.employeeId)}>
                         <Icon name="ios-more" style={{ color: '#2069F3', fontSize: 30 }}></Icon>
                       </TouchableOpacity>
