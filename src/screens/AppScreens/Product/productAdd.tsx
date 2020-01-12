@@ -128,7 +128,7 @@ class productAdd extends Component<Props, {}> {
                         >
                             {props => {
                                 return (
-                                    <View>
+                                    <View style={{marginHorizontal:20}}>
                                         <View style={styles.containerNew} >
                                             <View style={[styles.input,{marginTop:15}]}>
                                                 <Item floatingLabel style={{ marginTop: 0, borderBottomColor: (props.touched.urunAdi && props.errors.urunAdi != null) ? 'red' : '#2069F3' }}>
