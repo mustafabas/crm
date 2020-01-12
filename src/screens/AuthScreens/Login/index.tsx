@@ -11,7 +11,7 @@ import {
   ActivityIndicator,
   ImageBackground,
 } from "react-native";
-import { Container, Header, Content, Form, Item, Input, Label,Icon, Button } from 'native-base';
+import { Container, Header, Content, Form, Item, Input, Label,Icon, Button, Spinner } from 'native-base';
 
 import { NavigationScreenProp, NavigationState, SafeAreaView } from "react-navigation";
 import { Formik } from "formik";
@@ -57,6 +57,23 @@ const loginSchema = Yup.object().shape({
 });
 
 class Login extends Component<Props, {}> {
+
+
+  static navigationOptions = (
+    screenProps: NavigationScreenProps
+  ) => {
+
+    return {
+
+      headerStyle: {
+        // height : screenProps.navigation.getParam('headerHeight'),
+        // backgroundColor:'#d67676'
+      },
+      header: null
+    }
+  }
+
+  
 
   handleLogin = (values: userData) => {
 
@@ -211,11 +228,11 @@ shadowOpacity: .5,}}>
             
           </Item>
 
-          <TouchableOpacity style={{alignSelf:'flex-end',marginTop:30}}>
+          {/* <TouchableOpacity style={{alignSelf:'flex-end',marginTop:30}}>
             <Text style={{color:'white',fontFamily:"Avenir Next"}}>
             Şifremi unuttum?
             </Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
 
                       </View>
@@ -232,7 +249,7 @@ shadowOpacity: .5,}}>
 
     
                     }}>
-            <Text style={{color:'#49B1FD',fontFamily:"Avenir Next",fontWeight:'bold',fontSize:16}} >Giriş Yap</Text>
+            {this.props.isLoading ? <Spinner /> : <Text style={{color:'#49B1FD',fontFamily:"Avenir Next",fontWeight:'bold',fontSize:16}} >Giriş Yap</Text>}
           </Button>
           <Hr hrPadding={50} hrStyles ={{marginTop:30}}lineColor="#eee" width={1}  text="Ya da" textStyles={{color:'white',fontFamily:"Avenir Next"}}/>
 
@@ -249,7 +266,13 @@ shadowOpacity: .5,}}>
                     }}>
             <Text style={{color:'white',fontFamily:"Avenir Next",fontWeight:'bold',fontSize:16}} >Üye Ol</Text>
           </Button>
-
+                   <View style={{flexDirection:'row',flexWrap:'wrap',justifyContent:'center'}}>
+                   <Text style={{fontFamily:'Avenir Next',fontSize:16,color:'white'}}>Üye olarak veya Giriş Yaparak </Text>
+                     <TouchableOpacity onPress={()=> this.props.navigation.navigate('UserAgreement')}>
+                       <Text  style={{fontFamily:'Avenir Next',fontSize:16,color:'#c2c2c2'}}>Kullanıcı Sözleşmesini </Text>
+                       </TouchableOpacity>
+                     <Text  style={{fontFamily:'Avenir Next',fontSize:16,color:'white'}}>Kabul Etmiş Sayılırsınız.</Text>
+                   </View>
                 </View>
 </View>                      
                       

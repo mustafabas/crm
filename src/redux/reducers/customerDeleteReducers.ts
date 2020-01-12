@@ -38,6 +38,6 @@ export default (state: CustomerDelete = initalState, action: Action) => {
        
 
     default:
-      return {...state};
+      return state;
   }
 };

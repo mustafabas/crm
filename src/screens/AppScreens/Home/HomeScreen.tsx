@@ -616,9 +616,7 @@ useNativeDriver ={true}
     };
 
     getDayOfMusteri(value: number) {
-        if(value === 8) {
-            logoutUserService()
-        }
+
         if(this.props.customers.length > 0) {
             this.flatListRef.getNode().scrollToOffset({animated: true, offset: 0})
         }
@@ -701,7 +699,7 @@ useNativeDriver ={true}
   <Picker.Item label="Cuma" value={5} />
   <Picker.Item label="Cumartesi" value={6} />
   <Picker.Item label="Pazar" value={7} />
-  <Picker.Item label="cıkıs" value={8} />
+  {/* <Picker.Item label="cıkıs" value={8} /> */}
 </Picker>
                        </RBSheet>
                     }

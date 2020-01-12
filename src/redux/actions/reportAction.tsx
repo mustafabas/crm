@@ -13,41 +13,56 @@ export function GetReport(startDate:string,endDate:string) {
 
         dispatch(loading(true));
 
-        var WATER_GET_REPORT_WITH_DATES = WATER_GET_REPORT + startDate + "&EndDate=" + endDate;
+        AsyncStorage.multiGet(['userToken', 'userId']).then((res) => {
+            let token = res[0][1];
+            let userId = res[1][1];
+            
+            const headers = {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+          }
 
-        axios.get(WATER_GET_REPORT_WITH_DATES,
+          var WATER_GET_REPORT_WITH_DATES = WATER_GET_REPORT + startDate + "&EndDate=" + endDate + "&UserId="+userId;
+          console.log(WATER_GET_REPORT_WITH_DATES)
+          axios.get(WATER_GET_REPORT_WITH_DATES,
+  
+          )
+              .then((response) => {
+  
+                  if (response.data.isSuccess) {
+                      var productsReport: IReportProductItems[] = [];
+                      response.data.result.reportProductItems.forEach((product: any) => {
+                          var productReport: IReportProductItems = {
+                              productId: product.productId,
+                              productName: product.productName,
+                              count: product.count,
+                          }
+                          productsReport.push(productReport)
+                      });
+                      var reportModel: IReportItem = {
+                          totalIncome: response.data.result.totalIncome,
+                          totalCost: response.data.result.totalCost,
+                          totalPaidAmount: response.data.result.totalPaidAmount,
+                          totalRestAmount: response.data.result.totalRestAmount,
+                          totalWorkerSalary: response.data.result.totalWorkerSalary,
+                          reportProductItems: productsReport,
+  
+                      }
+                      dispatch(Report(reportModel));      
+                  }
+                  else {
+  
+                  }
+              })
+              .catch((err) => {
+                  console.log(err)
+              });
 
-        )
-            .then((response) => {
+        }).catch(err => {
 
-                if (response.data.isSuccess) {
-                    var productsReport: IReportProductItems[] = [];
-                    response.data.result.reportProductItems.forEach((product: any) => {
-                        var productReport: IReportProductItems = {
-                            productId: product.productId,
-                            productName: product.productName,
-                            count: product.count,
-                        }
-                        productsReport.push(productReport)
-                    });
-                    var reportModel: IReportItem = {
-                        totalIncome: response.data.result.totalIncome,
-                        totalCost: response.data.result.totalCost,
-                        totalPaidAmount: response.data.result.totalPaidAmount,
-                        totalRestAmount: response.data.result.totalRestAmount,
-                        totalWorkerSalary: response.data.result.totalWorkerSalary,
-                        reportProductItems: productsReport,
+        })
 
-                    }
-                    dispatch(Report(reportModel));      
-                }
-                else {
-
-                }
-            })
-            .catch((err) => {
-                console.log(err)
-            });
+     
     }
 }
 

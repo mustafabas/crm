@@ -29,6 +29,7 @@ export function loginUserService(username:string, password:string) {
       AsyncStorage.setItem("userId", response.data.result.userId.toString()).then(()=>{
         AsyncStorage.setItem("UserType",response.data.result.userType.toString()).then(()=>{
           dispatch(loginIsSucceed(true,"")); 
+          dispatch(reset());
         });
        
       })
@@ -62,11 +63,26 @@ export function loginUserService(username:string, password:string) {
 }
 
 
+export function logOut() {
+  return (dispatch : Dispatch<Action>) =>  { 
+
+    AsyncStorage.multiRemove(["userToken","userId"])
+    .then(() => {
+      navigate('AuthLoading',{})
+
+     }).catch(err => {
+
+     })
+
+  }
+}
 export function logoutUserService() {
     return new Promise((resolve, reject) => {
       AsyncStorage.multiRemove(["userToken","userId"])
         .then(() => {
+         
           resolve();
+
         })
         .catch(error => {
           reject(error);

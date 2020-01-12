@@ -46,6 +46,6 @@ export default (state: CustomerEdit = initalState, action: Action) => {
 
           }
     default:
-      return {...state};
+      return state;
   }
 };

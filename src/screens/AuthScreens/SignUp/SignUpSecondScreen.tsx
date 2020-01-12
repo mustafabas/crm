@@ -62,6 +62,22 @@ const loginSchema = Yup.object().shape({
 class SignUpSecondScreen extends Component<Props, {}> {
 
 
+  static navigationOptions = (
+    screenProps: NavigationScreenProps
+  ) => {
+
+    return {
+
+      headerStyle: {
+        // height : screenProps.navigation.getParam('headerHeight'),
+        // backgroundColor:'#d67676'
+      },
+      header: null
+    }
+  }
+
+
+  
   showSimpleMessage() {
 
     if (this.props.isSecondFinished && (!this.props.isSecondSucceed)) {

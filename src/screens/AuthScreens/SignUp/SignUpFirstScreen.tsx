@@ -63,6 +63,22 @@ const loginSchema = Yup.object().shape({
 class SignUpFirstScreen extends Component<Props, {}> {
 
 
+  static navigationOptions = (
+    screenProps: NavigationScreenProps
+  ) => {
+
+    return {
+
+      headerStyle: {
+        // height : screenProps.navigation.getParam('headerHeight'),
+        // backgroundColor:'#d67676'
+      },
+      header: null
+    }
+  }
+
+  
+
   showSimpleMessage() {
 
     if (this.props.isFinished && (!this.props.isSucceed)) {
@@ -287,9 +303,9 @@ secureTextEntry = {props.values.IsSecureText}
            
           </Button>
 
-          <TouchableOpacity style={{alignSelf:'center',borderBottomWidth:1,borderColor:'white',marginTop:20}}>
+          <TouchableOpacity onPress={()=> this.props.navigation.goBack()} style={{alignSelf:'center',borderBottomWidth:1,borderColor:'white',marginTop:20}}>
             <Text style={{color:'white',fontFamily:"Avenir Next",fontSize:16}}>
-            Have an account Login?
+            Hesabınız Varsa Giriş Yapın
             </Text>
           </TouchableOpacity>
 

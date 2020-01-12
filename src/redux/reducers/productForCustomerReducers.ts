@@ -30,6 +30,6 @@ export default (state: ProductForCustomer = intialState, action: Action) => {
         isLoading: action.payload
       };
     default:
-      return {...state};
+      return state;
   }
 };
