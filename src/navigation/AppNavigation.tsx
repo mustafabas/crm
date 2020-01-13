@@ -8,7 +8,7 @@ import {
 
 import {createStackNavigator} from 'react-navigation-stack'
 import { createBottomTabNavigator } from 'react-navigation-tabs';
-import { Dimensions, TouchableOpacity, View } from "react-native";
+import { Dimensions, TouchableOpacity, View, Platform } from "react-native";
 
 const { width } = Dimensions.get("window");
 // import { createIconSetFromIcoMoon } from 'react-native-vector-icons'
@@ -53,6 +53,7 @@ import ProfileEditGeneralScreen from "../screens/AppScreens/Profile/ProfileEditG
 import CompanyEditScreen from "../screens/AppScreens/Profile/CompanyEditScreen";
 import ReportScreen from "../screens/AppScreens/Report/ReportScreen";
 import UserAgreementScreen from "../screens/AuthScreens/Login/UserAgreementScreen";
+import HomeScreenAndroid from "../screens/AppScreens/Home/HomeScreenAndroid";
 // import newPricePage from "../pages/newPricePage";
 // import customerDefinedPricePage from "../pages/CustomerDefinedPrice"
 // import editOrder from "../pages/editOrder";
@@ -184,7 +185,7 @@ const CustomerStack = createStackNavigator(
 
 
 const HomeStack = createStackNavigator({
-  Home : HomeScreen,
+  Home : Platform.OS === 'ios' ? HomeScreen : HomeScreenAndroid,
   Customer : CustomerOrdersScreen,
   addCustomer : addCustomer,
   orderAdd : orderAdd,
@@ -325,7 +326,7 @@ export default createAppContainer(
       LoginScreen: LoginScreen,
       introductionStack :introductionStack,
       MainStack: MainStack,
-     
+
       // AddCustomer: CustomerApp,
     },
     {

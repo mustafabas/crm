@@ -20,7 +20,7 @@ export interface BaseUser {
 
 export function createBaseUser(user :BaseUser) {
     return(dispatch : Dispatch<Action>) => {
-        dispatch(loading(true));
+        dispatch(loadingSecond(true));
 
 
 

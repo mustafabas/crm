@@ -393,7 +393,7 @@ class Employee extends Component<Props, State> {
                 borderColor:'#CFD3D7',
                 
                 borderWidth:1,
-                elevation: 3,
+
               }}>
                 <View  style={{ borderBottomColor: '#CFD3D7',padding:10, borderBottomWidth: 1 }}>
                   <View style={{ justifyContent: 'space-between', flexDirection: 'row', flex: 1 }}>

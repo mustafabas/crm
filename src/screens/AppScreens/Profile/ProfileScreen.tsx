@@ -122,9 +122,9 @@ renderContent() {
         ()=> this.props.navigation.navigate('profileEditGeneral')
 
         } style={styles.profileContainer}>
-        <Icon name="ios-person" type="ionicon" color={this.state.iconColor} size={25} />
+        <Icon name="ios-person" type="Ionicons" color={this.state.iconColor} style={{fontSize:20,marginTop:Platform.OS === 'ios' ? 5 : 0}} />
         <Text style={styles.profileTextStyle}>Profili Düzenle</Text>
-        <Icon name="ios-arrow-dropright" color={this.state.iconColor} size={25} />
+        <Icon name="right" type="AntDesign" color={this.state.iconColor} style={{fontSize:20,marginTop:Platform.OS === 'ios' ? 5 : 0}}/>
       
       </TouchableOpacity>
 
@@ -132,16 +132,16 @@ renderContent() {
 
       <View style={styles.propsSeperator}></View>
       <TouchableOpacity onPress={()=> this.props.navigation.navigate('Securtiy')} style={styles.profileContainer}>
-        <Icon name="ios-lock" type="ionicon" color={this.state.iconColor} size={25} />
+        <Icon name="ios-lock" type="ionicon" color={this.state.iconColor} style={{fontSize:20,marginTop:Platform.OS === 'ios' ? 5 : 0}} />
         <Text style={styles.profileTextStyle}>Güvenlik</Text>
-        <Icon name="ios-arrow-dropright" color={this.state.iconColor} size={25} />
+        <Icon name="right" type="AntDesign" color={this.state.iconColor} style={{fontSize:20,marginTop:Platform.OS === 'ios' ? 5 : 0}}/>
       
       </TouchableOpacity>
       <View style={styles.propsSeperator}></View>
       {userInfo.userType === userType.companyUser && <TouchableOpacity onPress={()=> this.props.navigation.navigate('companyInfo')}  style={styles.profileContainer}>
-        <Icon name="ios-business" type="ionicon" color={this.state.iconColor} size={25} />
+        <Icon name="ios-business" type="ionicon" color={this.state.iconColor} style={{fontSize:20,marginTop:Platform.OS === 'ios' ? 5 : 0}} />
         <Text style={styles.profileTextStyle}>Şirket Bilgileri</Text>
-        <Icon name="ios-arrow-dropright" color={this.state.iconColor} size={25} />
+        <Icon name="right" type="AntDesign" color={this.state.iconColor} style={{fontSize:20,marginTop:Platform.OS === 'ios' ? 5 : 0}}/>
       
       </TouchableOpacity>} 
   
@@ -149,33 +149,33 @@ renderContent() {
       <View style={styles.propsSeperator}></View>
 
       <TouchableOpacity onPress={()=> this.props.navigation.navigate('products')} style={styles.profileContainer}>
-        <Icon name="ios-basket" type="ionicon" color={this.state.iconColor} size={25} />
+        <Icon name="ios-basket" type="ionicon" color={this.state.iconColor} style={{fontSize:20,marginTop:Platform.OS === 'ios' ? 5 : 0}} />
         <Text style={styles.profileTextStyle}>Ürünlerim</Text>
-        <Icon name="ios-arrow-dropright" color={this.state.iconColor} size={25} />
+        <Icon name="right" type="AntDesign" color={this.state.iconColor} style={{fontSize:20,marginTop:Platform.OS === 'ios' ? 5 : 0}}/>
       
       </TouchableOpacity>
       <View style={styles.propsSeperator}></View>
       <TouchableOpacity  style={styles.profileContainer}>
-        <Icon name="ios-notifications" type="ionicon" color={this.state.iconColor} size={25} />
+        <Icon name="ios-notifications" type="ionicon" color={this.state.iconColor} style={{fontSize:20,marginTop:Platform.OS === 'ios' ? 5 : 0}} />
         <Text style={styles.profileTextStyle}>Bildirim Ayarları</Text>
-        <Icon name="ios-arrow-dropright" color={this.state.iconColor} size={25} />
+        <Icon name="right" type="AntDesign" color={this.state.iconColor} style={{fontSize:20,marginTop:Platform.OS === 'ios' ? 5 : 0}}/>
       
       </TouchableOpacity>
       <View style={styles.propsSeperator}></View>
 
       <TouchableOpacity onPress={()=> this.props.navigation.navigate('HelpSupport')} style={styles.profileContainer}>
-        <Icon name="ios-help-circle-outline" type="ionicon" color={this.state.iconColor} size={25} />
+        <Icon name="ios-help-circle-outline" type="ionicon" color={this.state.iconColor} style={{fontSize:20,marginTop:Platform.OS === 'ios' ? 5 : 0}} />
         <Text style={styles.profileTextStyle}>Yardım ve Destek</Text>
-        <Icon name="ios-arrow-dropright" color={this.state.iconColor} size={25} />
+        <Icon name="right" type="AntDesign" color={this.state.iconColor} style={{fontSize:20,marginTop:Platform.OS === 'ios' ? 5 : 0}}/>
       
       </TouchableOpacity>
       
       <View style={styles.propsSeperator}></View>
 
       <TouchableOpacity onPress={()=> this.props.navigation.navigate('AboutUs')}  style={styles.profileContainer}>
-        <Icon name="ios-at" type="ionicon" color={this.state.iconColor} size={25} />
+        <Icon name="ios-at" type="ionicon" color={this.state.iconColor} style={{fontSize:20,marginTop:Platform.OS === 'ios' ? 5 : 0}} />
         <Text style={styles.profileTextStyle}>Hakkımızda</Text>
-        <Icon name="ios-arrow-dropright" color={this.state.iconColor} size={25} />
+        <Icon name="right" type="AntDesign" color={this.state.iconColor} style={{fontSize:20,marginTop:Platform.OS === 'ios' ? 5 : 0}}/>
       
       </TouchableOpacity>
       
@@ -183,9 +183,9 @@ renderContent() {
 
       
       <TouchableOpacity onPress={() => this.logOut()} style={styles.profileContainer}>
-        <Icon name="ios-log-out" type="ionicon" color={this.state.iconColor} size={25} />
+        <Icon name="ios-log-out" type="ionicon" color={this.state.iconColor} style={{fontSize:20,marginTop:Platform.OS === 'ios' ? 5 : 0}} />
         <Text style={styles.profileTextStyle}>Çıkış Yap</Text>
-        <Icon name="ios-arrow-dropright" color={this.state.iconColor} size={25} />
+        <Icon name="right" type="AntDesign" color={this.state.iconColor} style={{fontSize:20,marginTop:Platform.OS === 'ios' ? 5 : 0}}/>
       
       </TouchableOpacity>
       <View style={styles.propsSeperator}></View>
@@ -238,13 +238,13 @@ const mapStateToProps = (state: AppState) => ({
 const styles = StyleSheet.create({
     profileContainer : {
       flexDirection:'row', 
-      marginTop:20,
+      marginTop:10,
       marginLeft:10,
 
   
     },
     profileTextStyle : {
-      fontSize:20,
+      fontSize:16,
       marginLeft:10,
       fontWeight:"300",
       fontFamily:'Avenir Next',
@@ -254,7 +254,7 @@ const styles = StyleSheet.create({
     },
     propsSeperator : {
       width:'90%',
-      backgroundColor:'#b57b7b',
+      backgroundColor:'#CFD3D7',
       height:.5,
       marginTop:10,
       alignSelf:'center'

@@ -98,9 +98,9 @@ interface Props {
 
 
 
-class HomeScreen extends Component<Props,State>{
+class HomeScreenAndroid extends Component<Props,State>{
 
-   customerRemove : any
+
 
     showSimpleMessage() {
 
@@ -211,12 +211,12 @@ class HomeScreen extends Component<Props,State>{
 
 
                 return (
-                    <Animated.View
-                    useNativeDriver ={true}
+                    <View
+
                      style={[styles.iOSTitleContainer, {
                         height: Platform.OS === "ios" ? this.headerHeight : this.headerHeight -30,
-                        opacity: titleOpacity,
-                        borderBottomColor: borderBottomColor,
+
+                        // borderBottomColor: borderBottomColor,
                         zIndex:1,
                         borderBottomWidth:2
 
@@ -232,61 +232,61 @@ class HomeScreen extends Component<Props,State>{
                         <TouchableOpacity onPress={()=>this.props.navigation.navigate('addCustomer')}  style={{zIndex:-1,marginLeft:-40,marginRight:20,marginBottom:8}}>
                             <Icon style={{color:'#216AF4'}}  name="ios-add-circle" />
                         </TouchableOpacity>
-                    </Animated.View>
+                    </View>
                 )
 
         }
     };
 
-    renderIOSBigTitle = () => {
+//     renderIOSBigTitle = () => {
 
         
-        if (this.state.HeaderTitle) {
-            let title = this.state.HeaderTitle;
-            if (this.state.HeaderTitle.length > 19) {
-                title = title.substr(0, 17) + "...";
-            }
-            const fontSize = this.state.scrollY.interpolate({
-                inputRange: [-15, 0,30],
-                outputRange: [40,34, 30],
-                extrapolate: 'clamp'
-            });
-            const top = this.state.scrollY.interpolate({
-                inputRange: [-15,0 ,15 , 35,45, 70, 90],
-                outputRange: [0,0,-15,-35,-45, -45,-90]
-            });
-            return (
-                <Animated.View
-                useNativeDriver ={true}
-                 style={ [styles.iOSBigTitleContainer, {backgroundColor:'clear',zIndex:1,transform: [{translateY: top}]}]}
-                               key="iosBigTitle">
-                    <Animated.Text
-                    useNativeDriver ={true}
-                        allowFontScaling={false}
-                        style={[styles.iOSBigTitle, {fontSize: fontSize}]}>
-                        {this.state.HeaderTitle}
-                    </Animated.Text>
+//         if (this.state.HeaderTitle) {
+//             let title = this.state.HeaderTitle;
+//             if (this.state.HeaderTitle.length > 19) {
+//                 title = title.substr(0, 17) + "...";
+//             }
+//             const fontSize = this.state.scrollY.interpolate({
+//                 inputRange: [-15, 0,30],
+//                 outputRange: [40,34, 30],
+//                 extrapolate: 'clamp'
+//             });
+//             const top = this.state.scrollY.interpolate({
+//                 inputRange: [-15,0 ,15 , 35,45, 70, 90],
+//                 outputRange: [0,0,-15,-35,-45, -45,-90]
+//             });
+//             return (
+//                 <Animated.View
+//                 useNativeDriver ={true}
+//                  style={ [styles.iOSBigTitleContainer, {backgroundColor:'clear',zIndex:1,transform: [{translateY: top}]}]}
+//                                key="iosBigTitle">
+//                     <Animated.Text
+//                     useNativeDriver ={true}
+//                         allowFontScaling={false}
+//                         style={[styles.iOSBigTitle, {fontSize: fontSize}]}>
+//                         {this.state.HeaderTitle}
+//                     </Animated.Text>
                     
 
 
-  <TouchableOpacity style={{}} onPress={()=>this.props.navigation.navigate('addCustomer')}>
-  <Icon style={[styles.iOSBigTitle,{marginRight:20,fontSize:40}]}  name="ios-add-circle"/>
-  </TouchableOpacity>
+//   <TouchableOpacity style={{}} onPress={()=>this.props.navigation.navigate('addCustomer')}>
+//   <Icon style={[styles.iOSBigTitle,{marginRight:20,fontSize:40}]}  name="ios-add-circle"/>
+//   </TouchableOpacity>
 
 
 
 
                     
-                </Animated.View>
-            )
-        }
-    };
+//                 </Animated.View>
+//             )
+//         }
+//     };
 
     
     changePage(page) {
-        if(this.props.customers.length >0) {
-            this.flatListRef.getNode().scrollToOffset({animated: true, offset: 0})
-        }
+        // if(this.props.customers.length >0) {
+        //     this.flatListRef.getNode().scrollToOffset({animated: true, offset: 0})
+        // }
 
         // this.flatListRef.scrollToOffset({ animated: true, offset: 0 })
 
@@ -326,9 +326,9 @@ class HomeScreen extends Component<Props,State>{
         
         return(
 //paddingBottom basta olmali sonra azaltilacak animasyonla
-            <Animated.FlatList
-            useNativeDriver ={true}
-            style={{ marginBottom:Platform.OS === "ios" ? -60 : -220,paddingTop:10,transform: [{translateY: top}]}}
+            <FlatList
+
+            style={{ marginBottom:Platform.OS === "ios" ? -60 : -220,paddingTop:10}}
             
            //  onScroll={
            //     Animated.event(
@@ -419,11 +419,7 @@ class HomeScreen extends Component<Props,State>{
                </View>
              ) : null
            }
-           
-           onScroll={
-               Animated.event(
-                   [{nativeEvent: {contentOffset: {y: this.state.scrollY}}}]
-               )}
+
 
          />
 
@@ -468,62 +464,7 @@ class HomeScreen extends Component<Props,State>{
         
 
     }
-    _renderCustomerSheetDeleteContent() {
-      return (
-  
-        <View style={stylesNew.SheetContainer}>
-          <Text>
-            Gerçekten Silmek İstiyor Musunuz?
-          </Text>
-          {/* <TouchableOpacity style={[stylesNew.SheetItemContainer, { justifyContent: 'flex-end', padding: 5 }]}
-            onPress={() => {
-              this.customerEdit.close();
-            }}>
-            <Icon name="ios-close" style={[{ fontSize: 40, marginRight: 10 }, stylesNew.SheetItemIcon]}></Icon>
-            
-          </TouchableOpacity> */}
-      <TouchableOpacity style={stylesNew.SheetItemContainer}
-            onPress={() => {
-              this.customerEdit.close();
 
-            }}>
-              <Icon type="FontAwesome" name="pencil"  style={[stylesNew.SheetItemIcon,{ fontSize:22}]} ></Icon>
-            <Text style={stylesNew.SheetItemText}
-            >Evet</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={stylesNew.SheetItemContainer}
-            onPress={() => {
-              this.customerEdit.close();
-              this.props.navigation.navigate('CustomerEdit',{customerId: this.state.customerId})
-            }}>
-              <Icon type="FontAwesome" name="pencil"  style={[stylesNew.SheetItemIcon,{ fontSize:22}]} ></Icon>
-            <Text style={stylesNew.SheetItemText}
-            >Hayır</Text>
-          </TouchableOpacity>
-
-
-          
-          <TouchableOpacity style={stylesNew.SheetItemContainer}
-            onPress={() => {
-           
-              this.deleteCustomerAlert()
-              // this.customerEdit.close();
-            }}>
-              <Icon type="FontAwesome" name="trash-o" style={[stylesNew.SheetItemIcon,{ fontSize:25}]}></Icon>
-          
-            <Text style={stylesNew.SheetItemText}
-            >Sil</Text>
-          </TouchableOpacity>
-        </View>
-      );
-    }
-
-    removeCustomer() {
-      console.log("girdi")
-      this.customerRemove.open()
-      this.customerEdit.close();
-      console.log("cikti")
-    }
     _renderCustomerSheetContent() {
         return (
     
@@ -547,8 +488,9 @@ class HomeScreen extends Component<Props,State>{
             </TouchableOpacity>
             <TouchableOpacity style={stylesNew.SheetItemContainer}
               onPress={() => {
-            //  this.customerEdit.close();
-            this.removeCustomer()
+             
+                this.deleteCustomerAlert()
+                // this.customerEdit.close();
               }}>
                 <Icon type="FontAwesome" name="trash-o" style={[stylesNew.SheetItemIcon,{ fontSize:25}]}></Icon>
             
@@ -581,13 +523,13 @@ class HomeScreen extends Component<Props,State>{
         });
 
 
-            let padding =  66
+            let padding = 10
             return (
-                <Animated.View
-                useNativeDriver ={true}
+                <View
+
                     showsVerticalScrollIndicator={false}
                     scrollEventThrottle={16}
-                    style={{paddingTop: padding, transform: [{translateY: top}]}}
+                    style={{paddingTop: padding}}
                     // onScroll={
                     //     Animated.event(
                     //         [{nativeEvent: {contentOffset: {y: this.state.scrollY}}}]
@@ -596,9 +538,9 @@ class HomeScreen extends Component<Props,State>{
                 >
                     <View style={[styles.contentContainer, {paddingBottom: 0,marginBottom:-20}]}>
                            <View >
-                          <Animated.View 
-useNativeDriver ={true}
-            style={{ transform: [{scaleY: topSecond}]}}
+                          <View 
+
+
 
             >
                           <Item style={{borderBottomWidth:0,backgroundColor:'#EFF3F9',paddingVertical:0,paddingLeft:10,marginLeft:20,marginRight:20,borderRadius:15,height:40,marginBottom:-10}}>
@@ -613,11 +555,11 @@ useNativeDriver ={true}
                             
                             </Input>
                             </Item>
-                          </Animated.View>
+                          </View>
 
-                           <Animated.View 
-                           useNativeDriver ={true}
-                           style={{flexDirection:'row' , transform: [{translateY: topThird}]}}>
+                           <View 
+
+                           style={{flexDirection:'row' }}>
                            <ScrollView alwaysBounceVertical={false} horizontal={true} showsHorizontalScrollIndicator={false} alwaysBounceHorizontal={true} style={{flexDirection:'row',marginVertical:30}}>
                            <View style={{flexDirection:'row'}}>
                             <TouchableOpacity onPress={()=>this.changePage(2)} style={{marginHorizontal:10}}>
@@ -638,7 +580,7 @@ useNativeDriver ={true}
                             <Image style={{width:21,height:21}} source={require('../../../images/filter1.png')}></Image>
                             </TouchableOpacity>
 
-                           </Animated.View>
+                           </View>
                            </View>
 
 
@@ -647,7 +589,7 @@ useNativeDriver ={true}
 
 
                     </View>
-                </Animated.View>
+                </View>
             )
         
     };
@@ -699,7 +641,7 @@ useNativeDriver ={true}
         return (
             <View style={styles.outerContainer}>
                 {
-                    this.renderIOSBigTitle()
+                    // this.renderIOSBigTitle()
                 }
                 {
                     this.renderTitleArea()
@@ -777,27 +719,6 @@ useNativeDriver ={true}
               }>
                   {this._renderCustomerSheetContent()}
                   </RBSheet>
-
-                  <RBSheet
-              ref={ref => {
-                this.customerRemove = ref;
-              }}
-              height={230}
-              duration={200}
-              customStyles={{
-                container: {
-                  justifyContent: "flex-start",
-                  alignItems: "flex-start",
-                  paddingLeft: 20,
-                  backgroundColor: '#EFF3F9',
-                  borderTopLeftRadius: 15,
-                  borderTopRightRadius: 15
-                }
-              }
-              }>
-                  {this._renderCustomerSheetDeleteContent()}
-                  </RBSheet>
-
                 </View>
                 {this.showSimpleMessage()}
             </View>
@@ -934,4 +855,4 @@ const mapStateToProps = (state: AppState) => ({
   export default connect(
     mapStateToProps,
     bindToAction
-  )(HomeScreen);
+  )(HomeScreenAndroid);

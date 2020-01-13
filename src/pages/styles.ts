@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     justifyContent: "flex-start",
     paddingHorizontal:0,
-    marginTop:20
+    marginTop:10
   },
 
   reportContainer: {
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
 
-    elevation: 5,
+
     borderRadius: 2,
     paddingTop: 30,
     //marginHorizontal:20,
@@ -935,6 +935,7 @@ const styles = StyleSheet.create({
     marginRight:50
   },
   SheetContainer: {
+    zIndex:100,
     flex: 1, 
     justifyContent: 'flex-start',
      alignItems: 'flex-start', 

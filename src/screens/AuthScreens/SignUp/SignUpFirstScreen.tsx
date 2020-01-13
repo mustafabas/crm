@@ -136,7 +136,7 @@ class SignUpFirstScreen extends Component<Props, {}> {
               </View>
               <View style={{marginTop:'20%'}}>
                 
-              <Item style={{borderBottomWidth:1,borderTopWidth:1,borderLeftWidth:1,borderRightWidth:1,borderColor: (props.touched.NameSurname && props.errors.NameSurname) ? "#FD0D55" : "#2069F3",borderRadius:30,backgroundColor:'#2069F3',paddingVertical:5
+              <Item style={{borderBottomWidth:1,borderTopWidth:1,borderLeftWidth:1,borderRightWidth:1,borderColor: (props.touched.NameSurname && props.errors.NameSurname) ? "#FD0D55" : "#2069F3",borderRadius:30,backgroundColor:'#2069F3',paddingVertical:0
             ,shadowRadius: 5.00,
                     
             elevation: 12,
@@ -144,7 +144,7 @@ class SignUpFirstScreen extends Component<Props, {}> {
             shadowColor: "#2069F3",
 shadowOffset: {width: 3, height: 3 },
 shadowOpacity: .5,}}>
-            <Icon style={{color:(props.touched.NameSurname && props.errors.NameSurname) ? "#FD0D55" : 'white',marginTop:-0,marginLeft:20}} active name='ios-person' />
+            <Icon style={{color:(props.touched.NameSurname && props.errors.NameSurname) ? "#FD0D55" : 'white',marginTop:-0,marginLeft:20,fontSize:20}} active name='ios-person' />
             {/* <Label style={{color:'white',fontFamily:"Avenir Next"}} >Email</Label> */}
            
             <Input 
@@ -175,7 +175,7 @@ shadowOpacity: .5,}}>
                  :  props.handleBlur("NameSurname")}
 
            
-             style={{color:'white',fontFamily:"Avenir Next",paddingTop:0}}
+             style={{color:'white',fontFamily:"Avenir Next",paddingTop:Platform.OS === 'ios' ? 0 : 10}}
              placeholder= {(props.touched.NameSurname && props.errors.NameSurname) ? "Lütfen İsim Soyisminizi Giriniz" : "İsim Soyisim"}
              placeholderTextColor="#dcdcdc"
              />
@@ -183,7 +183,7 @@ shadowOpacity: .5,}}>
           </Item>
 
 
-          <Item style={{marginTop:20,borderBottomWidth:1,borderTopWidth:1,borderLeftWidth:1,borderRightWidth:1,borderColor: (props.touched.email && props.errors.email) ? "#FD0D55" : "#2069F3",borderRadius:30,backgroundColor:'#2069F3',paddingVertical:5
+          <Item style={{marginTop:20,borderBottomWidth:1,borderTopWidth:1,borderLeftWidth:1,borderRightWidth:1,borderColor: (props.touched.email && props.errors.email) ? "#FD0D55" : "#2069F3",borderRadius:30,backgroundColor:'#2069F3'
             ,shadowRadius: 5.00,
                     
             elevation: 12,
@@ -191,7 +191,7 @@ shadowOpacity: .5,}}>
             shadowColor: "#2069F3",
 shadowOffset: {width: 3, height: 3 },
 shadowOpacity: .5,}}>
-            <Icon style={{color:(props.touched.email && props.errors.email) ? "#FD0D55" : 'white',marginTop:-0,marginLeft:20}} active name='ios-mail' />
+            <Icon style={{color:(props.touched.email && props.errors.email) ? "#FD0D55" : 'white',marginTop:-0,marginLeft:20,fontSize:20}} active name='ios-mail' />
             {/* <Label style={{color:'white',fontFamily:"Avenir Next"}} >Email</Label> */}
            
             <Input 
@@ -222,7 +222,7 @@ shadowOpacity: .5,}}>
                :  props.handleBlur("email")}
 
            
-             style={{color:'white',fontFamily:"Avenir Next",paddingTop:0}}
+             style={{color:'white',fontFamily:"Avenir Next",paddingTop:Platform.OS === 'ios' ? 0 : 10}}
              placeholder= {(props.touched.email && props.errors.email) ? "Lütfen Emailinizi Giriniz" : "Email"}
              placeholderTextColor="#dcdcdc"
              />
@@ -230,7 +230,7 @@ shadowOpacity: .5,}}>
           </Item>
 
 
-          <Item style={{marginTop:20,borderBottomWidth:1,borderTopWidth:1,borderLeftWidth:1,borderRightWidth:1,borderColor: (props.touched.password && props.errors.password) ? "#FD0D55" : "#2069F3",borderRadius:30,backgroundColor:'#2069F3',paddingVertical:5
+          <Item style={{marginTop:20,borderBottomWidth:1,borderTopWidth:1,borderLeftWidth:1,borderRightWidth:1,borderColor: (props.touched.password && props.errors.password) ? "#FD0D55" : "#2069F3",borderRadius:30,backgroundColor:'#2069F3'
             ,shadowRadius: 5.00,
                     
             elevation: 12,
@@ -238,7 +238,7 @@ shadowOpacity: .5,}}>
             shadowColor: "#2069F3",
 shadowOffset: {width: 3, height: 3 },
 shadowOpacity: .5,}}>
-            <Icon style={{color:(props.touched.password && props.errors.password) ? "#FD0D55" : 'white',marginTop:-0,marginLeft:20}} active name='ios-lock' />
+            <Icon style={{color:(props.touched.password && props.errors.password) ? "#FD0D55" : 'white',marginTop:-0,marginLeft:20,fontSize:20}} active name='ios-lock' />
             {/* <Label style={{color:'white',fontFamily:"Avenir Next"}} >Email</Label> */}
            
             <Input 
@@ -269,13 +269,13 @@ onBlur={ (props.touched.password && props.errors.password) ? ()=> {
     :  props.handleBlur("password")}
 
 
-style={{color:'white',fontFamily:"Avenir Next",paddingTop:0}}
+style={{color:'white',fontFamily:"Avenir Next",paddingTop:Platform.OS=== 'ios' ? 0 : 10}}
 placeholder= {(props.touched.password && props.errors.password) ? "Lütfen Şifrenizi Giriniz." : "******"}
 placeholderTextColor="#dcdcdc"
 secureTextEntry = {props.values.IsSecureText}
 />
 <TouchableOpacity onPressIn ={()=> props.setFieldValue('IsSecureText',false)} onPressOut={()=> props.setFieldValue('IsSecureText',true)} >
-  <Icon style={{color:'white'}} active name="ios-eye" />
+  <Icon style={{color:'white',fontSize:20}} active name="ios-eye" />
 </TouchableOpacity>
 
 </Item>
