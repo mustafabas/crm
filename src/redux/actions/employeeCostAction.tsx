@@ -10,7 +10,7 @@ import { reset } from './loginAction';
 export function employeeCost(employeId:number, cost:number) {
 
   return (dispatch : Dispatch<Action>) =>  {
-    console.log("employeCostAdd");
+
     dispatch(employeeAddCostLoading(true));
   axios.post(WATER_ADD_EMPLOYEE_COST,
     {
@@ -20,7 +20,7 @@ export function employeeCost(employeId:number, cost:number) {
   .then((response) =>{
   if(response.data.isSuccess){
       if(response.data.result){
-        console.log(response.data.result);
+ 
         dispatch(employeCostIsSucceed(true, "Çalışan Gider Eklendi!"));
         dispatch(reset());
       

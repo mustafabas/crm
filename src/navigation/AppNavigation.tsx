@@ -185,7 +185,7 @@ const CustomerStack = createStackNavigator(
 
 
 const HomeStack = createStackNavigator({
-  Home : Platform.OS === 'ios' ? HomeScreen : HomeScreenAndroid,
+  Home : Platform.OS === 'ios' ? HomeScreenAndroid : HomeScreen,
   Customer : CustomerOrdersScreen,
   addCustomer : addCustomer,
   orderAdd : orderAdd,

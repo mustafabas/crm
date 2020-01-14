@@ -32,7 +32,8 @@ export default (state: EmployeeCostAdd = initalState, action: Action) => {
         case RESET_PROPS:
           return {
             ...state,
-            EmployeeCostAddMessage:""
+            EmployeeCostAddMessage:"",
+            EmployeAddCostLoading:false
           }
     default:
       return state;

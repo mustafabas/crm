@@ -268,7 +268,8 @@ const styles = StyleSheet.create({
   },
   row_cell5: {
     flexDirection: 'row',
-    flex: 7,
+    flex: 1,
+    justifyContent:'space-between'
   },
 
   row_cell6: {
@@ -318,7 +319,7 @@ const styles = StyleSheet.create({
     textAlignVertical: 'bottom',
     includeFontPadding: false,
     flex: 0,
-    fontSize: 20,
+    fontSize: 17,
   },
   alt_bilgi: {
     color: "#0A157A",
@@ -507,10 +508,8 @@ const styles = StyleSheet.create({
     textAlign: "right",
   },
   iconButtonOrder: {
-    marginHorizontal: 2,
     paddingLeft: 16,
-    flex: 0.22,
-    textAlign: "right",
+
   },
 
 
@@ -737,12 +736,11 @@ const styles = StyleSheet.create({
   },
 
   productUrunfiyatText: {
-    color: "#0A157A",
-    textAlignVertical: 'top',
+    color: "#333",
+
     includeFontPadding: false,
-    flex: 0,
-    fontSize: 12,
-    textAlign: "right",
+    fontSize: 13,
+
   },
 
   wantedCustomerGetButtonContainer: {

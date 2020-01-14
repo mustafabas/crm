@@ -19,7 +19,7 @@ export function customerAdd(nameSurname: string, companyName: string, dayOfWeek:
     AsyncStorage.multiGet(['userToken', 'userId']).then((res) => {
       let token = res[0][1];
       let userId = res[1][1];
-      
+      console.log(userId)
       const headers = {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
@@ -32,7 +32,7 @@ export function customerAdd(nameSurname: string, companyName: string, dayOfWeek:
           dayOfWeek: 0,
           fountainCount: +fountainCount,
           dayOfWeeks: dayOfWeeks, 
-          userId: 1,
+          userId: userId,
           address: address,
           phoneNumber:phoneNumber 
   
@@ -42,7 +42,8 @@ export function customerAdd(nameSurname: string, companyName: string, dayOfWeek:
             if (response.data.result) {
             
               dispatch(customerAddIsSucceed(true, "Müşteri Eklendi!"));
-              dispatch(reset())
+              dispatch(reset());
+              dispatch(GetCustomers(1,"",0,1));
             }
   
           }
@@ -50,7 +51,7 @@ export function customerAdd(nameSurname: string, companyName: string, dayOfWeek:
             console.log(response.data.message)
             dispatch(customerAddIsSucceed(false, "Müşteri Zaten Var!"));
             dispatch(reset())
-            dispatch(GetCustomers(1,"",0,1))
+            dispatch(GetCustomers(1,"",0,1));
           }
         })
         .catch(error => {

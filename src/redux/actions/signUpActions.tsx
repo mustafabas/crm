@@ -22,15 +22,13 @@ export function createBaseUser(user :BaseUser) {
     return(dispatch : Dispatch<Action>) => {
         dispatch(loadingSecond(true));
 
-
-        axios.post(WATER_USER_CREATE,{
+      axios.post(WATER_USER_CREATE,{
         nameSurname: user.nameSurname,
     phoneNumber: user.phoneNumber,
     email: user.email,
-    password: user.phoneNumber,
-    companyName: user.phoneNumber,
-    address: user.phoneNumber,
-
+    password: user.password,
+    companyName: user.companyName,
+    address: user.address,
         }).then((res)=> {
             if(res.data.isSuccess) {
 

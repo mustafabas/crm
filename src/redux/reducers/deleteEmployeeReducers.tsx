@@ -1,9 +1,9 @@
 import { EmployeeDelete, Action } from "../states";
-import {EMPLOYEE_DELETE_SUCCEED,EMPLOYEE_DELETE_FAILED} from "../types";
+import {EMPLOYEE_DELETE_SUCCEED,EMPLOYEE_DELETE_FAILED, RESET_PROPS} from "../types";
 
 
 const initalState = {
-    isSuccess: false,
+  isSuccess:null
   };
 
 export default (state: EmployeeDelete = initalState, action: Action) => {
@@ -18,6 +18,11 @@ export default (state: EmployeeDelete = initalState, action: Action) => {
         ...state,
         isSuccess:false,
       };
+      case RESET_PROPS:
+        return{
+          ...state,
+          isSuccess:null
+        }
     default:
       return state;
   }

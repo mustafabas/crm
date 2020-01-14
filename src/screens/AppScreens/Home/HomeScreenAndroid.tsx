@@ -325,15 +325,11 @@ class HomeScreenAndroid extends Component<Props,State>{
 
         
         return(
-//paddingBottom basta olmali sonra azaltilacak animasyonla
             <FlatList
 
             style={{ marginBottom:Platform.OS === "ios" ? -60 : -220,paddingTop:10}}
             
-           //  onScroll={
-           //     Animated.event(
-           //         [{nativeEvent: {contentOffset: {y: this.state.scrollY}}}]
-           //     )}
+      
 
 
            refreshing={this.state.refreshing}
@@ -423,45 +419,17 @@ class HomeScreenAndroid extends Component<Props,State>{
 
          />
 
-            
-            
-
-
-            
-                
-                
-                
-            
-
         )
 
                
     }
     deleteSelectedCustomer() {
-        this.customerEdit.close()
          this.props.customerDelete(this.state.customerId);
         // this.setState({ page: 1 });
-
-        //   this.props.GetCustomers(this.state.orderType, this.state.searchText, this.state.dayOfWeek, 1);
-          
-
-    
+      //   this.props.GetCustomers(this.state.orderType, this.state.searchText, this.state.dayOfWeek, 1);          
       }
     deleteCustomerAlert() {
-
-
-            Alert.alert(
-              //title
-              'Müşteri Silme İşlemi',
-              //body
-              'Müşteriyi silmek istiyor musunuz?',
-              [
-                { text: 'Vazgeç' , onPress: () => this.customerEdit.close() },
-                { text: 'Evet', onPress: () => this.deleteSelectedCustomer() },
-              ],
-              { cancelable: false }
-            );
-        
+    this.deleteSelectedCustomer();
 
     }
 
@@ -488,8 +456,8 @@ class HomeScreenAndroid extends Component<Props,State>{
             </TouchableOpacity>
             <TouchableOpacity style={stylesNew.SheetItemContainer}
               onPress={() => {
-             
-                this.deleteCustomerAlert()
+                this.customerEdit.close();
+                this.deleteRb.open()
                 // this.customerEdit.close();
               }}>
                 <Icon type="FontAwesome" name="trash-o" style={[stylesNew.SheetItemIcon,{ fontSize:25}]}></Icon>
@@ -500,7 +468,41 @@ class HomeScreenAndroid extends Component<Props,State>{
           </View>
         );
       }
+      _renderCustomerDeleteContent() {
+        return (
+    
+          <View style={stylesNew.SheetContainer}>
+            <TouchableOpacity style={[stylesNew.SheetItemContainer, { justifyContent: 'flex-end', padding: 5 }]}
+              onPress={() => {
+                this.deleteRb.close();
+              }}>
+              <Icon name="ios-close" style={[{ fontSize: 40, marginRight: 10 }, stylesNew.SheetItemIcon]}></Icon>
+    
+            </TouchableOpacity>
+            <TouchableOpacity style={stylesNew.SheetItemContainer}
+              onPress={() => {
+                this.deleteRb.close();
+                this.deleteCustomerAlert()
+                // this.customerEdit.close();
+              }}>
+                <Icon type="FontAwesome" name="trash-o" style={[stylesNew.SheetItemIcon,{ fontSize:25}]}></Icon>
+            
+              <Text style={stylesNew.SheetItemText}
+              >Sil</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={stylesNew.SheetItemContainer}
+              onPress={() => {
+                this.deleteRb.close();
+       
+              }}>
+                <Icon type="FontAwesome" name="chevron-left"  style={[stylesNew.SheetItemIcon,{ fontSize:22}]} ></Icon>
+              <Text style={stylesNew.SheetItemText}
+              >İptal Et</Text>
+            </TouchableOpacity>
 
+          </View>
+        );
+      }
 
 
     search() {
@@ -700,6 +702,7 @@ class HomeScreenAndroid extends Component<Props,State>{
                        </RBSheet>
                     }
 
+
 <RBSheet
               ref={ref => {
                 this.customerEdit = ref;
@@ -718,6 +721,26 @@ class HomeScreenAndroid extends Component<Props,State>{
               }
               }>
                   {this._renderCustomerSheetContent()}
+                  </RBSheet>
+
+                  <RBSheet
+              ref={ref => {
+                this.deleteRb = ref;
+              }}
+              height={230}
+              duration={200}
+              customStyles={{
+                container: {
+                  justifyContent: "flex-start",
+                  alignItems: "flex-start",
+                  paddingLeft: 20,
+                  backgroundColor: '#EFF3F9',
+                  borderTopLeftRadius: 15,
+                  borderTopRightRadius: 15
+                }
+              }
+              }>
+                  {this._renderCustomerDeleteContent()}
                   </RBSheet>
                 </View>
                 {this.showSimpleMessage()}

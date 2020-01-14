@@ -191,7 +191,7 @@ export interface AddUser
 
   export interface EmployeeDelete
   {
-    isSuccess: boolean;
+    isSuccess: boolean | null;
   }
 
   export interface getUserState{

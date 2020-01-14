@@ -518,47 +518,76 @@ class HomeScreen extends Component<Props,State>{
       );
     }
 
-    removeCustomer() {
-      console.log("girdi")
-      this.customerRemove.open()
-      this.customerEdit.close();
-      console.log("cikti")
-    }
-    _renderCustomerSheetContent() {
-        return (
-    
-          <View style={stylesNew.SheetContainer}>
-            <TouchableOpacity style={[stylesNew.SheetItemContainer, { justifyContent: 'flex-end', padding: 5 }]}
-              onPress={() => {
-                this.customerEdit.close();
-              }}>
-              <Icon name="ios-close" style={[{ fontSize: 40, marginRight: 10 }, stylesNew.SheetItemIcon]}></Icon>
-    
-            </TouchableOpacity>
-        
-            <TouchableOpacity style={stylesNew.SheetItemContainer}
-              onPress={() => {
-                this.customerEdit.close();
-                this.props.navigation.navigate('CustomerEdit',{customerId: this.state.customerId})
-              }}>
-                <Icon type="FontAwesome" name="pencil"  style={[stylesNew.SheetItemIcon,{ fontSize:22}]} ></Icon>
-              <Text style={stylesNew.SheetItemText}
-              >Düzenle</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={stylesNew.SheetItemContainer}
-              onPress={() => {
-            //  this.customerEdit.close();
-            this.removeCustomer()
-              }}>
-                <Icon type="FontAwesome" name="trash-o" style={[stylesNew.SheetItemIcon,{ fontSize:25}]}></Icon>
-            
-              <Text style={stylesNew.SheetItemText}
-              >Sil</Text>
-            </TouchableOpacity>
-          </View>
-        );
-      }
 
+    _renderCustomerSheetContent() {
+      return (
+  
+        <View style={stylesNew.SheetContainer}>
+          <TouchableOpacity style={[stylesNew.SheetItemContainer, { justifyContent: 'flex-end', padding: 5 }]}
+            onPress={() => {
+              this.customerEdit.close();
+            }}>
+            <Icon name="ios-close" style={[{ fontSize: 40, marginRight: 10 }, stylesNew.SheetItemIcon]}></Icon>
+  
+          </TouchableOpacity>
+      
+          <TouchableOpacity style={stylesNew.SheetItemContainer}
+            onPress={() => {
+              this.customerEdit.close();
+              this.props.navigation.navigate('CustomerEdit',{customerId: this.state.customerId})
+            }}>
+              <Icon type="FontAwesome" name="pencil"  style={[stylesNew.SheetItemIcon,{ fontSize:22}]} ></Icon>
+            <Text style={stylesNew.SheetItemText}
+            >Düzenle</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={stylesNew.SheetItemContainer}
+            onPress={() => {
+              this.customerEdit.close();
+              this.deleteRb.open()
+              // this.customerEdit.close();
+            }}>
+              <Icon type="FontAwesome" name="trash-o" style={[stylesNew.SheetItemIcon,{ fontSize:25}]}></Icon>
+          
+            <Text style={stylesNew.SheetItemText}
+            >Sil</Text>
+          </TouchableOpacity>
+        </View>
+      );
+    }
+    _renderCustomerDeleteContent() {
+      return (
+  
+        <View style={stylesNew.SheetContainer}>
+          <TouchableOpacity style={[stylesNew.SheetItemContainer, { justifyContent: 'flex-end', padding: 5 }]}
+            onPress={() => {
+              this.deleteRb.close();
+            }}>
+            <Icon name="ios-close" style={[{ fontSize: 40, marginRight: 10 }, stylesNew.SheetItemIcon]}></Icon>
+  
+          </TouchableOpacity>
+          <TouchableOpacity style={stylesNew.SheetItemContainer}
+            onPress={() => {
+              this.deleteRb.close();
+              this.deleteSelectedCustomer()
+              // this.customerEdit.close();
+            }}>
+              <Icon type="FontAwesome" name="trash-o" style={[stylesNew.SheetItemIcon,{ fontSize:25}]}></Icon>
+          
+            <Text style={stylesNew.SheetItemText}
+            >Sil</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={stylesNew.SheetItemContainer}
+            onPress={() => {
+              this.deleteRb.close();
+            }}>
+              <Icon type="FontAwesome" name="chevron-left"  style={[stylesNew.SheetItemIcon,{ fontSize:22}]} ></Icon>
+            <Text style={stylesNew.SheetItemText}
+            >İptal Et</Text>
+          </TouchableOpacity>
+
+        </View>
+      );
+    }
 
 
     search() {
@@ -780,7 +809,7 @@ useNativeDriver ={true}
 
                   <RBSheet
               ref={ref => {
-                this.customerRemove = ref;
+                this.deleteRb = ref;
               }}
               height={230}
               duration={200}
@@ -795,7 +824,7 @@ useNativeDriver ={true}
                 }
               }
               }>
-                  {this._renderCustomerSheetDeleteContent()}
+                  {this._renderCustomerDeleteContent()}
                   </RBSheet>
 
                 </View>

@@ -16,7 +16,7 @@ export function GetProducts() {
 
     AsyncStorage.multiGet(['userToken', 'userId']).then((res) => {
       let token = res[0][1];
-
+      
       
       const headers = {
         'Content-Type': 'application/json',

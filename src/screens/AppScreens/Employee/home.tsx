@@ -166,21 +166,7 @@ class Employee extends Component<Props, State> {
 
   }
 
-  deleteEmployeeAlert() {
-    //function to make three option alert
-    Alert.alert(
-      //title
-      'Müşteri Silme İşlemi',
-      //body
-      'Müşteriyi silmek istiyor musunuz?',
-      [
-        { text: 'Geri Gel' },
-        { text: 'Evet', onPress: () => this.deleteSelectedEmployee() },
-      ],
-      { cancelable: false }
-    );
 
-  }
   editEmployee() {
     this.closeModal();
     this.props.navigation.navigate("EditEmployee",
@@ -228,7 +214,17 @@ class Employee extends Component<Props, State> {
     }
 
   }
+  showSimpleDeleteMessage() {
+    if (this.props.employeeDeleteIsSuccess) {
+      showMessage({
+        message: "Çalışan başarıyla silindi",
+        type: this.props.isSuccess ? "success" : "danger",
+        icon: "auto"
+      }
+      );
+    }
 
+  }
   getUserType() {
     //function to make three option alert
     AsyncStorage.getItem("UserType").then((value) => {
@@ -257,7 +253,7 @@ class Employee extends Component<Props, State> {
           }}>
           <Icon name="ios-add" style={styles.SheetItemIcon}></Icon>
           <Text style={styles.SheetItemText}
-          >Ödeme Ekle</Text>
+          >Gider Ekle</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.SheetItemContainer}
           onPress={() => {
@@ -271,7 +267,7 @@ class Employee extends Component<Props, State> {
         <TouchableOpacity style={styles.SheetItemContainer}
           onPress={() => {
             this.OrderSheet.close();
-            this.deleteEmployeeAlert();
+            this.DeleteAlert.open();
           }}>
           <Icon type="FontAwesome" name="trash-o" style={[styles.SheetItemIcon, { fontSize: 25 }]}></Icon>
 
@@ -282,6 +278,41 @@ class Employee extends Component<Props, State> {
     );
   }
 
+
+  _renderEmployeeDeleteAlert() {
+    return (
+
+      <View style={styles.SheetContainer}>
+        <TouchableOpacity style={[styles.SheetItemContainer, { justifyContent: 'flex-end', padding: 5 }]}
+          onPress={() => {
+            this.DeleteAlert.close();
+          }}>
+          <Icon name="ios-close" style={[{ fontSize: 40, marginRight: 10 }, styles.SheetItemIcon]}></Icon>
+
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.SheetItemContainer}
+          onPress={() => {
+            this.DeleteAlert.close();
+            this.deleteSelectedEmployee();
+          }}>
+          <Icon type="FontAwesome" name="trash-o" style={[styles.SheetItemIcon, { fontSize: 25 }]}></Icon>
+
+          <Text style={styles.SheetItemText}
+          >Sil</Text>
+
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.SheetItemContainer}
+          onPress={() => {
+            this.DeleteAlert.close();
+          }}>
+          <Icon type="FontAwesome" name="chevron-left" style={[styles.SheetItemIcon, { fontSize: 22 }]} ></Icon>
+          <Text style={styles.SheetItemText}
+          >İptal Et</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
   componentDidMount() {
     this.mapToPropsToState();
   }
@@ -304,26 +335,27 @@ class Employee extends Component<Props, State> {
                   }}>
                   <Icon name="ios-close" style={[{ fontSize: 40, marginRight: 10 }, styles.SheetItemIcon]}></Icon>
                 </TouchableOpacity>
+                <View style={{ flexDirection: "row", justifyContent: 'flex-start' }}>
+                  <Input
+                    //containerStyle={{ width: '80%' }}
+                    style={styles.input}
+                    placeholder="Gider Miktarı"
+                    placeholderTextColor="#9A9A9A"
+                    value={props.values.amount + ""}
+                    autoCapitalize="none"
+                    keyboardType="numeric"
+                    onBlur={(props.touched.amount && props.errors.amount) ? () => {
+                      props.setFieldValue('amount', "")
+                      props.handleChange("amount")
+                    }
+                      : props.handleBlur("amount")}
+                    onChangeText={props.handleChange("amount")}
+                  />
 
-                <Content style={{ padding: 0, margin: 0 }} >
-                  <Form style={{ flexDirection: 'row', flex: 1 }}>
-                    <Item floatingLabel style={{ width: '60%', borderBottomColor: props.touched.amount && props.errors.amount != null ? 'red' : '#216AF4' }}>
-                      <Label style={{ color: props.touched.amount && props.errors.amount != null ? 'red' : '#000' }}>Miktar</Label>
-                      <Input
-                        onBlur={(props.touched.amount && props.errors.amount) ? () => {
-                          props.setFieldValue('amount', "")
-                          props.handleChange("amount")
-                        }
-                          : props.handleBlur("amount")}
-                        onChangeText={props.handleChange("amount")}
-                      />
-                    </Item>
-                    <Button onPress={() => props.handleSubmit()} primary style={{ width: '20%', marginLeft: '10%', marginTop: 20, backgroundColor: '#01C3E3', borderRadius: 5 }}>
-                      {this._renderEmployeeCostAddButtonText()}
-
-                    </Button>
-                  </Form>
-                </Content>
+                  <Button onPress={() => props.handleSubmit()} style={styles.SheetButtonContainer}>
+                    {this._renderEmployeeCostAddButtonText()}
+                  </Button>
+                </View>
 
               </View>
             </KeyboardAvoidingView>
@@ -386,16 +418,16 @@ class Employee extends Component<Props, State> {
           onRefresh={() => this.onRefresh()}
           data={this.props.employees}
           renderItem={({ item }) => (
-            <View style={{padding:5}}>
+            <View style={{ padding: 5 }}>
               <View style={{
 
-                borderRadius:15,
-                borderColor:'#CFD3D7',
-                
-                borderWidth:1,
+                borderRadius: 15,
+                borderColor: '#CFD3D7',
+
+                borderWidth: 1,
 
               }}>
-                <View  style={{ borderBottomColor: '#CFD3D7',padding:10, borderBottomWidth: 1 }}>
+                <View style={{ borderBottomColor: '#CFD3D7', padding: 10, borderBottomWidth: 1 }}>
                   <View style={{ justifyContent: 'space-between', flexDirection: 'row', flex: 1 }}>
                     <View style={{ flexDirection: 'row' }}>
                       <View style={{ width: 33, height: 33, borderRadius: 16.5, backgroundColor: '#2069F3', justifyContent: 'center', alignItems: 'center' }}>
@@ -413,7 +445,7 @@ class Employee extends Component<Props, State> {
                     </View>
                   </View>
                 </View>
-                <View style={{padding:10}} >
+                <View style={{ padding: 10 }} >
                   <View style={{ justifyContent: 'space-between', flexDirection: 'row', flex: 1 }}>
                     <View style={{ flexDirection: 'column' }}>
                       {item.monthlySalaryDisplay != '' && <Text style={{ fontFamily: 'Avenir Next', color: '#404243' }}>Maaş</Text>}
@@ -423,17 +455,17 @@ class Employee extends Component<Props, State> {
                     </View>
                     <View style={{ flexDirection: 'column', flex: 0.6 }}>
                       {item.phoneNumber != "" &&
-                        <Text style={{ fontFamily: 'Avenir Next', color: '#404243' ,textAlign:'right'}}>Telefon</Text>}
+                        <Text style={{ fontFamily: 'Avenir Next', color: '#404243', textAlign: 'right' }}>Telefon</Text>}
                       <TouchableOpacity onPress={() => Linking.openURL(`tel:${item.phoneNumber}`)}>
-                        <Text style={{ color: '#58595A',textAlign:'right', fontFamily: 'Avenir Next', textDecorationLine: 'underline' }}>
+                        <Text style={{ color: '#58595A', textAlign: 'right', fontFamily: 'Avenir Next', textDecorationLine: 'underline' }}>
                           {item.phoneNumber}
                         </Text>
                       </TouchableOpacity>
                       <View>
                         {item.address != "" &&
-                          <Text style={{ fontFamily: 'Avenir Next', color: '#404243',textAlign:'right'}}>Adres</Text>}
+                          <Text style={{ fontFamily: 'Avenir Next', color: '#404243', textAlign: 'right' }}>Adres</Text>}
                         <TouchableOpacity onPress={() => Linking.openURL('https://www.google.com/maps/search/?api=1&query=' + item.address)}>
-                          <Text style={{ color: '#58595A',textAlign:'right', textDecorationLine: 'underline', fontFamily: 'Avenir Next' }}>
+                          <Text style={{ color: '#58595A', textAlign: 'right', textDecorationLine: 'underline', fontFamily: 'Avenir Next' }}>
                             {item.address}
                           </Text>
                         </TouchableOpacity>
@@ -508,7 +540,25 @@ class Employee extends Component<Props, State> {
             }>
             {this._renderEmployeeSheetContent()}
           </RBSheet>
-
+          <RBSheet
+            ref={ref => {
+              this.DeleteAlert = ref;
+            }}
+            height={230}
+            duration={200}
+            customStyles={{
+              container: {
+                justifyContent: "flex-start",
+                alignItems: "flex-start",
+                paddingLeft: 20,
+                backgroundColor: '#EFF3F9',
+                borderTopLeftRadius: 15,
+                borderTopRightRadius: 15
+              }
+            }
+            }>
+            {this._renderEmployeeDeleteAlert()}
+          </RBSheet>
           <RBSheet
             ref={ref => {
               this.AmountSheet = ref;
@@ -530,6 +580,7 @@ class Employee extends Component<Props, State> {
           </RBSheet>
           {this._renderView()}
           {this.showSimpleMessage()}
+          {this.showSimpleDeleteMessage()}
         </View>
       );
     }
