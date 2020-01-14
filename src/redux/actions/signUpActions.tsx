@@ -6,7 +6,7 @@ import {SIGNUP_FAILED,SIGNUP_STARTED,SIGNUP_SUCCEED,RESET_PROPS, USER_CREATE_FIR
 import {Action} from '../states'
 import { UserFirstData } from "../reducers/signUpReducers";
 import { navigate } from "../services/Navigator";
-
+ 
 
 export interface BaseUser {
     nameSurname: string;
@@ -22,7 +22,8 @@ export function createBaseUser(user :BaseUser) {
     return(dispatch : Dispatch<Action>) => {
         dispatch(loadingSecond(true));
 
-      axios.post(WATER_USER_CREATE,{
+
+        axios.post(WATER_USER_CREATE,{
         nameSurname: user.nameSurname,
     phoneNumber: user.phoneNumber,
     email: user.email,
