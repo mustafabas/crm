@@ -131,8 +131,12 @@ export function GetCustomerMore(orderType: number, searchText: string, dayOfWeek
       });
  
 
-  });
-     }
+  })
+
+  
+
+
+  }
 }
 
 export const loading = (loader: boolean) => ({

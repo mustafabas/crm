@@ -124,11 +124,11 @@ class CustomerOrdersScreen extends Component<Props, State>{
   }
 
 
-  componentDidMount() {
-    this.props.navigation.setParams({
-      callingFun: this.callingFun,
-    })
-  }
+componentDidMount(){
+  this.props.navigation.setParams({
+    callingFun: this.callingFun,
+})
+}
   componentWillMount() {
     const customerId = this.props.navigation.getParam("customerId");
     this.props.GetCustomerDetail(customerId);
@@ -140,22 +140,22 @@ class CustomerOrdersScreen extends Component<Props, State>{
 
   callingFun = () => {
     this.CustomerSheet.open()
-  }
+}
 
-  static navigationOptions = ({ navigation }) => ({
+   static navigationOptions = ({ navigation }) => ({
     title: 'Müşteri Siparişleri',
     headerRight: () => {
       return (
-        <View style={{ flexDirection: 'row' }}>
-          <TouchableOpacity onPress={() => navigation.getParam('callingFun')()} style={{ marginRight: 20 }}>
-            <Icon style={{ color: 'white' }} type="AntDesign" name="edit" />
+        <View style={{flexDirection:'row'}}>
+          <TouchableOpacity onPress={() => navigation.getParam('callingFun')() } style={{ marginRight: 20 }}>
+          <Icon style={{ color: 'white' }} type="AntDesign" name="edit" />
 
-          </TouchableOpacity>
+        </TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.navigate("orderAdd", { customerId: navigation.getParam("customerId") })} style={{ marginRight: 20 }}>
-            <Icon style={{ color: 'white' }} name="ios-add-circle" />
+          <Icon style={{ color: 'white' }} name="ios-add-circle" />
 
-          </TouchableOpacity>
-
+        </TouchableOpacity>
+        
         </View>
       )
     }
