@@ -23,7 +23,6 @@ export function createBaseUser(user :BaseUser) {
         dispatch(loading(true));
 
 
-
         axios.post(WATER_USER_CREATE,{
         nameSurname: user.nameSurname,
     phoneNumber: user.phoneNumber,
