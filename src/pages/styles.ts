@@ -18,6 +18,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "white",
     justifyContent: "flex-start",
+    paddingHorizontal:0,
+    marginTop:10
   },
 
   reportContainer: {
@@ -42,7 +44,7 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
 
-    elevation: 5,
+
     borderRadius: 2,
     paddingTop: 30,
     //marginHorizontal:20,
@@ -472,13 +474,14 @@ const styles = StyleSheet.create({
   searchButtonDate: {
     backgroundColor: '#2B6EDC',
     elevation: 1,
-    borderRadius: 2,
+    borderRadius: 5,
     //marginHorizontal:20,
     justifyContent: "space-between",
     padding: 7,
-    flex:0.2,
+
     alignItems:'center',
     margin:5,
+    paddingHorizontal:15
   },
 
   search_row: {
@@ -932,6 +935,7 @@ const styles = StyleSheet.create({
     marginRight:50
   },
   SheetContainer: {
+    zIndex:100,
     flex: 1, 
     justifyContent: 'flex-start',
      alignItems: 'flex-start', 

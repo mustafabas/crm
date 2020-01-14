@@ -43,28 +43,41 @@ interface userData {
   phoneNumber: string;
    companyName:string;
   adress:string;
-
 }
 
+
 const loginSchema = Yup.object().shape({
-  NameSurname :Yup.string()
-  .min(4)
-  .max(30)
+  phoneNumber :Yup.string()
+  .min(9)
+
   .required(),
-  email: Yup.string()
-    .email()
-    .min(4)
+  companyName: Yup.string()
     .max(50)
     .required(),
-  password: Yup.string()
-    .min(6)
-    .max(16)
+    adress: Yup.string()
+    .max(100)
     .required()
 });
 
 class SignUpSecondScreen extends Component<Props, {}> {
 
 
+  static navigationOptions = (
+    screenProps: NavigationScreenProps
+  ) => {
+
+    return {
+
+      headerStyle: {
+        // height : screenProps.navigation.getParam('headerHeight'),
+        // backgroundColor:'#d67676'
+      },
+      header: null
+    }
+  }
+
+
+  
   showSimpleMessage() {
 
     if (this.props.isSecondFinished && (!this.props.isSecondSucceed)) {
@@ -109,7 +122,7 @@ class SignUpSecondScreen extends Component<Props, {}> {
           <ScrollView bounces={false} contentContainerStyle={{flexGrow:1}}>
             <Formik
               initialValues={{ phoneNumber: "", companyName: "" ,adress:""}}
-              // validationSchema={loginSchema}
+              validationSchema={loginSchema}
               onSubmit={values => this.handleLogin(values)}
             >
               {props => {
@@ -125,7 +138,7 @@ class SignUpSecondScreen extends Component<Props, {}> {
               </View>
               <View style={{marginTop:'20%'}}>
                 
-              <Item style={{borderBottomWidth:1,borderTopWidth:1,borderLeftWidth:1,borderRightWidth:1,borderColor: (props.touched.phoneNumber && props.errors.phoneNumber) ? "#FD0D55" : "#2069F3",borderRadius:30,backgroundColor:'#2069F3',paddingVertical:5
+              <Item style={{borderBottomWidth:1,borderTopWidth:1,borderLeftWidth:1,borderRightWidth:1,borderColor: (props.touched.phoneNumber && props.errors.phoneNumber) ? "#FD0D55" : "#2069F3",borderRadius:30,backgroundColor:'#2069F3'
             ,shadowRadius: 5.00,
                     
             elevation: 12,
@@ -133,7 +146,7 @@ class SignUpSecondScreen extends Component<Props, {}> {
             shadowColor: "#2069F3",
 shadowOffset: {width: 3, height: 3 },
 shadowOpacity: .5,}}>
-            <Icon style={{color:(props.touched.phoneNumber && props.errors.phoneNumber) ? "#FD0D55" : 'white',marginTop:-0,marginLeft:20}} active name='ios-call' />
+            <Icon style={{color:(props.touched.phoneNumber && props.errors.phoneNumber) ? "#FD0D55" : 'white',marginTop:-0,marginLeft:20,fontSize:20}} active name='ios-call' />
             {/* <Label style={{color:'white',fontFamily:"Avenir Next"}} >Email</Label> */}
            
             <Input 
@@ -164,7 +177,7 @@ shadowOpacity: .5,}}>
                  :  props.handleBlur("phoneNumber")}
 
            
-             style={{color:'white',fontFamily:"Avenir Next",paddingTop:0}}
+             style={{color:'white',fontFamily:"Avenir Next",paddingTop:Platform.OS === 'ios' ? 0 : 10}}
              placeholder= {(props.touched.phoneNumber && props.errors.phoneNumber) ? "Lütfen Telefon Numaranızı" : "0 506 680 4389"}
              placeholderTextColor="#dcdcdc"
              />
@@ -174,7 +187,7 @@ shadowOpacity: .5,}}>
 
 
           
-          <Item style={{marginTop:20,borderBottomWidth:1,borderTopWidth:1,borderLeftWidth:1,borderRightWidth:1,borderColor: (props.touched.companyName && props.errors.companyName) ? "#FD0D55" : "#2069F3",borderRadius:30,backgroundColor:'#2069F3',paddingVertical:5
+          <Item style={{marginTop:20,borderBottomWidth:1,borderTopWidth:1,borderLeftWidth:1,borderRightWidth:1,borderColor: (props.touched.companyName && props.errors.companyName) ? "#FD0D55" : "#2069F3",borderRadius:30,backgroundColor:'#2069F3'
             ,shadowRadius: 5.00,
                     
             elevation: 12,
@@ -213,7 +226,7 @@ shadowOpacity: .5,}}>
                  :  props.handleBlur("companyName")}
 
            
-             style={{color:'white',fontFamily:"Avenir Next",paddingTop:0}}
+             style={{color:'white',fontFamily:"Avenir Next",paddingTop:Platform.OS === 'ios' ? 0 : 10}}
              placeholder= {(props.touched.companyName && props.errors.companyName) ? "Şirket İsminizi Giriniz." : "Şirket İsmi"}
              placeholderTextColor="#dcdcdc"
              />
@@ -221,7 +234,7 @@ shadowOpacity: .5,}}>
           </Item>
 
 
-           <Item style={{marginTop:20,borderBottomWidth:1,borderTopWidth:1,borderLeftWidth:1,borderRightWidth:1,borderColor: (props.touched.adress && props.errors.adress) ? "#FD0D55" : "#2069F3",borderRadius:30,backgroundColor:'#2069F3',paddingVertical:5
+           <Item style={{marginTop:20,borderBottomWidth:1,borderTopWidth:1,borderLeftWidth:1,borderRightWidth:1,borderColor: (props.touched.adress && props.errors.adress) ? "#FD0D55" : "#2069F3",borderRadius:30,backgroundColor:'#2069F3'
             ,shadowRadius: 5.00,
                     
             elevation: 12,
@@ -260,7 +273,7 @@ shadowOpacity: .5,}}>
                  :  props.handleBlur("adress")}
 
            
-             style={{color:'white',fontFamily:"Avenir Next",paddingTop:0}}
+             style={{color:'white',fontFamily:"Avenir Next",paddingTop:Platform.OS === 'ios' ? 0 : 10}}
              placeholder= {(props.touched.adress && props.errors.adress) ? "Lütfen Adresinizi Giriniz." : "Adres"}
              placeholderTextColor="#dcdcdc"
              />

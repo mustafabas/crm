@@ -133,6 +133,7 @@ class Products extends Component<Props, State> {
     }
     else {
       return (<FlatList
+        contentContainerStyle={{paddingTop:10}}
         refreshing={this.state.refreshing}
         onRefresh={() => this.onRefresh()}
         data={this.props.products}
@@ -215,7 +216,7 @@ class Products extends Component<Props, State> {
             {this._renderProductSheetContent()}
           </RBSheet>
 
-          <View style={{ marginTop: 10 }}></View>
+          <View style={{ }}></View>
         </KeyboardAvoidingView>
         {this._renderView()}
       </View>

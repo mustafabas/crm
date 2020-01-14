@@ -237,9 +237,9 @@ onValueChange2(value: string) {
           behavior={Platform.OS === "ios" ? "padding" : "height"}
         >
           <ScrollView bounces={false}>
-            <Text style={{textAlign:'right',marginRight:20,marginTop:20}}>
+            {/* <Text style={{textAlign:'right',marginRight:20,marginTop:20}}>
               {this.state.date}
-            </Text>
+            </Text> */}
             <Formik
               enableReinitialize
               initialValues={initialValues}
@@ -254,10 +254,13 @@ onValueChange2(value: string) {
                     <View style={[styles.rnpickerselect,{paddingTop:20,paddingRight:20}]}>
 
 
-<Picker
+          
+                      </View>
+                    <View style={[styles.inputContainer,{paddingTop:0}]}>
+                    <Picker
 placeholderStyle={{width:'100%'}}
 headerTitleStyle={{color:'white',fontFamily:'Avenir Next',fontSize:18}}
-headerStyle={{backgroundColor: '#2B6EDC'}}
+// headerStyle={{backgroundColor: '#2B6EDC'}}
 iosHeader="Ürünler"
 headerBackButtonTextStyle={{color:'white'}}
                 mode="dropdown"
@@ -280,10 +283,7 @@ headerBackButtonTextStyle={{color:'white'}}
                 
 
               </Picker>
-              
-                      </View>
-                    <View style={[styles.inputContainer,{paddingTop:0}]}>
-                      
+    
 
                       <View style={styles.input}>
                        <Item floatingLabel>

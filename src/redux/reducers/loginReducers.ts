@@ -41,7 +41,7 @@ export default (state: UserState = intialState, action: Action) => {
           loginErrorMessage : ""
         };
     default:
-      return {...state} ;
+      return state ;
 
   }
 };

@@ -60,6 +60,6 @@ export default (state: ProductEdit = initalState, action: Action) => {
       
 
     default:
-      return {...state};
+      return state;
   }
 };

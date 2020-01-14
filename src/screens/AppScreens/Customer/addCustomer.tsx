@@ -304,7 +304,7 @@ style={{fontFamily:'Avenir Next',fontSize:18}}
                         style={{minHeight:100,maxHeight:100,fontFamily:'Avenir Next',fontSize:18}}
 
                         // underlineColorAndroid="transparent"
-                        keyboardType= "phone-pad"
+
                         placeholderTextColor="#9A9A9A"
                         value={values.adress}
                         autoCapitalize="words"

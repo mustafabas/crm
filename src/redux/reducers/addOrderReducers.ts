@@ -41,6 +41,6 @@ export default (state: AddOrder = initalState, action: Action) => {
         isLoading : false
       }
     default:
-      return {...state};
+      return state;
   }
 };

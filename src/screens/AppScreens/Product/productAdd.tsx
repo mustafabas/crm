@@ -128,9 +128,9 @@ class productAdd extends Component<Props, {}> {
                         >
                             {props => {
                                 return (
-                                    <View>
+                                    <View style={{marginHorizontal:20}}>
                                         <View style={styles.containerNew} >
-                                            <View style={styles.input}>
+                                            <View style={[styles.input,{marginTop:15}]}>
                                                 <Item floatingLabel style={{ marginTop: 0, borderBottomColor: (props.touched.urunAdi && props.errors.urunAdi != null) ? 'red' : '#2069F3' }}>
                                                     <Label style={{ color: (props.touched.urunAdi && props.errors.urunAdi != null) ? 'red' : '#959595' }}>Ürün Adı</Label>
                                                     <Input
@@ -144,7 +144,7 @@ class productAdd extends Component<Props, {}> {
                                                 </Item>
                                             </View>
 
-                                            <View style={styles.input}>
+                                            <View style={[styles.input,{marginTop:15}]}>
                                                 <Item floatingLabel style={{ marginTop: 0, borderBottomColor: (props.touched.urunKodu && props.errors.urunKodu != null) ? 'red' : '#2069F3' }}>
                                                     <Label style={{ color: (props.touched.urunKodu && props.errors.urunKodu != null) ? 'red' : '#959595' }}>Ürün Kodu</Label>
                                                     <Input
@@ -158,7 +158,7 @@ class productAdd extends Component<Props, {}> {
                                                 </Item>
 
                                             </View>
-                                            <View style={styles.input}>
+                                            <View style={[styles.input,{marginTop:15}]}>
                                                 <Item floatingLabel style={{ marginTop: 0, borderBottomColor: (props.touched.urunFiyati && props.errors.urunFiyati != null) ? 'red' : '#2069F3' }}>
                                                     <Label style={{ color: (props.touched.urunFiyati && props.errors.urunFiyati != null) ? 'red' : '#959595' }}>Ürün Fiyatı</Label>
                                                     <Input
@@ -173,7 +173,7 @@ class productAdd extends Component<Props, {}> {
                                                 </Item>
 
                                             </View>
-                                            <View style={styles.input}>
+                                            <View style={[styles.input,{marginTop:15}]}>
                                                 <Item floatingLabel style={{ marginTop: 0, borderBottomColor: (props.touched.productCount && props.errors.productCount != null) ? 'red' : '#2069F3' }}>
                                                     <Label style={{ color: (props.touched.productCount && props.errors.productCount != null) ? 'red' : '#959595' }}>Ürün Sayısı</Label>
                                                     <Input

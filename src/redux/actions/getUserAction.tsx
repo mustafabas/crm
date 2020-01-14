@@ -1,9 +1,18 @@
 import axios from 'axios'
-import { WATER_GET_USER } from './../constants'
+import { WATER_GET_USER,WATER_GET_ABOUT_US } from './../constants'
 import { Dispatch } from "react";
 import { USER_GET, USER_LOADING } from './../types'
 import { Action } from '../states'
 import { IGetUserItem } from "../models/userModel";
+import { reset } from './loginAction';
+
+
+
+
+    
+
+
+
 
 
 export function GetUser(employeeId: number) {

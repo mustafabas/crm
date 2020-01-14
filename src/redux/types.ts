@@ -60,6 +60,35 @@ export const GET_TAKE_TOTAL_AMOUNT = "GetTakeTotalAmounts";
 export const GET_TOOK_TOTAL_AMOUNT = "GetTookTotalAmounts";
 export const GET_REST_TOTAL_AMOUNT = "GetRestTotalAmounts";
 
+export const ABOUT_US_CONTEXT = "aboutUsContext"
+export const ABOUT_US_CONTEXT_LOADING = "ABOUT_US_CONTEXTLoading"
+export const ABOUT_US_CONTEXT_FAILED = "ABOUT_US_CONTEXTSucceed"
+
+export const GET_USER_INFO = "getUserInfo"
+export const GET_USER_INFO_LOADING = "getiUserInfoLoading"
+export const GET_USER_INFO_FAILED = "getUserInfoIsSucceed"
+
+
+export const GET_STORE_INFO = "getStoreInfo"
+export const GET_STORE_INFO_LOADING = "getStoreInfoLoading"
+export const GET_STORE_INFO_FAILED = "getStoreInfoFailed"
+
+export const UPADTE_STORE_INFO = "UPADTEStoreInfo"
+export const UPADTE_STORE_INFO_LOADING = "UPADTEStoreInfoLoading"
+export const UPADTE_STORE_INFO_FAILED = "UPADTEStoreInfoFailed"
+
+
+export const UPDATE_USER_GENERAL_LOADING = "updateUserGeneralLoading"
+export const UPDATE_USER_GENERAL_FAILED = "updateUserGeneralFailed"
+export const UPDATE_USER_GENERAL = "updateUserGeneral"
+
+
+export const UPDATE_USER_SECURITY_LOADING = "updateUserSecurityLoading"
+export const UPDATE_USER_SECURITY_FAILED = "updateUserSecurityFailed"
+export const UPDATE_USER_SECURITY = "updateUserSecurity"
+
+
+
 export const ADD_CASH_SUCCEED ="AddCashSucceed";
 export const ADD_CASH_FAILED ="AddCashFailed";
 
