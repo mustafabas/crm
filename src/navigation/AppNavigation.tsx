@@ -52,6 +52,7 @@ import AboutUsScreen from "../screens/AppScreens/Profile/AboutUsScreen";
 import ProfileEditGeneralScreen from "../screens/AppScreens/Profile/ProfileEditGeneralScreen";
 import CompanyEditScreen from "../screens/AppScreens/Profile/CompanyEditScreen";
 import ReportScreen from "../screens/AppScreens/Report/ReportScreen";
+import ReportTemplateScreen from '../screens/AppScreens/Report/ReportTemplateScreen'
 import UserAgreementScreen from "../screens/AuthScreens/Login/UserAgreementScreen";
 import HomeScreenAndroid from "../screens/AppScreens/Home/HomeScreenAndroid";
 import SupportScreen from "../screens/AppScreens/Profile/SupportScreen";
@@ -91,7 +92,7 @@ const introductionStack = createStackNavigator({
 
   const reportStack = createStackNavigator(
     {
-      Report : ReportScreen
+      Report : ReportTemplateScreen
     },
     {
       // headerMode: "none"

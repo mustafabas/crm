@@ -151,17 +151,17 @@ class ReportScreen extends Component<Props, State> {
                     <Text style={styles.reportText}>Çalışan Maaşları: {this.props.report.totalWorkerSalary} TL</Text>
                     <Text style={styles.reportText}>Çalışan Maaşları(Maliyet de Ekli): {this.props.report.totalWorkerSalary+this.props.report.totalCost} TL</Text>
                     <Text style={styles.reportTextTotalCost}>Toplam Gelir: {this.props.report.totalIncome} TL</Text>
-                    <View style={{ margin: 7 }}><Text>Ürünler ve Satış Sayıları:</Text></View>
+                    <View style={{marginVertical:10}}><Text style={{textAlign:'center',fontFamily:'Avenir Next',fontSize:20}}>Ürünler ve Satış Sayıları</Text></View>
                     <FlatList
                         data={this.props.report.reportProductItems}
                         renderItem={({ item }) => (
-                            <View style={styles.row}>
-                                <View style={styles.row_cell5}>
-                                    <Text style={styles.musteri_adi}>{item.productName}</Text>
-                                    <View style={styles.row_cell2}>
+                            <View style={[styles.row,{backgroundColor:'#EFF3F9'}]}>
+
+                                    <Text style={[styles.musteri_adi,{flex:1}]}>{item.productName}</Text>
+                                    <View >
                                         <Text style={styles.productUrunfiyatText}>Satış Sayısı: {item.count}</Text>
                                     </View>
-                                </View>
+
                             </View>)}
                         keyExtractor={item => item.productId.toString()}
                     />

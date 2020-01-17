@@ -12,7 +12,8 @@ export const WATER_CUSTOMER_DELETE = WATER_BASE_URL_NEW+"/api/customer/Delete";
 export const WATER_CUSTOMER_EDIT = WATER_BASE_URL_NEW+"/api/customer/Update";
 export const WATER_CUSTOMER_GETBY_ID = WATER_BASE_URL_NEW + '/api/customer/GetCustomerById'
 export const WATER_PRODUCT_ADD = WATER_BASE_URL_NEW+"/api/Product";
-export const WATER_ADD_CASH = WATER_BASE_URL+"/Cash";
+export const WATER_ADD_CASH = WATER_BASE_URL_NEW+"/api/Cash";
+
 export const WATER_GET_PRODUCT = WATER_BASE_URL_NEW+"/api/Product/GetByUserId";
 export const WATER_EDIT_PRODUCT = WATER_BASE_URL_NEW+"/api/Product/Update";
 export const WATER_GET_PRODUCT_BY_ID = WATER_BASE_URL_NEW  +'/api/Product/GetProductById'

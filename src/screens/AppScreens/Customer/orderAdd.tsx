@@ -260,6 +260,7 @@ onValueChange2(value: string) {
                     <View style={[styles.inputContainer,{paddingTop:0}]}>
                     <Picker
 placeholderStyle={{width:'100%'}}
+headerStyle={{backgroundColor:'#2069F3'}}
 headerTitleStyle={{color:'white',fontFamily:'Avenir Next',fontSize:18}}
 // headerStyle={{backgroundColor: '#2B6EDC'}}
 iosHeader="Ürünler"

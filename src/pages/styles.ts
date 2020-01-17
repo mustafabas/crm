@@ -909,12 +909,14 @@ const styles = StyleSheet.create({
     paddingLeft:10,
     margin:5,
     borderBottomWidth:1,
+    fontFamily:'Avenir Next'
   },
   reportTextTotalCost:{
     fontSize:18,
     color:'black',
     paddingLeft:10,
     margin:5,
+    fontFamily:'Avenir Next',
     borderBottomWidth:1,
     fontWeight:'bold',
   },
