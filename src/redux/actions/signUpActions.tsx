@@ -146,4 +146,4 @@ export function controlEmail(NameSurname: string,password:string , email:string)
   export const reset = () => ({
     type : RESET_PROPS,
     payload:null
-  })
+  })  
