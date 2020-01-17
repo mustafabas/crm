@@ -213,7 +213,7 @@ _renderView(){
 
           onPress={()=>this.openModal(item.customerPriceId,item.unitPrice)}>
           
-      <Icon name="md-more" size={24} color={"#C4B47B"} />
+      <Icon name="md-more" size={30} />
       </TouchableOpacity>
       </View>)}
     keyExtractor={item => item.productId.toString()}
