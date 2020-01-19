@@ -49,13 +49,7 @@ const girdiler = Yup.object().shape({
   musteriAdiSoyadi: Yup.string()
     .min(1)
     .max(30)
-    .required(),
-  sirketAdi: Yup.string()
-    .min(1)
-    .max(30)
-    .required(),
-  fountainCount: Yup.number()
-    .positive()
+    .required()
 });
 
 interface State {
@@ -526,7 +520,7 @@ style={{fontFamily:'Avenir Next',fontSize:18}}
               
                   
                                   }}>
-                                     {this.props.loading ? <Spinner  color='01C3E3' /> :   <Text style={{color:'white',fontFamily:"Avenir Next",fontWeight:'bold',fontSize:16}} >Ekle</Text>}
+                                     {this.props.loading ? <Spinner  color='01C3E3' /> :   <Text style={{color:'white',fontFamily:"Avenir Next",fontWeight:'bold',fontSize:16}} >Kaydet</Text>}
                                      
                          
                         </Button>

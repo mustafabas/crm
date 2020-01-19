@@ -76,11 +76,21 @@ console.log(WATER_CUSTOMERS_HOME_GET_ORDER_TYPE_SEARCH_TEXT)
 export function GetCustomerMore(orderType: number, searchText: string, dayOfWeek: number, pageIndex: number) {
   return (dispatch: Dispatch<Action>) => {
 
+    AsyncStorage.multiGet(['userToken', 'userId']).then((res) => {
+      let token = res[0][1];
+      let userId = res[1][1];
+      
+      const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+    }
 
+    var WATER_CUSTOMERS_HOME_GET_ORDER_TYPE_SEARCH_TEXT = WATER_CUSTOMERS_HOME_GET + orderType + "&searchText=" + searchText + "&pageIndex=" + pageIndex + "&pageSize=10&dayOfWeek=" + dayOfWeek+"&userId="+userId;
 
-    var WATER_CUSTOMERS_HOME_GET_ORDER_TYPE_SEARCH_TEXT = WATER_CUSTOMERS_HOME_GET + orderType + "&searchText=" + searchText + "&pageIndex=" + pageIndex + "&pageSize=10&dayOfWeek=" + dayOfWeek;
-
+    console.log(WATER_CUSTOMERS_HOME_GET_ORDER_TYPE_SEARCH_TEXT);
     axios.get(WATER_CUSTOMERS_HOME_GET_ORDER_TYPE_SEARCH_TEXT,
+      {    headers: headers
+       }
 
     )
       .then(async (response) => {
@@ -116,11 +126,13 @@ export function GetCustomerMore(orderType: number, searchText: string, dayOfWeek
       })
       .catch((err) => {
         // dispatch(loading(false));
+        console.log(err);
 
       });
+ 
 
-
-  }
+  });
+     }
 }
 
 export const loading = (loader: boolean) => ({

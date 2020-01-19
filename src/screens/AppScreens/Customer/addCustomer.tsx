@@ -95,17 +95,6 @@ const girdiler = Yup.object().shape({
   musteriAdiSoyadi: Yup.string()
   .min(3).max(30)
     .required("*Zorunlu Alan"),
-
-  sirketAdi: Yup.string()
-  .min(3).max(30)
-  .required("*Zorunlu Alan"),
-
-  adress:Yup.string()
-.min(3).max(150)
-.required("*Zorunlu Alan"),
-phoneNumber:Yup.string()
-.min(3).max(15)
-.required("*Zorunlu Alan"),
 AllDays : Yup.bool(),
   monday : Yup.bool(),
   tuesday : Yup.bool(),
