@@ -564,6 +564,7 @@ class HomeScreen extends Component<Props,State>{
         <View style={stylesNew.SheetContainer}>
           <TouchableOpacity style={[stylesNew.SheetItemContainer, { justifyContent: 'flex-end', padding: 5 }]}
             onPress={() => {
+              this.setState({isShowDeleteView : false})
               this.customerEdit.close();
             }}>
             <Icon name="ios-close" style={[{ fontSize: 40, marginRight: 10 }, stylesNew.SheetItemIcon]}></Icon>
@@ -571,6 +572,7 @@ class HomeScreen extends Component<Props,State>{
           </TouchableOpacity>
           <TouchableOpacity style={stylesNew.SheetItemContainer}
             onPress={() => {
+              this.setState({isShowDeleteView : false})
               this.customerEdit.close();
               this.deleteCustomerAlert()
               // this.customerEdit.close();

@@ -47,6 +47,7 @@ interface Props {
   employeeAddCostLoading: boolean;
   employeeCostAddMessage: string;
   isSuccess: boolean;
+ 
 }
 
 interface State {
@@ -59,6 +60,7 @@ interface State {
   UserType: string | null;
   modalAmountVisible: boolean;
   employeeList: IEmployeeItemResponseModel[];
+  isShowDeleteView : boolean;
 }
 
 interface amountData {
@@ -89,7 +91,8 @@ class Employee extends Component<Props, State> {
       active: false,
       UserType: "",
       modalAmountVisible: false,
-      employeeList: []
+      employeeList: [],
+      isShowDeleteView : false,
     };
 
     AsyncStorage.getItem("UserType").then((value) => {
@@ -266,8 +269,8 @@ class Employee extends Component<Props, State> {
         </TouchableOpacity>
         <TouchableOpacity style={styles.SheetItemContainer}
           onPress={() => {
-            this.OrderSheet.close();
-            this.DeleteAlert.open();
+
+            this.setState({isShowDeleteView : true})
           }}>
           <Icon type="FontAwesome" name="trash-o" style={[styles.SheetItemIcon, { fontSize: 25 }]}></Icon>
 
@@ -285,7 +288,8 @@ class Employee extends Component<Props, State> {
       <View style={styles.SheetContainer}>
         <TouchableOpacity style={[styles.SheetItemContainer, { justifyContent: 'flex-end', padding: 5 }]}
           onPress={() => {
-            this.DeleteAlert.close();
+            this.OrderSheet.close();
+            this.setState({isShowDeleteView : false});
           }}>
           <Icon name="ios-close" style={[{ fontSize: 40, marginRight: 10 }, styles.SheetItemIcon]}></Icon>
 
@@ -293,7 +297,8 @@ class Employee extends Component<Props, State> {
 
         <TouchableOpacity style={styles.SheetItemContainer}
           onPress={() => {
-            this.DeleteAlert.close();
+            this.OrderSheet.close();
+            this.setState({isShowDeleteView : false});
             this.deleteSelectedEmployee();
           }}>
           <Icon type="FontAwesome" name="trash-o" style={[styles.SheetItemIcon, { fontSize: 25 }]}></Icon>
@@ -304,7 +309,8 @@ class Employee extends Component<Props, State> {
         </TouchableOpacity>
         <TouchableOpacity style={styles.SheetItemContainer}
           onPress={() => {
-            this.DeleteAlert.close();
+
+            this.setState({isShowDeleteView : false});
           }}>
           <Icon type="FontAwesome" name="chevron-left" style={[styles.SheetItemIcon, { fontSize: 22 }]} ></Icon>
           <Text style={styles.SheetItemText}
@@ -538,7 +544,8 @@ class Employee extends Component<Props, State> {
               }
             }
             }>
-            {this._renderEmployeeSheetContent()}
+              {this.state.isShowDeleteView ? this._renderEmployeeDeleteAlert() : this._renderEmployeeSheetContent()}
+
           </RBSheet>
           <RBSheet
             ref={ref => {
