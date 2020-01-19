@@ -1,5 +1,5 @@
 import { AddCustomerPrice, Action } from "../states";
-import {CUSTOMERPRICE_ADD_FAILED,CUSTOMERPRICE_ADD_SUCCEED} from "../types";
+import {CUSTOMERPRICE_ADD_FAILED,CUSTOMERPRICE_ADD_SUCCEED, RESET_PROPS} from "../types";
 
 
 const initalState = {
@@ -21,6 +21,13 @@ export default (state: AddCustomerPrice = initalState, action: Action) => {
         isSuccess:false,
         AddCustomerPriceMessage:action.payload,
       };
+      case RESET_PROPS :
+        return {
+          ...state,
+          isSuccess:false,
+          AddCustomerPriceMessage : ""
+        }
+      
     default:
       return state;
   }

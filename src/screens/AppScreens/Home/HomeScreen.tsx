@@ -272,6 +272,7 @@ class HomeScreen extends Component<Props,State>{
   <TouchableOpacity style={{}} onPress={()=>this.props.navigation.navigate('addCustomer')}>
   <Icon style={[styles.iOSBigTitle,{marginRight:20,fontSize:40}]}  name="ios-add-circle"/>
   </TouchableOpacity>
+  
 
 
 

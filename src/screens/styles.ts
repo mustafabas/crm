@@ -3,7 +3,7 @@ import { colors } from "../constants";
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#2B6EDC",
+
     justifyContent: "center",
     
   },
@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
   },
   addCustomerContainer: {
     flex: 1,
-    backgroundColor: "#2B6EDC",
+
     justifyContent: "flex-start",
   },
 
@@ -99,10 +99,10 @@ const styles = StyleSheet.create({
   row: {
     elevation: 1,
     borderRadius: 10,
-    backgroundColor: "#B5BAEA",
+    backgroundColor: "#EFF3F9",
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'flex-start',
+    justifyContent: 'space-between',
     // alignItems: 'center',
     paddingTop: 10,
     paddingBottom: 10,
@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
   },
   SheetAmountContainer: {
     flex: 1, justifyContent: 'flex-start', alignItems: 'flex-start', flexDirection: 'column', paddingTop: 10,
-    backgroundColor:'#EFF3F9'
+
   },
   SheetItemContainer: {
     borderBottomColor: "#D7DBE0", 
@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
     fontFamily:'Avenir Next',
     marginLeft: 20
   },
-  inputFiyatContainer:{},
+
   row_cell: {
     flex: 1,
     flexDirection: 'column',

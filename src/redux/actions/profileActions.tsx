@@ -1,7 +1,7 @@
 import axios from 'axios'
-import { WATER_GET_USER,WATER_GET_ABOUT_US, WATER_GET_USER_INFO, WATER_UPDATE_USER_INFO_GENERAL, WATER_UPDATE_STORE_INFO, WATER_GET_STORE_INFO } from './../constants'
+import { WATER_GET_USER,WATER_GET_ABOUT_US, WATER_GET_USER_INFO, WATER_UPDATE_USER_INFO_GENERAL, WATER_UPDATE_STORE_INFO, WATER_GET_STORE_INFO, WATER_SUPPORT_SEND_MESSAGE } from './../constants'
 import { Dispatch } from "react";
-import { USER_GET, USER_LOADING, ABOUT_US_CONTEXT, GET_USER_INFO, GET_USER_INFO_LOADING, GET_USER_INFO_FAILED, ABOUT_US_CONTEXT_LOADING, ABOUT_US_CONTEXT_FAILED, UPDATE_USER_GENERAL, UPDATE_USER_GENERAL_LOADING, UPDATE_USER_GENERAL_FAILED, UPDATE_USER_SECURITY_LOADING, UPDATE_USER_SECURITY_FAILED, UPDATE_USER_SECURITY, GET_STORE_INFO_LOADING, GET_STORE_INFO_FAILED, GET_STORE_INFO, UPADTE_STORE_INFO_LOADING, UPADTE_STORE_INFO_FAILED, UPADTE_STORE_INFO } from './../types'
+import { USER_GET, USER_LOADING, ABOUT_US_CONTEXT, GET_USER_INFO, GET_USER_INFO_LOADING, GET_USER_INFO_FAILED, ABOUT_US_CONTEXT_LOADING, ABOUT_US_CONTEXT_FAILED, UPDATE_USER_GENERAL, UPDATE_USER_GENERAL_LOADING, UPDATE_USER_GENERAL_FAILED, UPDATE_USER_SECURITY_LOADING, UPDATE_USER_SECURITY_FAILED, UPDATE_USER_SECURITY, GET_STORE_INFO_LOADING, GET_STORE_INFO_FAILED, GET_STORE_INFO, UPADTE_STORE_INFO_LOADING, UPADTE_STORE_INFO_FAILED, UPADTE_STORE_INFO, SEND_SUPPORT_MESSAGE_LOADING, SEND_SUPPORT_MESSAGE_FAILED, SEND_SUPPORT_MESSAGE_SUCCEED } from './../types'
 import { Action } from '../states'
 import { IGetUserItem } from "../models/userModel";
 import { reset } from './loginAction';
@@ -58,6 +58,7 @@ export function getStoreInfo() {
                   store.phoneNumber = data.phoneNumber
                   store.status = data.status
                   store.storeName = data.storeName
+
                    console.log(store)
                   dispatch(getStore(store))
               }
@@ -66,6 +67,7 @@ export function getStoreInfo() {
                 dispatch(reset())
               }
           }).catch(err => {
+            console.log(err)
             dispatch(loadingGetStoreInfo(false,"Bir Hata Meydana Geldi.")) 
             dispatch(reset())
           })
@@ -107,10 +109,12 @@ export function updateStoreInfo(store : storeInfo) {
               }else {
 
                 dispatch(loadingUpdateStoreInfo(false,"Bir Hata Meydana Geldi.")) 
+                dispatch(reset())
               }
           }).catch(err => {
               console.log(err)
             dispatch(loadingUpdateStoreInfo(false,"Bir Hata Meydana Geldi.")) 
+            dispatch(reset())
           })
 
 
@@ -281,6 +285,53 @@ export function getAboutUs() {
 
     }}
 
+
+    export function sendSupportMessage(subject : string , message : string) {
+      return (dispatch : any) =>  {
+        dispatch(loadingSupportAction(true,""))
+    AsyncStorage.multiGet(['userToken', 'userId']).then((res) => {
+        let token = res[0][1];
+        let userId = res[1][1];
+        
+        const headers = {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+      }
+
+      axios.post(WATER_SUPPORT_SEND_MESSAGE, {
+        userId: userId,
+        subject: subject,
+        message: message
+      },{headers : headers}).then(res => {
+        if(res.data.isSuccess){
+          dispatch(SucceedSupportAction())
+          dispatch(reset())
+          
+}else {
+  dispatch(loadingSupportAction(false,"Mesajınız Gönderilmedi Tekrar Deneyiniz!"))
+  dispatch(reset())
+}
+      }).catch(err=> {
+        dispatch(loadingSupportAction(false,"Mesajınız Gönderilmedi Tekrar Deneyiniz!"))
+        dispatch(reset())
+      })
+    }).catch(err=> {
+      dispatch(loadingSupportAction(false,"Mesajınız Gönderilmedi Tekrar Deneyiniz!"))
+      dispatch(reset())
+    })
+
+    }}
+
+    export const loadingSupportAction = (loader : boolean, message : string) => ({
+      type : loader ? SEND_SUPPORT_MESSAGE_LOADING : SEND_SUPPORT_MESSAGE_FAILED,
+      payload : message
+    })
+
+
+    export const SucceedSupportAction = () => ({
+      type : SEND_SUPPORT_MESSAGE_SUCCEED,
+      payload : null
+    })
 
     export const loadingUpdateSecurityInfo = (loader : boolean,message: string) => ({
         type : loader  ? UPDATE_USER_SECURITY_LOADING : UPDATE_USER_SECURITY_FAILED,

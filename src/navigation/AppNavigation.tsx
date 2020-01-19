@@ -54,6 +54,9 @@ import CompanyEditScreen from "../screens/AppScreens/Profile/CompanyEditScreen";
 import ReportScreen from "../screens/AppScreens/Report/ReportScreen";
 import UserAgreementScreen from "../screens/AuthScreens/Login/UserAgreementScreen";
 import HomeScreenAndroid from "../screens/AppScreens/Home/HomeScreenAndroid";
+import SupportScreen from "../screens/AppScreens/Profile/SupportScreen";
+import CustomerDefinedPriceAddScreen from '../screens/AppScreens/Customer/CustomerDefinedPriceAddScreen'
+import CustomerDefinedPricesScreen from '../screens/AppScreens/Customer/CustomerDefinedPricesScreen'
 // import newPricePage from "../pages/newPricePage";
 // import customerDefinedPricePage from "../pages/CustomerDefinedPrice"
 // import editOrder from "../pages/editOrder";
@@ -116,6 +119,7 @@ const introductionStack = createStackNavigator({
       Securtiy : SecurtiyScreen,
       AddProduct: { screen: productAdd },
       companyInfo : CompanyEditScreen ,
+      Support : SupportScreen
      //AddEmployee: { screen: employeeAdd },
  //     EditEmployee: { screen: editEmployee },
  //     EmployeeCost: { screen: employeeCost },
@@ -189,7 +193,9 @@ const HomeStack = createStackNavigator({
   Customer : CustomerOrdersScreen,
   addCustomer : addCustomer,
   orderAdd : orderAdd,
-  CustomerEdit : CustomerEditScreen
+  CustomerEdit : CustomerEditScreen,
+  CustomerDefinedPriceAdd : CustomerDefinedPriceAddScreen,
+  CustomerDefinedPrices : CustomerDefinedPricesScreen
 
 },{
   defaultNavigationOptions: {

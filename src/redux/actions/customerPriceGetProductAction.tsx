@@ -14,7 +14,7 @@ export function GetCustomerProduct(customerId:number) {
     dispatch(loading(true));
 
     var WATER_CUSTOMER_PRICE_GET_PRODUCT_WITH_CUSTOMERID = WATER_CUSTOMER_PRICE_GET_PRODUCT+customerId;
-
+console.log(WATER_CUSTOMER_PRICE_GET_PRODUCT_WITH_CUSTOMERID)
   axios.get(WATER_CUSTOMER_PRICE_GET_PRODUCT_WITH_CUSTOMERID,
     
     )
@@ -41,7 +41,7 @@ export function GetCustomerProduct(customerId:number) {
   }
   })
   .catch((err) => {
-
+    console.log(err)
   });
 
 
