@@ -92,7 +92,7 @@ const introductionStack = createStackNavigator({
 
   const reportStack = createStackNavigator(
     {
-      Report : ReportTemplateScreen
+      Report : ReportScreen
     },
     {
       // headerMode: "none"
