@@ -10,7 +10,7 @@ import {
     Platform,
     Modal,
 } from "react-native";
-import { NavigationScreenProp, NavigationState, ScrollView } from "react-navigation";
+import { NavigationScreenProp, NavigationState, ScrollView, SafeAreaView } from "react-navigation";
 import { connect } from "react-redux";
 
 import styles from "../../../pages/styles";
@@ -49,14 +49,8 @@ class ReportTemplateScreen extends Component<Props, State> {
 
     static navigationOptions = ({ navigation }: Props) => {
         return {
-            title: 'Rapor',
-            headerStyle: {
-                backgroundColor: '#2B6EDC',
-            },
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-                fontWeight: 'bold',
-            },
+          
+            header : null
         }
     };
     startDateSheet: any;
@@ -174,7 +168,7 @@ class ReportTemplateScreen extends Component<Props, State> {
         const { report, isLoading, navigation } = this.props;
       
             return (
-                <View style={styles.reportContainer}>
+                <SafeAreaView style={styles.reportContainer}>
                     <View style={{ flexDirection: "row",justifyContent:'space-between' }}>
                         <DateTimePicker
             defaultDate={new Date()}
@@ -216,7 +210,7 @@ class ReportTemplateScreen extends Component<Props, State> {
                         </TouchableOpacity>
                     </View>
                     {this.renderContent()}
-                </View>);
+                </SafeAreaView>);
 
     }
     render() {

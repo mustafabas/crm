@@ -92,6 +92,7 @@ interface Props {
     dayOfWeekChoose: boolean;
     dayList : String[];
     today  : Date;
+    isShowDeleteView : boolean;
   }
 
 
@@ -170,6 +171,7 @@ class HomeScreen extends Component<Props,State>{
       dayOfWeekChoose:false,
       dayList : ["Tüm Günler","Pazartesi","Salı","Çarşamba","Perşembe","Cuma","Cumartesi","Pazar"],
       today : new Date(),
+      isShowDeleteView : false,
         };
       }
 
@@ -543,8 +545,9 @@ class HomeScreen extends Component<Props,State>{
           </TouchableOpacity>
           <TouchableOpacity style={stylesNew.SheetItemContainer}
             onPress={() => {
-              this.customerEdit.close();
-              this.deleteRb.open()
+              // this.customerEdit.close();
+              // this.deleteRb.open()
+              this.setState({isShowDeleteView : true})
               // this.customerEdit.close();
             }}>
               <Icon type="FontAwesome" name="trash-o" style={[stylesNew.SheetItemIcon,{ fontSize:25}]}></Icon>
@@ -561,15 +564,15 @@ class HomeScreen extends Component<Props,State>{
         <View style={stylesNew.SheetContainer}>
           <TouchableOpacity style={[stylesNew.SheetItemContainer, { justifyContent: 'flex-end', padding: 5 }]}
             onPress={() => {
-              this.deleteRb.close();
+              this.customerEdit.close();
             }}>
             <Icon name="ios-close" style={[{ fontSize: 40, marginRight: 10 }, stylesNew.SheetItemIcon]}></Icon>
   
           </TouchableOpacity>
           <TouchableOpacity style={stylesNew.SheetItemContainer}
             onPress={() => {
-              this.deleteRb.close();
-              this.deleteSelectedCustomer()
+              this.customerEdit.close();
+              this.deleteCustomerAlert()
               // this.customerEdit.close();
             }}>
               <Icon type="FontAwesome" name="trash-o" style={[stylesNew.SheetItemIcon,{ fontSize:25}]}></Icon>
@@ -579,7 +582,8 @@ class HomeScreen extends Component<Props,State>{
           </TouchableOpacity>
           <TouchableOpacity style={stylesNew.SheetItemContainer}
             onPress={() => {
-              this.deleteRb.close();
+              this.setState({isShowDeleteView : false})
+     
             }}>
               <Icon type="FontAwesome" name="chevron-left"  style={[stylesNew.SheetItemIcon,{ fontSize:22}]} ></Icon>
             <Text style={stylesNew.SheetItemText}
@@ -805,7 +809,7 @@ useNativeDriver ={true}
                 }
               }
               }>
-                  {this._renderCustomerSheetContent()}
+                    {this.state.isShowDeleteView ? this._renderCustomerDeleteContent() : this._renderCustomerSheetContent()}
                   </RBSheet>
 
                   <RBSheet
