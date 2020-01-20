@@ -218,7 +218,7 @@ class Employee extends Component<Props, State> {
     if (this.props.employeeDeleteIsSuccess) {
       showMessage({
         message: "Çalışan başarıyla silindi",
-        type: this.props.isSuccess ? "success" : "danger",
+        type: this.props.employeeDeleteIsSuccess ? "success" : "danger",
         icon: "auto"
       }
       );

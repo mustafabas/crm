@@ -141,17 +141,20 @@ class employeeEditScreen extends Component<Props, State> {
         }
         else {
             const employee = this.props.employee;
+            if(this.props.isLoading==false){
+                
+
             const initialValues: multi = {
-                nameSurname: employee.employeeName,
+                nameSurname: employee.employeeName ? employee.employeeName:"",
                 monthlySalary: employee.monthlySalary ? employee.monthlySalary.toString() : "",
-                mail: employee.mail,
-                password: employee.employeeName,
-                phoneNumber: employee.phoneNumber,
-                identityNumber: employee.identityNumber,
-                address: employee.address,
+                mail: employee.mail ? employee.mail:"" ,
+                password: employee.password ? employee.password : "",
+                phoneNumber: employee.phoneNumber ? employee.phoneNumber : "",
+                identityNumber: employee.identityNumber ? employee.identityNumber : "",
+                address: employee.address ? employee.address :"",
                 dailyPriceFood: employee.dailyPriceFood ? employee.dailyPriceFood.toString() : "",
-                AddAsUser: this.props.employee.addAsUser,
-                Active: this.props.employee.active
+                AddAsUser: this.props.employee.addAsUser ? employee.addAsUser:false,
+                Active: this.props.employee.active ? employee.active : false,
             }
 
             return (
@@ -350,6 +353,8 @@ onBlur={handleBlur("address")}
                     {this.showSimpleMessage()}
                 </View>
             );
+
+        }
         }
     }
 }

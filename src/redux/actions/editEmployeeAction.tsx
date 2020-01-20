@@ -62,7 +62,7 @@ export function employeeEdit(nameSurname:string, monthlySalary:number,email:stri
 export function getEmployeeById(employeeId:number) {
 
   return (dispatch : Dispatch<Action>) =>  {
-
+    console.log(employeeId,"mp");
     AsyncStorage.multiGet(['userToken', 'userId']).then((res) => {
       let token = res[0][1];
       let userId = res[1][1]; 
@@ -83,7 +83,7 @@ export function getEmployeeById(employeeId:number) {
                   var employee = response.data.result.employe;
                 
                       var employeeItem: IEmployeeItemBaseResponseModel = {
-                          employeeId: employee.employeeId,
+                          employeeId: employee.id,
                           employeeName: employee.nameSurname,
                           monthlySalary: employee.monthlySalary,
                           address:employee.address,

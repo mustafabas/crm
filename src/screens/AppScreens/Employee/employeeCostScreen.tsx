@@ -20,6 +20,8 @@ import RBSheet from "react-native-raw-bottom-sheet";
 import { employeeCostDelete } from "../../../redux/actions/deleteEmployeeCostAction";
 import { Icon, Card, CardItem, Body } from "native-base";
 import { connect } from "react-redux";
+import { stat } from "fs";
+import { showMessage } from "react-native-flash-message";
 
 
 interface Props {
@@ -28,6 +30,7 @@ interface Props {
   employeeCosts: IEmployeeCostItem[];
   GetEmployeeCost: () => void;
   employeeCostDelete: (id: number) => void;
+  deleteIsSuccess:boolean;
 }
 
 interface State {
@@ -36,6 +39,7 @@ interface State {
   id: number;
   employeId: number;
   cost: number;
+  deleteSheetRender:boolean;
 }
 
 class employeeCostScreen extends Component<Props, State> {
@@ -70,6 +74,7 @@ class employeeCostScreen extends Component<Props, State> {
       id: 0,
       employeId: 0,
       cost: 0,
+      deleteSheetRender:false
     };
   }
 
@@ -97,55 +102,72 @@ class employeeCostScreen extends Component<Props, State> {
     const { employeeCostDelete } = this.props;
     employeeCostDelete(this.state.id);
   }
+  showSimpleMessage() {
+    if (this.props.deleteIsSuccess) {
+        showMessage({
+            message: this.props.deleteIsSuccess  ? "Çalışan Maliyeti Başarıyla Silinmiştir" : "",
+            type: this.props.deleteIsSuccess ? "success" : "danger",
+            icon: "auto"
+        }
+        );
+    }
+}
 
   _renderProductSheetContent() {
-    return (<View style={styles.SheetContainer}>
-      <TouchableOpacity style={[styles.SheetItemContainer, { justifyContent: 'flex-end', padding: 10 }]}
-        onPress={() => {
-          this.AmountSheet.close();
-        }}>
-        <Icon name="ios-close" style={[{ fontSize: 40, marginRight: 10 }, styles.SheetItemIcon]}></Icon>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.SheetItemContainer}
-        onPress={() => {
-          this.AmountSheet.close();
+    if(this.state.deleteSheetRender==false){
+      return (<View style={styles.SheetContainer}>
+        <TouchableOpacity style={[styles.SheetItemContainer, { justifyContent: 'flex-end', padding: 10 }]}
+          onPress={() => {
+            this.AmountSheet.close();
+          }}>
+          <Icon name="ios-close" style={[{ fontSize: 40, marginRight: 10 }, styles.SheetItemIcon]}></Icon>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.SheetItemContainer}
+          onPress={() => {
+            this.AmountSheet.close();
+  
+          this.setState({deleteSheetRender:true});
+          }}>
+          <Icon name="ios-trash" style={styles.SheetItemIcon}></Icon>
+          <Text style={styles.SheetItemText}
+          >Sil</Text>
+        </TouchableOpacity>
+      </View>);
+    }
+    else{
+      return (<View style={styles.SheetContainer}>
+        <TouchableOpacity style={[styles.SheetItemContainer, { justifyContent: 'flex-end', padding: 10 }]}
+          onPress={() => {
+            this.AmountSheet.close();
+          }}>
+          <Icon name="ios-close" style={[{ fontSize: 40, marginRight: 10 }, styles.SheetItemIcon]}></Icon>
+        </TouchableOpacity>
+  
+        <TouchableOpacity style={styles.SheetItemContainer}
+          onPress={() => {
+            this.deleteSelectedCost();
+            this.AmountSheet.close();
+       
+          }}>
+          <Icon name="ios-trash" style={styles.SheetItemIcon}></Icon>
+          <Text style={styles.SheetItemText}
+          >Sil</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.SheetItemContainer}
+          onPress={() => {
+            this.AmountSheet.close();
+          }}>
+          <Icon name="ios-close" style={styles.SheetItemIcon}></Icon>
+          <Text style={styles.SheetItemText}
+          >İptal Et</Text>
+        </TouchableOpacity>
+      </View>);
+    }
 
-          this.DeleteSheet.open();
-        }}>
-        <Icon name="ios-trash" style={styles.SheetItemIcon}></Icon>
-        <Text style={styles.SheetItemText}
-        >Sil</Text>
-      </TouchableOpacity>
-    </View>);
 
   }
   _renderDeleteSheetContent() {
-    return (<View style={styles.SheetContainer}>
-      <TouchableOpacity style={[styles.SheetItemContainer, { justifyContent: 'flex-end', padding: 10 }]}
-        onPress={() => {
-          this.DeleteSheet.close();
-        }}>
-        <Icon name="ios-close" style={[{ fontSize: 40, marginRight: 10 }, styles.SheetItemIcon]}></Icon>
-      </TouchableOpacity>
 
-      <TouchableOpacity style={styles.SheetItemContainer}
-        onPress={() => {
-          this.DeleteSheet.close();
-          this.deleteSelectedCost();
-        }}>
-        <Icon name="ios-trash" style={styles.SheetItemIcon}></Icon>
-        <Text style={styles.SheetItemText}
-        >Sil</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.SheetItemContainer}
-        onPress={() => {
-          this.DeleteSheet.close();
-        }}>
-        <Icon name="ios-close" style={styles.SheetItemIcon}></Icon>
-        <Text style={styles.SheetItemText}
-        >İptal Et</Text>
-      </TouchableOpacity>
-    </View>);
 
   }
 
@@ -250,7 +272,7 @@ class employeeCostScreen extends Component<Props, State> {
             ref={ref => {
               this.AmountSheet = ref;
             }}
-            height={150}
+            height={200}
             duration={100}
             customStyles={{
               container: {
@@ -263,31 +285,15 @@ class employeeCostScreen extends Component<Props, State> {
               }
             }}
           >
-            {this._renderProductSheetContent()}
+            {
+            this._renderProductSheetContent()}
           </RBSheet>
-          <RBSheet
-            ref={ref => {
-              this.DeleteSheet = ref;
-            }}
-            height={150}
-            duration={100}
-            customStyles={{
-              container: {
-                justifyContent: "flex-start",
-                alignItems: "flex-start",
-                paddingLeft: 20,
-                backgroundColor: '#EFF3F9',
-                borderTopLeftRadius: 15,
-                borderTopRightRadius: 15
-              }
-            }}
-          >
-            {this._renderDeleteSheetContent()}
-          </RBSheet>
+
 
           <View style={{ marginTop: 10 }}></View>
         </KeyboardAvoidingView>
         {this._renderView()}
+        {this.showSimpleMessage()}
       </View>
     );
   }
@@ -296,6 +302,9 @@ class employeeCostScreen extends Component<Props, State> {
 const mapStateToProps = (state: AppState) => ({
   isHomeLoading: state.getEmployeeCost.isLoading,
   employeeCosts: state.getEmployeeCost.employees,
+  deleteIsSuccess : state.deleteEmployeeCost.isSuccess,
+
+
 })
 function bindToAction(dispatch: any) {
   return {
