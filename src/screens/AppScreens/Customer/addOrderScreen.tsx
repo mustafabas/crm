@@ -90,67 +90,12 @@ class CustomerOrdersScreen extends Component<Props,State>{
         this.setState({ refreshing: false });
       }
 
+      
       static navigationOptions = ({navigation}) => ({
         title: 'Sipariş Ekle',
         
     })
 
-//     static navigationOptions = ({ navigation }) => ({
-//         header: () => <SafeAreaView forceInset={{horizontal:'never'}}  style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between',height:Platform.OS === 'ios' ? '100%' : 56,backgroundColor:'#216AF4',paddingHorizontal:10}}>
-
-// <TouchableOpacity
-
-//              onPress={()=>navigation.popToTop()}
-
-//             ><Image  style={{height:24,width:15,marginBottom:5}}  source={require('../../../images/Vector3.png')} /></TouchableOpacity>
-//             <Text style={{fontWeight: '600',
-//         fontFamily:'Avenir Next',
-//         fontSize:18,color:'white'}}>
-//               Müşteri Siparişleri
-//             </Text>
-
-// <TouchableOpacity
-
-             
-
-// ><Icon  style={{color:'white'}}  name="ios-add-circle" /></TouchableOpacity>
-//         </SafeAreaView>,
-//       });
-
-
-
-    // static navigationOptions = {
-    //     title: 'Müşteri Siparişleri',
-    
-    //     // headerStyle: {
-    //     //   backgroundColor: '#e83537',
-    //     // },
-    //     // headerTintColor: '#fff',
-    //     // headerTitleStyle: {
-    //     //   fontWeight: 'bold',
-    //     // },
-
-    //       headerLeft: shouldShowBackButton(navigation) ? (
-    //         <TouchableOpacity
-
-             
-
-    //         ><Icon style={{color:'white'}}  name="ios-add-circle" /></TouchableOpacity>
-    //       ) : null,
-
-
-
-    //     headerRight: () => (
-    //         <TouchableOpacity
-
-             
-
-    //         ><Icon style={{color:'white'}}  name="ios-add-circle" /></TouchableOpacity>
-    //       ),
-
-
-    //   };
-    
 
     OrderSheet: any;
     CustomerSheet: any;
@@ -314,7 +259,7 @@ class CustomerOrdersScreen extends Component<Props,State>{
           <TouchableOpacity style={styles.SheetItemContainer}    onPress={() => {
                     this.CustomerSheet.close();
             this.goToNewPricePage();}}>
-            <Icon name="ios-add" size={30} style={styles.SheetItemIcon}></Icon>
+            <Icon name="ios-add" style={styles.SheetItemIcon}></Icon>
             <Text style={styles.SheetItemText}>
               Yeni Fiyat Ekle
             </Text>
@@ -322,7 +267,7 @@ class CustomerOrdersScreen extends Component<Props,State>{
           <TouchableOpacity style={styles.SheetItemContainer}   onPress={() => {
             this.CustomerSheet.close();
             this.goToDefinedPrice();}}>
-            <Icon name="ios-list" size={30} style={styles.SheetItemIcon}></Icon>
+            <Icon name="ios-list" style={styles.SheetItemIcon}></Icon>
             <Text style={styles.SheetItemText}>
               Tanımlı Fiyatlar
             </Text>

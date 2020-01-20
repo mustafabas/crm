@@ -55,6 +55,7 @@ interface State {
   count: string,
   isSuccess: boolean,
   status: boolean,
+  selected2:boolan
 }
 
 interface Item {
@@ -128,7 +129,7 @@ class orderAdd extends Component<Props, State> {
       count: "",
       isSuccess: false,
       status:false,
-      selected2: undefined,
+      selected2: null,
       selectedProductValue : null
     };
   }
@@ -155,7 +156,7 @@ class orderAdd extends Component<Props, State> {
   }
 
   OrderInfo(productId: number) {
-    console.log(productId)
+  
     this.props.GetProduct(productId, this.props.navigation.getParam("customerId"));
 
     this.setState({
@@ -213,7 +214,7 @@ onValueChange2(value: string) {
 
 
   render() {
-    
+    console.log(this.props.product,"product");
     const initialValues: input = {
       count: this.state.count,
       unitPrice: this.props.product.unitPrice ? String(this.props.product.unitPrice) : "",
