@@ -124,7 +124,11 @@ class CustomerOrdersScreen extends Component<Props, State>{
   }
 
 
-
+componentDidMount(){
+  this.props.navigation.setParams({
+    callingFun: this.callingFun,
+})
+}
   componentWillMount() {
     const customerId = this.props.navigation.getParam("customerId");
     this.props.GetCustomerDetail(customerId);
@@ -134,15 +138,25 @@ class CustomerOrdersScreen extends Component<Props, State>{
 
   }
 
-  static navigationOptions = ({ navigation }) => ({
+  callingFun = () => {
+    this.CustomerSheet.open()
+}
+
+   static navigationOptions = ({ navigation }) => ({
     title: 'Müşteri Siparişleri',
     headerRight: () => {
       return (
-        <TouchableOpacity onPress={() => navigation.navigate("orderAdd", { customerId: navigation.getParam("customerId") })} style={{ marginRight: 20 }}>
+        <View style={{flexDirection:'row'}}>
+          <TouchableOpacity onPress={() => navigation.getParam('callingFun')() } style={{ marginRight: 20 }}>
+          <Icon style={{ color: 'white' }} type="AntDesign" name="edit" />
+
+        </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate("orderAdd", { customerId: navigation.getParam("customerId") })} style={{ marginRight: 20 }}>
           <Icon style={{ color: 'white' }} name="ios-add-circle" />
 
         </TouchableOpacity>
-
+        
+        </View>
       )
     }
   })
@@ -317,12 +331,12 @@ class CustomerOrdersScreen extends Component<Props, State>{
 
   goToNewPricePage() {
     this.closePriceModal();
-    this.props.navigation.navigate("NewPricePage", { customerId: this.props.navigation.getParam("customerId") });
+    this.props.navigation.navigate("CustomerDefinedPriceAdd", { customerId: this.props.navigation.getParam("customerId") });
   }
 
   goToDefinedPrice() {
     this.closePriceModal();
-    this.props.navigation.navigate("CustomerDefinedPricePage", { customerId: this.props.navigation.getParam("customerId") });
+    this.props.navigation.navigate("CustomerDefinedPrices", { customerId: this.props.navigation.getParam("customerId") });
   }
 
   odemeAl(values: amountData) {

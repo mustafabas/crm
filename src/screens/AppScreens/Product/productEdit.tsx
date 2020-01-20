@@ -127,7 +127,7 @@ class productEditScreen extends Component<Props,state> {
     const { productEdit } = this.props;
     productEdit(
       this.props.navigation.getParam("productId"),
-    values.active, 
+    values.productStatus, 
     values.productName,
     values.productCode.toString(),
     Number(values.price.toString().replace(",",".")),values.productCount);

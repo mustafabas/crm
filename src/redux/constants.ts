@@ -17,10 +17,12 @@ export const WATER_GET_PRODUCT = WATER_BASE_URL_NEW+"/api/Product/GetByUserId";
 export const WATER_EDIT_PRODUCT = WATER_BASE_URL_NEW+"/api/Product/Update";
 export const WATER_GET_PRODUCT_BY_ID = WATER_BASE_URL_NEW  +'/api/Product/GetProductById'
 export const WATER_ADD_ORDER = WATER_BASE_URL_NEW+"/api/Order";
-export const WATER_CUSTOMER_PRICE_GET_PRODUCT = WATER_BASE_URL+"/CustomerPrice/Product?customerId=";
-export const WATER_CUSTOMER_PRICE_ADD = WATER_BASE_URL+"/CustomerPrice";
-export const WATER_CUSTOMER_DEFINED_PRICE = WATER_BASE_URL+"/CustomerPrice/CustomerPrice?customerId=";
-export const WATER_CUSTOMER_PRICE_EDIT = WATER_BASE_URL+"/CustomerPrice/Update";
+export const WATER_CUSTOMER_PRICE_GET_PRODUCT = WATER_BASE_URL_NEW+"/api/CustomerPrice/Product?customerId=";
+export const WATER_CUSTOMER_PRICE_ADD = WATER_BASE_URL_NEW+"/api/CustomerPrice";
+
+export const WATER_CUSTOMER_DEFINED_PRICE = WATER_BASE_URL_NEW+"/api/CustomerPrice/CustomerPrice?customerId=";
+
+export const WATER_CUSTOMER_PRICE_EDIT = WATER_BASE_URL_NEW+"/api/CustomerPrice/Update";
 export const WATER_PRODUCT_FOR_CUSTOMER = WATER_BASE_URL_NEW+"/api/Product/ProductForCustomer?productId=";
 export const WATER_CUSTOMER_ORDER_DELETE = WATER_BASE_URL_NEW+"/api/Order/Delete";
 export const WATER_CUSTOMER_ORDER_UPDATE = WATER_BASE_URL+"/Order/Update";
@@ -32,10 +34,12 @@ export const WATER_GET_EMPLOYEEBYID = WATER_BASE_URL_NEW+"/api/employe/GetEmploy
 export const WATER_DELETE_EMPLOYEE = WATER_BASE_URL_NEW+"/api/employe/Delete";
 export const WATER_GET_USER = WATER_BASE_URL_NEW+"/api/User?employeId=";
 export const WATER_GET_ABOUT_US = WATER_BASE_URL_NEW + "/api/Cash/GetByName?identityName=hakkimizda"
-export const WATER_UPDATE_STORE_INFO = WATER_BASE_URL_NEW + '/Store/UpdateStore'
-export const WATER_GET_STORE_INFO = WATER_BASE_URL_NEW  +'/Store/GetStoreByUserId'
+export const WATER_UPDATE_STORE_INFO = WATER_BASE_URL_NEW + '/UpdateStore'
+export const WATER_GET_STORE_INFO = WATER_BASE_URL_NEW  +'/GetStoreByUserId'
 
 export const WATER_UPDATE_USER_INFO_GENERAL = WATER_BASE_URL_NEW  +'/api/User/Update'
+
+export const WATER_SUPPORT_SEND_MESSAGE = WATER_BASE_URL_NEW + '/api/Support'
 export const WATER_ADD_EMPLOYEE_COST = WATER_BASE_URL_NEW+"/api/employeCost";
 
 export const WATER_GET_USER_INFO = WATER_BASE_URL_NEW + "/api/User/GetUserById"

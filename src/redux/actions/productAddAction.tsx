@@ -37,6 +37,9 @@ export function productAddAction(productName:string, productCode:string, price:s
               dispatch(GetProducts())
              
             }
+          }else {
+            dispatch(productAddIsSucceed(false,"Bir hata oluştu."));
+          dispatch(reset());
           }
         })
         .catch(error => { 

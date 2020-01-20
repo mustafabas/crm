@@ -3,7 +3,7 @@ import {PRODUCT_ADD_SUCCEED,PRODUCT_ADD_FAILED, PRODUCT_ADD_LOADING, RESET_PROPS
 
 
 const initalState = {
-    isSuccess: null,
+    isSuccess: false,
     ProductAddMessage: "",
     isAddLoading:false
   };
@@ -32,6 +32,7 @@ export default (state: ProductAdd = initalState, action: Action) => {
          return {
             ...state,
             isAddLoading:false,
+            isSuccess:false,
             ProductAddMessage:"",
           }
     default:

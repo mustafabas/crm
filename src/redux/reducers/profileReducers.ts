@@ -1,5 +1,5 @@
 import { Action, ProductForCustomer } from "../states";
-import { ABOUT_US_CONTEXT, LOGIN_STARTED, RESET_PROPS, GET_USER_INFO, GET_USER_INFO_LOADING, GET_USER_INFO_FAILED, ABOUT_US_CONTEXT_LOADING, ABOUT_US_CONTEXT_FAILED, UPDATE_USER_GENERAL_FAILED, UPDATE_USER_GENERAL_LOADING, UPDATE_USER_GENERAL, UPDATE_USER_SECURITY_LOADING, UPDATE_USER_SECURITY_FAILED, UPDATE_USER_SECURITY, GET_STORE_INFO, GET_STORE_INFO_LOADING, GET_STORE_INFO_FAILED, UPADTE_STORE_INFO_LOADING as UPDATE_STORE_INFO_LOADING, UPADTE_STORE_INFO_FAILED as UPDATE_STORE_INFO_FAILED, UPADTE_STORE_INFO as UPDATE_STORE_INFO } from "../types";
+import { ABOUT_US_CONTEXT, LOGIN_STARTED, RESET_PROPS, GET_USER_INFO, GET_USER_INFO_LOADING, GET_USER_INFO_FAILED, ABOUT_US_CONTEXT_LOADING, ABOUT_US_CONTEXT_FAILED, UPDATE_USER_GENERAL_FAILED, UPDATE_USER_GENERAL_LOADING, UPDATE_USER_GENERAL, UPDATE_USER_SECURITY_LOADING, UPDATE_USER_SECURITY_FAILED, UPDATE_USER_SECURITY, GET_STORE_INFO, GET_STORE_INFO_LOADING, GET_STORE_INFO_FAILED, UPADTE_STORE_INFO_LOADING as UPDATE_STORE_INFO_LOADING, UPADTE_STORE_INFO_FAILED as UPDATE_STORE_INFO_FAILED, UPADTE_STORE_INFO as UPDATE_STORE_INFO, SEND_SUPPORT_MESSAGE_SUCCEED, SEND_SUPPORT_MESSAGE_LOADING, SEND_SUPPORT_MESSAGE_FAILED } from "../types";
 import { ActionSheet } from "native-base";
 import { UserInfo, storeInfo } from "../actions/profileActions";
 import { userInfo } from "os";
@@ -22,7 +22,8 @@ const intialState = {
   loadingUpdateStoreInfo : false,
   IsSucceedUpdateStoreInfo : false,
   storeInfo : {} as storeInfo,
-  
+  IsSuceedUserSupportAction : false,
+  loadingSupportAction : false,
 
 
  };
@@ -42,12 +43,31 @@ interface Profile {
     loadingUpdateStoreInfo : boolean;
     IsSucceedUpdateStoreInfo : boolean;
     storeInfo : storeInfo;
+    IsSuceedUserSupportAction : boolean;
+    loadingSupportAction : boolean;
     
 }
 
 export default (state: Profile = intialState, action: Action) => {
   switch (action.type) {
 
+    case SEND_SUPPORT_MESSAGE_LOADING : 
+    return {
+        ...state,
+        loadingSupportAction : true
+    }
+    case SEND_SUPPORT_MESSAGE_FAILED :
+        return {
+            ...state,
+            loadingSupportAction : false,
+            message : action.payload
+        }
+    case SEND_SUPPORT_MESSAGE_SUCCEED :
+        return {
+            ...state,
+            loadingSupportAction : false,
+            IsSuceedUserSupportAction : true
+        }
     case UPDATE_USER_SECURITY_LOADING : 
     return {
         ...state,
@@ -120,6 +140,8 @@ export default (state: Profile = intialState, action: Action) => {
             loadingUpdateStoreInfo : false,
             IsSucceedUpdateStoreInfo : false,
             storeInfo : {} as storeInfo,
+            IsSuceedUserSupportAction : false,
+        loadingSupportAction : false,
 
         }
     case GET_USER_INFO_LOADING:

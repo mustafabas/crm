@@ -163,7 +163,7 @@ renderContent() {
       </TouchableOpacity>
       <View style={styles.propsSeperator}></View>
 
-      <TouchableOpacity onPress={()=> this.props.navigation.navigate('HelpSupport')} style={styles.profileContainer}>
+      <TouchableOpacity onPress={()=> this.props.navigation.navigate('Support')} style={styles.profileContainer}>
         <Icon name="ios-help-circle-outline" type="ionicon" color={this.state.iconColor} style={{fontSize:20,marginTop:Platform.OS === 'ios' ? 5 : 0}} />
         <Text style={styles.profileTextStyle}>Yardım ve Destek</Text>
         <Icon name="right" type="AntDesign" color={this.state.iconColor} style={{fontSize:20,marginTop:Platform.OS === 'ios' ? 5 : 0}}/>

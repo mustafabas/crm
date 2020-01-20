@@ -70,7 +70,7 @@ console.log("asd")
 export function productEdit(id:number, status:boolean, productName:string,productCode:string,price:number,productCount : number) {
 
   return (dispatch : any) =>  {
-    console.log(id + "id")
+    console.log(id + "id" + "status" +status)
 
 dispatch(editProductLoading())
 

@@ -87,7 +87,9 @@ export const UPDATE_USER_SECURITY_LOADING = "updateUserSecurityLoading"
 export const UPDATE_USER_SECURITY_FAILED = "updateUserSecurityFailed"
 export const UPDATE_USER_SECURITY = "updateUserSecurity"
 
-
+export const SEND_SUPPORT_MESSAGE_LOADING = "sendSupportMessageLoading"
+export const SEND_SUPPORT_MESSAGE_FAILED = "sendSupportMessageFailed"
+export const SEND_SUPPORT_MESSAGE_SUCCEED= "sendSupportMessageSucceed"
 
 export const ADD_CASH_SUCCEED ="AddCashSucceed";
 export const ADD_CASH_FAILED ="AddCashFailed";
