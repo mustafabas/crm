@@ -1,5 +1,5 @@
 import { EmployeeCostAdd, Action } from "../states";
-import {EMPLOYEE_COST_ADD_SUCCEED,EMPLOYEE_COST_ADD_FAILED, EMPLOYEECOST_LOADING, RESET_PROPS} from "../types";
+import {EMPLOYEE_COST_ADD_SUCCEED,EMPLOYEE_COST_ADD_FAILED, EMPLOYEECOST_LOADING, RESET_PROPS, EMPLOYE_COST_ADD_LOADING} from "../types";
 
 
 const initalState = {
@@ -24,7 +24,7 @@ export default (state: EmployeeCostAdd = initalState, action: Action) => {
         isSuccess:false,
         EmployeeCostAddMessage:"Çalışan Gider Eklenemedi!",
       };
-      case EMPLOYEECOST_LOADING:
+      case EMPLOYE_COST_ADD_LOADING:
         return {
           ...state,
           EmployeAddCostLoading:true

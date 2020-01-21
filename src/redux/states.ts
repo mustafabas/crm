@@ -25,7 +25,7 @@ export interface State {
 
   export interface HomeState{
       customers:ICustomerItem[];
-      isHomeLoading :boolean;
+      isHomeLoading :boolean | null;
   }
 
   export interface UserState {
@@ -180,7 +180,7 @@ export interface EmployeeEditRedecurState
 {
   isSuccess: boolean;
   EmployeeUpdateMessage: string;
-  employee :IEmployeeItemBaseResponseModel | null;
+  employee :IEmployeeItemBaseResponseModel;
   isLoading : boolean;
 }
 export interface AddUser

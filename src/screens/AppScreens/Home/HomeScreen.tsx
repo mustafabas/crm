@@ -751,6 +751,11 @@ useNativeDriver ={true}
                     }
                     {/* <Text>asdasdas</Text> */}
                     {this.props.customers.length > 0 && this.renderGetPay()} 
+                    {this.props.isHomeLoading === null ? <View>
+                      <Text>Urun yok</Text>
+                    </View> : null
+                    }
+
                             {this.props.isHomeLoading && <View style={{position:'absolute',top:0,left:0,right:0,bottom:0}}> 
                                 <ActivityIndicator size="large" style={{flex:1}} />
                             </View>}

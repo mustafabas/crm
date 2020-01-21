@@ -1,12 +1,13 @@
 import { EmployeeAdd, Action, EmployeeEditRedecurState } from "../states";
 import {EMPLOYEE_EDIT_SUCCEED,EMPLOYEE_EDIT_FAILED, EMPLOYEE_GET_ONE, EMPLOYEE_EDIT_LOADING, RESET_PROPS} from "../types";
 import { stat } from "fs";
+import { IEmployeeItemBaseResponseModel } from "../models/employeeModel";
 
 
 const initalState = {
     isSuccess: false,
     EmployeeUpdateMessage: "",
-    employee:null,
+    employee:{} as IEmployeeItemBaseResponseModel,
     isLoading:false
   };
 

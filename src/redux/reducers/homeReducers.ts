@@ -5,7 +5,7 @@ import { CUSTOMER_GET, HOME_LOADING_CUSTOMERS, CUSTOMER_GET_MORE } from "../type
 
 const intialState = {
   customers: [],
-  isHomeLoading: false,
+  isHomeLoading: false || null,
   totalRecords : 0
 };
 

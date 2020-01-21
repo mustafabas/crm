@@ -26,6 +26,10 @@ export function employeeCost(employeId:number, cost:number) {
       
 
       }
+    }else {
+      dispatch(employeCostIsSucceed(false,"Çalışan Gider Eklenirken bir hata oluştu."));
+      dispatch(reset());
+  
     }
   })
   .catch(error => { 
