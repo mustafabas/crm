@@ -497,7 +497,7 @@ isShowDeleteView  : false,
               >Sil</Text>
             </TouchableOpacity>
             <TouchableOpacity style={stylesNew.SheetItemContainer}
-              onPress={() => {
+              onPress={() => { 
                 this.setState({isShowDeleteView : false})
        
               }}>
