@@ -101,7 +101,7 @@ export interface State {
 
   export interface ProductState{
     products:IProductItem[];
-    isProductLoading :boolean;
+    isProductLoading :boolean | null;
 }
 
 export interface AddOrder

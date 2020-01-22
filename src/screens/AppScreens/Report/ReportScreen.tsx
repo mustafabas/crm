@@ -150,7 +150,9 @@ class ReportScreen extends Component<Props, State> {
                     <Text style={styles.reportText}>Toplam Maliyet: {this.props.report.totalCost} TL</Text>
                     <Text style={styles.reportText}>Çalışan Maaşları: {this.props.report.totalWorkerSalary} TL</Text>
                     <Text style={styles.reportText}>Çalışan Maaşları(Maliyet de Ekli): {this.props.report.totalWorkerSalary+this.props.report.totalCost} TL</Text>
+                    <Text style={styles.reportText}>Toplam Sebil Sayısı: {this.props.report.totalFountainCount} Adet</Text>
                     <Text style={styles.reportTextTotalCost}>Toplam Gelir: {this.props.report.totalIncome} TL</Text>
+                    
                     <View style={{marginVertical:10}}><Text style={{textAlign:'center',fontFamily:'Avenir Next',fontSize:20}}>Ürünler ve Satış Sayıları</Text></View>
                     <FlatList
                         data={this.props.report.reportProductItems}

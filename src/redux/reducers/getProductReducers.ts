@@ -4,7 +4,7 @@ import { PRODUCT_GET, PRODUCT_LOADING } from "../types";
 
 const intialState = {
   products: [],
-  isProductLoading: false
+  isProductLoading: false || null
 };
 
 export default (state: ProductState = intialState, action: Action) => {

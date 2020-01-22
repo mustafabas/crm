@@ -19,9 +19,9 @@ import {
 } from './DimensionsHelper';
 import stylesNew from "../../../pages/styles";
 
-import { Icon, Input, Item, Tabs, Tab, TabHeading, Button, ScrollableTab } from 'native-base';
+import { Icon, Input, Item, Tabs, Tab, TabHeading, Button, ScrollableTab, Card, CardItem, Body } from 'native-base';
 import { Alert } from 'react-native';
-import { NavigationScreenProps, NavigationState } from 'react-navigation';
+import { NavigationScreenProps, NavigationState, NavigationScreenProp } from 'react-navigation';
 import { Dimensions } from 'react-native';
 import { ICustomerItem } from '../../../redux/models/homeModel';
 import { connect } from 'react-redux';
@@ -34,6 +34,7 @@ import RBSheet from "react-native-raw-bottom-sheet";
 // import {} from '@react-native-community/picker';
 import { logoutUserService } from '../../../redux/actions/loginAction';
 import { showMessage } from 'react-native-flash-message';
+
 
 
 
@@ -574,7 +575,7 @@ class HomeScreen extends Component<Props,State>{
             onPress={() => {
               this.setState({isShowDeleteView : false})
               this.customerEdit.close();
-              this.deleteCustomerAlert()
+              this.deleteSelectedCustomer() 
               // this.customerEdit.close();
             }}>
               <Icon type="FontAwesome" name="trash-o" style={[stylesNew.SheetItemIcon,{ fontSize:25}]}></Icon>
@@ -751,9 +752,21 @@ useNativeDriver ={true}
                     }
                     {/* <Text>asdasdas</Text> */}
                     {this.props.customers.length > 0 && this.renderGetPay()} 
-                    {this.props.isHomeLoading === null ? <View>
-                      <Text>Urun yok</Text>
-                    </View> : null
+                    {this.props.isHomeLoading !== null && this.props.customers.length<1 ? <View >
+
+<Card style={{ borderColor: '#f5f5f5' }}>
+
+  <CardItem>
+    <Body style={{ flexDirection: "column", justifyContent: "center", alignItems: "center" }} >
+      <Icon name="ios-information-circle-outline" style={{ fontSize: 40 }} ></Icon>
+      <Text>
+        Sisteme eklediğiniz müşteri bulunmakatadır. Müşterilerinizi yönetmek için eklemeye şimdi başlayın!
+        </Text>
+    </Body>
+  </CardItem>
+</Card>
+
+</View> : null
                     }
 
                             {this.props.isHomeLoading && <View style={{position:'absolute',top:0,left:0,right:0,bottom:0}}> 

@@ -672,10 +672,11 @@ componentDidMount(){
               </TouchableOpacity>
             </View>
           }
+          
           <View style={{ flex: 1 }}>
 
             {!this.props.isCustomerDetailLoading && this.props.customerDetailModel && this.props.customerDetailModel.adress != null && this.props.customerDetailModel.adress!=="" &&
-              <View style={{ flexDirection: 'row', }}>
+              <View style={{ flexDirection: 'row',marginTop:5 }}>
                 <Icon name="ios-pin" style={{ fontSize: 20 }} />
                 <TouchableOpacity onPress={() => {
                   Platform.OS === "ios" ? Linking.openURL('http://maps.apple.com/maps?daddr=' + this.props.customerDetailModel?.adress) : Linking.openURL('http://maps.google.com/maps?daddr=' + this.props.customerDetailModel?.adress)
@@ -686,6 +687,18 @@ componentDidMount(){
                     {this.props.customerDetailModel.adress}
                   </Text>
                 </TouchableOpacity>
+              </View>
+
+
+            }
+            {!this.props.isCustomerDetailLoading && this.props.customerDetailModel && this.props.customerDetailModel.fountainCount != null && this.props.customerDetailModel.fountainCount!==0 &&
+              <View style={{ flexDirection: 'row', marginTop:5,marginLeft:-5}}>
+                <Icon name="cup-water" type="MaterialCommunityIcons" style={{ fontSize: 20 }} />
+              
+                  <Text style={{ color: '#404243', fontSize: 16, fontWeight: '600', marginLeft: 5, fontFamily: 'Avenir Next' }}>
+                    {this.props.customerDetailModel.fountainCount}
+                  </Text>
+
               </View>
 
 

@@ -12,7 +12,7 @@ import newStyles from "../../AuthScreens/Login/styles";
 import { connect } from "react-redux";
 import { AppState } from '../../../redux/store'
 import { getAboutUs } from "../../../redux/actions/profileActions";
-
+import HTML from 'react-native-render-html'
 
 
 
@@ -54,9 +54,8 @@ class AboutUsScreen extends Component<Props, {}> {
     }else {
       return(
         <View style={[newStyles.inputContainer,{marginTop:5,padding:20}]}>
-                <Text style={{fontFamily:'Avenir Next',fontSize:18}}>
-                    {this.props.context}
-                </Text>
+
+                <HTML html={this.props.context} />
         
       </View>
       )

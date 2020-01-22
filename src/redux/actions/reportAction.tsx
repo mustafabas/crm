@@ -31,6 +31,7 @@ export function GetReport(startDate:string,endDate:string) {
   
                   if (response.data.isSuccess) {
                       var productsReport: IReportProductItems[] = [];
+                      console.log(response.data.result)
                       response.data.result.reportProductItems.forEach((product: any) => {
                           var productReport: IReportProductItems = {
                               productId: product.productId,
@@ -46,6 +47,7 @@ export function GetReport(startDate:string,endDate:string) {
                           totalRestAmount: response.data.result.totalRestAmount,
                           totalWorkerSalary: response.data.result.totalWorkerSalary,
                           reportProductItems: productsReport,
+                          totalFountainCount : response.data.result.totalFountainCount
   
                       }
                       dispatch(Report(reportModel));      

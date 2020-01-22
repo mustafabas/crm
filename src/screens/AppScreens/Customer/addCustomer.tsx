@@ -117,7 +117,7 @@ class addCustomer extends Component<Props, CustomerInserState> {
 
       showMessage({
         message: this.props.CustomerAddMessage,
-        type: this.props.isSuccees ? "success" : "danger",
+        type: this.props.isSuccees ? "success" : (this.props.CustomerAddMessage === "Limitli pakete sahip üyelerimiz tanımlanandan fazla müşteri ekleyememektedir. Lütfen destek sayfamızdan bizimle iletişime geçiniz" ? "warning" : "danger"),
         icon: 'auto'
       }
       );

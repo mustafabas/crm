@@ -19,6 +19,8 @@ import { AppState } from "../../..//redux/store";
 import { IProductItem } from "../../../redux/models/productModel";
 import Icon from "react-native-vector-icons/Ionicons";
 import RBSheet from "react-native-raw-bottom-sheet";
+import { Card, CardItem, Body } from "native-base";
+
 
 interface Props {
   navigation: NavigationScreenProp<NavigationState>;
@@ -219,13 +221,29 @@ class Products extends Component<Props, State> {
           <View style={{ }}></View>
         </KeyboardAvoidingView>
         {this._renderView()}
+        {this.props.isLoading === false && this.props.products.length < 1 &&  <View >
+
+<Card style={{ borderColor: '#f5f5f5' }}>
+
+  <CardItem onPress={()=>this.props.navigation.navigate("AddProduct")}>
+    <Body style={{ flexDirection: "column", justifyContent: "center", alignItems: "center" }} >
+      <Icon name="ios-information-circle-outline" style={{ fontSize: 40 }} ></Icon>
+      <Text>
+        Sisteme eklediğiniz ürün bulunmakatadır. Ürünlerinizi yönetmek için eklemeye şimdi başlayın!
+        </Text>
+    </Body>
+  </CardItem>
+</Card>
+
+</View>}
       </View>
     );
   }
 }
 
 const mapStateToProps = (state: AppState) => ({
-  isHomeLoading: state.home.isHomeLoading,
+  isProductLoading : state.products.isProductLoading,
+
   products: state.products.products,
 })
 function bindToAction(dispatch: any) {

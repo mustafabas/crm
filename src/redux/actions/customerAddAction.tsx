@@ -49,7 +49,14 @@ export function customerAdd(nameSurname: string, companyName: string, dayOfWeek:
           }
           else {
             console.log(response.data.message)
-            dispatch(customerAddIsSucceed(false, "Müşteri Zaten Var!"));
+            if(response.data.message === "Customer.Post.StoreCannotAddMoreThan5Customers"){
+              dispatch(customerAddIsSucceed(false, "Limitli pakete sahip üyelerimiz tanımlanandan fazla müşteri ekleyememektedir. Lütfen destek sayfamızdan bizimle iletişime geçiniz"));
+            }
+            else {
+              dispatch(customerAddIsSucceed(false, "Kayıtlı Müşteri Var."));
+          
+            }
+            
             dispatch(reset())
             dispatch(GetCustomers(1,"",0,1));
           }
