@@ -114,27 +114,7 @@ class employeeCostScreen extends Component<Props, State> {
 }
 
   _renderProductSheetContent() {
-    if(this.state.deleteSheetRender==false){
-      return (<View style={styles.SheetContainer}>
-        <TouchableOpacity style={[styles.SheetItemContainer, { justifyContent: 'flex-end', padding: 10 }]}
-          onPress={() => {
-            this.AmountSheet.close();
-          }}>
-          <Icon name="ios-close" style={[{ fontSize: 40, marginRight: 10 }, styles.SheetItemIcon]}></Icon>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.SheetItemContainer}
-          onPress={() => {
-            this.AmountSheet.close();
-  
-          this.setState({deleteSheetRender:true});
-          }}>
-          <Icon name="ios-trash" style={styles.SheetItemIcon}></Icon>
-          <Text style={styles.SheetItemText}
-          >Sil</Text>
-        </TouchableOpacity>
-      </View>);
-    }
-    else{
+    
       return (<View style={styles.SheetContainer}>
         <TouchableOpacity style={[styles.SheetItemContainer, { justifyContent: 'flex-end', padding: 10 }]}
           onPress={() => {
@@ -162,7 +142,7 @@ class employeeCostScreen extends Component<Props, State> {
           >İptal Et</Text>
         </TouchableOpacity>
       </View>);
-    }
+    
 
 
   }

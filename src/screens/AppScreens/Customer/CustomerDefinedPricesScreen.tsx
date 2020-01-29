@@ -16,7 +16,7 @@ import { AppState } from "../../../redux/store";
 import { IDefinedCustomerPriceItem } from "../../../redux/models/customerDefinedPriceModel";
 import Icon from "react-native-vector-icons/Ionicons";
 import {getCustomerPrice} from "../../../redux/actions/customerDefinedPriceAction"
-import {Input, Button, Spinner} from "native-base"
+import {Input, Button, Spinner, Card, CardItem,Body} from "native-base"
 import { Formik } from "formik";
 import * as Yup from "yup";
 import {customerPriceEdit} from "../../../redux/actions/customerPriceEditAction"
@@ -193,6 +193,30 @@ _renderView(){
   if(isLoading && !this.props.products){
     return (<ActivityIndicator></ActivityIndicator>);
   }
+  else if(this.props.isLoading === false && this.props.products.length < 1)
+  {
+    return(
+      <View style={{flex:1}} >
+<TouchableOpacity onPress={()=> this.props.navigation.navigate('CustomerDefinedPriceAdd')} >
+        
+        <Card style={{ borderColor: '#f5f5f5' }}>
+        
+          <CardItem >
+            <Body style={{ flexDirection: "column", justifyContent: "center", alignItems: "center" }} >
+              <Icon name="ios-information-circle-outline" style={{ fontSize: 40 }} ></Icon>
+              <Text>
+                Sisteme eklediğiniz müşteriye özel ürün fiyatlandırması bulunmakatadır. Müşteriye özel ürün fiyatlarını eklemeye şimdi başlayın!
+                </Text>
+            </Body>
+          </CardItem>
+        </Card>
+        
+        </TouchableOpacity>
+      </View>
+      )
+  
+  }
+
   else{
     return (<FlatList
       refreshing={this.state.refreshing}

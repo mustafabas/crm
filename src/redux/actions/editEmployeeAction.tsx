@@ -1,7 +1,7 @@
 import axios from 'axios'
 import {WATER_EDIT_EMPLOYEE, WATER_GET_EMPLOYEEBYID} from './../constants'
 import { Dispatch } from "react";
-import {EMPLOYEE_EDIT_SUCCEED,EMPLOYEE_EDIT_FAILED, EMPLOYEE_GET_ONE, EMPLOYEE_EDIT_LOADING} from './../types'
+import {EMPLOYEE_EDIT_SUCCEED,EMPLOYEE_EDIT_FAILED, EMPLOYEE_GET_ONE, EMPLOYEE_EDIT_LOADING, EMPLOYEE_GET_EDIT_LOADING} from './../types'
 import {Action} from '../states'
 import AsyncStorage from '@react-native-community/async-storage';
 import { IEmployeeItem, IEmployeeItemBaseResponseModel } from '../models/employeeModel';
@@ -62,6 +62,7 @@ export function employeeEdit(nameSurname:string, monthlySalary:number,email:stri
 export function getEmployeeById(employeeId:number) {
 
   return (dispatch : Dispatch<Action>) =>  {
+    dispatch(loadingGetEmployee(true))
     console.log(employeeId,"mp");
     AsyncStorage.multiGet(['userToken', 'userId']).then((res) => {
       let token = res[0][1];
@@ -101,8 +102,11 @@ export function getEmployeeById(employeeId:number) {
           })
           .catch((err) => {
             console.log(err);
+            dispatch(loadingGetEmployee(false))
           });
 
+  }).catch(err=>{
+    dispatch(loadingGetEmployee(false))
   });
 
 }
@@ -119,6 +123,11 @@ export function getEmployeeById(employeeId:number) {
   })
   export const employeEditLoading = (val : boolean) => ({
     type :  EMPLOYEE_EDIT_LOADING,
+    payload : val
+  })
+
+  export const loadingGetEmployee = (val : boolean) => ({
+    type : EMPLOYEE_GET_EDIT_LOADING,
     payload : val
   })
   

@@ -53,11 +53,14 @@ import ProfileEditGeneralScreen from "../screens/AppScreens/Profile/ProfileEditG
 import CompanyEditScreen from "../screens/AppScreens/Profile/CompanyEditScreen";
 import ReportScreen from "../screens/AppScreens/Report/ReportScreen";
 import ReportTemplateScreen from '../screens/AppScreens/Report/ReportTemplateScreen'
+import ReportNewScreen from '../screens/AppScreens/Report/ReportNewScreen'
+
 import UserAgreementScreen from "../screens/AuthScreens/Login/UserAgreementScreen";
 import HomeScreenAndroid from "../screens/AppScreens/Home/HomeScreenAndroid";
 import SupportScreen from "../screens/AppScreens/Profile/SupportScreen";
 import CustomerDefinedPriceAddScreen from '../screens/AppScreens/Customer/CustomerDefinedPriceAddScreen'
 import CustomerDefinedPricesScreen from '../screens/AppScreens/Customer/CustomerDefinedPricesScreen'
+import ReportBaseScreen from '../screens/AppScreens/Report/ReportBaseScreen'
 // import newPricePage from "../pages/newPricePage";
 // import customerDefinedPricePage from "../pages/CustomerDefinedPrice"
 // import editOrder from "../pages/editOrder";
@@ -92,7 +95,10 @@ const introductionStack = createStackNavigator({
 
   const reportStack = createStackNavigator(
     {
-      Report : ReportScreen
+      ReportBase : ReportBaseScreen,
+      ReportNew : ReportNewScreen,
+      ReportTemplate : ReportTemplateScreen,
+      ReportOld : ReportScreen
     },
     {
       // headerMode: "none"
@@ -231,6 +237,8 @@ const AgreementStack = createStackNavigator({
     },
   },
 })
+
+
 
 
 

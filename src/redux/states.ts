@@ -57,7 +57,7 @@ export interface State {
   export interface Orders
   {
     orders: IOrderItem[];
-    isOrderLoading: boolean;
+    isOrderLoading: boolean | null;
     customerDetail : ICustomerDetailItem;
     isCustomerDetailLoading : boolean;
     loadingMore:boolean;
@@ -137,7 +137,7 @@ export interface AddCustomerPrice
 
   export interface CustomerDefinedPriceState{
     products:IDefinedCustomerPriceItem[];
-    isProductLoading :boolean;
+    isProductLoading :boolean | null;
 }
 
 export interface CustomerPriceEdit
@@ -174,7 +174,7 @@ export interface EmployeeAdd
 {
   isSuccess: boolean;
   EmployeeAddMessage: string;
-  isLoading:boolean;;
+  isLoading:boolean;
 }
 export interface EmployeeEditRedecurState
 {
@@ -182,6 +182,8 @@ export interface EmployeeEditRedecurState
   EmployeeUpdateMessage: string;
   employee :IEmployeeItemBaseResponseModel;
   isLoading : boolean;
+  isLoadignGetEmployee : boolean | null;
+
 }
 export interface AddUser
   {

@@ -72,9 +72,9 @@ const initialValues: amountData = {
 }
 
 const girdiler = Yup.object().shape({
-  amount: Yup.number()
-    .positive()
-    .required(),
+  amount: Yup.string().required()
+
+
 });
 
 class Employee extends Component<Props, State> {
@@ -163,6 +163,7 @@ class Employee extends Component<Props, State> {
   deleteSelectedEmployee() {
 
     const { employeeDelete } = this.props;
+    console.log(this.state.employeeId)
     employeeDelete(this.state.employeeId);
     this.OrderSheet.close();
     this.onRefresh();
@@ -179,13 +180,14 @@ class Employee extends Component<Props, State> {
 
   }
   openModal(employeeId: number) {
+    console.log(employeeId)
     this.setState({
       employeeId: employeeId,
     });
     this.OrderSheet.open();
   }
   giderEkle(values: amountData) {
-    this.props.employeeCost(this.state.employeeId, Number(values.amount));
+    this.props.employeeCost(this.state.employeeId,Number(values.amount.replace(",",".")));
     this.AmountSheet.close();
     this.onRefresh();
 

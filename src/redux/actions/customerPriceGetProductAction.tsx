@@ -22,7 +22,7 @@ export function GetCustomerProduct(customerId: number) {
         'Authorization': `Bearer ${token}`
       }
 
-      var WATER_CUSTOMER_PRICE_GET_PRODUCT_WITH_CUSTOMERID = WATER_CUSTOMER_PRICE_GET_PRODUCT + "?customerId=" + customerId + "&userId=" + userId;
+      var WATER_CUSTOMER_PRICE_GET_PRODUCT_WITH_CUSTOMERID = WATER_CUSTOMER_PRICE_GET_PRODUCT  + customerId + "&userId=" + userId;
 
       console.log(WATER_CUSTOMER_PRICE_GET_PRODUCT_WITH_CUSTOMERID)
       axios.get(WATER_CUSTOMER_PRICE_GET_PRODUCT_WITH_CUSTOMERID,
@@ -46,14 +46,18 @@ export function GetCustomerProduct(customerId: number) {
           }
 
 
-          else {
+          else {   
+            dispatch(loading(false));
 
           }
         })
         .catch((err) => {
           console.log(err)
+          dispatch(loading(false));
         });
 
+      }).catch(err=>{
+        dispatch(loading(false));
       });
     }
  

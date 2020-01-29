@@ -95,16 +95,18 @@ const girdiler = Yup.object().shape({
   musteriAdiSoyadi: Yup.string()
   .min(3).max(30)
     .required("*Zorunlu Alan"),
-AllDays : Yup.bool(),
-  monday : Yup.bool(),
-  tuesday : Yup.bool(),
-  wednesday : Yup.bool(),
-  thusday : Yup.bool(),
-  friday : Yup.bool(),
-  saturday : Yup.bool(),
-  sunday : Yup.bool(),
-}).atLeastOneOf(['AllDays', 'monday','tuesday','wednesday','thusday','friday','saturday','sunday'])
-;
+
+// AllDays : Yup.bool(),
+//   monday : Yup.bool(),
+//   tuesday : Yup.bool(),
+//   wednesday : Yup.bool(),
+//   thusday : Yup.bool(),
+//   friday : Yup.bool(),
+//   saturday : Yup.bool(),
+//   sunday : Yup.bool(),
+})
+// .atLeastOneOf(['AllDays', 'monday','tuesday','wednesday','thusday','friday','saturday','sunday'])
+// ;
 
 
 class addCustomer extends Component<Props, CustomerInserState> {
@@ -194,10 +196,11 @@ class addCustomer extends Component<Props, CustomerInserState> {
           gunler += "7,"
         }
       }
-      const { customerAdd } = this.props;
-      customerAdd(values.musteriAdiSoyadi, values.sirketAdi, 0, Math.round(Number(values.fountainCount)).toString(), gunler,values.adress,values.phoneNumber);
-  
+      
     }
+    const { customerAdd } = this.props;
+      customerAdd(values.musteriAdiSoyadi, values.sirketAdi, 0, values.fountainCount.length > 0 ? values.fountainCount : "0" , gunler,values.adress,values.phoneNumber);
+  
     
   };
 
@@ -318,9 +321,9 @@ style={{fontFamily:'Avenir Next',fontSize:18}}
 
                   style={{fontFamily:'Avenir Next',fontSize:18}}
                           placeholderTextColor="#9A9A9A"
-
+                          
                           value={String(values.fountainCount)}
-                          keyboardType="numeric"
+                          keyboardType="number-pad"
                           onChangeText={handleChange("fountainCount")}
                           onBlur={handleBlur("fountainCount")}
                         />

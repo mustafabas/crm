@@ -53,13 +53,11 @@ const girdiler = Yup.object().shape({
         .min(1)
         .max(30)
         .required(),
-    urunFiyati: Yup.number()
-        .positive()
-        .required()
-        .moreThan(0),
+    urunFiyati: Yup.string()
+        .required(),
+
     productCount: Yup.number()
-        .positive()
-        .required()
+
         .moreThan(0),
 });
 
@@ -99,7 +97,7 @@ class productAdd extends Component<Props, {}> {
     }
     handleCreateProduct(values: productData) {
         const { productAddAction } = this.props;
-        productAddAction(values.urunAdi, values.urunKodu, values.urunFiyati, values.productCount);
+        productAddAction(values.urunAdi, values.urunKodu, values.urunFiyati.replace(",","."), values.productCount);
     };
 
     _renderButtonText() {

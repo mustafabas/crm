@@ -33,7 +33,7 @@ console.log(WATER_CUSTOMERS_HOME_GET_ORDER_TYPE_SEARCH_TEXT)
         if (response.data.isSuccess) {
           var customersModel: ICustomerItem[] = [];
           var totalRecords = response.data.result.totalRecords
-
+console.log("Girdi")
           response.data.result.homeCustomerItemModels.forEach((customer: any) => {
             var customerItem: ICustomerItem = {
               customerId: customer.customerId,
@@ -57,10 +57,12 @@ console.log(WATER_CUSTOMERS_HOME_GET_ORDER_TYPE_SEARCH_TEXT)
 
 
         else {
+          console.log("Girdime")
           dispatch(loading(false));
         }
       })
       .catch((err) => {
+        console.log("Girdime")
         dispatch(loading(false));
 
       });

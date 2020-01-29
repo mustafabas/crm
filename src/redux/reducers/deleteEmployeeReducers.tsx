@@ -3,7 +3,7 @@ import {EMPLOYEE_DELETE_SUCCEED,EMPLOYEE_DELETE_FAILED, RESET_PROPS} from "../ty
 
 
 const initalState = {
-  isSuccess:null
+  isSuccess:false || null
   };
 
 export default (state: EmployeeDelete = initalState, action: Action) => {
@@ -21,7 +21,7 @@ export default (state: EmployeeDelete = initalState, action: Action) => {
       case RESET_PROPS:
         return{
           ...state,
-          isSuccess:null
+          isSuccess:false
         }
     default:
       return state;

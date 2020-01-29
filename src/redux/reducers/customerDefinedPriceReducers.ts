@@ -4,7 +4,7 @@ import { CUSTOMER_DEFINED_PRICE_GET, CUSTOMER_DEFINED_PRICE_LOADING } from "../t
 
 const intialState = {
   products: [],
-  isProductLoading: false
+  isProductLoading: false || null,
 };
 
 export default (state: CustomerDefinedPriceState = intialState, action: Action) => {

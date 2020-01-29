@@ -24,7 +24,7 @@ import { Card, CardItem, Body } from "native-base";
 
 interface Props {
   navigation: NavigationScreenProp<NavigationState>;
-  isLoading: boolean;
+  isProductLoading: boolean;
   products: IProductItem[];
   GetProducts: () => void;
 }
@@ -130,8 +130,30 @@ class Products extends Component<Props, State> {
 
   _renderView() {
     const { products, isLoading, navigation } = this.props;
-    if (isLoading) {
+    if (this.props.isProductLoading) {
       return (<ActivityIndicator></ActivityIndicator>);
+    }
+    if(this.props.isProductLoading === false && this.props.products.length < 1)
+    {
+   return(
+    <View  style={{flex:1}}>
+
+    <TouchableOpacity onPress={()=>this.props.navigation.navigate("AddProduct")}>
+    <Card style={{ borderColor: '#f5f5f5' }}>
+    
+    <CardItem onPress={()=>this.props.navigation.navigate("AddProduct")}>
+      <Body style={{ flexDirection: "column", justifyContent: "center", alignItems: "center" }} >
+        <Icon name="ios-information-circle-outline" style={{ fontSize: 40 }} ></Icon>
+        <Text>
+          Sisteme eklediğiniz ürün bulunmakatadır. Ürünlerinizi yönetmek için eklemeye şimdi başlayın!
+          </Text>
+      </Body>
+    </CardItem>
+  </Card>
+    </TouchableOpacity>
+    
+    </View>
+   )
     }
     else {
       return (<FlatList
@@ -221,21 +243,7 @@ class Products extends Component<Props, State> {
           <View style={{ }}></View>
         </KeyboardAvoidingView>
         {this._renderView()}
-        {this.props.isLoading === false && this.props.products.length < 1 &&  <View >
-
-<Card style={{ borderColor: '#f5f5f5' }}>
-
-  <CardItem onPress={()=>this.props.navigation.navigate("AddProduct")}>
-    <Body style={{ flexDirection: "column", justifyContent: "center", alignItems: "center" }} >
-      <Icon name="ios-information-circle-outline" style={{ fontSize: 40 }} ></Icon>
-      <Text>
-        Sisteme eklediğiniz ürün bulunmakatadır. Ürünlerinizi yönetmek için eklemeye şimdi başlayın!
-        </Text>
-    </Body>
-  </CardItem>
-</Card>
-
-</View>}
+       
       </View>
     );
   }

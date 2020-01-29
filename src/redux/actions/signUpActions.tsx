@@ -33,15 +33,16 @@ export function createBaseUser(user :BaseUser) {
         }).then((res)=> {
             if(res.data.isSuccess) {
 
-
-                AsyncStorage.multiSet([['userToken',res.data.result.token],['userId',res.data.result.userId.toString()]])
-                .then(() => {
-                  dispatch(loginIsSucceedSecond(true,""));
-                  dispatch(reset());
-                //   navigate('LoginPhoneVerify');
-        
-                })
-                .catch(error => {
+                console.log(res.data.result)
+                AsyncStorage.setItem("userToken",res.data.result.token).then(()=>{
+                  AsyncStorage.setItem("userId",res.data.result.userId.toString()).then(()=>{
+                    dispatch(loginIsSucceedSecond(true,""));
+                    dispatch(reset());
+                  }).catch(er=>{
+                    dispatch(loginIsSucceedSecond(false,"Bir Hata Meydana Geldi"));
+                    dispatch(reset())
+                  })
+                }).catch(err=>{
                   dispatch(loginIsSucceedSecond(false,"Bir Hata Meydana Geldi"));
                   dispatch(reset())
                 })

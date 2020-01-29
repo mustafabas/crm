@@ -12,6 +12,7 @@ export function employeeCost(employeId:number, cost:number) {
   return (dispatch : Dispatch<Action>) =>  {
 
     dispatch(employeeAddCostLoading(true));
+    console.log(employeId + "   " + cost)
   axios.post(WATER_ADD_EMPLOYEE_COST,
     {
         employeId: employeId,

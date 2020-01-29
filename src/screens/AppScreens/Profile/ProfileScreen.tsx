@@ -78,14 +78,20 @@ class ProfileScreen extends Component<Props,State>{
 
 
      logOut() {
-       AsyncStorage.multiRemove(["userToken","userId"])
-        .then(() => { 
-          this.props.navigation.navigate('AuthLoading')
+      //  AsyncStorage.multiRemove(["userToken","userId"])
+      //   .then(() => { 
+          
 
+      //   })
+      //   .catch(error => {
+
+      //   });
+        AsyncStorage.removeItem("userToken").then(()=> {
+          AsyncStorage.removeItem("userId").then(()=> {
+            this.props.navigation.navigate('AuthLoading')
+          })
         })
-        .catch(error => {
 
-        });
     }
     componentWillMount() {
 this.props.getUserInfo()

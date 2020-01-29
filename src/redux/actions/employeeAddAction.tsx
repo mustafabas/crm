@@ -18,6 +18,8 @@ export function employeeAdd(nameSurname:string, monthlySalary:number,email:strin
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
     }
+    console.log("User Id : " + userId )
+    console.log("Token Id : " + token )
     axios.post(WATER_ADD_EMPLOYEE,
       {
           nameSurname: nameSurname,

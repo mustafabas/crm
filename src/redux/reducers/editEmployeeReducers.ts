@@ -1,5 +1,5 @@
 import { EmployeeAdd, Action, EmployeeEditRedecurState } from "../states";
-import {EMPLOYEE_EDIT_SUCCEED,EMPLOYEE_EDIT_FAILED, EMPLOYEE_GET_ONE, EMPLOYEE_EDIT_LOADING, RESET_PROPS} from "../types";
+import {EMPLOYEE_EDIT_SUCCEED,EMPLOYEE_EDIT_FAILED, EMPLOYEE_GET_ONE, EMPLOYEE_EDIT_LOADING, RESET_PROPS, EMPLOYEE_GET_EDIT_LOADING} from "../types";
 import { stat } from "fs";
 import { IEmployeeItemBaseResponseModel } from "../models/employeeModel";
 
@@ -8,7 +8,8 @@ const initalState = {
     isSuccess: false,
     EmployeeUpdateMessage: "",
     employee:{} as IEmployeeItemBaseResponseModel,
-    isLoading:false
+    isLoading:false,
+    isLoadignGetEmployee : false || null
   };
 
 export default (state: EmployeeEditRedecurState = initalState, action: Action) => {
@@ -30,7 +31,7 @@ export default (state: EmployeeEditRedecurState = initalState, action: Action) =
       case EMPLOYEE_GET_ONE:     
       return {
         ...state,
-        isSuccess:false,
+        isLoadignGetEmployee : false,
         employee: action.payload,
         EmployeeUpdateMessage:"",
       };
@@ -45,7 +46,11 @@ export default (state: EmployeeEditRedecurState = initalState, action: Action) =
             EmployeeUpdateMessage:"",
             isSuccess:false
           }
-
+        case EMPLOYEE_GET_EDIT_LOADING :
+          return {
+            ...state,
+            isLoadignGetEmployee: action.payload
+          }
     default:
       return state;
   }

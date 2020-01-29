@@ -12,7 +12,10 @@ export function GetReport(startDate:string,endDate:string) {
     return (dispatch: Dispatch<Action>) => {
 
         dispatch(loading(true));
-
+        console.log("Eski StartDate")
+        console.log(startDate)
+        console.log("Eski endDate")
+        console.log(endDate)
         AsyncStorage.multiGet(['userToken', 'userId']).then((res) => {
             let token = res[0][1];
             let userId = res[1][1];

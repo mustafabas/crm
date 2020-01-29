@@ -148,7 +148,7 @@ class SupportScreen extends Component<Props, CustomerInserState> {
                       <View style={styles.input}>
                        
                       <Item  floatingLabel style={{marginTop:20,borderBottomColor: (touched.message && errors.message != null) ? 'red' : '#2069F3',paddingBottom:20}}>
-                        <Icon name="ios-home" style={{minHeight:60,color:'#a5a5a5'}}/>
+                        <Icon name="ios-home" style={{color:'#a5a5a5',marginTop:-50}}/>
                          <Label style={{fontFamily:'Avenir Next',marginTop:-10,color:(touched.message && errors.message != null) ? 'red' : '#959595'}}>Açıklama</Label>
                    
                        <Input

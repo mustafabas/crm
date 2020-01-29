@@ -36,6 +36,7 @@ interface Props {
     isLoading: boolean;
     GetEmployees: () => void;
     getEmployeeById: (employeeId: number) => void;
+    isLoadignGetEmployee: boolean;
 }
 
 interface State {
@@ -52,13 +53,10 @@ const girdiler = Yup.object().shape({
         .min(3, "*Çalışan adı 3 karakterden kısa olamaz!")
         .max(30, "*Çalışan adı 30 karakterden uzun olamaz!")
         .required("*Zorunlu Alan"),
-    monthlySalary: Yup.number()
-        .positive("Pozitif değer giriniz!")
-        .moreThan(0, "Sıfırdan büyük olmalıdır!"),
+    monthlySalary: Yup.number(),
     identityNumber: Yup.number()
         .positive("Pozitif değer giriniz!"),
-    dailyPriceFood: Yup.number()
-        .positive("Pozitif değer giriniz!"),
+    dailyPriceFood: Yup.string(),
     phoneNumber: Yup.number()
         .positive("Pozitif değer giriniz!")
 });
@@ -101,7 +99,7 @@ class employeeEditScreen extends Component<Props, State> {
     handleAddEmployee(values: multi) {
         const { employeeEdit, AddUser } = this.props;
         const employeeId: number = Number(this.props.navigation.getParam('employeeId'));
-        employeeEdit(values.nameSurname, Number(values.monthlySalary), values.mail, values.password, values.phoneNumber, values.identityNumber, values.address, Number(values.dailyPriceFood), employeeId, values.Active,values.AddAsUser);
+        employeeEdit(values.nameSurname,Number(values.monthlySalary.replace(",",".")), values.mail, values.password, values.phoneNumber, values.identityNumber, values.address,Number(values.dailyPriceFood.replace(",",".")), employeeId, values.Active,values.AddAsUser);
         // if (values.mail != "" && values.password != "") {
         //     AddUser(values.nameSurname, values.mail, values.password);
         // }     
@@ -137,11 +135,15 @@ class employeeEditScreen extends Component<Props, State> {
         if (this.state.UserType === "2") {
             return (<View style={styles.musteribulunamadiContainer}>
                 <Text style={styles.musteribulunamadiText}>Bu Sayfaya Erişim İzniniz Yok</Text>
-            </View>);
+            </View>)
+            ;
         }
         else {
             const employee = this.props.employee;
-            if(this.props.isLoading==false){
+            if(this.props.isLoadignGetEmployee) {
+                return (<Spinner color='01C3E3' />)
+            }
+            else {
                 
 
             const initialValues: multi = {
@@ -218,7 +220,7 @@ class employeeEditScreen extends Component<Props, State> {
                                                     <Input
                                                         value={values.monthlySalary}
                                                         placeholderTextColor="#9A9A9A"
-                                                        keyboardType="number-pad"
+                                                        keyboardType="numeric"
                                                         autoCapitalize="words"
                                                         onChangeText={handleChange("monthlySalary")}
                                                         onBlur={handleBlur("monthlySalary")}
@@ -234,7 +236,7 @@ class employeeEditScreen extends Component<Props, State> {
                                                     <Input
                                                         placeholderTextColor="#9A9A9A"
                                                         value={values.dailyPriceFood}
-                                                        keyboardType="number-pad"
+                                                        keyboardType="numeric"
                                                         autoCapitalize="words"
                                                         onChangeText={handleChange("dailyPriceFood")}
                                                         onBlur={handleBlur("dailyPriceFood")}
@@ -364,7 +366,8 @@ const mapStateToProps = (state: AppState) => ({
     EmployeeUpdateMessage: state.editEmployeReducer.EmployeeUpdateMessage,
     isSucceesUser: state.addUser.isSuccess,
     employee: state.editEmployeReducer.employee,
-    isLoading: state.editEmployeReducer.isLoading
+    isLoading: state.editEmployeReducer.isLoading,
+    isLoadignGetEmployee : state.editEmployeReducer.isLoadignGetEmployee
 })
 
 function bindToAction(dispatch: any) {

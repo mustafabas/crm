@@ -25,7 +25,7 @@ import { AddOrder } from "../../../redux/actions/addOrderAction";
 // import { IAddOrderItem } from "../redux/models/addOrderModel";
 import { GetProduct } from "../../../redux/actions/productForCustomerAction";
 import { IProductForCustomerItem } from "../../../redux/models/productForCustomerModel";
-import { Input, CheckBox,Picker, Item, Label, Button, Spinner } from "native-base";
+import { Input, CheckBox,Picker, Item, Label, Button, Spinner, Card, CardItem,Body } from "native-base";
 import { showMessage } from "react-native-flash-message";
 
 interface Props {
@@ -212,13 +212,170 @@ onValueChange2(value: string) {
   //  this.OrderInfo(Number(value))
 }
 
+renderContent(){
+  const initialValues: input = {
+    count: this.state.count,
+    unitPrice: this.props.product.unitPrice ? String(this.props.product.unitPrice) : "",
+  }
 
+
+ if(this.props.isProductLoading !== true && this.props.products.length < 1){
+    return (<TouchableOpacity onPress={()=> this.props.navigation.navigate('AddProduct')} >
+
+      <Card style={{ borderColor: '#f5f5f5' }}>
+
+        <CardItem>
+          <Body style={{ flexDirection: "column", justifyContent: "center", alignItems: "center" }} >
+            <Icon name="ios-information-circle-outline" style={{ fontSize: 40 }} ></Icon>
+            <Text>
+              Sisteme eklediğiniz ürün bulunmakatadır. Sipariş Eklemek için ürün eklemeye şimdi başlayın!
+              </Text>
+          </Body>
+        </CardItem>
+      </Card>
+
+    </TouchableOpacity>);
+  }else {
+    return (
+       
+      <Formik
+      enableReinitialize
+      initialValues={initialValues}
+      validationSchema={girdiler}
+      onSubmit={values => this.siparisOlustur(values)}
+    >
+      {props => {
+        return (
+          <View>
+            <View>
+            </View>
+            <View style={[styles.rnpickerselect,{paddingTop:20,paddingRight:20}]}>
+
+
+  
+              </View>
+            <View style={[styles.inputContainer,{paddingTop:0}]}>
+            <Picker
+placeholderStyle={{width:'100%'}}
+headerStyle={{backgroundColor:'#2069F3'}}
+headerTitleStyle={{color:'white',fontFamily:'Avenir Next',fontSize:18}}
+// headerStyle={{backgroundColor: '#2B6EDC'}}
+iosHeader="Ürünler"
+headerBackButtonTextStyle={{color:'white'}}
+        mode="dropdown"
+        iosIcon={<Icon name="ios-arrow-down" />}
+        style={{ width:'100%'}}
+        placeholder="Ürün Seçimi"
+        placeholderStyle={{ color: "#bfc6ea" }}
+        placeholderIconColor="#007aff"
+        selectedValue={this.state.selected2}
+        // onValueChange={this.onValueChange2.bind(this)}
+        onValueChange={(itemValue, itemIndex) =>
+          this.onValueChange2(itemValue)
+        }>
+      
+        {this.PickerMenuCreate().map((res)=> {
+            return (
+              <Picker.Item label={res.label} value={res.value} />
+            )
+        })}
+        
+
+      </Picker>
+
+
+              <View style={styles.input}>
+               <Item floatingLabel>
+                <Label style={{fontFamily:'Avenir Next',fontSize:18,}}>
+                Ürün Adedi:
+                </Label>
+                <Input
+                  style={styles.input}
+
+                  placeholderTextColor="#9A9A9A"
+                  keyboardType="numeric"
+                  value={props.values.count}
+                  onChangeText={props.handleChange("count")}
+                  onBlur={props.handleBlur("count")}
+                />
+               </Item>
+              </View>
+
+
+              <Text style={{fontFamily:'Avenir Next',fontSize:18,marginTop:20}}>Ürün Kodu: {this.state.selectedProductValue}</Text>
+              
+            <Item floatingLabel style={{marginTop:20}}>
+          <Label style={{fontFamily:'Avenir Next',fontSize:18}}>
+          Birim Fiyat: 
+       
+          </Label>
+            
+             {/* <View style={styles.input}> */}
+                <Input
+                  // style={styles.input}
+                  // placeholder="Ürün Adedi"
+                  placeholderTextColor="#9A9A9A"
+                  keyboardType="numeric"
+                  value={String(props.values.unitPrice)}
+                  onChangeText={props.handleChange("unitPrice")}
+                  onBlur={props.handleBlur("unitPrice")}
+                />
+                </Item>
+              {/* </View>   */}
+              <View style={{margin:2}}></View>
+              <View style={{flexDirection:'row',marginTop:30}}>
+              <CheckBox
+
+// containerStyle={styles.chechBoxContainer}             
+
+
+style={{marginLeft:-5}}
+checked={this.state.status}
+onPress={() => this.setState({ status: !this.state.status })}
+/>
+<Label style={{marginLeft:20}}>
+Pesin Odeme
+</Label>
+              </View>
+
+                <Text style={styles.odenecekText}>Toplam Fiyat: {(Number(props.values.unitPrice.replace(",",".")) * Number(props.values.count))} TL</Text>
+
+              {/* <TouchableOpacity style={styles.siparisButtonContainer}>
+                <Text style={styles.amountButtonText}
+                 
+                >Sipariş Ekle</Text>
+              </TouchableOpacity> */}
+
+
+
+              <Button onPress={props.handleSubmit}  style={{justifyContent:'center',marginTop:30,marginBottom:30,marginHorizontal:40,borderRadius:20,backgroundColor:'#01C3E3',
+            shadowRadius: 5.00,
+            
+            elevation: 12,
+
+            shadowColor: "#006c7e",
+shadowOffset: {width: 3, height: 3 },
+shadowOpacity: .5,
+
+
+            }}>
+              {this.props.isLoading ? <Spinner  color='01C3E3' /> :   <Text  style={{color:'white',fontFamily:"Avenir Next",fontWeight:'bold',fontSize:16}} >Ekle</Text>}
+               
+   
+  </Button>
+  
+            </View>
+          </View>
+        );
+      }}
+    </Formik>
+
+    )
+  }
+}
   render() {
     console.log(this.props.product,"product");
-    const initialValues: input = {
-      count: this.state.count,
-      unitPrice: this.props.product.unitPrice ? String(this.props.product.unitPrice) : "",
-    }
+   
 
     const placeholder = {
       label: 'Ege Life Damacana',
@@ -228,6 +385,7 @@ onValueChange2(value: string) {
     if(this.props.isSuccees) {
       this.props.navigation.goBack()
     }
+    
     return (
       
       <View style={styles.addCustomerContainer}>
@@ -241,137 +399,10 @@ onValueChange2(value: string) {
             {/* <Text style={{textAlign:'right',marginRight:20,marginTop:20}}>
               {this.state.date}
             </Text> */}
-            <Formik
-              enableReinitialize
-              initialValues={initialValues}
-              validationSchema={girdiler}
-              onSubmit={values => this.siparisOlustur(values)}
-            >
-              {props => {
-                return (
-                  <View>
-                    <View>
-                    </View>
-                    <View style={[styles.rnpickerselect,{paddingTop:20,paddingRight:20}]}>
-
-
-          
-                      </View>
-                    <View style={[styles.inputContainer,{paddingTop:0}]}>
-                    <Picker
-placeholderStyle={{width:'100%'}}
-headerStyle={{backgroundColor:'#2069F3'}}
-headerTitleStyle={{color:'white',fontFamily:'Avenir Next',fontSize:18}}
-// headerStyle={{backgroundColor: '#2B6EDC'}}
-iosHeader="Ürünler"
-headerBackButtonTextStyle={{color:'white'}}
-                mode="dropdown"
-                iosIcon={<Icon name="ios-arrow-down" />}
-                style={{ width:'100%'}}
-                placeholder="Ürün Seçimi"
-                placeholderStyle={{ color: "#bfc6ea" }}
-                placeholderIconColor="#007aff"
-                selectedValue={this.state.selected2}
-                // onValueChange={this.onValueChange2.bind(this)}
-                onValueChange={(itemValue, itemIndex) =>
-                  this.onValueChange2(itemValue)
-                }>
-              
-                {this.PickerMenuCreate().map((res)=> {
-                    return (
-                      <Picker.Item label={res.label} value={res.value} />
-                    )
-                })}
-                
-
-              </Picker>
-    
-
-                      <View style={styles.input}>
-                       <Item floatingLabel>
-                        <Label style={{fontFamily:'Avenir Next',fontSize:18,}}>
-                        Ürün Adedi:
-                        </Label>
-                        <Input
-                          style={styles.input}
-
-                          placeholderTextColor="#9A9A9A"
-                          keyboardType="numeric"
-                          value={props.values.count}
-                          onChangeText={props.handleChange("count")}
-                          onBlur={props.handleBlur("count")}
-                        />
-                       </Item>
-                      </View>
-
-
-                      <Text style={{fontFamily:'Avenir Next',fontSize:18,marginTop:20}}>Ürün Kodu: {this.state.selectedProductValue}</Text>
-                      
-                    <Item floatingLabel style={{marginTop:20}}>
-                  <Label style={{fontFamily:'Avenir Next',fontSize:18}}>
-                  Birim Fiyat: 
-               
-                  </Label>
-                    
-                     {/* <View style={styles.input}> */}
-                        <Input
-                          // style={styles.input}
-                          // placeholder="Ürün Adedi"
-                          placeholderTextColor="#9A9A9A"
-                          keyboardType="numeric"
-                          value={String(props.values.unitPrice)}
-                          onChangeText={props.handleChange("unitPrice")}
-                          onBlur={props.handleBlur("unitPrice")}
-                        />
-                        </Item>
-                      {/* </View>   */}
-                      <View style={{margin:2}}></View>
-                      <View style={{flexDirection:'row',marginTop:30}}>
-                      <CheckBox
-
-// containerStyle={styles.chechBoxContainer}             
-
-
-style={{marginLeft:-5}}
-checked={this.state.status}
-onPress={() => this.setState({ status: !this.state.status })}
-/>
-<Label style={{marginLeft:20}}>
-  Pesin Odeme
-</Label>
-                      </View>
-
-                        <Text style={styles.odenecekText}>Toplam Fiyat: {(Number(props.values.unitPrice.replace(",",".")) * Number(props.values.count))} TL</Text>
-
-                      {/* <TouchableOpacity style={styles.siparisButtonContainer}>
-                        <Text style={styles.amountButtonText}
-                         
-                        >Sipariş Ekle</Text>
-                      </TouchableOpacity> */}
-
-
-
-                      <Button onPress={props.handleSubmit}  style={{justifyContent:'center',marginTop:30,marginBottom:30,marginHorizontal:40,borderRadius:20,backgroundColor:'#01C3E3',
-                    shadowRadius: 5.00,
-                    
-                    elevation: 12,
-
-                    shadowColor: "#006c7e",
-    shadowOffset: {width: 3, height: 3 },
-    shadowOpacity: .5,
-
-    
-                    }}>
-                      {this.props.isLoading ? <Spinner  color='01C3E3' /> :   <Text  style={{color:'white',fontFamily:"Avenir Next",fontWeight:'bold',fontSize:16}} >Ekle</Text>}
-                       
+{this.renderContent()}
            
-          </Button>
-          
-                    </View>
-                  </View>
-                );
-              }}
-            </Formik>
+        
+        
           </ScrollView>
         </KeyboardAvoidingView>
         {this.showSimpleMessage()}

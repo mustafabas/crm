@@ -399,7 +399,7 @@ style={{fontFamily:'Avenir Next',fontSize:18}}
                           placeholderTextColor="#9A9A9A"
 
                           value={String(values.fountainCount)}
-                          keyboardType="numeric"
+                          keyboardType="number-pad"
                           onChangeText={handleChange("fountainCount")}
                           onBlur={handleBlur("fountainCount")}
                         />
