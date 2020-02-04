@@ -24,8 +24,10 @@ import { GetCustomerProduct } from "../../../redux/actions/customerPriceGetProdu
 import { ICustomerPriceProductItem } from "../../../redux/models/customerPriceProductModel";
 import {customerPriceAdd} from "../../../redux/actions/customerpriceAddAction";
 import {ICustomerPriceItem} from "../redux/models/addCustomerPriceModel";
-import { Input, Picker ,Button, Card, CardItem,Body} from "native-base";
+import { Input, Picker ,Button, Card, CardItem,Body, Item,Label} from "native-base";
 import { showMessage } from "react-native-flash-message";
+import { InfoItem } from "../../../components/InfoItem";
+import { Dimensions } from "react-native";
 
 interface Props {
   navigation: NavigationScreenProp<NavigationState>;
@@ -168,21 +170,17 @@ class CustomerDefinedPriceAddScreen extends Component<Props, State> {
       if(this.props.isProductLoading === false && this.props.products.length < 1)
 {
   return(
-    <TouchableOpacity onPress={()=> this.props.navigation.navigate('AddProduct')} >
+    <View style={{marginTop:Dimensions.get('window').width / 3}}>
+      <TouchableOpacity onPress={()=> this.props.navigation.navigate('AddProduct')} >
 
-     <Card style={{ borderColor: '#f5f5f5' }}>
+
+
+     <InfoItem  text="Sisteme eklediğiniz ürün bulunmakatadır. Ürünlerinizi yönetmek için eklemeye şimdi başlayın!" />
+
      
-       <CardItem onPress={()=>this.props.navigation.navigate("AddProduct")}>
-         <Body style={{ flexDirection: "column", justifyContent: "center", alignItems: "center" }} >
-           <Icon name="ios-information-circle-outline" style={{ fontSize: 40 }} ></Icon>
-           <Text>
-             Sisteme eklediğiniz ürün bulunmakatadır. Ürünlerinizi yönetmek için eklemeye şimdi başlayın!
-             </Text>
-         </Body>
-       </CardItem>
-     </Card>
-     
-     </TouchableOpacity>)
+     </TouchableOpacity>
+    </View>
+    )
 
 }else {
   return(
@@ -195,12 +193,12 @@ class CustomerDefinedPriceAddScreen extends Component<Props, State> {
     onSubmit={values => this.yeniFiyat(values)}
   >
     {props => {
+      const {touched,errors} = props
       return (
         <View>
-          <View>
-          </View>
-          <View style={styles.inputContainer}>
-          <View style={styles.input}>
+          
+          <View style={{marginHorizontal : 20}}>
+          <View  >
           <Picker
 placeholderStyle={{width:'100%'}}
 headerTitleStyle={{color:'white',fontFamily:'Avenir Next',fontSize:18}}
@@ -228,16 +226,23 @@ headerBackButtonTextStyle={{color:'white'}}
 
     </Picker>
           </View>
-          <View style={styles.input}>
-            <Input
+          <View style={{marginHorizontal: 15,marginTop:10}}>
+            
+
+<Item  floatingLabel style={{marginTop:0,borderBottomColor: (touched.price && errors.price != null) ? 'red' : '#2069F3'}}>
+                        <Icon name="ios-person" style={{color:'#a5a5a5'}}  />
+                         <Label style={{fontFamily:'Avenir Next',marginTop:-10,color:(touched.price && errors.price != null) ? 'red' : '#959595'}}>Ürün Fiyatı</Label>
+                         <Input
               
-              placeholder="Ürün Fiyatı"
+              placeholder=""
               placeholderTextColor="#9A9A9A"
               keyboardType="numeric"
               value={props.values.price}
               onChangeText={props.handleChange("price")}
               onBlur={props.handleBlur("price")}
             />
+                       </Item>
+
             </View>
             
 

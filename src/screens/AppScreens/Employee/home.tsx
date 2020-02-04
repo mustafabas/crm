@@ -33,6 +33,7 @@ import SvgIcon from 'react-native-svg-icon';
 import svgs from '../../../images/icomoon/SVG/svgs';
 import { showMessage } from "react-native-flash-message";
 import { employe } from "../../../redux/actions/editEmployeeAction";
+import { InfoItem } from "../../../components/InfoItem";
 
 const IconNew = (props) => <SvgIcon {...props} svgs={svgs} />
 
@@ -488,19 +489,13 @@ class Employee extends Component<Props, State> {
         />
       </View>);
     } else {
-      return (<View >
+      return (<View style={{justifyContent:'center',flex:1}} >
 
-        <Card style={{ borderColor: '#f5f5f5' }}>
+      
 
-          <CardItem>
-            <Body style={{ flexDirection: "column", justifyContent: "center", alignItems: "center" }} >
-              <Icon name="ios-information-circle-outline" style={{ fontSize: 40 }} ></Icon>
-              <Text>
-                Sisteme eklediğiniz çalışan bulunmakatadır. Çalışanlarınızı yönetmek için eklemeye şimdi başlayın!
-                </Text>
-            </Body>
-          </CardItem>
-        </Card>
+        <InfoItem text="Sisteme eklediğiniz çalışan bulunmakatadır." />
+
+
 
       </View>);
     }

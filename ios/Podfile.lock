@@ -250,6 +250,8 @@ PODS:
     - React
   - RNGestureHandler (1.5.3):
     - React
+  - RNRate (1.1.10):
+    - React
   - RNReanimated (1.4.0):
     - React
   - RNSVG (9.13.6):
@@ -300,6 +302,7 @@ DEPENDENCIES:
   - "RNCPicker (from `../node_modules/@react-native-community/picker`)"
   - "RNDateTimePicker (from `../node_modules/@react-native-community/datetimepicker`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
+  - RNRate (from `../node_modules/react-native-rate`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNTooltips (from `../node_modules/react-native-tooltips/ios`)
@@ -382,6 +385,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/datetimepicker"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
+  RNRate:
+    :path: "../node_modules/react-native-rate"
   RNReanimated:
     :path: "../node_modules/react-native-reanimated"
   RNSVG:
@@ -430,6 +435,7 @@ SPEC CHECKSUMS:
   RNCPicker: 50bec2a6f247bd83c21b80e37a8b13608b9c1978
   RNDateTimePicker: 9db00606d689f5653f08aa601c81b9d3266a0a19
   RNGestureHandler: 02905abe54e1f6e59c081a10b4bd689721e17aa6
+  RNRate: 832f7e4da1b043bda1a138e20afdb75c42a530e9
   RNReanimated: b2ab0b693dddd2339bd2f300e770f6302d2e960c
   RNSVG: 8ba35cbeb385a52fd960fd28db9d7d18b4c2974f
   RNTooltips: e13180e4339e2a85daabd09507f62a5a32d3dc8a

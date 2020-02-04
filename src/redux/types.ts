@@ -158,6 +158,10 @@ export const EMPLOYE_COST_ADD_LOADING = "EmployeeCostAddLoading";
 export const REPORT_GET = "ReportGet";
 export const REPORT_LOADING = "ReportLoading";
 
+export const REPORT_GET_PRODUCT_PIE = "ReportGetProductPie";
+export const REPORT_LOADING_PRODUCT_PIE = "ReportLoadingProductPie";
+
+
 export const EMPLOYEECOST_GET = "EmployeeCostGet";
 export const EMPLOYEECOST_LOADING = "EmployeeCostLoading";
 

@@ -59,9 +59,13 @@ class ReportBaseScreen extends Component<Props,{}> {
         var reportList : reportType [] = []
         let widthOfContainers = Dimensions.get('window').width / 2  - 30
         let heightOfContainers = Dimensions.get('window').width / 2  - 30
-        //{reportName:'Elma Dilimi' , reportId :1,iconName:'circular-graph',navigationName:'ReportNew' }, {reportName : 'Eski Sitil' , reportId : 2,iconName:'line-graph',navigationName:'ReportOld'} , 
-        //,{reportId:4,reportName:'Ek Tip',iconName:'area-graph',navigationName:'ReportTemplate'}
-        reportList.push({reportId : 3 ,reportName : 'Sipariş Raporları',iconName:'bar-graph',navigationName:'ReportTemplate'}  )
+        reportList.push({reportId : 3 ,reportName : 'Sipariş Raporları',iconName:'bar-graph',navigationName:'ReportTemplate'} ,{reportName:'Dairesel Dağılım' ,
+         reportId :1,iconName:'circular-graph',navigationName:'ReportNew' },
+        //   {reportName : 'Eski Sitil' , reportId : 2,iconName:'line-graph',navigationName:'ReportOld'} , 
+        //  {reportId:4,reportName:'Ek Tip',iconName:'area-graph',navigationName:'ReportAnother'}
+        
+        )
+        // reportList.push({reportId : 3 ,reportName : 'Sipariş Raporları',iconName:'bar-graph',navigationName:'ReportTemplate'}  )
         return (
             <SafeAreaView style={styles.container}>
 

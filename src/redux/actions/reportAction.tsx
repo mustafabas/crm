@@ -1,11 +1,67 @@
 import { AsyncStorage } from "react-native";
 import axios from 'axios'
-import { WATER_GET_REPORT } from './../constants'
+import { WATER_GET_REPORT, WATER_GET_REPORT_PRODUCTS_PIE } from './../constants'
 import { Dispatch } from "react";
-import { REPORT_GET, REPORT_LOADING } from './../types'
+import { REPORT_GET, REPORT_LOADING, REPORT_GET_PRODUCT_PIE, REPORT_LOADING_PRODUCT_PIE } from './../types'
 import { Action } from '../states'
 import { IReportItem, IReportProductItems } from "../models/reportModel";
 
+
+export interface productCountList {
+    productList : productCountItem[];
+    totalCount : number;
+
+}
+export interface productCountItem {
+    count : number;
+    name : string;
+}
+
+export function getReportProductsForPie(){
+return(dispatch : Dispatch<Action>) => {
+    loadingProductPie(true) ;
+    console.log("asdasd")
+    AsyncStorage.multiGet(['userToken', 'userId']).then((res) => {
+        let token = res[0][1];
+        let userId = res[1][1];
+        
+        const headers = {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+      }
+      var _WATER_GET_REPORT_PRODUCTS_PIE = WATER_GET_REPORT_PRODUCTS_PIE + `?UserId=${userId}`
+      axios.get(_WATER_GET_REPORT_PRODUCTS_PIE ,{
+          headers: headers
+      } ).then((res) => {
+        
+        if(res.data.isSuccess) {
+            var list : productCountItem[] = []
+            var productCountListTmp = {} as  productCountList;
+            productCountListTmp.totalCount = res.data.result.totalCount;
+
+            res.data.result.productCountItem.forEach((element : productCountItem) => {
+                list.push(element);
+
+            });
+            productCountListTmp.productList = list;
+            dispatch(ReportProductPie(productCountListTmp))
+
+
+        }else {
+
+            dispatch(loadingProductPie(false));
+        }
+      }).catch(err => {
+        dispatch(loadingProductPie(false));
+      })
+
+
+    }).catch(err=> {
+        dispatch(loadingProductPie(false));
+    })
+    
+}
+}
 
 export function GetReport(startDate:string,endDate:string) {
 
@@ -70,6 +126,19 @@ export function GetReport(startDate:string,endDate:string) {
      
     }
 }
+
+
+export const loadingProductPie = (loader : boolean) => ({
+    type : REPORT_LOADING_PRODUCT_PIE,
+    payload: loader
+})
+
+
+export const ReportProductPie = (report: productCountList) => ({
+    type: REPORT_GET_PRODUCT_PIE,
+    payload: report
+})
+
 
 export const loading = (loader: boolean) => ({
     type: REPORT_LOADING,

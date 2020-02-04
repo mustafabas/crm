@@ -33,10 +33,11 @@ import employee from '../screens/AppScreens/Employee/home';
 import employeeAddScreen from '../screens/AppScreens/Employee/employeeAddScreen';
 import employeeEditScreen from '../screens/AppScreens/Employee/employeeEditScreen';
 import SecurtiyScreen from '../screens/AppScreens/Profile/SecurityScreen'
-import IntroductionScreen from '../screens/AppScreens/Introduction/index'
+// import IntroductionScreen from '../screens/AppScreens/Introduction/index'
 // import Customer from "../pages/customer";
 // import Employee from "../pages/employee";
 // import Settings from "../pages/settings";
+import RateUsScreen from '../screens/AppScreens/Profile/RateUsScreen'
 import addCustomer from "../screens/AppScreens/Customer/addCustomer";
 import productAdd from "../screens/AppScreens/Product/productAdd";
 import ProfileScreen from "../screens/AppScreens/Profile/ProfileScreen";
@@ -54,7 +55,8 @@ import CompanyEditScreen from "../screens/AppScreens/Profile/CompanyEditScreen";
 import ReportScreen from "../screens/AppScreens/Report/ReportScreen";
 import ReportTemplateScreen from '../screens/AppScreens/Report/ReportTemplateScreen'
 import ReportNewScreen from '../screens/AppScreens/Report/ReportNewScreen'
-
+import ReportAnotherScreen from '../screens/AppScreens/Report/ReportAnotherScreen'
+import IntroductionScreen from '../screens/AuthScreens/Introduction/IntroductionScreen'
 import UserAgreementScreen from "../screens/AuthScreens/Login/UserAgreementScreen";
 import HomeScreenAndroid from "../screens/AppScreens/Home/HomeScreenAndroid";
 import SupportScreen from "../screens/AppScreens/Profile/SupportScreen";
@@ -98,7 +100,8 @@ const introductionStack = createStackNavigator({
       ReportBase : ReportBaseScreen,
       ReportNew : ReportNewScreen,
       ReportTemplate : ReportTemplateScreen,
-      ReportOld : ReportScreen
+      ReportOld : ReportScreen,
+      ReportAnother : ReportAnotherScreen
     },
     {
       // headerMode: "none"
@@ -126,7 +129,8 @@ const introductionStack = createStackNavigator({
       Securtiy : SecurtiyScreen,
       AddProduct: { screen: productAdd },
       companyInfo : CompanyEditScreen ,
-      Support : SupportScreen
+      Support : SupportScreen,
+      RateUs : RateUsScreen
      //AddEmployee: { screen: employeeAdd },
  //     EditEmployee: { screen: editEmployee },
  //     EmployeeCost: { screen: employeeCost },

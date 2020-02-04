@@ -12,6 +12,7 @@ import {IEmployeeCostItem} from "./models/employeeCostModel"
 import { UserFirstData } from "./reducers/signUpReducers";
 import { IProduct } from "./actions/productEditAction";
 import { Customer } from "./actions/customerEditAction";
+import { productCountList } from "./actions/reportAction";
 
 export interface State {
     data: any[];
@@ -211,6 +212,8 @@ export interface EmployeeCostAdd
 export interface ReportState{
   report:IReportItem;
   isReportLoading :boolean;
+  isReportLoadingProductPie : boolean | null;
+  reportProductPie :productCountList;
 }
 
 export interface GetEmployeeCostState{

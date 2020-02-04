@@ -22,8 +22,37 @@ class AuthLoading extends React.Component<Props, {}> {
     const { navigation } = this.props;
     const userToken = await AsyncStorage.getItem("userToken");
    
-    navigation.navigate(userToken ? "MainStack" : "LoginScreen");
+    // navigation.navigate(userToken ? "MainStack" : this.getIntro());
+    // AsyncStorage.setItem("setToIntrShowed",JSON.stringify(false));
+
+    if(userToken) {
+      navigation.navigate("MainStack")
+    }else {
+
+      
+      AsyncStorage.getItem("setToIntrShowed",(err, value) =>{
+        if (err) {
+
+          navigation.navigate("LoginScreen")
+
+      } else {
+         let val = JSON.parse(value) // boolean false
+          if(val) {
+            navigation.navigate("LoginScreen")
+           
+          }
+          else {
+            navigation.navigate("introductionStack")
+          }
+      }
+      })
+
+    }
   };
+
+  getIntro = () =>{
+    
+  }
 
   render() {
     return (

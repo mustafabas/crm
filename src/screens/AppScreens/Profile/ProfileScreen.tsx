@@ -35,6 +35,7 @@ import { Formik } from 'formik';
 import { getUserInfo, UserInfo, userType } from '../../../redux/actions/profileActions';
 import { logoutUserService, logOut } from '../../../redux/actions/loginAction';
 
+import Rate, { AndroidMarket } from 'react-native-rate'
 
 
 
@@ -106,7 +107,7 @@ renderContent() {
     var userInfo = this.props.userInfo
     return( 
          
-      <View style={[newStyles.inputContainer,{ paddingTop:10, marginTop:10,paddingBottom:30,justifyContent:'flex-start' ,paddingRight:0,paddingLeft:10}]}>
+      <View style={[newStyles.inputContainer,{ paddingTop:10, marginTop:10,paddingBottom:10,justifyContent:'flex-start' ,paddingRight:0,paddingLeft:10}]}>
         
       
 
@@ -121,84 +122,142 @@ renderContent() {
 
         {/* <Text style={[styles.profileTextStyle,{fontSize:16,marginTop:20,textAlign:'center',marginRight:20,flex:0}]}>Hakkinda</Text> */}
        
+<ScrollView>
 
-      <View style={{marginTop:20}}>
+<View style={{marginTop:20}}>
 
-      <TouchableOpacity onPress={
-        ()=> this.props.navigation.navigate('profileEditGeneral')
+<TouchableOpacity onPress={
+  ()=> this.props.navigation.navigate('profileEditGeneral')
 
-        } style={styles.profileContainer}>
-        <Icon name="ios-person" type="Ionicons" color={this.state.iconColor} style={{fontSize:20,marginTop:Platform.OS === 'ios' ? 5 : 0}} />
-        <Text style={styles.profileTextStyle}>Profili Düzenle</Text>
-        <Icon name="right" type="AntDesign" color={this.state.iconColor} style={{fontSize:20,marginTop:Platform.OS === 'ios' ? 5 : 0}}/>
-      
-      </TouchableOpacity>
+  } style={styles.profileContainer}>
+  <Icon name="ios-person" type="Ionicons" color={this.state.iconColor} style={{fontSize:20,marginTop:Platform.OS === 'ios' ? 5 : 0}} />
+  <Text style={styles.profileTextStyle}>Profili Düzenle</Text>
+  <Icon name="right" type="AntDesign" color={this.state.iconColor} style={{fontSize:20,marginTop:Platform.OS === 'ios' ? 5 : 0}}/>
 
-      
+</TouchableOpacity>
 
-      <View style={styles.propsSeperator}></View>
-      <TouchableOpacity onPress={()=> this.props.navigation.navigate('Securtiy')} style={styles.profileContainer}>
-        <Icon name="ios-lock" type="ionicon" color={this.state.iconColor} style={{fontSize:20,marginTop:Platform.OS === 'ios' ? 5 : 0}} />
-        <Text style={styles.profileTextStyle}>Güvenlik</Text>
-        <Icon name="right" type="AntDesign" color={this.state.iconColor} style={{fontSize:20,marginTop:Platform.OS === 'ios' ? 5 : 0}}/>
-      
-      </TouchableOpacity>
-      <View style={styles.propsSeperator}></View>
-      {userInfo.userType === userType.companyUser && <TouchableOpacity onPress={()=> this.props.navigation.navigate('companyInfo')}  style={styles.profileContainer}>
-        <Icon name="ios-business" type="ionicon" color={this.state.iconColor} style={{fontSize:20,marginTop:Platform.OS === 'ios' ? 5 : 0}} />
-        <Text style={styles.profileTextStyle}>Şirket Bilgileri</Text>
-        <Icon name="right" type="AntDesign" color={this.state.iconColor} style={{fontSize:20,marginTop:Platform.OS === 'ios' ? 5 : 0}}/>
-      
-      </TouchableOpacity>} 
-  
 
-      <View style={styles.propsSeperator}></View>
 
-      <TouchableOpacity onPress={()=> this.props.navigation.navigate('products')} style={styles.profileContainer}>
-        <Icon name="ios-basket" type="ionicon" color={this.state.iconColor} style={{fontSize:20,marginTop:Platform.OS === 'ios' ? 5 : 0}} />
-        <Text style={styles.profileTextStyle}>Ürünlerim</Text>
-        <Icon name="right" type="AntDesign" color={this.state.iconColor} style={{fontSize:20,marginTop:Platform.OS === 'ios' ? 5 : 0}}/>
-      
-      </TouchableOpacity>
-      <View style={styles.propsSeperator}></View>
-      <TouchableOpacity  style={styles.profileContainer}>
-        <Icon name="ios-notifications" type="ionicon" color={this.state.iconColor} style={{fontSize:20,marginTop:Platform.OS === 'ios' ? 5 : 0}} />
-        <Text style={styles.profileTextStyle}>Bildirim Ayarları</Text>
-        <Icon name="right" type="AntDesign" color={this.state.iconColor} style={{fontSize:20,marginTop:Platform.OS === 'ios' ? 5 : 0}}/>
-      
-      </TouchableOpacity>
-      <View style={styles.propsSeperator}></View>
+<View style={styles.propsSeperator}></View>
+<TouchableOpacity onPress={()=> this.props.navigation.navigate('Securtiy')} style={styles.profileContainer}>
+  <Icon name="ios-lock" type="ionicon" color={this.state.iconColor} style={{fontSize:20,marginTop:Platform.OS === 'ios' ? 5 : 0}} />
+  <Text style={styles.profileTextStyle}>Güvenlik</Text>
+  <Icon name="right" type="AntDesign" color={this.state.iconColor} style={{fontSize:20,marginTop:Platform.OS === 'ios' ? 5 : 0}}/>
 
-      <TouchableOpacity onPress={()=> this.props.navigation.navigate('Support')} style={styles.profileContainer}>
-        <Icon name="ios-help-circle-outline" type="ionicon" color={this.state.iconColor} style={{fontSize:20,marginTop:Platform.OS === 'ios' ? 5 : 0}} />
-        <Text style={styles.profileTextStyle}>Yardım ve Destek</Text>
-        <Icon name="right" type="AntDesign" color={this.state.iconColor} style={{fontSize:20,marginTop:Platform.OS === 'ios' ? 5 : 0}}/>
-      
-      </TouchableOpacity>
-      
-      <View style={styles.propsSeperator}></View>
+</TouchableOpacity>
+<View style={styles.propsSeperator}></View>
+{userInfo.userType === userType.companyUser && <TouchableOpacity onPress={()=> this.props.navigation.navigate('companyInfo')}  style={styles.profileContainer}>
+  <Icon name="ios-business" type="ionicon" color={this.state.iconColor} style={{fontSize:20,marginTop:Platform.OS === 'ios' ? 5 : 0}} />
+  <Text style={styles.profileTextStyle}>Şirket Bilgileri</Text>
+  <Icon name="right" type="AntDesign" color={this.state.iconColor} style={{fontSize:20,marginTop:Platform.OS === 'ios' ? 5 : 0}}/>
 
-      <TouchableOpacity onPress={()=> this.props.navigation.navigate('AboutUs')}  style={styles.profileContainer}>
-        <Icon name="ios-at" type="ionicon" color={this.state.iconColor} style={{fontSize:20,marginTop:Platform.OS === 'ios' ? 5 : 0}} />
-        <Text style={styles.profileTextStyle}>Hakkımızda</Text>
-        <Icon name="right" type="AntDesign" color={this.state.iconColor} style={{fontSize:20,marginTop:Platform.OS === 'ios' ? 5 : 0}}/>
-      
-      </TouchableOpacity>
-      
-      <View style={styles.propsSeperator}></View>
+</TouchableOpacity>} 
 
-      
-      <TouchableOpacity onPress={() => this.logOut()} style={styles.profileContainer}>
-        <Icon name="ios-log-out" type="ionicon" color={this.state.iconColor} style={{fontSize:20,marginTop:Platform.OS === 'ios' ? 5 : 0}} />
-        <Text style={styles.profileTextStyle}>Çıkış Yap</Text>
-        <Icon name="right" type="AntDesign" color={this.state.iconColor} style={{fontSize:20,marginTop:Platform.OS === 'ios' ? 5 : 0}}/>
-      
-      </TouchableOpacity>
-      <View style={styles.propsSeperator}></View>
-     
-      </View>
-      
 
+<View style={styles.propsSeperator}></View>
+
+<TouchableOpacity onPress={()=> this.props.navigation.navigate('products')} style={styles.profileContainer}>
+  <Icon name="ios-basket" type="ionicon" color={this.state.iconColor} style={{fontSize:20,marginTop:Platform.OS === 'ios' ? 5 : 0}} />
+  <Text style={styles.profileTextStyle}>Ürünlerim</Text>
+  <Icon name="right" type="AntDesign" color={this.state.iconColor} style={{fontSize:20,marginTop:Platform.OS === 'ios' ? 5 : 0}}/>
+
+</TouchableOpacity>
+<View style={styles.propsSeperator}></View>
+<TouchableOpacity  style={styles.profileContainer}>
+  <Icon name="ios-notifications" type="ionicon" color={this.state.iconColor} style={{fontSize:20,marginTop:Platform.OS === 'ios' ? 5 : 0}} />
+  <Text style={styles.profileTextStyle}>Bildirim Ayarları</Text>
+  <Icon name="right" type="AntDesign" color={this.state.iconColor} style={{fontSize:20,marginTop:Platform.OS === 'ios' ? 5 : 0}}/>
+
+</TouchableOpacity>
+<View style={styles.propsSeperator}></View>
+
+<TouchableOpacity onPress={()=> this.props.navigation.navigate('Support')} style={styles.profileContainer}>
+  <Icon name="ios-help-circle-outline" type="ionicon" color={this.state.iconColor} style={{fontSize:20,marginTop:Platform.OS === 'ios' ? 5 : 0}} />
+  <Text style={styles.profileTextStyle}>Yardım ve Destek</Text>
+  <Icon name="right" type="AntDesign" color={this.state.iconColor} style={{fontSize:20,marginTop:Platform.OS === 'ios' ? 5 : 0}}/>
+
+</TouchableOpacity>
+
+<View style={styles.propsSeperator}></View>
+
+<TouchableOpacity onPress={()=> this.props.navigation.navigate('AboutUs')}  style={styles.profileContainer}>
+  <Icon name="ios-at" type="ionicon" color={this.state.iconColor} style={{fontSize:20,marginTop:Platform.OS === 'ios' ? 5 : 0}} />
+  <Text style={styles.profileTextStyle}>Hakkımızda</Text>
+  <Icon name="right" type="AntDesign" color={this.state.iconColor} style={{fontSize:20,marginTop:Platform.OS === 'ios' ? 5 : 0}}/>
+
+</TouchableOpacity>
+
+<View style={styles.propsSeperator}></View>
+
+<TouchableOpacity  onPress={()=>{
+
+    const options = {
+      AppleAppID:"1495596894",
+  //     GooglePackageName:"com.mywebsite.myapp",
+  //     AmazonPackageName:"com.mywebsite.myapp",
+  //     OtherAndroidURL:"http://www.randomappstore.com/app/47172391",
+  //     preferredAndroidMarket: AndroidMarket.Google,
+  //     preferInApp:false,
+  //     openAppStoreIfInAppFails:true,
+  //     fallbackPlatformURL:"http://www.mywebsite.com/myapp.html",
+    }
+
+    AsyncStorage.getItem("IsRateCompleted",(err, value) =>{
+      if (err) {
+
+        Rate.rate(options, success=>{
+          if (success) {
+            // this technically only tells us if the user successfully went to the Review Page. Whether they actually did anything, we do not know.
+            // this.setState({rated:true})
+            AsyncStorage.setItem("IsRateCompleted", JSON.stringify(true));
+
+          }
+        })
+
+    } else {
+       let val = JSON.parse(value) // boolean false
+        if(val) {
+
+         
+        }
+        else {
+          Rate.rate(options, success=>{
+            if (success) {
+              // this technically only tells us if the user successfully went to the Review Page. Whether they actually did anything, we do not know.
+              // this.setState({rated:true})
+              AsyncStorage.setItem("IsRateCompleted", JSON.stringify(true));
+
+            }
+          })
+        }
+    }
+    })
+
+
+  }
+
+}
+    style={styles.profileContainer}>
+  <Icon name="rate-review" type="MaterialIcons" color={this.state.iconColor} style={{fontSize:20,marginTop:Platform.OS === 'ios' ? 5 : 0}} />
+  <Text style={styles.profileTextStyle}>Bize Oy Verin</Text>
+  <Icon name="right" type="AntDesign" color={this.state.iconColor} style={{fontSize:20,marginTop:Platform.OS === 'ios' ? 5 : 0}}/>
+
+</TouchableOpacity>
+
+<View style={styles.propsSeperator}></View>
+
+<TouchableOpacity onPress={() => this.logOut()} style={styles.profileContainer}>
+  <Icon name="ios-log-out" type="ionicon" color={this.state.iconColor} style={{fontSize:20,marginTop:Platform.OS === 'ios' ? 5 : 0}} />
+  <Text style={styles.profileTextStyle}>Çıkış Yap</Text>
+  <Icon name="right" type="AntDesign" color={this.state.iconColor} style={{fontSize:20,marginTop:Platform.OS === 'ios' ? 5 : 0}}/>
+
+</TouchableOpacity>
+{/* <View style={styles.propsSeperator}></View> */}
+
+</View>
+
+
+</ScrollView>
     </View>
 
 

@@ -294,7 +294,7 @@ shadowOpacity: .5,}}>
     
                     }}>
 
-{this.props.isSecondLoading ? <Spinner  color='01C3E3' /> :   <Text  style={{color:'white',fontFamily:"Avenir Next",fontWeight:'bold',fontSize:16}} >Devam Et</Text>}
+{this.props.isSecondLoading ? <Spinner  color='01C3E3' /> :   <Text  style={{color:'white',fontFamily:"Avenir Next",fontWeight:'bold',fontSize:16}} >Bitir</Text>}
                        
            
 

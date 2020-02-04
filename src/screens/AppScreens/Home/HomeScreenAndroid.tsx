@@ -34,6 +34,7 @@ import RBSheet from "react-native-raw-bottom-sheet";
 // import {} from '@react-native-community/picker';
 import { logoutUserService } from '../../../redux/actions/loginAction';
 import { showMessage } from 'react-native-flash-message';
+import { InfoItem } from '../../../components/InfoItem';
 
 
 
@@ -94,6 +95,7 @@ interface Props {
     dayList : String[];
     today  : Date;
     isShowDeleteView : boolean;
+    isAnyCustomerValid : boolean;
 
   }
 
@@ -174,6 +176,7 @@ class HomeScreenAndroid extends Component<Props,State>{
       dayList : ["Tüm Günler","Pazartesi","Salı","Çarşamba","Perşembe","Cuma","Cumartesi","Pazar"],
       today : new Date(),
 isShowDeleteView  : false,
+isAnyCustomerValid : false,
         };
       }
 
@@ -326,7 +329,9 @@ isShowDeleteView  : false,
             inputRange: [0 ,35, 70,90],
             outputRange: [0,0, -40,-40]
         });
-
+        if(this.props.customers.length > 0 && !this.state.isAnyCustomerValid) {
+          this.setState({isAnyCustomerValid : true})
+        }
         
         return(
             <FlatList
@@ -666,19 +671,13 @@ isShowDeleteView  : false,
                     }
                     {/* <Text>asdasdas</Text> */}
                     {this.props.customers.length > 0 && this.renderGetPay()} 
-                    {this.props.isHomeLoading !== null && this.props.customers.length<1 ? <View >
+                    {this.props.isHomeLoading !== null && this.props.customers.length<1 ? <View style={{justifyContent:'center',flex:1,marginBottom:150}} >
 
-<Card style={{ borderColor: '#f5f5f5' }}>
 
-  <CardItem>
-    <Body style={{ flexDirection: "column", justifyContent: "center", alignItems: "center" }} >
-      <Icon name="ios-information-circle-outline" style={{ fontSize: 40 }} ></Icon>
-      <Text>
-        Sisteme eklediğiniz müşteri bulunmakatadır. Müşterilerinizi yönetmek için eklemeye şimdi başlayın!
-        </Text>
-    </Body>
-  </CardItem>
-</Card>
+
+                    <InfoItem text={this.state.isAnyCustomerValid ? "Aradığınız kriterlerde müşteri bulunamadı." : "Sisteme eklediğiniz müşteri bulunmakatadır. Müşterilerinizi yönetmek için eklemeye şimdi başlayın!"} />
+
+
 
 </View> : null
                     }

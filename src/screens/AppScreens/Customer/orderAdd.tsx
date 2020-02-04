@@ -27,6 +27,7 @@ import { GetProduct } from "../../../redux/actions/productForCustomerAction";
 import { IProductForCustomerItem } from "../../../redux/models/productForCustomerModel";
 import { Input, CheckBox,Picker, Item, Label, Button, Spinner, Card, CardItem,Body } from "native-base";
 import { showMessage } from "react-native-flash-message";
+import { InfoItem } from "../../../components/InfoItem";
 
 interface Props {
   navigation: NavigationScreenProp<NavigationState>;
@@ -220,21 +221,18 @@ renderContent(){
 
 
  if(this.props.isProductLoading !== true && this.props.products.length < 1){
-    return (<TouchableOpacity onPress={()=> this.props.navigation.navigate('AddProduct')} >
+    return (<View style={{marginTop:100}}>
+      <TouchableOpacity onPress={()=> this.props.navigation.navigate('AddProduct')} >
 
-      <Card style={{ borderColor: '#f5f5f5' }}>
+    
 
-        <CardItem>
-          <Body style={{ flexDirection: "column", justifyContent: "center", alignItems: "center" }} >
-            <Icon name="ios-information-circle-outline" style={{ fontSize: 40 }} ></Icon>
-            <Text>
-              Sisteme eklediğiniz ürün bulunmakatadır. Sipariş Eklemek için ürün eklemeye şimdi başlayın!
-              </Text>
-          </Body>
-        </CardItem>
-      </Card>
 
-    </TouchableOpacity>);
+<InfoItem text="Sisteme eklediğiniz ürün bulunmakatadır. Sipariş Eklemek için ürün eklemeye şimdi başlayın!" />
+
+
+
+</TouchableOpacity>
+    </View>);
   }else {
     return (
        

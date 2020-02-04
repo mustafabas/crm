@@ -9,6 +9,7 @@ import {
     KeyboardAvoidingView,
     Platform,
     Modal,
+    TextInput,
 } from "react-native";
 import { NavigationScreenProp, NavigationState, ScrollView, SafeAreaView } from "react-navigation";
 import { connect } from "react-redux";
@@ -51,8 +52,11 @@ class UserAgreementScreen extends Component<Props,{}> {
         return (
             <SafeAreaView style={styles.container}>
 
-                <ScrollView>
-                <Text style={{margin:20,fontFamily:'Avenir Next',fontSize:14}}>
+                {/* <ScrollView> */}
+
+                <TextInput multiline editable={false} style={{padding:20,fontFamily:'Avenir Next',fontSize:14}}>
+ 
+                {/* <Text style={{margin:20,fontFamily:'Avenir Next',fontSize:14}}> */}
             MOBİL UYGULAMA KULLANICI SÖZLEŞMESİ
 MADDE 1– TARAFLAR
 İşbu sözleşme ve ekleri (EK-1 Gizlilik Sözleşmesi) “Kavacık Mahallesi, Ertürk Sokak, No:1 K 1 Plaza Kavacık/İstanbul” adresinde mukim “Sodexo Avantaj ve Ödüllendirme Hizmetleri Anonim Şirketi” (bundan böyle "Sodexo" olarak anılacaktır) ile Sodexo mobil uygulamalarından iş bu sözleşmede belirtilen koşullar dahilinde yararlanan Kullanıcı ile karşılıklı olarak kabul edilerek yürürlüğe girmiştir.
@@ -146,10 +150,11 @@ EK - GİZLİLİK SÖZLEŞMESİ
 10. Sodexo tarafından Uygulamalar içerisinde düzenlenebilecek periyodik veya periyodik olmayan anketlere cevap veren Kullanıcılardan talep edilebilecek bilgiler de, Sodexo ve işbirliği içindeki kişi ya da kurumlar tarafından bu kullanıcılara doğrudan pazarlama yapmak, istatistiki analizler yapmak ve özel bir veri tabanı oluşturmak amacıyla da kullanılabilecektir. 
 11. Sodexo, işbu gizlilik bildiriminde geçen hükümleri gerekli gördüğü zamanda Uygulamada yayınlamak şartıyla değiştirebilir. Sodexo’nun değişiklik yaptığı gizlilik bildirimi hükümleri Uygulamada yayınlandığı tarihte yürürlüğe girmiş kabul edilir.
 12. İşbu Gizlilik Sözleşmesi, 12 (oniki) maddeden ibaret olup Mobil Uygulama Kullanıcı Sözleşmesinin ayrılmaz bir parçasıdır.
-            </Text>
+Some very long text
+</TextInput>
 
 
-                </ScrollView>
+                {/* </ScrollView> */}
             
 
 

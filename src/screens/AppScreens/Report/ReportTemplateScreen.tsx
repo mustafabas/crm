@@ -382,11 +382,11 @@ isShowedTwoDatePicker: false,
     };
     componentWillMount() {
         console.log("Eski Ay : " + this.state.startDate)
-        this.props.GetReport(this.state.startDate.toISOString().slice(8, 10) + "." +
-        this.state.startDate.toISOString().slice(5, 7) + "." +
-        this.state.startDate.toISOString().slice(0, 4), this.state.endDate.toISOString().slice(8, 10) + "." +
-            this.state.endDate.toISOString().slice(5, 7) + "." +
-            this.state.endDate.toISOString().slice(0, 4));
+        // this.props.GetReport(this.state.startDate.toISOString().slice(8, 10) + "." +
+        // this.state.startDate.toISOString().slice(5, 7) + "." +
+        // this.state.startDate.toISOString().slice(0, 4), this.state.endDate.toISOString().slice(8, 10) + "." +
+        //     this.state.endDate.toISOString().slice(5, 7) + "." +
+        //     this.state.endDate.toISOString().slice(0, 4));
         this.setState({ refreshing: false });
 
         const today = this.state.currentDate;
@@ -405,7 +405,7 @@ console.log("Aylar")
             listOfMonths.push({monthId : moment().subtract(i,'month').format("M"),monthName : moment().subtract(i,'month').format("MMMM"),startOfMonth :moment().subtract(i,'month').startOf('month').format(),endOfMonth : moment().subtract(i, "M").endOf('month').format()})
         }
         this.setState({listOfMonth : listOfMonths})
-
+        this.toggleMarginLeft(0)
 
     }
 
@@ -541,27 +541,27 @@ console.log("Aylar")
                 
                  <View style={{flexDirection:'row',justifyContent : 'space-between',marginHorizontal:10,marginVertical:10}}>
                 <TouchableOpacity onPress={()=> this.toggleMarginLeft(0) }>
-                <Text style={{fontSize:16,fontFamily:'Avenir Next'}}>
+                <Text style={{fontFamily:'Avenir Next'}}>
                     Hepsi
                 </Text>
                 </TouchableOpacity >
                 <TouchableOpacity onPress={()=> this.toggleMarginLeft(1) }>
-                <Text style={{fontSize:16,fontFamily:'Avenir Next'}}>
+                <Text style={{fontFamily:'Avenir Next'}}>
                     İlk Hafta
                 </Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={()=> this.toggleMarginLeft(2) }>
-                <Text style={{fontSize:16,fontFamily:'Avenir Next'}}>
+                <Text style={{fontFamily:'Avenir Next'}}>
                     İkinci Hafta
                 </Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={()=>this.toggleMarginLeft(3) }>
-                <Text style={{fontSize:16,fontFamily:'Avenir Next'}}>
+                <Text style={{fontFamily:'Avenir Next'}}>
                     3.Hafta
                 </Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={()=> this.toggleMarginLeft(4) }>
-                <Text style={{fontSize:16,fontFamily:'Avenir Next'}}>
+                <Text style={{fontFamily:'Avenir Next'}}>
                     4.Hafta
                 </Text>
                 </TouchableOpacity>
@@ -574,8 +574,9 @@ console.log("Aylar")
     _renderDateTimePickers(){
         return(
     
-            <View style={{ flexDirection: "row",justifyContent:'space-between' }}>
-            <DateTimePicker
+            <View style={{ flexDirection: "row",justifyContent:'space-between'}}>
+              <View style={{borderWidth:2,borderColor:'#85a3db',borderRadius:5,marginTop:10,height:40,marginLeft:10}}>
+              <DateTimePicker
 defaultDate={new Date()}
 minimumDate={new Date()}
 maximumDate={new Date(2018, 12, 31)}
@@ -584,13 +585,17 @@ timeZoneOffsetInMinutes={undefined}
 modalTransparent={false}
 animationType={"fade"}
 androidMode={"default"}
-placeHolderText="Başlangıç Tarihi"
-textStyle={{ color: "#001c58",paddingTop:15,fontFamily:'Cabin',fontSize:20 }}
+placeHolderText="DD/MM/YYYY"
 
-placeHolderTextStyle={{ paddingTop:15,fontFamily:'Cabin',color:'#001c58',fontSize:20 }}
+textStyle={{ color: "#001c58",fontFamily:'Cabin',fontSize:13 }}
+
+placeHolderTextStyle={{ fontFamily:'Cabin',color:'#a3a3a3',fontSize:13 }}
 onDateChange={startDate => this.setState({ startDate })}
 disabled={false}
 />
+                </View>
+            
+<View style={{borderWidth:2,borderColor:'#85a3db',borderRadius:5,marginTop:10,height:40}}>
 <DateTimePicker
 defaultDate={this.state.startDate}
 minimumDate={this.state.startDate}
@@ -600,14 +605,15 @@ timeZoneOffsetInMinutes={undefined}
 modalTransparent={false}
 animationType={"fade"}
 androidMode={"default"}
-placeHolderText="Bitiş Tarihi"
+placeHolderText="DD/MM/YYYY"
 
-textStyle={{ color: "#001c58",paddingTop:15,fontFamily:'Cabin',fontSize:20 }}
-placeHolderTextStyle={{color:"#001c58",paddingTop:15,fontFamily:'Cabin',fontSize:20 }}
+textStyle={{ color: "#001c58",fontFamily:'Cabin',fontSize:13 }}
+placeHolderTextStyle={{color:"#a3a3a3",fontFamily:'Cabin',fontSize:13 }}
 
 onDateChange={endDate => this.setState({ endDate })}
 disabled={false}
 />
+</View>
 
 
 

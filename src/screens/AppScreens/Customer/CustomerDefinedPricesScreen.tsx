@@ -8,7 +8,8 @@ import { View,
         Platform,
         Modal,
         Text,
-        Alert,} from "react-native";
+        Alert,
+        Dimensions,} from "react-native";
 import { NavigationScreenProp, NavigationState, ScrollView } from "react-navigation";
 import { connect } from "react-redux";
 import styles from "../..//styles";
@@ -21,6 +22,7 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import {customerPriceEdit} from "../../../redux/actions/customerPriceEditAction"
 import RBSheet from "react-native-raw-bottom-sheet";
+import { InfoItem } from "../../../components/InfoItem";
 
 
 interface Props {
@@ -196,20 +198,15 @@ _renderView(){
   else if(this.props.isLoading === false && this.props.products.length < 1)
   {
     return(
-      <View style={{flex:1}} >
+      <View style={{marginTop:Dimensions.get('window').width / 4}}>
 <TouchableOpacity onPress={()=> this.props.navigation.navigate('CustomerDefinedPriceAdd')} >
         
-        <Card style={{ borderColor: '#f5f5f5' }}>
+       
         
-          <CardItem >
-            <Body style={{ flexDirection: "column", justifyContent: "center", alignItems: "center" }} >
-              <Icon name="ios-information-circle-outline" style={{ fontSize: 40 }} ></Icon>
-              <Text>
-                Sisteme eklediğiniz müşteriye özel ürün fiyatlandırması bulunmakatadır. Müşteriye özel ürün fiyatlarını eklemeye şimdi başlayın!
-                </Text>
-            </Body>
-          </CardItem>
-        </Card>
+
+        <InfoItem text="Sisteme eklediğiniz müşteriye özel ürün fiyatlandırması bulunmakatadır." />
+
+     
         
         </TouchableOpacity>
       </View>

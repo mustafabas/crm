@@ -39,6 +39,7 @@ import {
   PlaceholderLine,
   Fade
 } from "rn-placeholder";
+import { InfoItem } from '../../../components/InfoItem';
 
 const title = "Home Screen"
 
@@ -451,19 +452,14 @@ componentDidMount(){
         ></FlatList>);
     }
     else if(this.props.isOrderLoading !== true && this.props.orders.length < 1){
-      return (<TouchableOpacity onPress={() => navigation.navigate("orderAdd", { customerId: navigation.getParam("customerId") })}>
+      return (<TouchableOpacity style={{marginTop:100}} onPress={() => navigation.navigate("orderAdd", { customerId: navigation.getParam("customerId") })}>
 
-        <Card style={{ borderColor: '#f5f5f5' }}>
+     
+      
 
-          <CardItem>
-            <Body style={{ flexDirection: "column", justifyContent: "center", alignItems: "center" }} >
-              <Icon name="ios-information-circle-outline" style={{ fontSize: 40 }} ></Icon>
-              <Text>
-                Sisteme eklediğiniz müşteri siparişi bulunmakatadır. Müşterinize sipariş eklemeye şimdi başlayın!
-                </Text>
-            </Body>
-          </CardItem>
-        </Card>
+
+        <InfoItem text="Sisteme eklediğiniz müşteri siparişi bulunmakatadır. Müşterinize sipariş ekleyebilirsiniz!" />
+
 
       </TouchableOpacity>);
     }

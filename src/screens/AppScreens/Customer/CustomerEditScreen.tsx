@@ -306,7 +306,7 @@ console.log(values)
                                     {/* <Text style={styles.FormLabel}>Adı Soyadı</Text> */}
                                     <View style={styles.input}>
                                      <Item  floatingLabel style={{marginTop:0,borderBottomColor: (touched.musteriAdiSoyadi && errors.musteriAdiSoyadi != null) ? 'red' : '#2069F3'}}>
-                                      <Icon name="ios-person" />
+                                      <Icon name="ios-person"  style={{color:'#a5a5a5'}} />
                                        <Label style={{marginTop:-10,color:(touched.musteriAdiSoyadi && errors.musteriAdiSoyadi != null) ? 'red' : '#959595',fontFamily:'Avenir Next'}}>Adı Soyadı</Label>
                                      <Input
               
@@ -327,7 +327,7 @@ console.log(values)
                                     <View style={styles.input}>
               
                                     <Item  floatingLabel style={{marginTop:20,borderBottomColor: (touched.sirketAdi && errors.sirketAdi != null) ? 'red' : '#2069F3'}}>
-                                    <Icon name="ios-business" />
+                                    <Icon name="ios-business" style={{color:'#a5a5a5'}}  />
                                        <Label style={{fontFamily:'Avenir Next',marginTop:-10,color:(touched.sirketAdi && errors.sirketAdi != null) ? 'red' : '#959595'}}>Şirket Adı</Label>
                                   
                                         <Input
@@ -342,7 +342,7 @@ console.log(values)
                                       />
                                       </Item>
                                       <Item  floatingLabel style={{marginTop:20,borderBottomColor: (touched.phoneNumber && errors.phoneNumber != null) ? 'red' : '#2069F3'}}>
-                                      <Icon name="ios-call" />
+                                      <Icon name="ios-call" style={{color:'#a5a5a5'}} />
                                        <Label style={{fontFamily:'Avenir Next',marginTop:-10,color:(touched.phoneNumber && errors.phoneNumber != null) ? 'red' : '#959595'}}>Telefon Numarası</Label>
                                    
                                      <Input

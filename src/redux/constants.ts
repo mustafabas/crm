@@ -37,7 +37,7 @@ export const WATER_GET_USER = WATER_BASE_URL_NEW+"/api/User?employeId=";
 export const WATER_GET_ABOUT_US = WATER_BASE_URL_NEW + "/api/Cash/GetByName?identityName=hakkimizda"
 export const WATER_UPDATE_STORE_INFO = WATER_BASE_URL_NEW + '/UpdateStore'
 export const WATER_GET_STORE_INFO = WATER_BASE_URL_NEW  +'/GetStoreByUserId'
-
+export const WATER_USER_CREATE_EMAIL_CONTROL = WATER_BASE_URL_NEW +  '/api/UserCreate/EmailCheck'
 export const WATER_UPDATE_USER_INFO_GENERAL = WATER_BASE_URL_NEW  +'/api/User/Update'
 
 export const WATER_SUPPORT_SEND_MESSAGE = WATER_BASE_URL_NEW + '/api/Support'
@@ -45,6 +45,9 @@ export const WATER_ADD_EMPLOYEE_COST = WATER_BASE_URL_NEW+"/api/employeCost";
 
 export const WATER_GET_USER_INFO = WATER_BASE_URL_NEW + "/api/User/GetUserById"
 export const WATER_GET_REPORT = WATER_BASE_URL_NEW+"/api/Report?StartDate=";
+export const WATER_GET_REPORT_PRODUCTS_PIE = WATER_BASE_URL_NEW  +'/api/Report/ProductReport';
+
+
 export const WATER_GETEMPLOYEECOST = WATER_BASE_URL_NEW+"/api/employeCost";
 export const WATER_EMPLOYEECOST_EDIT = WATER_BASE_URL_NEW+"/api/employeCost/Update";
 export const WATER_EMPLOYEECOST_DELETE = WATER_BASE_URL_NEW+"/api/employeCost/Delete";

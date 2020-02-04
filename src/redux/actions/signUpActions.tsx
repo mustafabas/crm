@@ -1,6 +1,6 @@
 import { AsyncStorage } from "react-native";
 import axios from 'axios'
-import {WATER_USER_CREATE_CONTROL_EMAIL, WATER_USER_CREATE} from './../constants'
+import {WATER_USER_CREATE_CONTROL_EMAIL, WATER_USER_CREATE, WATER_USER_CREATE_EMAIL_CONTROL} from './../constants'
 import { Dispatch } from "react";
 import {SIGNUP_FAILED,SIGNUP_STARTED,SIGNUP_SUCCEED,RESET_PROPS, USER_CREATE_FIRST_STEP, SIGNUP2_SUCCEED, SIGNUP2_FAILED, SIGNUP2_STARTED} from './../types'
 import {Action} from '../states'
@@ -74,11 +74,33 @@ export function controlEmail(NameSurname: string,password:string , email:string)
     dispatch(loading(true));
   
 
-    dispatch(signUpFirstSucceed(user))
-    dispatch(loginIsSucceed(true,""));
-    dispatch(reset());
+    axios.post(WATER_USER_CREATE_EMAIL_CONTROL, {
+      email : email
+    }).then((res)=> {
+      if(res.data.result) {
 
+        dispatch(signUpFirstSucceed(user))
+        dispatch(loginIsSucceed(true,""));
+        dispatch(reset());
+         
+          
 
+      }else {
+          if(res.data.message === "Error.User.EmailCheck.EmailFound") {
+            dispatch(loginIsSucceed(false,"Bu email adresi ile tanımlı kullanıcı bulundu. Şifrenizi unuttuysanız yeni şifre alabilirsiniz."));
+            dispatch(reset())
+          }
+          else {
+            dispatch(loginIsSucceed(false,"Bir Hata meydana geldi."));
+            dispatch(reset())
+          }
+          
+      }
+
+  }).catch(err =>{
+    dispatch(loginIsSucceed(false,"Bir Hata Meydana Geldi"));
+    dispatch(reset())
+  })
 
 
 //   axios.post(WATER_USER_CREATE_CONTROL_EMAIL,
