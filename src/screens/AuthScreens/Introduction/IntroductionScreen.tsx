@@ -50,7 +50,7 @@ const slides = [
       'Müşterilerinizi kolayca yönetin ve onlara özel fiyat tanımlaması yapın!',
     icon: 'ios-images',
     colors: ['green', 'black'],
-    image : platform ? require('../../../images/intro/intro1-ios.png') : require('../../../images/intro-android/intro0-android.png')
+    image : platform ? require('../../../images/intro/intro1-ios.png') : require('../../../images/intro-android/musteriler.png')
 
   },
   {
@@ -60,7 +60,7 @@ const slides = [
       'Müşterilerinize sipariş ekleyin ve ödemeleriniz kayıt altına alın!',
     icon: 'ios-options',
     colors: ['green', 'black'],
-    image : platform ?  require('../../../images/intro/intro4-ios.png') : require('../../../images/intro-android/intro1-android.png')
+    image : platform ?  require('../../../images/intro/intro4-ios.png') : require('../../../images/intro-android/siparisler.png')
   },
   {
     key: 'somethun2',
@@ -68,7 +68,7 @@ const slides = [
     text: 'Gelişmiş rapor sistemimizle müşterilerinizi ürünlerinizi gün ve ay bazında listeleyip kar marjınızı görün!',
     icon: 'ios-beer',
     colors: ['green', 'black'],
-    image : platform ? require('../../../images/intro/intro3-ios.png') : require('../../../images/intro-android/intro2-android.png')
+    image : platform ? require('../../../images/intro/intro3-ios.png') : require('../../../images/intro-android/rapor1.png')
   },
   {
     key: 'somethun2',
@@ -76,7 +76,7 @@ const slides = [
     text: 'Çalışanlarınız ve onların giderlerini ekleyin ayrıca uygulamayı kullanmalarına izin verin!',
     icon: 'ios-beer',
     colors: ['green', 'black'],
-    image : platform ? require('../../../images/intro/intro2-ios.png') : require('../../../images/intro-android/intro4-android.png')
+    image : platform ? require('../../../images/intro/intro2-ios.png') : require('../../../images/intro-android/calisanlar.png')
   },
 ];
 

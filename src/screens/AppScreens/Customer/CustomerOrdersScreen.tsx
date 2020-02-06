@@ -374,7 +374,7 @@ componentDidMount(){
               <Input
                 //containerStyle={{ width: '80%' }}
                 style={styles.input}
-                placeholder="Ürün Fiyatı"
+                placeholder="Ödeme Miktarı"
                 placeholderTextColor="#9A9A9A"
                 value={props.values.amount + ""}
                 autoCapitalize="none"

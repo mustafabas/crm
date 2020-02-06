@@ -160,35 +160,50 @@ class Products extends Component<Props, State> {
         onRefresh={() => this.onRefresh()}
         data={this.props.products}
         renderItem={({ item }) => (
-          <View style={[styles.row,{justifyContent:'space-between',backgroundColor:'#EFF3F9'}]}>
+          <View style={[styles.row,{backgroundColor:'#EFF3F9',flexDirection:'column'}]}>
+          <View style={{flexDirection:'row',justifyContent:'space-between'}}> 
+          <Text style={styles.musteri_adi}>{item.productName}</Text>
 
-              <View style={{justifyContent:'space-between'}} >
-                <Text style={styles.musteri_adi}>{item.productName}</Text>
-                <View style={{flexDirection:'row'}}>
-                <Text style={styles.alt_bilgi}>Ürün Kodu: </Text>
-                <Text style={[styles.alt_bilgi,{fontWeight:'600'}]} >{item.productCode}</Text>
-                </View>
-              </View>
-              <View style={{}} >
-              <TouchableOpacity
-              style={[styles.iconButtonCustomer,{alignSelf:'flex-end',marginBottom:30}]}
+          <TouchableOpacity
+              style={[styles.iconButtonCustomer,{alignContent:'flex-end',marginBottom:30}]}
 
               onPress={() => this.openModal(item.productCode, item.productName, item.price, item.productId, item.productStatus)}>
 
               <Icon name="ios-more" size={25}  />
             </TouchableOpacity>
-               <View style={{flexDirection:'row'}}>
+
+          </View>
+
+          <View style={{justifyContent:'space-between',flexDirection:'row'}} >
+               
+<View style={{flexDirection:'row'}}>
+
+<Text style={styles.alt_bilgi}>Ürün Kodu: </Text>
+                <Text style={[styles.alt_bilgi,{fontWeight:'600'}]} >{item.productCode}</Text>
+
+</View>
+
+                <View style={{flexDirection:'row'}}>
                <Text style={styles.alt_bilgi}>Birim Fiyat: </Text>
                 <Text style={[styles.alt_bilgi,{fontWeight:'600'}]}>
                 {item.price} TL
                 </Text>
                 
                </View>
+
+                
+              </View>
+              
+              <View style={{}} >
+              
+              
               </View>
 
             
           </View>)}
-        keyExtractor={item => item.productId.toString()}
+      
+      
+      keyExtractor={item => item.productId.toString()}
       />);
     }
   }
