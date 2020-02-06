@@ -122,7 +122,7 @@ class orderAdd extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      productId: 19,
+      productId: 0,
       productName: "",
       productCode: "",
       unitPrice: "",

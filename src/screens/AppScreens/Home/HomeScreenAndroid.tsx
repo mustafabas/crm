@@ -336,7 +336,7 @@ isAnyCustomerValid : false,
         return(
             <FlatList
 
-            style={{ marginBottom:Platform.OS === "ios" ? -60 : -220,paddingTop:10}}
+            style={{ paddingTop:10,marginBottom:46}}
             
       
 
@@ -627,9 +627,9 @@ isAnyCustomerValid : false,
 
     getDayOfMusteri(value: number) {
 
-        if(this.props.customers.length > 0) {
-            this.flatListRef.getNode().scrollToOffset({animated: true, offset: 0})
-        }
+        // if(this.props.customers.length > 0) {
+        //     this.flatListRef.getNode().scrollToOffset({animated: true, offset: 0})
+        // }
     
         this.setState({
           dayOfWeek: value,

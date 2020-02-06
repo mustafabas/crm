@@ -6,8 +6,12 @@ import AppIntroSlider from 'react-native-app-intro-slider';
 import { NavigationScreenProp, NavigationState } from 'react-navigation';
 import { Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-native';
+import { Platform } from 'react-native';
 
 I18nManager.forceRTL(false);
+
+const platform  = Platform.OS === 'ios'
+
 
 const styles = StyleSheet.create({
   mainContent: {
@@ -46,7 +50,7 @@ const slides = [
       'Müşterilerinizi kolayca yönetin ve onlara özel fiyat tanımlaması yapın!',
     icon: 'ios-images',
     colors: ['green', 'black'],
-    image : require('../../../images/intro/intro1-ios.png')
+    image : platform ? require('../../../images/intro/intro1-ios.png') : require('../../../images/intro-android/intro0-android.png')
 
   },
   {
@@ -56,7 +60,7 @@ const slides = [
       'Müşterilerinize sipariş ekleyin ve ödemeleriniz kayıt altına alın!',
     icon: 'ios-options',
     colors: ['green', 'black'],
-    image : require('../../../images/intro/intro4-ios.png')
+    image : platform ?  require('../../../images/intro/intro4-ios.png') : require('../../../images/intro-android/intro1-android.png')
   },
   {
     key: 'somethun2',
@@ -64,7 +68,7 @@ const slides = [
     text: 'Gelişmiş rapor sistemimizle müşterilerinizi ürünlerinizi gün ve ay bazında listeleyip kar marjınızı görün!',
     icon: 'ios-beer',
     colors: ['green', 'black'],
-    image : require('../../../images/intro/intro3-ios.png')
+    image : platform ? require('../../../images/intro/intro3-ios.png') : require('../../../images/intro-android/intro2-android.png')
   },
   {
     key: 'somethun2',
@@ -72,7 +76,7 @@ const slides = [
     text: 'Çalışanlarınız ve onların giderlerini ekleyin ayrıca uygulamayı kullanmalarına izin verin!',
     icon: 'ios-beer',
     colors: ['green', 'black'],
-    image : require('../../../images/intro/intro2-ios.png')
+    image : platform ? require('../../../images/intro/intro2-ios.png') : require('../../../images/intro-android/intro4-android.png')
   },
 ];
 
