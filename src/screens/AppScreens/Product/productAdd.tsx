@@ -24,6 +24,7 @@ import ImagePicker from 'react-native-image-picker';
 import { Dimensions } from "react-native";
 import { ImageBackground } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
+import ImageResizer from 'react-native-image-resizer';
 
 
 interface Props {
@@ -108,6 +109,23 @@ class productAdd extends Component<Props, {}> {
         return (<Spinner color='01C3E3' />)
     }
 
+
+    imageResizer(request : any){
+
+ImageResizer.createResizedImage(request.uri, request.width, request.height, 'JPEG', 100).then((response) => {
+    // response.uri is the URI of the new image that can now be displayed, uploaded...
+    // response.path is the path of the new image
+    // response.name is the name of the new image with the extension
+    // response.size is the size of the new image
+    const source = { uri: response.uri };
+    console.log(response)
+    this.setState({avatarSource : source})
+  }).catch((err) => {
+    // Oops, something went wrong. Check that the filename is correct and
+    // inspect err to get more details.
+  });
+    }
+
     selectImage(){
         const options = {
             title: 'Select Avatar',
@@ -142,6 +160,8 @@ class productAdd extends Component<Props, {}> {
           });
 
     }
+
+
     _renderImagePickerSheet(){
         const options = {
 
@@ -225,6 +245,8 @@ class productAdd extends Component<Props, {}> {
                       avatarSource: source,
                       imageLoading : false
                     });
+
+                    this.imageResizer(response)
                   }
               });
 
@@ -348,7 +370,7 @@ class productAdd extends Component<Props, {}> {
                                               
                                                 {this._renderButtonText()}
                                             </Button>
-
+                                            
 
                                           
 
