@@ -4,7 +4,7 @@ import { persistStore, persistReducer } from "redux-persist";
 // import storage from "redux-persist/lib/storage";
 
 
-import {AsyncStorage} from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 
 import reducer from "./reducers";
 import loginRed from './reducers/loginReducers'

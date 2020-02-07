@@ -39,6 +39,7 @@
 		8BB1F09982BB672E6A746DE0 /* libPods-BayimSu-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CF4D2EDCB43310701DE02E5B /* libPods-BayimSu-tvOS.a */; };
 		8CEA923A622247DB9DE7625C /* Cabin-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 34F1719B9DCD496E8C53B3C6 /* Cabin-SemiBoldItalic.ttf */; };
 		9BEF0E60D67F4126A3360215 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 15A766A5A4F042F5B872C1EC /* MaterialCommunityIcons.ttf */; };
+		A22CD98E23ED6B280072258F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A22CD98D23ED6B280072258F /* GoogleService-Info.plist */; };
 		AE21BF785CBC469D8FF1447A /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E1344DE2D3FF4AC79AE3E5D8 /* MaterialIcons.ttf */; };
 		B349C110442C40509E75C332 /* Cabin-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8F6CBFC29C8648759DC94A2F /* Cabin-Regular.ttf */; };
 		BDDFA1A0F090482CA28B0C0F /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B5297B27FF9442FA907FB759 /* FontAwesome.ttf */; };
@@ -105,6 +106,8 @@
 		A1783F1593424B6103CC4DD6 /* Pods-BayimSu.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BayimSu.debug.xcconfig"; path = "Target Support Files/Pods-BayimSu/Pods-BayimSu.debug.xcconfig"; sourceTree = "<group>"; };
 		A2029B2B23DADAD000F6EBA4 /* libreact-native-text-input-mask.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libreact-native-text-input-mask.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A22B63F223B4984900AA7794 /* AppCenter-Config.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AppCenter-Config.plist"; sourceTree = "<group>"; };
+		A22CD98D23ED6B280072258F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		A22CD98F23ED6E4F0072258F /* BayimSu.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = BayimSu.entitlements; path = BayimSu/BayimSu.entitlements; sourceTree = "<group>"; };
 		AAB6F909231EA2E4BFE76B60 /* Pods-BayimSuTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BayimSuTests.release.xcconfig"; path = "Target Support Files/Pods-BayimSuTests/Pods-BayimSuTests.release.xcconfig"; sourceTree = "<group>"; };
 		AD25AB417DA5466AA0B89BDF /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/native-base/Fonts/Feather.ttf"; sourceTree = "<group>"; };
 		B5297B27FF9442FA907FB759 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/native-base/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
@@ -180,6 +183,7 @@
 		13B07FAE1A68108700A75B9A /* BayimSu */ = {
 			isa = PBXGroup;
 			children = (
+				A22CD98F23ED6E4F0072258F /* BayimSu.entitlements */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				A22B63F223B4984900AA7794 /* AppCenter-Config.plist */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -215,6 +219,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				A22CD98D23ED6B280072258F /* GoogleService-Info.plist */,
 				13B07FAE1A68108700A75B9A /* BayimSu */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* BayimSuTests */,
@@ -450,6 +455,7 @@
 				AE21BF785CBC469D8FF1447A /* MaterialIcons.ttf in Resources */,
 				6124191BF5FB4477929A0017 /* Octicons.ttf in Resources */,
 				4BF831366D1F4F73A252D884 /* Roboto_medium.ttf in Resources */,
+				A22CD98E23ED6B280072258F /* GoogleService-Info.plist in Resources */,
 				DB25F2C82E3846339F206ECB /* Roboto.ttf in Resources */,
 				71F1794B54F84A958A69AB9D /* rubicon-icon-font.ttf in Resources */,
 				295118B818AB42139C488939 /* SimpleLineIcons.ttf in Resources */,
@@ -753,14 +759,15 @@
 			baseConfigurationReference = A1783F1593424B6103CC4DD6 /* Pods-BayimSu.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = BayimSu/BayimSu.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 8TSHZ8SJ45;
 				INFOPLIST_FILE = BayimSu/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.7;
+				MARKETING_VERSION = 1.8;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -778,13 +785,14 @@
 			baseConfigurationReference = 2784E52D3B90D4B9F06AAC7F /* Pods-BayimSu.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = BayimSu/BayimSu.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 8TSHZ8SJ45;
 				INFOPLIST_FILE = BayimSu/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.7;
+				MARKETING_VERSION = 1.8;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

@@ -3,7 +3,8 @@ import {WATER_CUSTOMER_ORDER_DELETE} from './../constants'
 import { Dispatch } from "react";
 import {ORDER_DELETE_SUCCEED,ORDER_DELETE_FAILED} from './../types'
 import {Action} from '../states'
-import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
+
 import { GetOrders } from './orderAction';
 import { reset } from './loginAction';
 

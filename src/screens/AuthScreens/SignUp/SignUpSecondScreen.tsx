@@ -109,7 +109,7 @@ class SignUpSecondScreen extends Component<Props, {}> {
 
   render() {
     if(this.props.isSecondSucceed) {
-      this.props.navigation.navigate('MainStack')
+      this.props.navigation.navigate('AuthLoading')
     }
 
     return (

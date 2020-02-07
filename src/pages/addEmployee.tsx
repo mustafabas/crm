@@ -8,8 +8,10 @@ import {
     TouchableOpacity,
     StatusBar,
     Alert,
-    AsyncStorage,
+
 } from "react-native";
+import AsyncStorage from '@react-native-community/async-storage';
+
 import { NavigationScreenProp, NavigationState, } from "react-navigation";
 import { Formik, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -115,13 +117,25 @@ class addEmployee extends Component<Props, State> {
         this.handleAlert();
     };
 
-    getUserType() {
+    async getUserType() {
         //function to make three option alert
-        AsyncStorage.getItem("UserType").then((value) => {
-            this.setState({
-                UserType: value,
-            })
-        });
+        // AsyncStorage.getItem("UserType").then((value) => {
+        //     this.setState({
+        //         UserType: value,
+        //     })
+        // });
+
+        try {
+            const value = await AsyncStorage.getItem('UserType')
+            if(value !== null) {
+                this.setState({
+                    UserType: value,
+                })
+            }
+          } catch(e) {
+            // error reading value
+          }
+          
     }
 
     render() {

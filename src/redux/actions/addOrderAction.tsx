@@ -3,7 +3,9 @@ import {WATER_ADD_ORDER} from './../constants'
 import { Dispatch } from "react";
 import {ADD_ORDER_SUCCEED,ADD_ORDER_FAILED, ADD_ORDER_IS_LOADING} from './../types'
 import {Action} from '../states'
-import { AsyncStorage } from 'react-native';
+
+import AsyncStorage from '@react-native-community/async-storage';
+
 import { GetOrders, GetCustomerDetail } from './orderAction';
 import { navigate } from '../services/Navigator';
 import { reset, loading } from './loginAction';

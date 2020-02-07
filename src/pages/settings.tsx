@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, StatusBar, TouchableOpacity, Text, AsyncStorage } from "react-native";
+import { View, StatusBar, TouchableOpacity, Text } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import { Header } from "../components";

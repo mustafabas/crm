@@ -9,11 +9,13 @@ import {
   Platform,
   Modal,
   Alert,
-  AsyncStorage,
+
   Image,
   Linking,
   Dimensions
 } from "react-native";
+import AsyncStorage from '@react-native-community/async-storage';
+
 import { Icon, Input, Item, Tabs, Tab, TabHeading, Text, Button, ScrollableTab, ListItem, Left, Thumbnail, Body, Right, Form, Label, Content, Card, CardItem, Accordion, Spinner } from 'native-base';
 import { NavigationScreenProp, NavigationState, ScrollView, } from "react-navigation";
 import { connect } from "react-redux";

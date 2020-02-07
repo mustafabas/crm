@@ -63,6 +63,7 @@ import SupportScreen from "../screens/AppScreens/Profile/SupportScreen";
 import CustomerDefinedPriceAddScreen from '../screens/AppScreens/Customer/CustomerDefinedPriceAddScreen'
 import CustomerDefinedPricesScreen from '../screens/AppScreens/Customer/CustomerDefinedPricesScreen'
 import ReportBaseScreen from '../screens/AppScreens/Report/ReportBaseScreen'
+import productsWithImagesScreen from "../screens/AppScreens/Product/productsWithImagesScreen";
 // import newPricePage from "../pages/newPricePage";
 // import customerDefinedPricePage from "../pages/CustomerDefinedPrice"
 // import editOrder from "../pages/editOrder";
@@ -122,7 +123,7 @@ const introductionStack = createStackNavigator({
   const ProfileStack = createStackNavigator(
     {
       ProfileScreen : ProfileScreen,
-      products : products,
+      products : productsWithImagesScreen,
       productEditScreen : productEditScreen,
       AboutUs :AboutUsScreen,
       profileEditGeneral : ProfileEditGeneralScreen,

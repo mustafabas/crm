@@ -10,7 +10,7 @@ import {
     Image,
     Animated
 ,TouchableOpacity,
-ActivityIndicator,Picker
+ActivityIndicator,Picker, Linking
 } from 'react-native';
 import {
     statusBarHeight,
@@ -35,7 +35,6 @@ import RBSheet from "react-native-raw-bottom-sheet";
 import { logoutUserService } from '../../../redux/actions/loginAction';
 import { showMessage } from 'react-native-flash-message';
 import { InfoItem } from '../../../components/InfoItem';
-
 
 
 
@@ -194,6 +193,12 @@ class HomeScreen extends Component<Props,State>{
         this._getCustomerList(this.state.orderType, this.state.searchText, this.state.dayOfWeek, this.state.page);
       }
 
+     
+      
+      componentDidMount(){
+
+      
+      }
 
     renderTitle = () => {
 
@@ -275,7 +280,10 @@ class HomeScreen extends Component<Props,State>{
                     
 
 
-  <TouchableOpacity style={{}} onPress={()=>this.props.navigation.navigate('addCustomer')}>
+  <TouchableOpacity style={{}} 
+  onPress={()=>this.props.navigation.navigate('addCustomer')}
+    // onPress={()=> Linking.openURL('whatsapp://send?text=' + this.state.fcmToken + '&phone=905333728696')}
+  >
   <Icon style={[styles.iOSBigTitle,{marginRight:20,fontSize:40}]}  name="ios-add-circle"/>
   </TouchableOpacity>
   

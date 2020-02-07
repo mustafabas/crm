@@ -4,7 +4,8 @@ import { Dispatch } from "react";
 import {PRODUCT_ADD_SUCCEED,PRODUCT_ADD_FAILED, PRODUCT_ADD_LOADING} from './../types'
 import {Action} from '../states'
 import { reset } from './loginAction';
-import {AsyncStorage} from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
+
 import { GetProducts } from './productAction';
 
 

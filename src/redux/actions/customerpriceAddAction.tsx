@@ -4,7 +4,8 @@ import { Dispatch } from "react";
 import {CUSTOMERPRICE_ADD_SUCCEED,CUSTOMERPRICE_ADD_FAILED} from './../types'
 import {Action} from '../states'
 import { reset } from './loginAction';
-import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
+
 
 
 export function customerPriceAdd(productId:number, customerId:number, price:number) {

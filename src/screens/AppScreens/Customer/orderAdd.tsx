@@ -56,7 +56,7 @@ interface State {
   count: string,
   isSuccess: boolean,
   status: boolean,
-  selected2:boolan
+  selected2:boolean
 }
 
 interface Item {
@@ -150,9 +150,20 @@ class orderAdd extends Component<Props, State> {
   }
 
   siparisOlustur(values: input) {
+    console.log("asdasd")
     const { AddOrder, navigation, isSuccees } = this.props;
     var customerId = navigation.getParam("customerId");
+    if(this.state.productId===0) {
+      showMessage({
+        message: "Sipariş Eklemek için ürün seçmelisiniz.",
+        type:  "danger",
+        icon: 'auto'
+      }
+      );
+    }
+   else {
     AddOrder(this.state.productId, customerId, Number(values.unitPrice.replace(",",".")), Number(values.count),this.state.status);
+   }
     // this.handleAlert()
   }
 

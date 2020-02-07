@@ -1,4 +1,5 @@
-import { AsyncStorage } from "react-native";
+import AsyncStorage from '@react-native-community/async-storage';
+
 import axios from 'axios'
 import {WATER_USER_CREATE_CONTROL_EMAIL, WATER_USER_CREATE, WATER_USER_CREATE_EMAIL_CONTROL} from './../constants'
 import { Dispatch } from "react";
@@ -37,6 +38,8 @@ export function createBaseUser(user :BaseUser) {
                 AsyncStorage.setItem("userToken",res.data.result.token).then(()=>{
                   AsyncStorage.setItem("userId",res.data.result.userId.toString()).then(()=>{
                     dispatch(loginIsSucceedSecond(true,""));
+                    
+
                     dispatch(reset());
                   }).catch(er=>{
                     dispatch(loginIsSucceedSecond(false,"Bir Hata Meydana Geldi"));

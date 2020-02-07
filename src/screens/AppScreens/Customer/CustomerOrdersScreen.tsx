@@ -10,11 +10,12 @@ import {
   ScrollView,
   TouchableOpacity,
   Image,
-  AsyncStorage,
+
   ActivityIndicator,
   Modal,
   Linking,
 } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 
 import { Icon, Input, Item, Tabs, Tab, TabHeading, Button, ScrollableTab, Card, CardItem,Body } from 'native-base';
 import { Alert } from 'react-native';

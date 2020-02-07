@@ -4,7 +4,8 @@ import { Dispatch } from "react";
 import {CUSTOMER_DEFINED_PRICE_GET,CUSTOMER_DEFINED_PRICE_LOADING } from '../types'
 import {Action} from '../states'
 import { IDefinedCustomerPriceItem } from "../models/customerDefinedPriceModel";
-import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
+
 
 
 export function getCustomerPrice(customerId:number) {

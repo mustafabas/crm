@@ -60,3 +60,4 @@ export const WATER_CUSTOMER_ADD_NEW = WATER_BASE_URL_NEW + '/api/customer'
 export const WATER_USER_CREATE_CONTROL_EMAIL = WATER_BASE_URL_NEW + "/api/UserCreate/EmailCheck" 
 
 
+export const WATER_CREATE_NOTIFICATION = WATER_BASE_URL_NEW + "/api/User/AddUserToken"

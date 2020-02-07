@@ -3,7 +3,9 @@ import {WATER_ADD_CASH} from './../constants'
 import { Dispatch } from "react";
 import {ADD_CASH_SUCCEED,ADD_CASH_FAILED} from './../types'
 import {Action} from '../states'
-import { AsyncStorage } from 'react-native';
+
+import AsyncStorage from '@react-native-community/async-storage';
+
 import { GetOrders } from './orderAction';
 import { reset } from './loginAction';
 
@@ -12,6 +14,8 @@ export function AddCash(customerId : number,orderId:number, amount:number) {
 
   return (dispatch : any) =>  {
     console.log(customerId + " "  + orderId + " " + amount )
+
+
     AsyncStorage.getItem('userToken').then((res) => {
       let token = res;
 

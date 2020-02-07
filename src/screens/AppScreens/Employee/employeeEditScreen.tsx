@@ -8,8 +8,10 @@ import {
     TouchableOpacity,
     StatusBar,
     Alert,
-    AsyncStorage,
+
 } from "react-native";
+import AsyncStorage from '@react-native-community/async-storage';
+
 import { NavigationScreenProp, NavigationState, NavigationEvents, } from "react-navigation";
 import { Formik, ErrorMessage } from "formik";
 import * as Yup from "yup";

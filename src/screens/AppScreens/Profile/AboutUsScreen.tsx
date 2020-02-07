@@ -4,7 +4,7 @@ import {
   
   KeyboardAvoidingView,
   ScrollView,
-  Platform, TouchableOpacity, Image, Text,StatusBar,StyleSheet, AsyncStorage, ActivityIndicator
+  Platform, TouchableOpacity, Image, Text,StatusBar,StyleSheet,  ActivityIndicator
 } from "react-native";
 import { NavigationScreenProp, NavigationState, SafeAreaView } from "react-navigation";
 
