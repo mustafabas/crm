@@ -345,6 +345,15 @@ PODS:
     - React
   - RNIap (4.4.0):
     - React
+  - RNImageCropPicker (0.28.0):
+    - React-Core
+    - React-RCTImage
+    - RNImageCropPicker/QBImagePickerController (= 0.28.0)
+    - RSKImageCropper
+  - RNImageCropPicker/QBImagePickerController (0.28.0):
+    - React-Core
+    - React-RCTImage
+    - RSKImageCropper
   - RNRate (1.1.10):
     - React
   - RNReanimated (1.4.0):
@@ -355,6 +364,7 @@ PODS:
     - pop (~> 1.0)
     - React
     - SexyTooltip
+  - RSKImageCropper (2.2.3)
   - SexyTooltip (1.2.7):
     - pop (~> 1.0)
   - Yoga (1.14.0)
@@ -402,6 +412,7 @@ DEPENDENCIES:
   - RNFirebase (from `../node_modules/react-native-firebase/ios`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNIap (from `../node_modules/react-native-iap`)
+  - RNImageCropPicker (from `../node_modules/react-native-image-crop-picker`)
   - RNRate (from `../node_modules/react-native-rate`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNSVG (from `../node_modules/react-native-svg`)
@@ -430,6 +441,7 @@ SPEC REPOS:
     - nanopb
     - pop
     - Protobuf
+    - RSKImageCropper
     - SexyTooltip
 
 EXTERNAL SOURCES:
@@ -509,6 +521,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-gesture-handler"
   RNIap:
     :path: "../node_modules/react-native-iap"
+  RNImageCropPicker:
+    :path: "../node_modules/react-native-image-crop-picker"
   RNRate:
     :path: "../node_modules/react-native-rate"
   RNReanimated:
@@ -579,10 +593,12 @@ SPEC CHECKSUMS:
   RNFirebase: 37daa9a346d070f9f6ee1f3b4aaf4c8e3b1d5d1c
   RNGestureHandler: 02905abe54e1f6e59c081a10b4bd689721e17aa6
   RNIap: 87f0bc97fb427d3f1773d5160966a8808f961c94
+  RNImageCropPicker: cf129d17e042ce3e96fb9ada967c28f21f977c82
   RNRate: 832f7e4da1b043bda1a138e20afdb75c42a530e9
   RNReanimated: b2ab0b693dddd2339bd2f300e770f6302d2e960c
   RNSVG: 8ba35cbeb385a52fd960fd28db9d7d18b4c2974f
   RNTooltips: e13180e4339e2a85daabd09507f62a5a32d3dc8a
+  RSKImageCropper: a446db0e8444a036b34f3c43db01b2373baa4b2a
   SexyTooltip: e243da5a858c7160141cf35786a4033669d1efca
   Yoga: f2a7cd4280bfe2cca5a7aed98ba0eb3d1310f18b
 

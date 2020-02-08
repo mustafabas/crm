@@ -6371,6 +6371,11 @@ react-native-iap@^4.4.0:
   dependencies:
     dooboolab-welcome "^1.1.1"
 
+react-native-image-crop-picker@^0.28.0:
+  version "0.28.0"
+  resolved "https://registry.yarnpkg.com/react-native-image-crop-picker/-/react-native-image-crop-picker-0.28.0.tgz#f121669853278dc14baf14ba25b8e6524b0c234c"
+  integrity sha512-4AqQdeS+uFkdeTlsz+3o2Y5dXoRalZiDjsyPsWR2JOawgbzUdjaMQwXkjd12fXNB+g8kccTjvbH96WlXaoHTTg==
+
 react-native-image-picker@^2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-2.2.1.tgz#0d8551e171338c1f79c0950112c82ced86c664a6"

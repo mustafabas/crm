@@ -10,6 +10,7 @@ import {
   Platform,
   Modal,
   Dimensions,
+  Image,
 } from "react-native";
 import { NavigationScreenProp, NavigationState, ScrollView } from "react-navigation";
 import { connect } from "react-redux";
@@ -171,7 +172,7 @@ class productsWithImagesScreen extends Component<Props, State> {
                 }}
                 renderItem={({ item }) => (
                   <TouchableOpacity onPress={() => this.openModal(item.productCode, item.productName, item.price, item.productId, item.productStatus)}
-                  style={{width:widthOfContainers,height:heightOfContainers,backgroundColor:'#2069F3',borderRadius:15,justifyContent:'space-evenly',alignItems:'center',paddingTop:10,
+                  style={{width:widthOfContainers,height:heightOfContainers,backgroundColor:'#2069F3',borderRadius:15,
                   shadowRadius: 5.00,
                             
                   elevation: 12,
@@ -180,13 +181,12 @@ class productsWithImagesScreen extends Component<Props, State> {
         shadowOffset: {width: 3, height: 3 },
         shadowOpacity: .5}}>
                      
-                     {/* <Icon type="Entypo" name={item.iconName} style={{fontSize : 50,color:'white'}} /> */}
+
                     
-                     <ImageBackground style={{width:'100%',height:'100%',justifyContent:'center',alignItems:'ce'}} source={require('../../../images/intro/intro1-ios.png')} >
-                     <Text style={{fontFamily:'Avenir Next',fontSize:18,color:'white'}}>
+                     <Image resizeMode="contain" style={{flex:1,width:'100%'}} source={require('../../../images/intro/intro1-ios.png')} />
+                     {/* <Text style={{fontFamily:'Avenir Next',fontSize:18,color:'white'}}>
                      {item.productName}
-                     </Text>
-                     </ImageBackground>
+                     </Text> */}
                   </TouchableOpacity>
                 )}
                 keyExtractor={item => item.productId.toString()}
