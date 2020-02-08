@@ -1,4 +1,4 @@
-import { AsyncStorage } from "react-native";
+
 import axios from 'axios'
 import {WATER_CUSTOMER_ORDERS_GET, WATER_CUSTOMER_ORDERS_GET_DETAIL} from './../constants'
 import { Dispatch } from "react";

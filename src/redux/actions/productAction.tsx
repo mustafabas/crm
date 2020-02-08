@@ -4,7 +4,8 @@ import { Dispatch } from "react";
 import {PRODUCT_GET,PRODUCT_LOADING } from './../types'
 import {Action} from '../states'
 import { IProductItem } from "../models/productModel";
-import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
+
 
 
 export function GetProducts() {
@@ -16,14 +17,14 @@ export function GetProducts() {
 
     AsyncStorage.multiGet(['userToken', 'userId']).then((res) => {
       let token = res[0][1];
-
+      let userId = res[1][1];
       
       const headers = {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
     }
 
-    axios.get(WATER_GET_PRODUCT,
+    axios.get(WATER_GET_PRODUCT+"?userId="+userId,
     
       {headers: headers })
     .then((response) =>{

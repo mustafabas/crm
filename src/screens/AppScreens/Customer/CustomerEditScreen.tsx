@@ -19,9 +19,9 @@ import { customerEdit, Customer,getCustomerInfo } from "../../../redux/actions/c
 import { AppState } from '../../../redux/store'
 import { connect } from "react-redux";
 // import RNPickerSelect from 'react-native-picker-select';
-import Icon from "react-native-vector-icons/Ionicons";
+// import Icon from "react-native-vector-icons/Ionicons";
 import { GetUser } from "../../../redux/actions/getUserAction"
-import { Input, CheckBox, Spinner, Button, Body, Item, Label, Textarea, ListItem, Switch } from "native-base";
+import { Input, CheckBox, Spinner, Button, Body, Item, Label, Textarea, ListItem, Switch,Icon } from "native-base";
 import { showMessage } from "react-native-flash-message";
 
 interface Props {
@@ -49,13 +49,7 @@ const girdiler = Yup.object().shape({
   musteriAdiSoyadi: Yup.string()
     .min(1)
     .max(30)
-    .required(),
-  sirketAdi: Yup.string()
-    .min(1)
-    .max(30)
-    .required(),
-  fountainCount: Yup.number()
-    .positive()
+    .required()
 });
 
 interface State {
@@ -312,7 +306,8 @@ console.log(values)
                                     {/* <Text style={styles.FormLabel}>Adı Soyadı</Text> */}
                                     <View style={styles.input}>
                                      <Item  floatingLabel style={{marginTop:0,borderBottomColor: (touched.musteriAdiSoyadi && errors.musteriAdiSoyadi != null) ? 'red' : '#2069F3'}}>
-                                       <Label style={{color:(touched.musteriAdiSoyadi && errors.musteriAdiSoyadi != null) ? 'red' : '#959595'}}>Adı Soyadı</Label>
+                                      <Icon name="ios-person"  style={{color:'#a5a5a5'}} />
+                                       <Label style={{marginTop:-10,color:(touched.musteriAdiSoyadi && errors.musteriAdiSoyadi != null) ? 'red' : '#959595',fontFamily:'Avenir Next'}}>Adı Soyadı</Label>
                                      <Input
               
                                       
@@ -331,13 +326,14 @@ console.log(values)
                                     {/* <Text style={styles.FormLabel}>Şirket Adı</Text> */}
                                     <View style={styles.input}>
               
-                                    <Item  floatingLabel style={{marginTop:15,borderBottomColor: (touched.sirketAdi && errors.sirketAdi != null) ? 'red' : '#2069F3'}}>
-                                       <Label style={{color:(touched.sirketAdi && errors.sirketAdi != null) ? 'red' : '#959595'}}>Şirket Adı</Label>
+                                    <Item  floatingLabel style={{marginTop:20,borderBottomColor: (touched.sirketAdi && errors.sirketAdi != null) ? 'red' : '#2069F3'}}>
+                                    <Icon name="ios-business" style={{color:'#a5a5a5'}}  />
+                                       <Label style={{fontFamily:'Avenir Next',marginTop:-10,color:(touched.sirketAdi && errors.sirketAdi != null) ? 'red' : '#959595'}}>Şirket Adı</Label>
                                   
                                         <Input
                                         
                                         // style={styles.input}
-              
+                                        style={{fontFamily:'Avenir Next',fontSize:18}}
                                         placeholderTextColor="#9A9A9A"
                                         value={values.sirketAdi}
                                         autoCapitalize="words"
@@ -345,12 +341,14 @@ console.log(values)
                                         onBlur={handleBlur("sirketAdi")}
                                       />
                                       </Item>
-                                      <Item  floatingLabel style={{marginTop:15,borderBottomColor: (touched.phoneNumber && errors.phoneNumber != null) ? 'red' : '#2069F3'}}>
-                                       <Label style={{color:(touched.phoneNumber && errors.phoneNumber != null) ? 'red' : '#959595'}}>Telefon Numarası</Label>
+                                      <Item  floatingLabel style={{marginTop:20,borderBottomColor: (touched.phoneNumber && errors.phoneNumber != null) ? 'red' : '#2069F3'}}>
+                                      <Icon name="ios-call" style={{color:'#a5a5a5'}} />
+                                       <Label style={{fontFamily:'Avenir Next',marginTop:-10,color:(touched.phoneNumber && errors.phoneNumber != null) ? 'red' : '#959595'}}>Telefon Numarası</Label>
                                    
                                      <Input
                                       
                                       // underlineColorAndroid="transparent"
+                                      style={{fontFamily:'Avenir Next',fontSize:18}}
                                       keyboardType= "phone-pad"
                                       placeholderTextColor="#9A9A9A"
                                       value={values.phoneNumber}
@@ -363,15 +361,24 @@ console.log(values)
                                   
               
               
-              <Textarea style={{marginTop:15,borderBottomWidth:1,borderBottomColor:(touched.adress && errors.adress != null) ? 'red' : '#2069F3'}} rowSpan={5} 
-              // underline
-              value={values.adress}
-              autoCapitalize="words"
-              placeholderTextColor={(touched.adress && errors.adress != null) ? 'red' : '#959595'}
-              onChangeText={handleChange("adress")}
-              onBlur={handleBlur("adress")}
-              
-               placeholder="Adres"  />
+                                     <Item  floatingLabel style={{maxHeight:80,marginTop:20,borderBottomColor: (touched.adress && errors.adress != null) ? 'red' : '#2069F3'}}>
+                        <Icon name="ios-home" style={{minHeight:60,color:'#a5a5a5'}}/>
+                         <Label style={{fontFamily:'Avenir Next',marginTop:-10,color:(touched.adress && errors.adress != null) ? 'red' : '#959595'}}>Adres</Label>
+                   
+                       <Input
+
+                        multiline
+                        style={{minHeight:100,maxHeight:100,fontFamily:'Avenir Next',fontSize:18}}
+                        // underlineColorAndroid="transparent"
+
+                        placeholderTextColor="#9A9A9A"
+                        value={values.adress}
+                        autoCapitalize="words"
+                        onChangeText={handleChange("adress")}
+                        onBlur={handleBlur("adress")}
+
+                      />
+                       </Item>
               
                                      
               
@@ -379,24 +386,29 @@ console.log(values)
                                     {/* <Text style={styles.errorText}>{errors.sirketAdi}</Text> */}
                                     {/* <Text style={styles.FormLabel}>Sebil Sayısı</Text> */}
                                     <View style={styles.input}>
-                                    <Item  floatingLabel style={{marginTop:0,borderBottomColor: (touched.fountainCount && errors.fountainCount != null) ? 'red' : '#2069F3'}}>
-                                       <Label style={{color:(touched.fountainCount && errors.fountainCount != null) ? 'red' : '#959595'}}>Sebil Sayısı</Label>
-                                   
-                                        <Input
-              
-              
-                                        placeholderTextColor="#9A9A9A"
-              
-                                        value={String(values.fountainCount)}
-                                        keyboardType="numeric"
-                                        onChangeText={handleChange("fountainCount")}
-                                        onBlur={handleBlur("fountainCount")}
-                                      />
-                                      </Item>
+                                    
+
+
+                                      <Item  floatingLabel style={{marginTop:20,borderBottomColor: (touched.fountainCount && errors.fountainCount != null) ? 'red' : '#2069F3'}}>
+                      <Icon name="ios-water" style={{color:'#a5a5a5'}} />
+                         <Label style={{fontFamily:'Avenir Next',marginTop:-10,color:(touched.fountainCount && errors.fountainCount != null) ? 'red' : '#959595'}}>Sebil Sayısı</Label>
+                   
+                          <Input
+
+style={{fontFamily:'Avenir Next',fontSize:18}}
+                          placeholderTextColor="#9A9A9A"
+
+                          value={String(values.fountainCount)}
+                          keyboardType="number-pad"
+                          onChangeText={handleChange("fountainCount")}
+                          onBlur={handleBlur("fountainCount")}
+                        />
+                        </Item>
                                     </View>
                                     {/* <Text style={styles.errorText}>{errors.fountainCount}</Text> */}
-                                    <Text style={[styles.FormLabel,{color :((!values.AllDays) &&(!values.monday) && (!values.tuesday) && (!values.wednesday) &&(!values.thusday) && (!values.friday) &&  (!values.saturday) &&(!values.sunday))  ? 'red' : '#959595' }]}>Gün</Text>
-              
+                                    <Text style={[styles.FormLabel,{color :((!values.AllDays) &&(!values.monday) && (!values.tuesday) && (!values.wednesday) &&(!values.thusday) && (!values.friday) &&  (!values.saturday) &&(!values.sunday))  ? 'red' : '#959595',marginTop:20,marginLeft:30,fontFamily:'Avenir Next' }]}>Sipariş Günleri</Text>
+
+
               
                                     <View>
                                       <ListItem>
@@ -508,7 +520,7 @@ console.log(values)
               
                   
                                   }}>
-                                     {this.props.loading ? <Spinner  color='01C3E3' /> :   <Text style={{color:'white',fontFamily:"Avenir Next",fontWeight:'bold',fontSize:16}} >Ekle</Text>}
+                                     {this.props.loading ? <Spinner  color='01C3E3' /> :   <Text style={{color:'white',fontFamily:"Avenir Next",fontWeight:'bold',fontSize:16}} >Kaydet</Text>}
                                      
                          
                         </Button>

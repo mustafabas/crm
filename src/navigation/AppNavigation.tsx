@@ -8,7 +8,7 @@ import {
 
 import {createStackNavigator} from 'react-navigation-stack'
 import { createBottomTabNavigator } from 'react-navigation-tabs';
-import { Dimensions, TouchableOpacity, View } from "react-native";
+import { Dimensions, TouchableOpacity, View, Platform } from "react-native";
 
 const { width } = Dimensions.get("window");
 // import { createIconSetFromIcoMoon } from 'react-native-vector-icons'
@@ -32,9 +32,12 @@ import SvgIcon from 'react-native-svg-icon';
 import employee from '../screens/AppScreens/Employee/home';
 import employeeAddScreen from '../screens/AppScreens/Employee/employeeAddScreen';
 import employeeEditScreen from '../screens/AppScreens/Employee/employeeEditScreen';
+import SecurtiyScreen from '../screens/AppScreens/Profile/SecurityScreen'
+// import IntroductionScreen from '../screens/AppScreens/Introduction/index'
 // import Customer from "../pages/customer";
 // import Employee from "../pages/employee";
 // import Settings from "../pages/settings";
+import RateUsScreen from '../screens/AppScreens/Profile/RateUsScreen'
 import addCustomer from "../screens/AppScreens/Customer/addCustomer";
 import productAdd from "../screens/AppScreens/Product/productAdd";
 import ProfileScreen from "../screens/AppScreens/Profile/ProfileScreen";
@@ -46,6 +49,21 @@ import employeeCostScreen from "../screens/AppScreens/Employee/employeeCostScree
 import products from "../screens/AppScreens/Product/produts";
 import productEditScreen from "../screens/AppScreens/Product/productEdit";
 import CustomerEditScreen from '../screens/AppScreens/Customer/CustomerEditScreen'
+import AboutUsScreen from "../screens/AppScreens/Profile/AboutUsScreen";
+import ProfileEditGeneralScreen from "../screens/AppScreens/Profile/ProfileEditGeneralScreen";
+import CompanyEditScreen from "../screens/AppScreens/Profile/CompanyEditScreen";
+import ReportScreen from "../screens/AppScreens/Report/ReportScreen";
+import ReportTemplateScreen from '../screens/AppScreens/Report/ReportTemplateScreen'
+import ReportNewScreen from '../screens/AppScreens/Report/ReportNewScreen'
+import ReportAnotherScreen from '../screens/AppScreens/Report/ReportAnotherScreen'
+import IntroductionScreen from '../screens/AuthScreens/Introduction/IntroductionScreen'
+import UserAgreementScreen from "../screens/AuthScreens/Login/UserAgreementScreen";
+import HomeScreenAndroid from "../screens/AppScreens/Home/HomeScreenAndroid";
+import SupportScreen from "../screens/AppScreens/Profile/SupportScreen";
+import CustomerDefinedPriceAddScreen from '../screens/AppScreens/Customer/CustomerDefinedPriceAddScreen'
+import CustomerDefinedPricesScreen from '../screens/AppScreens/Customer/CustomerDefinedPricesScreen'
+import ReportBaseScreen from '../screens/AppScreens/Report/ReportBaseScreen'
+import productsWithImagesScreen from "../screens/AppScreens/Product/productsWithImagesScreen";
 // import newPricePage from "../pages/newPricePage";
 // import customerDefinedPricePage from "../pages/CustomerDefinedPrice"
 // import editOrder from "../pages/editOrder";
@@ -56,6 +74,13 @@ import CustomerEditScreen from '../screens/AppScreens/Customer/CustomerEditScree
 // import employeeCost from "../pages/employeeCost";
 // import editEmployeeCost from "../pages/editEmployeeCost";
 
+
+const introductionStack = createStackNavigator({
+  Introduction :IntroductionScreen
+
+},{
+  headerMode:'none'
+})
  const EmployeeApp = createStackNavigator(
    {
      Employee: { screen: employee },
@@ -70,13 +95,43 @@ import CustomerEditScreen from '../screens/AppScreens/Customer/CustomerEditScree
 //     // headerMode:"none"
   });
 
+
+  const reportStack = createStackNavigator(
+    {
+      ReportBase : ReportBaseScreen,
+      ReportNew : ReportNewScreen,
+      ReportTemplate : ReportTemplateScreen,
+      ReportOld : ReportScreen,
+      ReportAnother : ReportAnotherScreen
+    },
+    {
+      // headerMode: "none"
+      defaultNavigationOptions: {
+        headerStyle: {
+          backgroundColor: '#216AF4',
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+          fontWeight: '600',
+          fontFamily:'Avenir Next',
+          fontSize:18
+        },
+      },
+    }
+  )
+
   const ProfileStack = createStackNavigator(
     {
       ProfileScreen : ProfileScreen,
-      products : products,
+      products : productsWithImagesScreen,
       productEditScreen : productEditScreen,
-
+      AboutUs :AboutUsScreen,
+      profileEditGeneral : ProfileEditGeneralScreen,
+      Securtiy : SecurtiyScreen,
       AddProduct: { screen: productAdd },
+      companyInfo : CompanyEditScreen ,
+      Support : SupportScreen,
+      RateUs : RateUsScreen
      //AddEmployee: { screen: employeeAdd },
  //     EditEmployee: { screen: editEmployee },
  //     EmployeeCost: { screen: employeeCost },
@@ -146,11 +201,13 @@ const CustomerStack = createStackNavigator(
 
 
 const HomeStack = createStackNavigator({
-  Home : HomeScreen,
+  Home : Platform.OS === 'ios' ? HomeScreen : HomeScreenAndroid,
   Customer : CustomerOrdersScreen,
   addCustomer : addCustomer,
   orderAdd : orderAdd,
-  CustomerEdit : CustomerEditScreen
+  CustomerEdit : CustomerEditScreen,
+  CustomerDefinedPriceAdd : CustomerDefinedPriceAddScreen,
+  CustomerDefinedPrices : CustomerDefinedPricesScreen
 
 },{
   defaultNavigationOptions: {
@@ -164,6 +221,31 @@ const HomeStack = createStackNavigator({
     },
   },
 })
+
+
+const AgreementStack = createStackNavigator({
+  UserAgreement : UserAgreementScreen,
+
+
+
+
+
+},{
+  defaultNavigationOptions: {
+    headerStyle: {
+      backgroundColor: '#2069F3',
+      fontFamily : 'Avenir Next'
+    },
+    headerTintColor: '#fff',
+    headerTitleStyle: {
+      fontWeight: 'bold',
+    },
+  },
+})
+
+
+
+
 
 
 // const Icon = createIconSetFromIcoMoon(require('../images/file1.svg'))
@@ -203,7 +285,7 @@ const MainStack = createBottomTabNavigator(
 
     },
     Settings: {
-      screen: HomeScreen,
+      screen: reportStack,
       navigationOptions: {
         tabBarLabel: 'Rapor',
 
@@ -246,13 +328,15 @@ const LoginScreen = createStackNavigator(
     SignUpFirst :SignUpFirstScreen,
     SignUpSecond : SignUpSecondScreen,
     PhoneVerification:PhoneVerificationScreen,
-    Home: HomeScreen
+    Home: HomeScreen,
+    UserAgreement : UserAgreementScreen
   },
   {
     initialRouteName: "Login",
-    headerMode: "none"
+    // headerMode: "none"
   }
 );
+
 
 
 export default createAppContainer(
@@ -260,8 +344,9 @@ export default createAppContainer(
     {
       AuthLoading: AuthLoading,
       LoginScreen: LoginScreen,
-
+      introductionStack :introductionStack,
       MainStack: MainStack,
+
       // AddCustomer: CustomerApp,
     },
     {

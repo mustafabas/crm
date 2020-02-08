@@ -4,7 +4,8 @@ import { Dispatch } from "react";
 import {CUSTOMER_DELETE_SUCCEED,CUSTOMER_DELETE_FAILED, CUSTOMER_DELETE_LOADING} from './../types'
 import {Action} from '../states'
 import { GetCustomers } from './homeAction';
-import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
+
 import { reset } from './loginAction';
 
 

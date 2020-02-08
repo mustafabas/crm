@@ -12,6 +12,7 @@ import {IEmployeeCostItem} from "./models/employeeCostModel"
 import { UserFirstData } from "./reducers/signUpReducers";
 import { IProduct } from "./actions/productEditAction";
 import { Customer } from "./actions/customerEditAction";
+import { productCountList } from "./actions/reportAction";
 
 export interface State {
     data: any[];
@@ -25,7 +26,7 @@ export interface State {
 
   export interface HomeState{
       customers:ICustomerItem[];
-      isHomeLoading :boolean;
+      isHomeLoading :boolean | null;
   }
 
   export interface UserState {
@@ -57,7 +58,7 @@ export interface State {
   export interface Orders
   {
     orders: IOrderItem[];
-    isOrderLoading: boolean;
+    isOrderLoading: boolean | null;
     customerDetail : ICustomerDetailItem;
     isCustomerDetailLoading : boolean;
     loadingMore:boolean;
@@ -101,7 +102,7 @@ export interface State {
 
   export interface ProductState{
     products:IProductItem[];
-    isProductLoading :boolean;
+    isProductLoading :boolean | null;
 }
 
 export interface AddOrder
@@ -137,7 +138,7 @@ export interface AddCustomerPrice
 
   export interface CustomerDefinedPriceState{
     products:IDefinedCustomerPriceItem[];
-    isProductLoading :boolean;
+    isProductLoading :boolean | null;
 }
 
 export interface CustomerPriceEdit
@@ -174,14 +175,16 @@ export interface EmployeeAdd
 {
   isSuccess: boolean;
   EmployeeAddMessage: string;
-  isLoading:boolean;;
+  isLoading:boolean;
 }
 export interface EmployeeEditRedecurState
 {
   isSuccess: boolean;
   EmployeeUpdateMessage: string;
-  employee :IEmployeeItemBaseResponseModel | null;
+  employee :IEmployeeItemBaseResponseModel;
   isLoading : boolean;
+  isLoadignGetEmployee : boolean | null;
+
 }
 export interface AddUser
   {
@@ -191,7 +194,7 @@ export interface AddUser
 
   export interface EmployeeDelete
   {
-    isSuccess: boolean;
+    isSuccess: boolean | null;
   }
 
   export interface getUserState{
@@ -209,6 +212,8 @@ export interface EmployeeCostAdd
 export interface ReportState{
   report:IReportItem;
   isReportLoading :boolean;
+  isReportLoadingProductPie : boolean | null;
+  reportProductPie :productCountList;
 }
 
 export interface GetEmployeeCostState{

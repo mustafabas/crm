@@ -9,10 +9,14 @@ import {
   Platform,
   Modal,
   Alert,
-  AsyncStorage,
+
   Image,
+  Linking,
+  Dimensions
 } from "react-native";
-import { Icon, Input, Item, Tabs, Tab, TabHeading, Text, Button, ScrollableTab, ListItem, Left, Thumbnail, Body, Right, Form, Label, Content, Card, CardItem, Accordion } from 'native-base';
+import AsyncStorage from '@react-native-community/async-storage';
+
+import { Icon, Input, Item, Tabs, Tab, TabHeading, Text, Button, ScrollableTab, ListItem, Left, Thumbnail, Body, Right, Form, Label, Content, Card, CardItem, Accordion, Spinner } from 'native-base';
 import { NavigationScreenProp, NavigationState, ScrollView, } from "react-navigation";
 import { connect } from "react-redux";
 import { AppState } from "../../../redux/store";
@@ -31,6 +35,7 @@ import SvgIcon from 'react-native-svg-icon';
 import svgs from '../../../images/icomoon/SVG/svgs';
 import { showMessage } from "react-native-flash-message";
 import { employe } from "../../../redux/actions/editEmployeeAction";
+import { InfoItem } from "../../../components/InfoItem";
 
 const IconNew = (props) => <SvgIcon {...props} svgs={svgs} />
 
@@ -45,6 +50,7 @@ interface Props {
   employeeAddCostLoading: boolean;
   employeeCostAddMessage: string;
   isSuccess: boolean;
+ 
 }
 
 interface State {
@@ -57,6 +63,7 @@ interface State {
   UserType: string | null;
   modalAmountVisible: boolean;
   employeeList: IEmployeeItemResponseModel[];
+  isShowDeleteView : boolean;
 }
 
 interface amountData {
@@ -68,9 +75,9 @@ const initialValues: amountData = {
 }
 
 const girdiler = Yup.object().shape({
-  amount: Yup.number()
-    .positive()
-    .required(),
+  amount: Yup.string().required()
+
+
 });
 
 class Employee extends Component<Props, State> {
@@ -87,7 +94,8 @@ class Employee extends Component<Props, State> {
       active: false,
       UserType: "",
       modalAmountVisible: false,
-      employeeList: []
+      employeeList: [],
+      isShowDeleteView : false,
     };
 
     AsyncStorage.getItem("UserType").then((value) => {
@@ -158,27 +166,14 @@ class Employee extends Component<Props, State> {
   deleteSelectedEmployee() {
 
     const { employeeDelete } = this.props;
+    console.log(this.state.employeeId)
     employeeDelete(this.state.employeeId);
     this.OrderSheet.close();
     this.onRefresh();
 
   }
 
-  deleteEmployeeAlert() {
-    //function to make three option alert
-    Alert.alert(
-      //title
-      'Müşteri Silme İşlemi',
-      //body
-      'Müşteriyi silmek istiyor musunuz?',
-      [
-        { text: 'Geri Gel' },
-        { text: 'Evet', onPress: () => this.deleteSelectedEmployee() },
-      ],
-      { cancelable: false }
-    );
 
-  }
   editEmployee() {
     this.closeModal();
     this.props.navigation.navigate("EditEmployee",
@@ -188,13 +183,14 @@ class Employee extends Component<Props, State> {
 
   }
   openModal(employeeId: number) {
+    console.log(employeeId)
     this.setState({
       employeeId: employeeId,
     });
     this.OrderSheet.open();
   }
   giderEkle(values: amountData) {
-    this.props.employeeCost(this.state.employeeId, Number(values.amount));
+    this.props.employeeCost(this.state.employeeId,Number(values.amount.replace(",",".")));
     this.AmountSheet.close();
     this.onRefresh();
 
@@ -226,7 +222,17 @@ class Employee extends Component<Props, State> {
     }
 
   }
+  showSimpleDeleteMessage() {
+    if (this.props.employeeDeleteIsSuccess) {
+      showMessage({
+        message: "Çalışan başarıyla silindi",
+        type: this.props.employeeDeleteIsSuccess ? "success" : "danger",
+        icon: "auto"
+      }
+      );
+    }
 
+  }
   getUserType() {
     //function to make three option alert
     AsyncStorage.getItem("UserType").then((value) => {
@@ -255,7 +261,7 @@ class Employee extends Component<Props, State> {
           }}>
           <Icon name="ios-add" style={styles.SheetItemIcon}></Icon>
           <Text style={styles.SheetItemText}
-          >Ödeme Ekle</Text>
+          >Gider Ekle</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.SheetItemContainer}
           onPress={() => {
@@ -268,8 +274,8 @@ class Employee extends Component<Props, State> {
         </TouchableOpacity>
         <TouchableOpacity style={styles.SheetItemContainer}
           onPress={() => {
-            this.OrderSheet.close();
-            this.deleteEmployeeAlert();
+
+            this.setState({isShowDeleteView : true})
           }}>
           <Icon type="FontAwesome" name="trash-o" style={[styles.SheetItemIcon, { fontSize: 25 }]}></Icon>
 
@@ -280,8 +286,46 @@ class Employee extends Component<Props, State> {
     );
   }
 
+
+  _renderEmployeeDeleteAlert() {
+    return (
+
+      <View style={styles.SheetContainer}>
+        <TouchableOpacity style={[styles.SheetItemContainer, { justifyContent: 'flex-end', padding: 5 }]}
+          onPress={() => {
+            this.OrderSheet.close();
+            this.setState({isShowDeleteView : false});
+          }}>
+          <Icon name="ios-close" style={[{ fontSize: 40, marginRight: 10 }, styles.SheetItemIcon]}></Icon>
+
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.SheetItemContainer}
+          onPress={() => {
+            this.OrderSheet.close();
+            this.setState({isShowDeleteView : false});
+            this.deleteSelectedEmployee();
+          }}>
+          <Icon type="FontAwesome" name="trash-o" style={[styles.SheetItemIcon, { fontSize: 25 }]}></Icon>
+
+          <Text style={styles.SheetItemText}
+          >Sil</Text>
+
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.SheetItemContainer}
+          onPress={() => {
+
+            this.setState({isShowDeleteView : false});
+          }}>
+          <Icon type="FontAwesome" name="chevron-left" style={[styles.SheetItemIcon, { fontSize: 22 }]} ></Icon>
+          <Text style={styles.SheetItemText}
+          >İptal Et</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
   componentDidMount() {
-          this.mapToPropsToState();       
+    this.mapToPropsToState();
   }
   _renderEmployeeCostSheetContent() {
     return (<View style={styles.SheetAmountContainer}>
@@ -302,26 +346,27 @@ class Employee extends Component<Props, State> {
                   }}>
                   <Icon name="ios-close" style={[{ fontSize: 40, marginRight: 10 }, styles.SheetItemIcon]}></Icon>
                 </TouchableOpacity>
+                <View style={{ flexDirection: "row", justifyContent: 'flex-start' }}>
+                  <Input
+                    //containerStyle={{ width: '80%' }}
+                    style={styles.input}
+                    placeholder="Gider Miktarı"
+                    placeholderTextColor="#9A9A9A"
+                    value={props.values.amount + ""}
+                    autoCapitalize="none"
+                    keyboardType="numeric"
+                    onBlur={(props.touched.amount && props.errors.amount) ? () => {
+                      props.setFieldValue('amount', "")
+                      props.handleChange("amount")
+                    }
+                      : props.handleBlur("amount")}
+                    onChangeText={props.handleChange("amount")}
+                  />
 
-                <Content style={{ padding: 0, margin: 0 }} >
-                  <Form style={{ flexDirection: 'row', flex: 1 }}>
-                    <Item floatingLabel style={{ width: '60%', borderBottomColor: props.touched.amount && props.errors.amount != null ? 'red' : '#216AF4' }}>
-                      <Label style={{ color: props.touched.amount && props.errors.amount != null ? 'red' : '#000' }}>Miktar</Label>
-                      <Input
-                        onBlur={(props.touched.amount && props.errors.amount) ? () => {
-                          props.setFieldValue('amount', "")
-                          props.handleChange("amount")
-                        }
-                          : props.handleBlur("amount")}
-                        onChangeText={props.handleChange("amount")}
-                      />
-                    </Item>
-                    <Button onPress={() => props.handleSubmit()} primary style={{ width: '20%', marginLeft: '10%', marginTop: 20, backgroundColor: '#01C3E3', borderRadius: 5 }}>
-                      {this._renderEmployeeCostAddButtonText()}
-
-                    </Button>
-                  </Form>
-                </Content>
+                  <Button onPress={() => props.handleSubmit()} style={styles.SheetButtonContainer}>
+                    {this._renderEmployeeCostAddButtonText()}
+                  </Button>
+                </View>
 
               </View>
             </KeyboardAvoidingView>
@@ -356,105 +401,107 @@ class Employee extends Component<Props, State> {
   }
   _renderArrowButton(item: any) {
     if (item.fullShow) {
-      return (<Icon style={{ fontSize: 50 }} name="chevron-up" type="EvilIcons"></Icon>);
+      return (<Icon style={{ fontSize: 24, color: "" }} name="caret-up" type="FontAwesome5"></Icon>);
     }
-    return (<Icon style={{ fontSize: 50, color: "green" }} name="chevron-down" type="EvilIcons"></Icon>);
+    return (<Icon style={{ fontSize: 24 }} name="caret-down" type="FontAwesome5"></Icon>);
 
   }
   _renderView() {
     const { isLoading, navigation } = this.props;
 
 
-      if (this.props.employees.length > 0) {
+    if (this.props.employees.length > 0) {
 
-        return (<View style={{padding: 10}}> 
+      return (<View style={{ padding: 10 }}>
         {
-          this.props.isLoading &&    
-          <ActivityIndicator style={{position:"absolute"}}></ActivityIndicator>
-          
+          this.props.isLoading &&
+          <Spinner color='#333' style={{ position: "absolute", left: (Dimensions.get('window').width / 2) - 25, top: 100, zIndex: 1000 }}></Spinner>
+
         }
-          <Button style={styles.employeeCostContainer} iconLeft onPress={() => this.props.navigation.navigate("EmployeeCost")}>
-            <Icon name="ios-list"></Icon>
-            <Text style={styles.employeeCostButtonText}>Çalışan Giderleri</Text>
-          </Button>
-          <FlatList
-            style={{ marginBottom: 40 }}
-            refreshing={this.state.refreshing}
-            onRefresh={() => this.onRefresh()}
-            data={this.state.employeeList}
-            renderItem={({ item }) => (
-              <View style={{  flex: 1, borderBottomColor: '#ccc', borderBottomWidth: 1,paddingTop:10  }}>
-                <View style={{ flexDirection: 'row', flex: 1, borderBottomColor: '#000'}}>
-                  <View style={{ flex: 0.17 }} >
-                    <View style={{ width: 33, height: 33, borderRadius: 16.5, backgroundColor: '#2069F3', justifyContent: 'center', alignItems: 'center' }}>
-                      <Text style={{ color: 'white' }}>{item.employeeName.substring(0, 1)}</Text>
+        <Button style={styles.employeeCostContainer} iconLeft onPress={() => this.props.navigation.navigate("EmployeeCost")}>
+          <Icon name="ios-list"></Icon>
+          <Text style={styles.employeeCostButtonText}>Çalışan Giderleri</Text>
+        </Button>
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          style={{ marginBottom: 40 }}
+          refreshing={this.state.refreshing}
+          onRefresh={() => this.onRefresh()}
+          data={this.props.employees}
+          renderItem={({ item }) => (
+            <View style={{ padding: 5 }}>
+              <View style={{
+
+                borderRadius: 15,
+                borderColor: '#CFD3D7',
+
+                borderWidth: 1,
+
+              }}>
+                <View style={{ borderBottomColor: '#CFD3D7', padding: 10, borderBottomWidth: 1 }}>
+                  <View style={{ justifyContent: 'space-between', flexDirection: 'row', flex: 1 }}>
+                    <View style={{ flexDirection: 'row' }}>
+                      <View style={{ width: 33, height: 33, borderRadius: 16.5, backgroundColor: '#2069F3', justifyContent: 'center', alignItems: 'center' }}>
+                        <Text style={{ color: 'white' }}>{item.employeeName.substring(0, 1)}</Text>
+                      </View>
+                      <View style={{ flexDirection: 'column', marginLeft: 10 }}>
+                        <Text style={styles.employeeNameText}>{item.employeeName}</Text>
+                        <Text note style={{ fontFamily: 'Avenir Next', color: '#404243' }}>{item.createDate}</Text>
+                      </View>
                     </View>
-                  </View>
-                  <View style={{ flex: 0.43 }}>
-                    <Text style={styles.employeeNameText}>{item.employeeName}</Text>
-                    <Text note>{item.createDate}</Text>
-                  </View>
-                  <View style={{ flex: 0.3, flexDirection: "row" }}>
-                    <Text note style={{ fontFamily: 'Avenir Next' }}>Maaş:</Text>
-                    <Text style={{ color: '#2069F3' }}>{item.monthlySalaryDisplay}</Text>
-
-                  </View>
-                  <View style={{ flex: 0.3, justifyContent: "flex-end", flexDirection: "row" }}>
-                    <View style={{ justifyContent: "flex-end" }}>
+                    <View>
                       <TouchableOpacity onPress={() => this.openModal(item.employeeId)}>
-
                         <Icon name="ios-more" style={{ color: '#2069F3', fontSize: 30 }}></Icon>
                       </TouchableOpacity>
-
-                      <TouchableOpacity onPress={() => this._showMore(item.employeeId, !item.fullShow)}>
-                        {this._renderArrowButton(item)}
-                      </TouchableOpacity>
                     </View>
                   </View>
-
-
                 </View>
-                {item.fullShow &&
-                  <View style={{flexDirection:"row", justifyContent:"space-between"}}>
-                    <View style={{ flexDirection: "column" }}>
-                      <Text note>Günlük Yemek Ücreti:</Text>
-                      <Text>{item.dailyDecimalFoodDisplay}</Text>
+                <View style={{ padding: 10 }} >
+                  <View style={{ justifyContent: 'space-between', flexDirection: 'row', flex: 1 }}>
+                    <View style={{ flexDirection: 'column' }}>
+                      {item.monthlySalaryDisplay != '' && <Text style={{ fontFamily: 'Avenir Next', color: '#404243' }}>Maaş</Text>}
+                      <Text style={{ color: '#2069F3' }}>{item.monthlySalaryDisplay}</Text>
+                      {item.dailyDecimalFoodDisplay != '' && <Text style={{ fontFamily: 'Avenir Next', color: '#404243' }}>Günlük Yemek Ücreti</Text>}
+                      <Text style={{ color: '#2069F3', fontFamily: 'Avenir Next' }}>{item.dailyDecimalFoodDisplay}</Text>
                     </View>
-                    <View style={{ flexDirection: "column" }}>
-                      <Text note>Telefon Numarası:</Text>
-                      <Text>{item.phoneNumber}</Text>
-                    </View>
-                    <View style={{ flexDirection: "column" }}>
-                      <Text note>Adres:</Text>
-                      <Text>{item.address}</Text>
+                    <View style={{ flexDirection: 'column', flex: 0.6 }}>
+                      {item.phoneNumber != "" &&
+                        <Text style={{ fontFamily: 'Avenir Next', color: '#404243', textAlign: 'right' }}>Telefon</Text>}
+                      <TouchableOpacity onPress={() => Linking.openURL(`tel:${item.phoneNumber}`)}>
+                        <Text style={{ color: '#58595A', textAlign: 'right', fontFamily: 'Avenir Next', textDecorationLine: 'underline' }}>
+                          {item.phoneNumber}
+                        </Text>
+                      </TouchableOpacity>
+                      <View>
+                        {item.address != "" &&
+                          <Text style={{ fontFamily: 'Avenir Next', color: '#404243', textAlign: 'right' }}>Adres</Text>}
+                        <TouchableOpacity onPress={() => Linking.openURL('https://www.google.com/maps/search/?api=1&query=' + item.address)}>
+                          <Text style={{ color: '#58595A', textAlign: 'right', textDecorationLine: 'underline', fontFamily: 'Avenir Next' }}>
+                            {item.address}
+                          </Text>
+                        </TouchableOpacity>
+                      </View>
                     </View>
                   </View>
-                }
-
+                </View>
               </View>
-            )}
-            keyExtractor={item => item.employeeId.toString()}
-          />
-        </View>);
-      } else {
-        return (<View >
+            </View>
+          )}
+          keyExtractor={item => item.employeeId.toString()}
+        />
+      </View>);
+    } else {
+      return (<View style={{justifyContent:'center',flex:1}} >
 
-          <Card style={{ borderColor: '#f5f5f5' }}>
+      
 
-            <CardItem>
-              <Body style={{ flexDirection: "column", justifyContent: "center", alignItems: "center" }} >
-                <Icon name="ios-information-circle-outline" style={{ fontSize: 40, }} ></Icon>
-                <Text>
+        <InfoItem text="Sisteme eklediğiniz çalışan bulunmakatadır." />
 
-                  Sisteme eklediğiniz çalışan bulunmakatadır. Çalışanlarınızı yönetmek için eklemeye şimdi başlayın!
-                </Text>
-              </Body>
-            </CardItem>
-          </Card>
 
-        </View>);
-      }
-    
+
+      </View>);
+    }
+
   }
   render() {
     if (this.state.UserType === "2") {
@@ -496,9 +543,28 @@ class Employee extends Component<Props, State> {
               }
             }
             }>
-            {this._renderEmployeeSheetContent()}
-          </RBSheet>
+              {this.state.isShowDeleteView ? this._renderEmployeeDeleteAlert() : this._renderEmployeeSheetContent()}
 
+          </RBSheet>
+          <RBSheet
+            ref={ref => {
+              this.DeleteAlert = ref;
+            }}
+            height={230}
+            duration={200}
+            customStyles={{
+              container: {
+                justifyContent: "flex-start",
+                alignItems: "flex-start",
+                paddingLeft: 20,
+                backgroundColor: '#EFF3F9',
+                borderTopLeftRadius: 15,
+                borderTopRightRadius: 15
+              }
+            }
+            }>
+            {this._renderEmployeeDeleteAlert()}
+          </RBSheet>
           <RBSheet
             ref={ref => {
               this.AmountSheet = ref;
@@ -520,6 +586,7 @@ class Employee extends Component<Props, State> {
           </RBSheet>
           {this._renderView()}
           {this.showSimpleMessage()}
+          {this.showSimpleDeleteMessage()}
         </View>
       );
     }

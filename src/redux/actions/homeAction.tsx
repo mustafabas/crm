@@ -1,4 +1,5 @@
-import { AsyncStorage } from "react-native";
+import AsyncStorage from '@react-native-community/async-storage';
+
 import axios from 'axios'
 import { WATER_CUSTOMERS_HOME_GET } from './../constants'
 import { Dispatch } from "react";
@@ -33,7 +34,7 @@ console.log(WATER_CUSTOMERS_HOME_GET_ORDER_TYPE_SEARCH_TEXT)
         if (response.data.isSuccess) {
           var customersModel: ICustomerItem[] = [];
           var totalRecords = response.data.result.totalRecords
-
+console.log("Girdi")
           response.data.result.homeCustomerItemModels.forEach((customer: any) => {
             var customerItem: ICustomerItem = {
               customerId: customer.customerId,
@@ -57,10 +58,12 @@ console.log(WATER_CUSTOMERS_HOME_GET_ORDER_TYPE_SEARCH_TEXT)
 
 
         else {
+          console.log("Girdime")
           dispatch(loading(false));
         }
       })
       .catch((err) => {
+        console.log("Girdime")
         dispatch(loading(false));
 
       });
@@ -76,11 +79,21 @@ console.log(WATER_CUSTOMERS_HOME_GET_ORDER_TYPE_SEARCH_TEXT)
 export function GetCustomerMore(orderType: number, searchText: string, dayOfWeek: number, pageIndex: number) {
   return (dispatch: Dispatch<Action>) => {
 
+    AsyncStorage.multiGet(['userToken', 'userId']).then((res) => {
+      let token = res[0][1];
+      let userId = res[1][1];
+      
+      const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+    }
 
+    var WATER_CUSTOMERS_HOME_GET_ORDER_TYPE_SEARCH_TEXT = WATER_CUSTOMERS_HOME_GET + orderType + "&searchText=" + searchText + "&pageIndex=" + pageIndex + "&pageSize=10&dayOfWeek=" + dayOfWeek+"&userId="+userId;
 
-    var WATER_CUSTOMERS_HOME_GET_ORDER_TYPE_SEARCH_TEXT = WATER_CUSTOMERS_HOME_GET + orderType + "&searchText=" + searchText + "&pageIndex=" + pageIndex + "&pageSize=10&dayOfWeek=" + dayOfWeek;
-
+    console.log(WATER_CUSTOMERS_HOME_GET_ORDER_TYPE_SEARCH_TEXT);
     axios.get(WATER_CUSTOMERS_HOME_GET_ORDER_TYPE_SEARCH_TEXT,
+      {    headers: headers
+       }
 
     )
       .then(async (response) => {
@@ -116,8 +129,14 @@ export function GetCustomerMore(orderType: number, searchText: string, dayOfWeek
       })
       .catch((err) => {
         // dispatch(loading(false));
+        console.log(err);
 
       });
+ 
+
+  })
+
+  
 
 
   }

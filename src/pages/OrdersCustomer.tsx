@@ -1,5 +1,7 @@
 import React, { Component } from "react";
-import { View, FlatList, ActivityIndicator, StatusBar, Text, TouchableOpacity, KeyboardAvoidingView, Platform, Modal, Alert, AsyncStorage } from "react-native";
+import { View, FlatList, ActivityIndicator, StatusBar, Text, TouchableOpacity, KeyboardAvoidingView, Platform, Modal, Alert } from "react-native";
+import AsyncStorage from '@react-native-community/async-storage';
+
 import { NavigationScreenProp, NavigationState, ScrollView, NavigationEvents } from "react-navigation";
 import { connect } from "react-redux";
 import { HeaderLeftRight } from "../components";
@@ -109,41 +111,48 @@ class OrdersCustomer extends Component<Props, State> {
     this.setState({ refreshing: false });
   }
 
-  deleteOrderAlert() {
+  async deleteOrderAlert() {
     //function to make three option alert
-    AsyncStorage.getItem("UserType").then((value) => {
-      if (value === "2") {
 
-        Alert.alert(
-          //title
-          'Hata',
-          //body
-          'Sipariş silme yetkiniz bulunmamaktadır',
-          [
-            { text: 'Tamam' },
-          ],
-          { cancelable: false }
-        );
-        this.closeModal();
+    try {
+      const value = await AsyncStorage.getItem('UserType')
+      if(value !== null) {
+        if (value === "2") {
 
-
+          Alert.alert(
+            //title
+            'Hata',
+            //body
+            'Sipariş silme yetkiniz bulunmamaktadır',
+            [
+              { text: 'Tamam' },
+            ],
+            { cancelable: false }
+          );
+          this.closeModal();
+  
+  
+        }
+        else {
+          Alert.alert(
+            //title
+            'Sipariş Silme İşlemi',
+            //body
+            'Siparişi silmek istiyor musunuz?',
+            [
+              { text: 'Geri Gel' },
+              { text: 'Evet', onPress: () => this.deleteSelectedOrder() },
+            ],
+            { cancelable: false }
+          );
+        }
+  
       }
-      else {
-        Alert.alert(
-          //title
-          'Sipariş Silme İşlemi',
-          //body
-          'Siparişi silmek istiyor musunuz?',
-          [
-            { text: 'Geri Gel' },
-            { text: 'Evet', onPress: () => this.deleteSelectedOrder() },
-          ],
-          { cancelable: false }
-        );
-      }
+    } catch(e) {
+      // error reading value
+    }
 
-
-    });
+   
 
 
   }

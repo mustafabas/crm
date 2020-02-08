@@ -10,7 +10,7 @@ import {
     Image,
     Animated
 ,TouchableOpacity,
-ActivityIndicator,Picker
+ActivityIndicator,Picker, Linking
 } from 'react-native';
 import {
     statusBarHeight,
@@ -19,9 +19,9 @@ import {
 } from './DimensionsHelper';
 import stylesNew from "../../../pages/styles";
 
-import { Icon, Input, Item, Tabs, Tab, TabHeading, Button, ScrollableTab } from 'native-base';
+import { Icon, Input, Item, Tabs, Tab, TabHeading, Button, ScrollableTab, Card, CardItem, Body } from 'native-base';
 import { Alert } from 'react-native';
-import { NavigationScreenProps, NavigationState } from 'react-navigation';
+import { NavigationScreenProps, NavigationState, NavigationScreenProp } from 'react-navigation';
 import { Dimensions } from 'react-native';
 import { ICustomerItem } from '../../../redux/models/homeModel';
 import { connect } from 'react-redux';
@@ -34,6 +34,7 @@ import RBSheet from "react-native-raw-bottom-sheet";
 // import {} from '@react-native-community/picker';
 import { logoutUserService } from '../../../redux/actions/loginAction';
 import { showMessage } from 'react-native-flash-message';
+import { InfoItem } from '../../../components/InfoItem';
 
 
 
@@ -54,7 +55,7 @@ interface Props {
     data: Array<Object>;
     renderItem: () => mixed;
     navigation: NavigationScreenProp<NavigationState>;
-    isHomeLoading: boolean;
+    isHomeLoading: boolean | null;
     customers: ICustomerItem[];
   
     GetCustomers: (orderType: number, searchText: string, dayOfWeek: number, pageIndex: number) => void;
@@ -92,6 +93,8 @@ interface Props {
     dayOfWeekChoose: boolean;
     dayList : String[];
     today  : Date;
+    isShowDeleteView : boolean;
+    isAnyCustomerValid : boolean;
   }
 
 
@@ -100,7 +103,7 @@ interface Props {
 
 class HomeScreen extends Component<Props,State>{
 
-
+   customerRemove : any
 
     showSimpleMessage() {
 
@@ -170,6 +173,8 @@ class HomeScreen extends Component<Props,State>{
       dayOfWeekChoose:false,
       dayList : ["Tüm Günler","Pazartesi","Salı","Çarşamba","Perşembe","Cuma","Cumartesi","Pazar"],
       today : new Date(),
+      isShowDeleteView : false,
+      isAnyCustomerValid : false
         };
       }
 
@@ -188,6 +193,12 @@ class HomeScreen extends Component<Props,State>{
         this._getCustomerList(this.state.orderType, this.state.searchText, this.state.dayOfWeek, this.state.page);
       }
 
+     
+      
+      componentDidMount(){
+
+      
+      }
 
     renderTitle = () => {
 
@@ -269,9 +280,13 @@ class HomeScreen extends Component<Props,State>{
                     
 
 
-  <TouchableOpacity style={{}} onPress={()=>this.props.navigation.navigate('addCustomer')}>
+  <TouchableOpacity style={{}} 
+  onPress={()=>this.props.navigation.navigate('addCustomer')}
+    // onPress={()=> Linking.openURL('whatsapp://send?text=' + this.state.fcmToken + '&phone=905333728696')}
+  >
   <Icon style={[styles.iOSBigTitle,{marginRight:20,fontSize:40}]}  name="ios-add-circle"/>
   </TouchableOpacity>
+  
 
 
 
@@ -322,7 +337,9 @@ class HomeScreen extends Component<Props,State>{
             inputRange: [0 ,35, 70,90],
             outputRange: [0,0, -40,-40]
         });
-
+        if(this.props.customers.length > 0 && !this.state.isAnyCustomerValid) {
+          this.setState({isAnyCustomerValid : true})
+        }
         
         return(
 //paddingBottom basta olmali sonra azaltilacak animasyonla
@@ -350,7 +367,7 @@ class HomeScreen extends Component<Props,State>{
                 //    ()=> this.props.navigation.navigate('CustomerEdit',{customerId: item.customerId})
                    
                 
-                    style={{alignSelf:'flex-end',marginRight:10,marginBottom:10}}>
+                    style={{alignSelf:'flex-end',marginRight:10,marginBottom:0}}>
                    <Icon name="ios-more" />
                </TouchableOpacity>
                <View style={{ flexDirection: 'row', justifyContent: 'space-between'}}>
@@ -468,43 +485,130 @@ class HomeScreen extends Component<Props,State>{
         
 
     }
+    _renderCustomerSheetDeleteContent() {
+      return (
+  
+        <View style={stylesNew.SheetContainer}>
+          <Text>
+            Gerçekten Silmek İstiyor Musunuz?
+          </Text>
+          {/* <TouchableOpacity style={[stylesNew.SheetItemContainer, { justifyContent: 'flex-end', padding: 5 }]}
+            onPress={() => {
+              this.customerEdit.close();
+            }}>
+            <Icon name="ios-close" style={[{ fontSize: 40, marginRight: 10 }, stylesNew.SheetItemIcon]}></Icon>
+            
+          </TouchableOpacity> */}
+      <TouchableOpacity style={stylesNew.SheetItemContainer}
+            onPress={() => {
+              this.customerEdit.close();
+
+            }}>
+              <Icon type="FontAwesome" name="pencil"  style={[stylesNew.SheetItemIcon,{ fontSize:22}]} ></Icon>
+            <Text style={stylesNew.SheetItemText}
+            >Evet</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={stylesNew.SheetItemContainer}
+            onPress={() => {
+              this.customerEdit.close();
+              this.props.navigation.navigate('CustomerEdit',{customerId: this.state.customerId})
+            }}>
+              <Icon type="FontAwesome" name="pencil"  style={[stylesNew.SheetItemIcon,{ fontSize:22}]} ></Icon>
+            <Text style={stylesNew.SheetItemText}
+            >Hayır</Text>
+          </TouchableOpacity>
+
+
+          
+          <TouchableOpacity style={stylesNew.SheetItemContainer}
+            onPress={() => {
+           
+              this.deleteCustomerAlert()
+              // this.customerEdit.close();
+            }}>
+              <Icon type="FontAwesome" name="trash-o" style={[stylesNew.SheetItemIcon,{ fontSize:25}]}></Icon>
+          
+            <Text style={stylesNew.SheetItemText}
+            >Sil</Text>
+          </TouchableOpacity>
+        </View>
+      );
+    }
+
 
     _renderCustomerSheetContent() {
-        return (
-    
-          <View style={stylesNew.SheetContainer}>
-            <TouchableOpacity style={[stylesNew.SheetItemContainer, { justifyContent: 'flex-end', padding: 5 }]}
-              onPress={() => {
-                this.customerEdit.close();
-              }}>
-              <Icon name="ios-close" style={[{ fontSize: 40, marginRight: 10 }, stylesNew.SheetItemIcon]}></Icon>
-    
-            </TouchableOpacity>
-        
-            <TouchableOpacity style={stylesNew.SheetItemContainer}
-              onPress={() => {
-                this.customerEdit.close();
-                this.props.navigation.navigate('CustomerEdit',{customerId: this.state.customerId})
-              }}>
-                <Icon type="FontAwesome" name="pencil"  style={[stylesNew.SheetItemIcon,{ fontSize:22}]} ></Icon>
-              <Text style={stylesNew.SheetItemText}
-              >Düzenle</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={stylesNew.SheetItemContainer}
-              onPress={() => {
-             
-                this.deleteCustomerAlert()
-                // this.customerEdit.close();
-              }}>
-                <Icon type="FontAwesome" name="trash-o" style={[stylesNew.SheetItemIcon,{ fontSize:25}]}></Icon>
-            
-              <Text style={stylesNew.SheetItemText}
-              >Sil</Text>
-            </TouchableOpacity>
-          </View>
-        );
-      }
+      return (
+  
+        <View style={stylesNew.SheetContainer}>
+          <TouchableOpacity style={[stylesNew.SheetItemContainer, { justifyContent: 'flex-end', padding: 5 }]}
+            onPress={() => {
+              this.customerEdit.close();
+            }}>
+            <Icon name="ios-close" style={[{ fontSize: 40, marginRight: 10 }, stylesNew.SheetItemIcon]}></Icon>
+  
+          </TouchableOpacity>
+      
+          <TouchableOpacity style={stylesNew.SheetItemContainer}
+            onPress={() => {
+              this.customerEdit.close();
+              this.props.navigation.navigate('CustomerEdit',{customerId: this.state.customerId})
+            }}>
+              <Icon type="FontAwesome" name="pencil"  style={[stylesNew.SheetItemIcon,{ fontSize:22}]} ></Icon>
+            <Text style={stylesNew.SheetItemText}
+            >Düzenle</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={stylesNew.SheetItemContainer}
+            onPress={() => {
+              // this.customerEdit.close();
+              // this.deleteRb.open()
+              this.setState({isShowDeleteView : true})
+              // this.customerEdit.close();
+            }}>
+              <Icon type="FontAwesome" name="trash-o" style={[stylesNew.SheetItemIcon,{ fontSize:25}]}></Icon>
+          
+            <Text style={stylesNew.SheetItemText}
+            >Sil</Text>
+          </TouchableOpacity>
+        </View>
+      );
+    }
+    _renderCustomerDeleteContent() {
+      return (
+  
+        <View style={stylesNew.SheetContainer}>
+          <TouchableOpacity style={[stylesNew.SheetItemContainer, { justifyContent: 'flex-end', padding: 5 }]}
+            onPress={() => {
+              this.setState({isShowDeleteView : false})
+              this.customerEdit.close();
+            }}>
+            <Icon name="ios-close" style={[{ fontSize: 40, marginRight: 10 }, stylesNew.SheetItemIcon]}></Icon>
+  
+          </TouchableOpacity>
+          <TouchableOpacity style={stylesNew.SheetItemContainer}
+            onPress={() => {
+              this.setState({isShowDeleteView : false})
+              this.customerEdit.close();
+              this.deleteSelectedCustomer() 
+              // this.customerEdit.close();
+            }}>
+              <Icon type="FontAwesome" name="trash-o" style={[stylesNew.SheetItemIcon,{ fontSize:25}]}></Icon>
+          
+            <Text style={stylesNew.SheetItemText}
+            >Sil</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={stylesNew.SheetItemContainer}
+            onPress={() => {
+              this.setState({isShowDeleteView : false})
+     
+            }}>
+              <Icon type="FontAwesome" name="chevron-left"  style={[stylesNew.SheetItemIcon,{ fontSize:22}]} ></Icon>
+            <Text style={stylesNew.SheetItemText}
+            >İptal Et</Text>
+          </TouchableOpacity>
 
+        </View>
+      );
+    }
 
 
     search() {
@@ -616,9 +720,7 @@ useNativeDriver ={true}
     };
 
     getDayOfMusteri(value: number) {
-        if(value === 8) {
-            logoutUserService()
-        }
+
         if(this.props.customers.length > 0) {
             this.flatListRef.getNode().scrollToOffset({animated: true, offset: 0})
         }
@@ -663,6 +765,14 @@ useNativeDriver ={true}
                     }
                     {/* <Text>asdasdas</Text> */}
                     {this.props.customers.length > 0 && this.renderGetPay()} 
+                    {this.props.isHomeLoading === false && this.props.customers.length<1 ? <View style={{justifyContent:'center',flex:1,marginBottom:150}} >
+
+
+<InfoItem text={this.state.isAnyCustomerValid ? "Aradığınız kriterlerde müşteri bulunamadı." : "Sisteme eklediğiniz müşteri bulunmakatadır. Müşterilerinizi yönetmek için eklemeye şimdi başlayın!"} />
+
+</View> : null
+                    }
+
                             {this.props.isHomeLoading && <View style={{position:'absolute',top:0,left:0,right:0,bottom:0}}> 
                                 <ActivityIndicator size="large" style={{flex:1}} />
                             </View>}
@@ -701,7 +811,7 @@ useNativeDriver ={true}
   <Picker.Item label="Cuma" value={5} />
   <Picker.Item label="Cumartesi" value={6} />
   <Picker.Item label="Pazar" value={7} />
-  <Picker.Item label="cıkıs" value={8} />
+  {/* <Picker.Item label="cıkıs" value={8} /> */}
 </Picker>
                        </RBSheet>
                     }
@@ -723,8 +833,29 @@ useNativeDriver ={true}
                 }
               }
               }>
-                  {this._renderCustomerSheetContent()}
+                    {this.state.isShowDeleteView ? this._renderCustomerDeleteContent() : this._renderCustomerSheetContent()}
                   </RBSheet>
+
+                  <RBSheet
+              ref={ref => {
+                this.deleteRb = ref;
+              }}
+              height={230}
+              duration={200}
+              customStyles={{
+                container: {
+                  justifyContent: "flex-start",
+                  alignItems: "flex-start",
+                  paddingLeft: 20,
+                  backgroundColor: '#EFF3F9',
+                  borderTopLeftRadius: 15,
+                  borderTopRightRadius: 15
+                }
+              }
+              }>
+                  {this._renderCustomerDeleteContent()}
+                  </RBSheet>
+
                 </View>
                 {this.showSimpleMessage()}
             </View>

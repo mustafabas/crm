@@ -61,6 +61,24 @@ const loginSchema = Yup.object().shape({
 
 export default class PhoneVerificationScreen extends Component<Props, {}> {
 
+
+
+  static navigationOptions = (
+    screenProps: NavigationScreenProps
+  ) => {
+
+    return {
+
+      headerStyle: {
+        // height : screenProps.navigation.getParam('headerHeight'),
+        // backgroundColor:'#d67676'
+      },
+      header: null
+    }
+  }
+
+
+  
     handleLogin = (values: userData) => {
         const { navigation, } = this.props;
         this.props.loginUserService(values.activationCode);

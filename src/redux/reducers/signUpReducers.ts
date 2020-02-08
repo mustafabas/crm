@@ -112,7 +112,7 @@ export default (state: UserCreate = intialState, action: Action) => {
         }
 
     default:
-      return {...state} ;
+      return state ;
 
   }
 };

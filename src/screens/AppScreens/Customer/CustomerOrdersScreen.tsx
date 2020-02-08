@@ -10,12 +10,14 @@ import {
   ScrollView,
   TouchableOpacity,
   Image,
-  AsyncStorage,
+
   ActivityIndicator,
   Modal,
+  Linking,
 } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 
-import { Icon, Input, Item, Tabs, Tab, TabHeading, Button, ScrollableTab } from 'native-base';
+import { Icon, Input, Item, Tabs, Tab, TabHeading, Button, ScrollableTab, Card, CardItem,Body } from 'native-base';
 import { Alert } from 'react-native';
 import { SafeAreaView, NavigationScreenProp, NavigationState } from 'react-navigation';
 import { IOrderItem } from '../../../redux/models/orderModel';
@@ -38,6 +40,7 @@ import {
   PlaceholderLine,
   Fade
 } from "rn-placeholder";
+import { InfoItem } from '../../../components/InfoItem';
 
 const title = "Home Screen"
 
@@ -123,7 +126,11 @@ class CustomerOrdersScreen extends Component<Props, State>{
   }
 
 
-
+componentDidMount(){
+  this.props.navigation.setParams({
+    callingFun: this.callingFun,
+})
+}
   componentWillMount() {
     const customerId = this.props.navigation.getParam("customerId");
     this.props.GetCustomerDetail(customerId);
@@ -133,74 +140,28 @@ class CustomerOrdersScreen extends Component<Props, State>{
 
   }
 
-  static navigationOptions = ({ navigation }) => ({
+  callingFun = () => {
+    this.CustomerSheet.open()
+}
+
+   static navigationOptions = ({ navigation }) => ({
     title: 'Müşteri Siparişleri',
     headerRight: () => {
       return (
-        <TouchableOpacity onPress={() => navigation.navigate("orderAdd", { customerId: navigation.getParam("customerId") })} style={{ marginRight: 20 }}>
+        <View style={{flexDirection:'row'}}>
+          <TouchableOpacity onPress={() => navigation.getParam('callingFun')() } style={{ marginRight: 20 }}>
+          <Icon style={{ color: 'white' }} type="AntDesign" name="edit" />
+
+        </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate("orderAdd", { customerId: navigation.getParam("customerId") })} style={{ marginRight: 20 }}>
           <Icon style={{ color: 'white' }} name="ios-add-circle" />
 
         </TouchableOpacity>
-
+        
+        </View>
       )
     }
   })
-
-  //     static navigationOptions = ({ navigation }) => ({
-  //         header: () => <SafeAreaView forceInset={{horizontal:'never'}}  style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between',height:Platform.OS === 'ios' ? '100%' : 56,backgroundColor:'#216AF4',paddingHorizontal:10}}>
-
-  // <TouchableOpacity
-
-  //              onPress={()=>navigation.popToTop()}
-
-  //             ><Image  style={{height:24,width:15,marginBottom:5}}  source={require('../../../images/Vector3.png')} /></TouchableOpacity>
-  //             <Text style={{fontWeight: '600',
-  //         fontFamily:'Avenir Next',
-  //         fontSize:18,color:'white'}}>
-  //               Müşteri Siparişleri
-  //             </Text>
-
-  // <TouchableOpacity
-
-
-
-  // ><Icon  style={{color:'white'}}  name="ios-add-circle" /></TouchableOpacity>
-  //         </SafeAreaView>,
-  //       });
-
-
-
-  // static navigationOptions = {
-  //     title: 'Müşteri Siparişleri',
-
-  //     // headerStyle: {
-  //     //   backgroundColor: '#e83537',
-  //     // },
-  //     // headerTintColor: '#fff',
-  //     // headerTitleStyle: {
-  //     //   fontWeight: 'bold',
-  //     // },
-
-  //       headerLeft: shouldShowBackButton(navigation) ? (
-  //         <TouchableOpacity
-
-
-
-  //         ><Icon style={{color:'white'}}  name="ios-add-circle" /></TouchableOpacity>
-  //       ) : null,
-
-
-
-  //     headerRight: () => (
-  //         <TouchableOpacity
-
-
-
-  //         ><Icon style={{color:'white'}}  name="ios-add-circle" /></TouchableOpacity>
-  //       ),
-
-
-  //   };
 
 
   OrderSheet: any;
@@ -316,12 +277,12 @@ class CustomerOrdersScreen extends Component<Props, State>{
 
   goToNewPricePage() {
     this.closePriceModal();
-    this.props.navigation.navigate("NewPricePage", { customerId: this.props.navigation.getParam("customerId") });
+    this.props.navigation.navigate("CustomerDefinedPriceAdd", { customerId: this.props.navigation.getParam("customerId") });
   }
 
   goToDefinedPrice() {
     this.closePriceModal();
-    this.props.navigation.navigate("CustomerDefinedPricePage", { customerId: this.props.navigation.getParam("customerId") });
+    this.props.navigation.navigate("CustomerDefinedPrices", { customerId: this.props.navigation.getParam("customerId") });
   }
 
   odemeAl(values: amountData) {
@@ -364,11 +325,18 @@ class CustomerOrdersScreen extends Component<Props, State>{
 
   _renderCustomerSheetContent() {
     return (<View style={styles.SheetContainer}>
+              <TouchableOpacity style={[styles.SheetItemContainer, { justifyContent: 'flex-end', padding: 5 }]}
+          onPress={() => {
+            this.CustomerSheet.close();
+          }}>
+          <Icon name="ios-close" style={[{ fontSize: 40, marginRight: 10 }, styles.SheetItemIcon]}></Icon>
+
+        </TouchableOpacity>
       <TouchableOpacity style={styles.SheetItemContainer} onPress={() => {
         this.CustomerSheet.close();
         this.goToNewPricePage();
       }}>
-        <Icon name="ios-add" size={30} style={styles.SheetItemIcon}></Icon>
+        <Icon name="ios-add"  style={styles.SheetItemIcon}></Icon>
         <Text style={styles.SheetItemText}>
           Yeni Fiyat Ekle
             </Text>
@@ -377,7 +345,7 @@ class CustomerOrdersScreen extends Component<Props, State>{
         this.CustomerSheet.close();
         this.goToDefinedPrice();
       }}>
-        <Icon name="ios-list" size={30} style={styles.SheetItemIcon}></Icon>
+        <Icon name="ios-list"  style={styles.SheetItemIcon}></Icon>
         <Text style={styles.SheetItemText}>
           Tanımlı Fiyatlar
             </Text>
@@ -395,12 +363,19 @@ class CustomerOrdersScreen extends Component<Props, State>{
       >
         {props => {
           return (
-            <View style={{ flexDirection: "row", justifyContent: 'flex-start' }}>
+            <View style={{  justifyContent: 'flex-start' }}>
+                        <TouchableOpacity style={[styles.SheetItemContainer, { justifyContent: 'flex-end', padding: 5 }]}
+          onPress={() => {
+            this.AmountSheet.close();
+          }}>
+          <Icon name="ios-close" style={[{ fontSize: 40, marginRight: 10 }, styles.SheetItemIcon]}></Icon>
 
+        </TouchableOpacity>
+            <View style={{flexDirection: "row",}}>
               <Input
                 //containerStyle={{ width: '80%' }}
                 style={styles.input}
-                placeholder="Ürün Fiyatı"
+                placeholder="Ödeme Miktarı"
                 placeholderTextColor="#9A9A9A"
                 value={props.values.amount + ""}
                 autoCapitalize="none"
@@ -414,6 +389,7 @@ class CustomerOrdersScreen extends Component<Props, State>{
 
 
               </Button>
+              </View>
             </View>
           );
         }}
@@ -424,31 +400,29 @@ class CustomerOrdersScreen extends Component<Props, State>{
 
   _renderOrderSheetContent() {
     return (<View style={styles.SheetContainer}>
+              <TouchableOpacity style={[styles.SheetItemContainer, { justifyContent: 'flex-end', padding: 5 }]}
+          onPress={() => {
+            this.OrderSheet.close();
+          }}>
+          <Icon name="ios-close" style={[{ fontSize: 40, marginRight: 10 }, styles.SheetItemIcon]}></Icon>
+
+        </TouchableOpacity>
       <TouchableOpacity style={styles.SheetItemContainer}
         onPress={() => {
           this.OrderSheet.close();
           this.addCash();
         }}>
-        <Icon name="ios-add" size={30} style={styles.SheetItemIcon}></Icon>
+        <Icon name="ios-add" style={styles.SheetItemIcon}></Icon>
         <Text style={styles.SheetItemText}
         >Ödeme Ekle</Text>
       </TouchableOpacity>
-      {/* <TouchableOpacity style={styles.SheetItemContainer}
-                      onPress={() => {
-                        this.OrderSheet.close();
-                        this.editOrder();
-                        }}>
-                               <Icon name="ios-arrow-round-forward" size={30} style={styles.SheetItemIcon}></Icon>
-                      <Text style={styles.SheetItemText}
-                      >Düzenle</Text>
-                    </TouchableOpacity> */}
       <TouchableOpacity style={styles.SheetItemContainer}
         onPress={() => {
           // this.OrderSheet.close();
           // this.OrderSheet.close();
           this.deleteOrderAlert();
         }}>
-        <Icon name="ios-trash" size={30} style={styles.SheetItemIcon}></Icon>
+        <Icon name="ios-trash" style={styles.SheetItemIcon}></Icon>
         <Text style={styles.SheetItemText}
         >Sil</Text>
       </TouchableOpacity>
@@ -461,22 +435,34 @@ class CustomerOrdersScreen extends Component<Props, State>{
   _renderView() {
     const { orders, isOrderLoading, navigation } = this.props;
     if (isOrderLoading) {
-      var dataArray:any[] = [1,2,3];
+      var dataArray: any[] = [1, 2, 3];
 
       return (
-      <FlatList    renderItem={({ item }) =>
-      <Placeholder    
-      
-      style={{borderBottomColor:'#e1e1e1',borderBottomWidth:1, marginBottom:20}}
-    >
-      <PlaceholderLine />
-      <PlaceholderLine  />
-      <PlaceholderLine />
-    </Placeholder>
+        <FlatList renderItem={({ item }) =>
+          <Placeholder
+
+            style={{ borderBottomColor: '#e1e1e1', borderBottomWidth: 1, marginBottom: 20 }}
+          >
+            <PlaceholderLine />
+            <PlaceholderLine />
+            <PlaceholderLine />
+          </Placeholder>
+        }
+          data={dataArray}
+          keyExtractor={(item, index) => String(index)}
+        ></FlatList>);
     }
-      data={dataArray}
-      keyExtractor={(item, index) => String(index)}
-      ></FlatList>);
+    else if(this.props.isOrderLoading !== true && this.props.orders.length < 1){
+      return (<TouchableOpacity style={{marginTop:100}} onPress={() => navigation.navigate("orderAdd", { customerId: navigation.getParam("customerId") })}>
+
+     
+      
+
+
+        <InfoItem text="Sisteme eklediğiniz müşteri siparişi bulunmakatadır. Müşterinize sipariş ekleyebilirsiniz!" />
+
+
+      </TouchableOpacity>);
     }
     else {
       return (<FlatList
@@ -573,19 +559,13 @@ class CustomerOrdersScreen extends Component<Props, State>{
                   <Text style={{ color: '#404243', fontSize: 16, fontWeight: '600', fontFamily: 'Avenir Next' }}>
                     {item.restAmount} TL
                  </Text>
-
                 </View>
-
-
               </View>
             </View>
           </View>
-
-
-
-
         }
-        keyExtractor={(item, index) => String(index)}
+        keyExtractor={item => item.orderId.toString()}
+
         onEndReached={() => {
           var pagenew = this.state.page + 1;
           this.setState({ page: pagenew });
@@ -593,11 +573,11 @@ class CustomerOrdersScreen extends Component<Props, State>{
             pagenew = pagenew + 1;
             this.setState({ page: pagenew });
           }
-          this.props.GetOrdersMore(this.props.navigation.getParam("customerId"), pagenew, 3);
+          this.props.GetOrdersMore(this.props.navigation.getParam("customerId"), pagenew, 10);
 
         }}
         onEndReachedThreshold={0.5}
-        initialNumToRender={8}
+        initialNumToRender={5}
         ListFooterComponent={
           this.props.loadingMore ? (
             <View>
@@ -609,112 +589,191 @@ class CustomerOrdersScreen extends Component<Props, State>{
     }
   }
 
+  _renderTopCustomerDetail() {
+   
+    if(this.props.isCustomerDetailLoading){
+    return ( <View>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between', borderBottomColor: '#CFD3D7', paddingBottom: 5, borderBottomWidth: 1 }}>
+        {this.props.isCustomerDetailLoading && <PlaceholderLine width={10} />}
+        <View>
 
+        </View>
+        <View style={{ flexDirection: 'row' }}>
+        {this.props.isCustomerDetailLoading && <PlaceholderLine width={20} />}
+
+        </View>
+      </View>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 5 }}>
+  
+          <View style={{ flexDirection: 'column', flex: 0.6 }}>
+  
+            {this.props.isCustomerDetailLoading && <PlaceholderLine width={20} />}
+  
+ 
+            <View style={{ flex: 1 }}>
+              {this.props.isCustomerDetailLoading && <PlaceholderLine width={30} />}
+
+            </View>
+  
+  
+          </View>
+          <View style={{ flexDirection: 'column', flex: .4 }}>
+  
+            <View style={{ flexDirection: 'row', alignSelf: 'flex-end' }}>
+
+              {this.props.isCustomerDetailLoading && <PlaceholderLine width={30} />}
+
+  
+  
+            </View>
+            <View style={{ flexDirection: 'row', alignSelf: 'flex-end' }}>
+
+              {this.props.isCustomerDetailLoading && <PlaceholderLine width={30} />}
+     
+  
+  
+            </View>
+            <View style={{ flexDirection: 'row', flex: .4, alignSelf: 'flex-end' }}>
+ 
+              {this.props.isCustomerDetailLoading && <PlaceholderLine width={30} />}
+
+            </View>
+  
+  
+          </View>
+  
+        </View>
+        </View>
+        );
+    }
+   
+    return (
+
+    <View>
+    <View style={{ flexDirection: 'row', justifyContent: 'space-between', borderBottomColor: '#CFD3D7', paddingBottom: 5, borderBottomWidth: 1 }}>
+
+  
+      <View>
+        {this.props.customerDetailModel?.nameSurname && !this.props.isCustomerDetailLoading &&
+          <Text style={{ alignSelf: 'center', color: '#2069F3', fontWeight: '600', fontSize: 24, fontFamily: 'Avenir Next' }}>
+            {this.props.customerDetailModel.nameSurname}
+          </Text>
+
+        }
+      </View>
+      <View style={{ flexDirection: 'row' }}>
+        <Text style={{ color: '#404243', fontSize: 16, fontFamily: 'Avenir Next' }}>
+          Toplam Sipariş:
+                           </Text>
+        {!this.props.isCustomerDetailLoading && this.props.customerDetailModel && this.props.customerDetailModel.totalOrderCount &&
+          <Text style={{ color: '#404243', fontWeight: '600', fontSize: 16, fontFamily: 'Avenir Next', textAlign: 'right' }}>
+            {this.props.customerDetailModel.totalOrderCount}
+
+          </Text>
+
+        }
+      </View>
+    </View>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 5 }}>
+        <View style={{ flexDirection: 'column', flex: 0.6 }}>
+          {this.props.customerDetailModel && this.props.customerDetailModel.phoneNumber!=null && this.props.customerDetailModel.phoneNumber!=="" &&
+            <View style={{ flexDirection: 'row', flex: 1 }}>
+              <Icon name="ios-call" style={{ fontSize: 20 }} />
+              <TouchableOpacity onPress={() => Linking.openURL(`tel:${this.props.customerDetailModel?.phoneNumber}`)}>
+                <Text style={{ color: '#404243', textDecorationLine: 'underline', fontSize: 16, marginLeft: 5, fontFamily: 'Avenir Next' }}>
+                  {this.props.customerDetailModel.phoneNumber}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          }
+          
+          <View style={{ flex: 1 }}>
+
+            {!this.props.isCustomerDetailLoading && this.props.customerDetailModel && this.props.customerDetailModel.adress != null && this.props.customerDetailModel.adress!=="" &&
+              <View style={{ flexDirection: 'row',marginTop:5 }}>
+                <Icon name="ios-pin" style={{ fontSize: 20 }} />
+                <TouchableOpacity onPress={() => {
+                  Platform.OS === "ios" ? Linking.openURL('http://maps.apple.com/maps?daddr=' + this.props.customerDetailModel?.adress) : Linking.openURL('http://maps.google.com/maps?daddr=' + this.props.customerDetailModel?.adress)
+
+
+                }}>
+                  <Text style={{ color: '#404243', fontSize: 16, fontWeight: '600', textDecorationLine: 'underline', marginLeft: 5, fontFamily: 'Avenir Next' }}>
+                    {this.props.customerDetailModel.adress}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+
+
+            }
+            {!this.props.isCustomerDetailLoading && this.props.customerDetailModel && this.props.customerDetailModel.fountainCount != null && this.props.customerDetailModel.fountainCount!==0 &&
+              <View style={{ flexDirection: 'row', marginTop:5,marginLeft:-5}}>
+                <Icon name="cup-water" type="MaterialCommunityIcons" style={{ fontSize: 20 }} />
+              
+                  <Text style={{ color: '#404243', fontSize: 16, fontWeight: '600', marginLeft: 5, fontFamily: 'Avenir Next' }}>
+                    {this.props.customerDetailModel.fountainCount}
+                  </Text>
+
+              </View>
+
+
+            }
+          </View>
+
+
+        </View>
+        <View style={{ flexDirection: 'column', flex: .4 }}>
+
+          <View style={{ flexDirection: 'row', alignSelf: 'flex-end' }}>
+            <Text style={{ color: '#404243', fontSize: 16, fontFamily: 'Avenir Next' }}>
+              Alınan:
+      </Text>
+
+            {this.props.customerDetailModel && this.props.customerDetailModel.displayTookTotalAmount &&
+              <Text style={{ color: '#404243', fontWeight: '600', fontSize: 16, fontFamily: 'Avenir Next' }}>{this.props.customerDetailModel.displayTookTotalAmount} </Text>
+            }
+
+
+          </View>
+          <View style={{ flexDirection: 'row', alignSelf: 'flex-end' }}>
+            <Text style={{ color: '#404243', fontSize: 16, fontFamily: 'Avenir Next' }}>
+              Kalan:
+      </Text>
+
+            {this.props.customerDetailModel && this.props.customerDetailModel.displayRestTotalAmount &&
+              <Text style={{ color: '#404243', fontWeight: '600', fontSize: 16, fontFamily: 'Avenir Next' }}>{this.props.customerDetailModel.displayRestTotalAmount} </Text>
+            }
+
+
+          </View>
+          <View style={{ flexDirection: 'row', flex: .4, alignSelf: 'flex-end' }}>
+            <Text style={{ color: '#404243', fontSize: 16, fontFamily: 'Avenir Next' }}>
+              Toplam:
+      </Text>
+ 
+            {this.props.customerDetailModel && this.props.customerDetailModel.displayTotalAmount &&
+              <Text style={{ color: '#404243', fontWeight: '600', fontSize: 16, fontFamily: 'Avenir Next' }}>{this.props.customerDetailModel.displayTotalAmount} </Text>
+            }
+
+          </View>
+
+
+        </View>
+
+      </View>
+      </View>
+
+    );
+  }
   render() {
-    console.log("customerDetialCome", this.props.customerDetailModel);
-
     return (
       <View style={{}}>
         <ScrollView style={{ paddingHorizontal: 10 }}>
 
+
           <View style={{ marginHorizontal: 5, paddingTop: 20, paddingHorizontal: 5, borderRadius: 15 }}>
+            {this._renderTopCustomerDetail()}
 
-            <View style={{ flexDirection: 'row', justifyContent:'space-between', borderBottomColor:'#CFD3D7', paddingBottom:5, borderBottomWidth:1 }}>
-
-            {this.props.isCustomerDetailLoading && <PlaceholderLine  width={10} />}
             <View>
-              {this.props.customerDetailModel?.nameSurname && !this.props.isCustomerDetailLoading && 
-   
-                <Text style={{ alignSelf: 'center', color: '#2069F3', fontWeight: '600', fontSize: 24, fontFamily: 'Avenir Next' }}>
-                  {this.props.customerDetailModel.nameSurname}
-                </Text>
-               
-              }
-            </View>
-              <View style={{ flexDirection: 'row' }}>
-              <Text style={{ color: '#404243', fontSize: 16, fontFamily: 'Avenir Next' }}>
-                    Toplam Sipariş:
-                                     </Text>
-              {this.props.customerDetailModel && this.props.customerDetailModel.totalOrderCount && !this.props.isCustomerDetailLoading &&
-                  <Text style={{ color: '#404243', fontWeight: '600', fontSize: 16, fontFamily: 'Avenir Next', textAlign: 'right' }}>
-                    {this.props.customerDetailModel.totalOrderCount}
-
-                  </Text>
-             
-              }
-                 </View>
-            </View>
-            <View style={{ flexDirection: 'row', justifyContent:'space-between', marginTop:5 }}>
-
-              <View style={{ flexDirection: 'column'}}>
-
-                {this.props.isCustomerDetailLoading && <PlaceholderLine width={10} />}
-                
-                {this.props.customerDetailModel && this.props.customerDetailModel.phoneNumber && !this.props.isCustomerDetailLoading &&
-                  <View style={{ flexDirection: 'row', flex: 1 }}>
-                    <Icon name="ios-call" style={{ fontSize: 20 }} />
-                    <Text style={{ color: '#404243', fontSize: 16, marginLeft: 5, fontFamily: 'Avenir Next' }}>
-                      {this.props.customerDetailModel.phoneNumber}
-                    </Text>
-                  </View>
-                }
-                            <View style={{  flex: 1 }}>
-                {this.props.isCustomerDetailLoading && <PlaceholderLine width={20} />}
-                {this.props.customerDetailModel && this.props.customerDetailModel.adress != null && !this.props.isCustomerDetailLoading &&
-                    <View style={{flexDirection: 'row',}}>
-                    <Icon name="ios-pin" style={{ fontSize: 20 }} />
-
-                    <Text style={{ color: '#404243', fontSize: 16, fontWeight: '600', marginLeft: 5, fontFamily: 'Avenir Next' }}>
-                      {this.props.customerDetailModel.adress}
-                    </Text>
-                    </View>
-
-              
-                }
-            </View>
-
-
-              </View>
-              <View style={{ flexDirection: 'column' }}>
-
-              <View style={{ flexDirection: 'row' }}>
-                  <Text style={{ color: '#404243', fontSize: 16, fontFamily: 'Avenir Next' }}>
-                    Alınan:
-                </Text>
-                  {this.props.isCustomerDetailLoading && <PlaceholderLine width={20} />}
-                  {this.props.customerDetailModel && this.props.customerDetailModel.displayTookTotalAmount &&
-                    <Text style={{ color: '#404243', fontWeight: '600', fontSize: 16, fontFamily: 'Avenir Next' }}>{this.props.customerDetailModel.displayTookTotalAmount} </Text>
-                  }
-
-
-                </View>
-                <View style={{ flexDirection: 'row' }}>
-                  <Text style={{ color: '#404243', fontSize: 16, fontFamily: 'Avenir Next' }}>
-                    Kalan:
-                </Text>
-                  {this.props.isCustomerDetailLoading && <PlaceholderLine width={20} />}
-                  {this.props.customerDetailModel && this.props.customerDetailModel.displayRestTotalAmount &&
-                    <Text style={{ color: '#404243', fontWeight: '600', fontSize: 16, fontFamily: 'Avenir Next' }}>{this.props.customerDetailModel.displayRestTotalAmount} </Text>
-                  }
-
-
-                </View>
-                <View style={{ flexDirection: 'row', flex: .4 }}>
-                  <Text style={{ color: '#404243', fontSize: 16, fontFamily: 'Avenir Next' }}>
-                    Toplam:
-                </Text>
-                  {this.props.isCustomerDetailLoading && <PlaceholderLine width={20} />}
-                  {this.props.customerDetailModel && this.props.customerDetailModel.displayTotalAmount &&
-                    <Text style={{ color: '#404243', fontWeight: '600', fontSize: 16, fontFamily: 'Avenir Next' }}>{this.props.customerDetailModel.displayTotalAmount} </Text>
-                  }
-
-                </View>
-
-
-              </View>
-
-            </View>
-            <View>       
 
               <View style={{ height: 30 }} />
 
@@ -728,7 +787,10 @@ class CustomerOrdersScreen extends Component<Props, State>{
                   container: {
                     justifyContent: "flex-start",
                     alignItems: "flex-start",
-                    paddingLeft: 20
+                    paddingLeft: 20,
+                    backgroundColor: '#EFF3F9',
+                    borderTopLeftRadius: 15,
+                    borderTopRightRadius: 15
                   }
                 }}
               >
@@ -745,7 +807,10 @@ class CustomerOrdersScreen extends Component<Props, State>{
                   container: {
                     justifyContent: "flex-start",
                     alignItems: "flex-start",
-                    paddingLeft: 20
+                    paddingLeft: 20,
+                    backgroundColor: '#EFF3F9',
+                    borderTopLeftRadius: 15,
+                    borderTopRightRadius: 15
                   }
                 }}
               >
@@ -757,13 +822,16 @@ class CustomerOrdersScreen extends Component<Props, State>{
                 ref={ref => {
                   this.AmountSheet = ref;
                 }}
-                height={100}
+                height={250}
                 duration={200}
                 customStyles={{
                   container: {
                     justifyContent: "flex-start",
                     alignItems: "flex-start",
-                    paddingLeft: 20
+                    paddingLeft: 20,
+                    backgroundColor: '#EFF3F9',
+                    borderTopLeftRadius: 15,
+                    borderTopRightRadius: 15
                   }
                 }}
               >

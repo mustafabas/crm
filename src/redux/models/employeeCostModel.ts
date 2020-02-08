@@ -1,5 +1,5 @@
 export interface IEmployeeCostItem{
-    cost: number;
+    cost: string;
     id: number;
     employeId :number;
     employeName: string;

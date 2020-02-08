@@ -4,6 +4,7 @@ import { Dispatch } from "react";
 import {EMPLOYEE_DELETE_SUCCEED,EMPLOYEE_DELETE_FAILED} from './../types'
 import {Action} from '../states'
 import { GetEmployees } from './employeeAction';
+import { reset } from './loginAction';
 
 
 export function employeeDelete(id:number) {
@@ -19,6 +20,7 @@ export function employeeDelete(id:number) {
       if(response.data.result){
         dispatch(employeeDeleteIsSucceed(true, "Çalışan Silindi!"));
         dispatch(GetEmployees());
+        dispatch(reset());
       }
     }
   })

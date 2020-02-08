@@ -10,8 +10,10 @@ import {
   Platform,
   Modal,
   Alert,
-  AsyncStorage,
+
 } from "react-native";
+import AsyncStorage from '@react-native-community/async-storage';
+
 import { NavigationScreenProp, NavigationState, ScrollView, SafeAreaView} from "react-navigation";
 import { connect } from "react-redux";
 import { Header } from "../components";
@@ -88,6 +90,9 @@ class Employee extends Component<Props, State> {
       })
       this.props.navigation.setParams({ Type: value });
     });
+
+
+
   }
   static navigationOptions = ({ navigation }: Props) => {
     if (navigation.getParam("Type") === "2") {
@@ -201,14 +206,21 @@ class Employee extends Component<Props, State> {
     this.componentWillMount();
   }
 
-  getUserType() {
-    //function to make three option alert
-    AsyncStorage.getItem("UserType").then((value) => {
-      this.setState({
-        UserType: value,
-      })
-      this.props.navigation.setParams({ Type: value });
-    });
+  async getUserType() {
+  
+
+      try {
+        const value = await AsyncStorage.getItem('UserType')
+        if(value !== null) {
+          this.setState({
+            UserType: value,
+          })
+          this.props.navigation.setParams({ Type: value });
+        }
+      } catch(e) {
+        // error reading value
+      }
+
   }
 
   _renderEmployeeSheetContent() {

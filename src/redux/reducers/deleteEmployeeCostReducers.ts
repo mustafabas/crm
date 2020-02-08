@@ -1,5 +1,5 @@
 import { EmployeeCostDelete, Action } from "../states";
-import {EMPLOYEECOST_DELETE_SUCCEED,EMPLOYEECOST_DELETE_FAILED} from "../types";
+import {EMPLOYEECOST_DELETE_SUCCEED,EMPLOYEECOST_DELETE_FAILED, RESET_PROPS} from "../types";
 
 
 const initalState = {
@@ -18,6 +18,11 @@ export default (state: EmployeeCostDelete = initalState, action: Action) => {
         ...state,
         isSuccess:false,
       };
+      case RESET_PROPS :
+        return{
+          ...state,
+          isSuccess : false
+        }
     default:
       return state;
   }

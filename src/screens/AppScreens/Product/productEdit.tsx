@@ -127,7 +127,7 @@ class productEditScreen extends Component<Props,state> {
     const { productEdit } = this.props;
     productEdit(
       this.props.navigation.getParam("productId"),
-    values.active, 
+    values.productStatus, 
     values.productName,
     values.productCode.toString(),
     Number(values.price.toString().replace(",",".")),values.productCount);
@@ -152,7 +152,7 @@ class productEditScreen extends Component<Props,state> {
     else {
       console.log(this.props.product.productCount)
       return (
-        <View style={styles.addCustomerContainer}>
+        <View style={[styles.addCustomerContainer,{marginHorizontal:20}]}>
           <StatusBar backgroundColor="#2B6EDC"/>
   
   

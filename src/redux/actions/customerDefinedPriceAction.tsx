@@ -4,16 +4,29 @@ import { Dispatch } from "react";
 import {CUSTOMER_DEFINED_PRICE_GET,CUSTOMER_DEFINED_PRICE_LOADING } from '../types'
 import {Action} from '../states'
 import { IDefinedCustomerPriceItem } from "../models/customerDefinedPriceModel";
+import AsyncStorage from '@react-native-community/async-storage';
+
 
 
 export function getCustomerPrice(customerId:number) {
 
+ 
   return (dispatch : Dispatch<Action>) =>  {
-  
     dispatch(loading(true));
 
-    var WATER_CUSTOMER_DEFINED_PRICE_WITH_CUSTOMERID= WATER_CUSTOMER_DEFINED_PRICE+customerId;
+    AsyncStorage.multiGet(['userToken', 'userId']).then((res) => {
+      let token = res[0][1];
+      let userId = res[1][1];
+      
+      const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+    }
+  
 
+    
+    var WATER_CUSTOMER_DEFINED_PRICE_WITH_CUSTOMERID= WATER_CUSTOMER_DEFINED_PRICE+customerId;
+console.log(WATER_CUSTOMER_DEFINED_PRICE_WITH_CUSTOMERID)
   axios.get(WATER_CUSTOMER_DEFINED_PRICE_WITH_CUSTOMERID,
     
     )
@@ -47,6 +60,13 @@ export function getCustomerPrice(customerId:number) {
     // dispatch(loading(false));
 
   });
+
+
+  })
+
+  
+  
+   
 
 
   }

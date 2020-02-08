@@ -8,7 +8,7 @@ import { ICustomerDetailItem } from "../models/homeModel";
 
 const initalState = {
     orders: [],
-    isOrderLoading: false,
+    isOrderLoading: false || null,
     loadingMore: false,
     customerDetail :{}  as ICustomerDetailItem,
     isCustomerDetailLoading:false

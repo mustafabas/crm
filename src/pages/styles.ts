@@ -11,12 +11,15 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     justifyContent: "flex-start",
-
+    // marginLeft:20,
+    // marginRight:20
   },
   addCustomerContainer: {
     flex: 1,
     backgroundColor: "white",
     justifyContent: "flex-start",
+    paddingHorizontal:0,
+    marginTop:10
   },
 
   reportContainer: {
@@ -41,7 +44,7 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
 
-    elevation: 5,
+
     borderRadius: 2,
     paddingTop: 30,
     //marginHorizontal:20,
@@ -265,7 +268,8 @@ const styles = StyleSheet.create({
   },
   row_cell5: {
     flexDirection: 'row',
-    flex: 7,
+    flex: 1,
+    justifyContent:'space-between'
   },
 
   row_cell6: {
@@ -315,7 +319,7 @@ const styles = StyleSheet.create({
     textAlignVertical: 'bottom',
     includeFontPadding: false,
     flex: 0,
-    fontSize: 20,
+    fontSize: 17,
   },
   alt_bilgi: {
     color: "#0A157A",
@@ -471,13 +475,14 @@ const styles = StyleSheet.create({
   searchButtonDate: {
     backgroundColor: '#2B6EDC',
     elevation: 1,
-    borderRadius: 2,
+    borderRadius: 5,
     //marginHorizontal:20,
     justifyContent: "space-between",
     padding: 7,
-    flex:0.2,
+
     alignItems:'center',
     margin:5,
+    paddingHorizontal:15
   },
 
   search_row: {
@@ -503,10 +508,8 @@ const styles = StyleSheet.create({
     textAlign: "right",
   },
   iconButtonOrder: {
-    marginHorizontal: 2,
     paddingLeft: 16,
-    flex: 0.22,
-    textAlign: "right",
+
   },
 
 
@@ -602,7 +605,8 @@ const styles = StyleSheet.create({
     // justifyContent:"flex-end"
     marginBottom: 10,
     padding:5,
-    marginTop:10
+    marginTop:10,
+    marginHorizontal:5
 
   },
 
@@ -732,12 +736,11 @@ const styles = StyleSheet.create({
   },
 
   productUrunfiyatText: {
-    color: "#0A157A",
-    textAlignVertical: 'top',
+    color: "#333",
+
     includeFontPadding: false,
-    flex: 0,
-    fontSize: 12,
-    textAlign: "right",
+    fontSize: 13,
+
   },
 
   wantedCustomerGetButtonContainer: {
@@ -906,12 +909,14 @@ const styles = StyleSheet.create({
     paddingLeft:10,
     margin:5,
     borderBottomWidth:1,
+    fontFamily:'Avenir Next'
   },
   reportTextTotalCost:{
     fontSize:18,
     color:'black',
     paddingLeft:10,
     margin:5,
+    fontFamily:'Avenir Next',
     borderBottomWidth:1,
     fontWeight:'bold',
   },
@@ -927,8 +932,10 @@ const styles = StyleSheet.create({
     fontFamily: 'Avenir Next',
     fontSize:16,
     fontWeight:'600',
+    marginRight:50
   },
   SheetContainer: {
+    zIndex:100,
     flex: 1, 
     justifyContent: 'flex-start',
      alignItems: 'flex-start', 

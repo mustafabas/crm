@@ -60,6 +60,37 @@ export const GET_TAKE_TOTAL_AMOUNT = "GetTakeTotalAmounts";
 export const GET_TOOK_TOTAL_AMOUNT = "GetTookTotalAmounts";
 export const GET_REST_TOTAL_AMOUNT = "GetRestTotalAmounts";
 
+export const ABOUT_US_CONTEXT = "aboutUsContext"
+export const ABOUT_US_CONTEXT_LOADING = "ABOUT_US_CONTEXTLoading"
+export const ABOUT_US_CONTEXT_FAILED = "ABOUT_US_CONTEXTSucceed"
+
+export const GET_USER_INFO = "getUserInfo"
+export const GET_USER_INFO_LOADING = "getiUserInfoLoading"
+export const GET_USER_INFO_FAILED = "getUserInfoIsSucceed"
+
+
+export const GET_STORE_INFO = "getStoreInfo"
+export const GET_STORE_INFO_LOADING = "getStoreInfoLoading"
+export const GET_STORE_INFO_FAILED = "getStoreInfoFailed"
+
+export const UPADTE_STORE_INFO = "UPADTEStoreInfo"
+export const UPADTE_STORE_INFO_LOADING = "UPADTEStoreInfoLoading"
+export const UPADTE_STORE_INFO_FAILED = "UPADTEStoreInfoFailed"
+
+
+export const UPDATE_USER_GENERAL_LOADING = "updateUserGeneralLoading"
+export const UPDATE_USER_GENERAL_FAILED = "updateUserGeneralFailed"
+export const UPDATE_USER_GENERAL = "updateUserGeneral"
+
+
+export const UPDATE_USER_SECURITY_LOADING = "updateUserSecurityLoading"
+export const UPDATE_USER_SECURITY_FAILED = "updateUserSecurityFailed"
+export const UPDATE_USER_SECURITY = "updateUserSecurity"
+
+export const SEND_SUPPORT_MESSAGE_LOADING = "sendSupportMessageLoading"
+export const SEND_SUPPORT_MESSAGE_FAILED = "sendSupportMessageFailed"
+export const SEND_SUPPORT_MESSAGE_SUCCEED= "sendSupportMessageSucceed"
+
 export const ADD_CASH_SUCCEED ="AddCashSucceed";
 export const ADD_CASH_FAILED ="AddCashFailed";
 
@@ -112,6 +143,7 @@ export const EMPLOYEE_EDIT_SUCCEED ="EmployeeEditSucceed";
 export const EMPLOYEE_EDIT_FAILED ="EmployeeEditFailed";
 export const EMPLOYEE_GET_ONE ="EmployeeGetOne";
 export const EMPLOYEE_EDIT_LOADING = "EmployeeEditLoading";
+export const EMPLOYEE_GET_EDIT_LOADING = "EmployeeGetEditLoading"
 
 export const EMPLOYEE_DELETE_SUCCEED ="EmployeeDeleteSucceed";
 export const EMPLOYEE_DELETE_FAILED ="EmployeeDeleteFailed";
@@ -125,6 +157,10 @@ export const EMPLOYE_COST_ADD_LOADING = "EmployeeCostAddLoading";
 
 export const REPORT_GET = "ReportGet";
 export const REPORT_LOADING = "ReportLoading";
+
+export const REPORT_GET_PRODUCT_PIE = "ReportGetProductPie";
+export const REPORT_LOADING_PRODUCT_PIE = "ReportLoadingProductPie";
+
 
 export const EMPLOYEECOST_GET = "EmployeeCostGet";
 export const EMPLOYEECOST_LOADING = "EmployeeCostLoading";

@@ -28,7 +28,7 @@ export default (state: CustomerAdd = initalState, action: Action) => {
         loading : false,
         isTried : true,
 
-        CustomerAddMessage:"Müşteri Eklenemedi!",
+        CustomerAddMessage:action.payload,
       };
       case CUSTOMER_ADD_LOADING :
         return {

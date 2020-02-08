@@ -6,6 +6,8 @@ export interface IReportItem{
     totalRestAmount:number;
     totalWorkerSalary:number;
     reportProductItems:IReportProductItems[];
+    totalFountainCount : number;
+    
 }
 
 export interface IReportProductItems{

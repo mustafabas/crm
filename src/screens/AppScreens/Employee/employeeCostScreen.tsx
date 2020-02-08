@@ -20,6 +20,8 @@ import RBSheet from "react-native-raw-bottom-sheet";
 import { employeeCostDelete } from "../../../redux/actions/deleteEmployeeCostAction";
 import { Icon, Card, CardItem, Body } from "native-base";
 import { connect } from "react-redux";
+import { stat } from "fs";
+import { showMessage } from "react-native-flash-message";
 
 
 interface Props {
@@ -28,6 +30,7 @@ interface Props {
   employeeCosts: IEmployeeCostItem[];
   GetEmployeeCost: () => void;
   employeeCostDelete: (id: number) => void;
+  deleteIsSuccess:boolean;
 }
 
 interface State {
@@ -36,6 +39,7 @@ interface State {
   id: number;
   employeId: number;
   cost: number;
+  deleteSheetRender:boolean;
 }
 
 class employeeCostScreen extends Component<Props, State> {
@@ -61,7 +65,7 @@ class employeeCostScreen extends Component<Props, State> {
 
 
   AmountSheet: any;
-  DeleteSheet : any;
+  DeleteSheet: any;
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -70,6 +74,7 @@ class employeeCostScreen extends Component<Props, State> {
       id: 0,
       employeId: 0,
       cost: 0,
+      deleteSheetRender:false
     };
   }
 
@@ -80,11 +85,10 @@ class employeeCostScreen extends Component<Props, State> {
   }
 
 
-  openModal(id: number, employeId: number, cost: number) {
+  openModal(id: number, employeId: number) {
     this.setState({
       id: id,
-      employeId: employeId,
-      cost: cost,
+      employeId: employeId
     });
     this.AmountSheet.open();
   }
@@ -98,51 +102,52 @@ class employeeCostScreen extends Component<Props, State> {
     const { employeeCostDelete } = this.props;
     employeeCostDelete(this.state.id);
   }
+  showSimpleMessage() {
+    if (this.props.deleteIsSuccess) {
+        showMessage({
+            message: this.props.deleteIsSuccess  ? "Çalışan Maliyeti Başarıyla Silinmiştir" : "",
+            type: this.props.deleteIsSuccess ? "success" : "danger",
+            icon: "auto"
+        }
+        );
+    }
+}
 
   _renderProductSheetContent() {
-    return (<View style={styles.SheetContainer}>
-      <TouchableOpacity style={styles.SheetItemContainer}
-        onPress={() => {
-          this.AmountSheet.close();
-          this.editProduct();
-        }}>
-        <Icon name="ios-arrow-round-forward"  style={styles.SheetItemIcon}></Icon>
-        <Text style={styles.SheetItemText}
-        >Düzenle</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.SheetItemContainer}
-        onPress={() => {
-          this.AmountSheet.close();
-     
-            this.DeleteSheet.open();
-        }}>
-        <Icon name="ios-trash" style={styles.SheetItemIcon}></Icon>
-        <Text style={styles.SheetItemText}
-        >Sil</Text>
-      </TouchableOpacity>
-    </View>);
+    
+      return (<View style={styles.SheetContainer}>
+        <TouchableOpacity style={[styles.SheetItemContainer, { justifyContent: 'flex-end', padding: 10 }]}
+          onPress={() => {
+            this.AmountSheet.close();
+          }}>
+          <Icon name="ios-close" style={[{ fontSize: 40, marginRight: 10 }, styles.SheetItemIcon]}></Icon>
+        </TouchableOpacity>
+  
+        <TouchableOpacity style={styles.SheetItemContainer}
+          onPress={() => {
+            this.deleteSelectedCost();
+            this.AmountSheet.close();
+       
+          }}>
+          <Icon name="ios-trash" style={styles.SheetItemIcon}></Icon>
+          <Text style={styles.SheetItemText}
+          >Sil</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.SheetItemContainer}
+          onPress={() => {
+            this.AmountSheet.close();
+          }}>
+          <Icon name="ios-close" style={styles.SheetItemIcon}></Icon>
+          <Text style={styles.SheetItemText}
+          >İptal Et</Text>
+        </TouchableOpacity>
+      </View>);
+    
+
 
   }
   _renderDeleteSheetContent() {
-    return (<View style={styles.SheetContainer}>
-      <TouchableOpacity style={styles.SheetItemContainer}
-        onPress={() => {
-          this.DeleteSheet.close();
-          this.deleteSelectedCost();
-        }}>
-        <Icon name="ios-trash"  style={styles.SheetItemIcon}></Icon>
-        <Text style={styles.SheetItemText}
-        >Sil</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.SheetItemContainer}
-        onPress={() => {
-          this.DeleteSheet.close();
-        }}>
-        <Icon name="ios-close"  style={styles.SheetItemIcon}></Icon>
-        <Text style={styles.SheetItemText}
-        >Vazgeç</Text>
-      </TouchableOpacity>
-    </View>);
+
 
   }
 
@@ -159,6 +164,8 @@ class employeeCostScreen extends Component<Props, State> {
 
   onRefresh() {
     this.setState({ refreshing: true });
+    this.props.GetEmployeeCost();
+    this.setState({ refreshing: false });
   }
 
   _renderView() {
@@ -167,53 +174,49 @@ class employeeCostScreen extends Component<Props, State> {
       return (<ActivityIndicator></ActivityIndicator>);
     }
     else {
-      if(this.props.employeeCosts.length>0){
-             return (<FlatList
-        refreshing={this.state.refreshing}
-        onRefresh={() => this.onRefresh()}
-        data={this.props.employeeCosts}
-        renderItem={({ item }) => (
-          <View style={styles.row}>
-            <View style={styles.row_cell5}>
-              <View style={styles.row_cell7}>
-                <Text style={styles.musteri_adi}>{item.employeName}</Text>
-                <Text style={styles.alt_bilgi}>Tarih: {item.createdDate.slice(8, 10) + "." +
-                  item.createdDate.slice(5, 7) + "." +
-                  item.createdDate.slice(0, 4) + " " + item.createdDate.slice(11, 13) + ":" + item.createdDate.slice(14, 16)}</Text>
-              </View>
-              <View style={styles.row_cell2}>
-                <Text style={styles.productUrunfiyatText}>Gider: {item.cost} TL</Text>
-              </View>
-              <View style={styles.row_cell6}>
-                <TouchableOpacity
-                  style={styles.iconButtonOrder}
-                  onPress={() => this.openModal(item.id, item.employeId, item.cost)}>
-                  <Icon name="md-more" color={"#C4B47B"} />
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>)}
-        keyExtractor={item => item.createdDate.toString()}
-      />);
-      }
-      else{
-        return (<View > 
+      if (this.props.employeeCosts.length > 0) {
+        return (<FlatList
+          style={{ marginLeft: 10, marginRight: 10 }}
+          refreshing={this.state.refreshing}
+          onRefresh={() => this.onRefresh()}
+          data={this.props.employeeCosts}
+          renderItem={({ item }) => (
+            <View style={{ borderBottomColor: '#e1e1e1', borderBottomWidth: 1, paddingBottom: 10, paddingTop: 5 }}>
+              <View style={styles.row_cell5}>
+                <View style={{}}>
+                  <Text style={styles.musteri_adi}>{item.employeName}</Text>
+                  <Text style={styles.productUrunfiyatText}>Gider: {item.cost}</Text>
 
-          <Card style={{borderColor:'#f5f5f5'}}>
-   
+                </View>
+                <View style={{ alignSelf: 'flex-end', flexDirection: 'column' }}>
+                  <TouchableOpacity
+                    style={styles.iconButtonOrder}
+                    onPress={() => this.openModal(item.id, item.employeId)}>
+                    <Icon name="ios-more" style={{color: '#2069F3'}} />
+                  </TouchableOpacity>
+                  <Text style={{ color: '#999', fontSize: 11 }}> {item.createdDate}</Text>
+                </View>
+              </View>
+            </View>)}
+          keyExtractor={item => item.id.toString()}
+        />);
+      }
+      else {
+        return (<View >
+
+          <Card style={{ borderColor: '#f5f5f5' }}>
+
             <CardItem>
-              <Body style={{ flexDirection:"column", justifyContent:"center", alignItems:"center"}} >
-                <Icon name="ios-information-circle-outline" style={{fontSize:40,}} ></Icon>
-                <Text>                  
+              <Body style={{ flexDirection: "column", justifyContent: "center", alignItems: "center" }} >
+                <Icon name="ios-information-circle-outline" style={{ fontSize: 40, }} ></Icon>
+                <Text>
                   Sisteme eklediğiniz herhangi bir maliyet bulunmamaktadır.
               </Text>
               </Body>
             </CardItem>
           </Card>
-      
-      </View>);
+        </View>);
       }
- 
     }
   }
   render() {
@@ -234,7 +237,7 @@ class employeeCostScreen extends Component<Props, State> {
               <View style={styles.innerContainer}>
                 <TouchableOpacity style={styles.modalCancelButtonContainer}
                   onPress={() => this.closeModal()}>
-                  <Icon name="md-close"  color={"#6E6E6E"} />
+                  <Icon name="md-close" color={"#6E6E6E"} />
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.modalEditButtonContainer}
                   onPress={() => this.editProduct()}>
@@ -249,7 +252,7 @@ class employeeCostScreen extends Component<Props, State> {
             ref={ref => {
               this.AmountSheet = ref;
             }}
-            height={150}
+            height={200}
             duration={100}
             customStyles={{
               container: {
@@ -262,31 +265,15 @@ class employeeCostScreen extends Component<Props, State> {
               }
             }}
           >
-            {this._renderProductSheetContent()}
+            {
+            this._renderProductSheetContent()}
           </RBSheet>
-          <RBSheet
-            ref={ref => {
-              this.DeleteSheet = ref;
-            }}
-            height={150}
-            duration={100}
-            customStyles={{
-              container: {
-                justifyContent: "flex-start",
-                alignItems: "flex-start",
-                paddingLeft: 20,
-                backgroundColor: '#EFF3F9',
-                borderTopLeftRadius: 15,
-                borderTopRightRadius: 15
-              }
-            }}
-          >
-            {this._renderDeleteSheetContent()}
-          </RBSheet>
+
 
           <View style={{ marginTop: 10 }}></View>
         </KeyboardAvoidingView>
         {this._renderView()}
+        {this.showSimpleMessage()}
       </View>
     );
   }
@@ -295,6 +282,9 @@ class employeeCostScreen extends Component<Props, State> {
 const mapStateToProps = (state: AppState) => ({
   isHomeLoading: state.getEmployeeCost.isLoading,
   employeeCosts: state.getEmployeeCost.employees,
+  deleteIsSuccess : state.deleteEmployeeCost.isSuccess,
+
+
 })
 function bindToAction(dispatch: any) {
   return {

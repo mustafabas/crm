@@ -14,14 +14,14 @@ import { NavigationScreenProp, NavigationState, } from "react-navigation";
 import { Formik, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import styles from "../../../pages/styles";
-import {Input,CheckBox, Item, Label, ListItem,Body, Switch, Textarea, Button,Spinner} from 'native-base'
+import {Input,CheckBox, Item, Label, ListItem,Body, Switch, Textarea, Button,Spinner,Icon } from 'native-base'
 import { customerAdd } from "../../../redux/actions/customerAddAction";
 import { AppState } from '../redux/store'
 import { connect } from "react-redux";
 
 import { showMessage } from "react-native-flash-message";
 
-import Icon from "react-native-vector-icons/Ionicons";
+// import Icon from "react-native-vector-icons/Ionicons";
 // import RNPickerSelect from 'react-native-picker-select';
 // import { Input, CheckBox } from "react-native-elements";
 interface Props {
@@ -96,26 +96,17 @@ const girdiler = Yup.object().shape({
   .min(3).max(30)
     .required("*Zorunlu Alan"),
 
-  sirketAdi: Yup.string()
-  .min(3).max(30)
-  .required("*Zorunlu Alan"),
-
-  adress:Yup.string()
-.min(3).max(150)
-.required("*Zorunlu Alan"),
-phoneNumber:Yup.string()
-.min(3).max(15)
-.required("*Zorunlu Alan"),
-AllDays : Yup.bool(),
-  monday : Yup.bool(),
-  tuesday : Yup.bool(),
-  wednesday : Yup.bool(),
-  thusday : Yup.bool(),
-  friday : Yup.bool(),
-  saturday : Yup.bool(),
-  sunday : Yup.bool(),
-}).atLeastOneOf(['AllDays', 'monday','tuesday','wednesday','thusday','friday','saturday','sunday'])
-;
+// AllDays : Yup.bool(),
+//   monday : Yup.bool(),
+//   tuesday : Yup.bool(),
+//   wednesday : Yup.bool(),
+//   thusday : Yup.bool(),
+//   friday : Yup.bool(),
+//   saturday : Yup.bool(),
+//   sunday : Yup.bool(),
+})
+// .atLeastOneOf(['AllDays', 'monday','tuesday','wednesday','thusday','friday','saturday','sunday'])
+// ;
 
 
 class addCustomer extends Component<Props, CustomerInserState> {
@@ -128,7 +119,7 @@ class addCustomer extends Component<Props, CustomerInserState> {
 
       showMessage({
         message: this.props.CustomerAddMessage,
-        type: this.props.isSuccees ? "success" : "danger",
+        type: this.props.isSuccees ? "success" : (this.props.CustomerAddMessage === "Limitli pakete sahip üyelerimiz tanımlanandan fazla müşteri ekleyememektedir. Lütfen destek sayfamızdan bizimle iletişime geçiniz" ? "warning" : "danger"),
         icon: 'auto'
       }
       );
@@ -205,10 +196,11 @@ class addCustomer extends Component<Props, CustomerInserState> {
           gunler += "7,"
         }
       }
-      const { customerAdd } = this.props;
-      customerAdd(values.musteriAdiSoyadi, values.sirketAdi, 0, Math.round(Number(values.fountainCount)).toString(), gunler,values.adress,values.phoneNumber);
-  
+      
     }
+    const { customerAdd } = this.props;
+      customerAdd(values.musteriAdiSoyadi, values.sirketAdi, 0, values.fountainCount.length > 0 ? values.fountainCount : "0" , gunler,values.adress,values.phoneNumber);
+  
     
   };
 
@@ -241,7 +233,8 @@ const propsNew = { trackColor: { true: "#2069F3", false: null } }
                       {/* <Text style={styles.FormLabel}>Adı Soyadı</Text> */}
                       <View style={styles.input}>
                        <Item  floatingLabel style={{marginTop:0,borderBottomColor: (touched.musteriAdiSoyadi && errors.musteriAdiSoyadi != null) ? 'red' : '#2069F3'}}>
-                         <Label style={{color:(touched.musteriAdiSoyadi && errors.musteriAdiSoyadi != null) ? 'red' : '#959595'}}>Adı Soyadı</Label>
+                        <Icon name="ios-person" style={{color:'#a5a5a5'}}  />
+                         <Label style={{fontFamily:'Avenir Next',marginTop:-10,color:(touched.musteriAdiSoyadi && errors.musteriAdiSoyadi != null) ? 'red' : '#959595'}}>Adı Soyadı</Label>
                        <Input
 
                         
@@ -260,12 +253,13 @@ const propsNew = { trackColor: { true: "#2069F3", false: null } }
                       <View style={styles.input}>
 
                       <Item  floatingLabel style={{marginTop:15,borderBottomColor: (touched.sirketAdi && errors.sirketAdi != null) ? 'red' : '#2069F3'}}>
-                         <Label style={{color:(touched.sirketAdi && errors.sirketAdi != null) ? 'red' : '#959595'}}>Şirket Adı</Label>
-                    
+                      <Icon name="ios-business" style={{color:'#a5a5a5'}}  />
+                         <Label style={{fontFamily:'Avenir Next',color:(touched.sirketAdi && errors.sirketAdi != null) ? 'red' : '#959595',marginTop:-10}}>Şirket Adı</Label>
+                          
                           <Input
                           
                           // style={styles.input}
-
+                          style={{fontFamily:'Avenir Next',fontSize:18}}
                           placeholderTextColor="#9A9A9A"
                           value={values.sirketAdi}
                           autoCapitalize="words"
@@ -273,11 +267,13 @@ const propsNew = { trackColor: { true: "#2069F3", false: null } }
                           onBlur={handleBlur("sirketAdi")}
                         />
                         </Item>
-                        <Item  floatingLabel style={{marginTop:15,borderBottomColor: (touched.phoneNumber && errors.phoneNumber != null) ? 'red' : '#2069F3'}}>
-                         <Label style={{color:(touched.phoneNumber && errors.phoneNumber != null) ? 'red' : '#959595'}}>Telefon Numarası</Label>
-                     
+                        <Item  floatingLabel style={{marginTop:20,borderBottomColor: (touched.phoneNumber && errors.phoneNumber != null) ? 'red' : '#2069F3'}}>
+                        <Icon name="ios-call" style={{color:'#a5a5a5'}}  />
+                         <Label style={{fontFamily:'Avenir Next',marginTop:-10,color:(touched.phoneNumber && errors.phoneNumber != null) ? 'red' : '#959595'}}>Telefon Numarası</Label>
+                   
                        <Input
-                        
+
+style={{fontFamily:'Avenir Next',fontSize:18}}
                         // underlineColorAndroid="transparent"
                         keyboardType= "phone-pad"
                         placeholderTextColor="#9A9A9A"
@@ -290,43 +286,57 @@ const propsNew = { trackColor: { true: "#2069F3", false: null } }
                        </Item>
                     
 
+                       <Item  floatingLabel style={{maxHeight:80,marginTop:20,borderBottomColor: (touched.adress && errors.adress != null) ? 'red' : '#2069F3'}}>
+                        <Icon name="ios-home" style={{minHeight:60,color:'#a5a5a5'}}/>
+                         <Label style={{fontFamily:'Avenir Next',marginTop:-10,color:(touched.adress && errors.adress != null) ? 'red' : '#959595'}}>Adres</Label>
+                   
+                       <Input
 
-<Textarea style={{marginTop:15,borderBottomWidth:1,borderBottomColor:(touched.adress && errors.adress != null) ? 'red' : '#2069F3'}} rowSpan={5} 
-// underline
-value={values.address}
-autoCapitalize="words"
-placeholderTextColor={(touched.adress && errors.adress != null) ? 'red' : '#959595'}
-onChangeText={handleChange("adress")}
-onBlur={handleBlur("adress")}
+                        multiline
+                        style={{minHeight:100,maxHeight:100,fontFamily:'Avenir Next',fontSize:18}}
 
- placeholder="Adres"  />
+                        // underlineColorAndroid="transparent"
+
+                        placeholderTextColor="#9A9A9A"
+                        value={values.adress}
+                        autoCapitalize="words"
+                        onChangeText={handleChange("adress")}
+                        onBlur={handleBlur("adress")}
+
+                      />
+                       </Item>
+                    
 
                        
 
                       </View>
                       {/* <Text style={styles.errorText}>{errors.sirketAdi}</Text> */}
                       {/* <Text style={styles.FormLabel}>Sebil Sayısı</Text> */}
-                      <View style={styles.input}>
-                      <Item  floatingLabel style={{marginTop:0,borderBottomColor: (touched.Sebil && errors.Sebil != null) ? 'red' : '#2069F3'}}>
-                         <Label style={{color:(touched.Sebil && errors.Sebil != null) ? 'red' : '#959595'}}>Sebil Sayısı</Label>
-                     
+                      <View  style={styles.input}>
+                      <Item  floatingLabel style={{marginTop:20,borderBottomColor: (touched.Sebil && errors.Sebil != null) ? 'red' : '#2069F3'}}>
+                      <Icon name="ios-water" style={{color:'#a5a5a5'}} />
+                         <Label style={{fontFamily:'Avenir Next',marginTop:-10,color:(touched.Sebil && errors.Sebil != null) ? 'red' : '#959595'}}>Sebil Sayısı</Label>
+                   
                           <Input
 
-
+                  style={{fontFamily:'Avenir Next',fontSize:18}}
                           placeholderTextColor="#9A9A9A"
-
+                          
                           value={String(values.fountainCount)}
-                          keyboardType="numeric"
+                          keyboardType="number-pad"
                           onChangeText={handleChange("fountainCount")}
                           onBlur={handleBlur("fountainCount")}
                         />
                         </Item>
                       </View>
                       {/* <Text style={styles.errorText}>{errors.fountainCount}</Text> */}
-                      <Text style={[styles.FormLabel,{color :((!values.AllDays) &&(!values.monday) && (!values.tuesday) && (!values.wednesday) &&(!values.thusday) && (!values.friday) &&  (!values.saturday) &&(!values.sunday))  ? 'red' : '#959595' }]}>Gün</Text>
 
 
-                      <View>
+                      <Text style={[styles.FormLabel,{color :((!values.AllDays) &&(!values.monday) && (!values.tuesday) && (!values.wednesday) &&(!values.thusday) && (!values.friday) &&  (!values.saturday) &&(!values.sunday))  ? 'red' : '#959595',marginTop:20,marginLeft:30 }]}>Sipariş Günleri</Text>
+
+
+
+                      <View style={{marginTop:10}}>
                         <ListItem>
                         
                         <Switch 
@@ -425,12 +435,12 @@ onBlur={handleBlur("adress")}
 
 
 
-                      <Button onPress={() => { handleSubmit() }} style={{justifyContent:'center',marginTop:30,marginBottom:30,marginHorizontal:40,borderRadius:20,backgroundColor:'#01C3E3',
+                      <Button onPress={() => { handleSubmit() }} style={{justifyContent:'center',marginTop:30,marginBottom:30,marginHorizontal:40,borderRadius:20,backgroundColor:'#216AF4',
                     shadowRadius: 5.00,
                     
                     elevation: 12,
 
-                    shadowColor: "#006c7e",
+                    shadowColor: "#216AF4",
     shadowOffset: {width: 3, height: 3 },
     shadowOpacity: .5,
 

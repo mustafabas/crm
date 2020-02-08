@@ -8,8 +8,10 @@ import {
     TouchableOpacity,
     StatusBar,
     Alert,
-    AsyncStorage,
+
 } from "react-native";
+import AsyncStorage from '@react-native-community/async-storage';
+
 import { NavigationScreenProp, NavigationState, } from "react-navigation";
 import { Formik, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -20,10 +22,14 @@ import { connect } from "react-redux";
 import { IEmployeeItem } from "../../../redux/models/addEmployeeModel";
 import { IUserItem } from "../../../redux/models/addUserModel";
 import { AddUser } from "../../../redux/actions/addUserAction"
-import { Item, Label, Input, Textarea, Button, Spinner, Switch } from "native-base";
+import { Item, Label, Input, Textarea, Button, Spinner, Switch, Icon } from "native-base";
 import { stat } from "fs";
 import { showMessage } from "react-native-flash-message";
 import { GetEmployees } from "../../../redux/actions/employeeAction";
+// import { TextInputMask } from 'react-native-masked-text'
+
+import {MaskedInput,Text as TextWix,View as ViewWix} from 'react-native-ui-lib'; //eslint-disable-line
+
 interface Props {
     navigation: NavigationScreenProp<NavigationState>;
     isSuccees: boolean;
@@ -37,6 +43,7 @@ interface Props {
 
 interface State {
     UserType: string | null
+    simple : number 
 }
 
 interface multi extends IEmployeeItem, IUserItem { }
@@ -60,15 +67,11 @@ const girdiler = Yup.object().shape({
         .required("*Zorunlu Alan"),
         mail: Yup.string()
         .email("E-posta Giriniz!"),
-    monthlySalary: Yup.number()
-        .positive("Pozitif değer giriniz!")
-        .moreThan(0, "Sıfırdan büyük olmalıdır!"),
-        identityNumber: Yup.number()
-        .positive("Pozitif değer giriniz!"),
-    dailyPriceFood: Yup.number()
-        .positive("Pozitif değer giriniz!"),
+    monthlySalary: Yup.string(),
+        identityNumber: Yup.number(),
+    dailyPriceFood: Yup.string(),
       phoneNumber: Yup.number()
-        .positive("Pozitif değer giriniz!")
+
 
 });
 
@@ -92,6 +95,7 @@ class employeeAddSceen extends Component<Props, State> {
         super(props);
         this.state = {
             UserType: "",
+            simple : 0
         };
     }
 
@@ -101,10 +105,10 @@ class employeeAddSceen extends Component<Props, State> {
 
     handleAddEmployee(values: multi) {
         const { employeeAdd, AddUser } = this.props;
-        employeeAdd(values.nameSurname, Number(values.monthlySalary), values.mail, values.password, values.phoneNumber, values.identityNumber, values.address, Number(values.dailyPriceFood));
+        employeeAdd(values.nameSurname,Number(values.monthlySalary.replace(",",".")), values.mail, values.password, values.phoneNumber, values.identityNumber, values.address , Number(values.dailyPriceFood.replace(",",".")));
         // if (values.mail != "" && values.password != "") {
         //     AddUser(values.nameSurname, values.mail, values.password);
-        // }     
+        // }      
   
     };
     showSimpleMessage() {
@@ -126,6 +130,20 @@ class employeeAddSceen extends Component<Props, State> {
             })
         });
     }
+    renderPrice(value) {
+        const hasValue = Boolean(value && value.length > 0);
+        return (
+          <ViewWix row center>
+            
+            <TextWix text30 dark10={hasValue} dark60={!hasValue}>
+              {hasValue ? value : '00'}
+            </TextWix>
+            <TextWix text30 dark60>
+            ₺
+            </TextWix>
+          </ViewWix>
+        );
+      }
 
     render() {
         if(this.props.isSuccees){
@@ -153,10 +171,11 @@ class employeeAddSceen extends Component<Props, State> {
                                 {({ values, errors, handleChange, handleBlur, handleSubmit, resetForm, touched, setFieldValue }) => {
                                     const propsNew = { trackColor: { true: "#2069F3", false: null } }
                                     return (
-                                        <View style={styles.containerNew} >
-                                            <View style={styles.input}>
-                                                <Item floatingLabel style={{ marginTop: 0, borderBottomColor: (touched.nameSurname && errors.nameSurname != null) ? 'red' : '#2069F3' }}>
-                                                    <Label style={{ color: (touched.nameSurname && errors.nameSurname != null) ? 'red' : '#959595' }}>Adı Soyadı</Label>
+                                        <View style={[styles.containerNew,{marginLeft:20,marginRight:20}]} >
+                                            <View style={[styles.input]}>
+                                                <Item floatingLabel style={{ marginTop: 20, borderBottomColor: (touched.nameSurname && errors.nameSurname != null) ? 'red' : '#2069F3' }}>
+                                                <Icon name="ios-person" style={{color:'#a5a5a5'}}  />
+                                                    <Label style={{ marginTop:-10,color: (touched.nameSurname && errors.nameSurname != null) ? 'red' : '#959595' }}>Adı Soyadı</Label>
                                                     <Input
                                                         style={{ fontFamily: 'Avenir Next', fontSize: 18 }}
                                                         placeholderTextColor="#9A9A9A"
@@ -169,9 +188,62 @@ class employeeAddSceen extends Component<Props, State> {
                                                 </Item>
                                           
                                             </View>
+                                            {/* <View style={{borderBottomWidth:1,borderBottomColor:'#2069F3',marginTop:20}}>
+                                            <View style={{flexDirection:'row'}}>
+                                            <Icon name="ios-card" style={{color:'#a5a5a5'}}  />
+                                                    <Label style={{ marginTop:5,marginLeft:5,color: (touched.monthlySalary && errors.monthlySalary != null) ? 'red' : '#959595' }}>Aylik Maaş</Label>
+                                                   
+                                            </View> */}
+                                            
+                                            {/* <TextInputMask
+                                            style={{fontSize:18,fontFamily:"Avenir Next",marginTop:5,marginBottom:5}}
+  type={'money'}
+  options={{
+    precision: 2,
+    separator: ',',
+    delimiter: '.',
+    unit: '₺',
+    suffixUnit: ''
+  }}
+  value={values.nameSurname}
+  onChangeText={handleChange("nameSurname")}
+/> */}
+{/* <MaskedInput
+            renderMaskedText={this.renderPrice}
+            keyboardType={'numeric'}
+          /> */}
+
+
+
+  
+                                            {/* </View>  */}
+                                               
+                                            
+
+                                            {/* <View style={[styles.input]}>
+                                                <Item floatingLabel style={{ marginTop: 20, borderBottomColor: (touched.nameSurname && errors.nameSurname != null) ? 'red' : '#2069F3' }}>
+                                                <Icon name="ios-person" style={{color:'#a5a5a5'}}  />
+                                                    <Label style={{ marginTop:-10,color: (touched.nameSurname && errors.nameSurname != null) ? 'red' : '#959595' }}>Adı Soyadı</Label>
+                                                    {/* <Input
+                                                        style={{ fontFamily: 'Avenir Next', fontSize: 18 }}
+                                                        placeholderTextColor="#9A9A9A"
+                                           
+                                                        autoCapitalize="words"
+                                                        onChangeText={handleChange("nameSurname")}
+                                                        onBlur={handleBlur("nameSurname")}
+                                                    /> */}
+
+
+                                               
+                           
+                                                {/* </Item> */}
+                                          
+                                            {/* // </View> */}
+
                                             <View style={styles.input}>
                                                 <Item floatingLabel style={{ marginTop: 15, borderBottomColor: (touched.identityNumber && errors.identityNumber != null) ? 'red' : '#2069F3' }}>
-                                                    <Label style={{ color: (touched.identityNumber && errors.identityNumber != null) ? 'red' : '#959595' }}>Kimlik Numarası</Label>
+                                                <Icon name="ios-menu" style={{color:'#a5a5a5'}}  />
+                                                    <Label style={{ marginTop:-10,color: (touched.identityNumber && errors.identityNumber != null) ? 'red' : '#959595' }}>Kimlik Numarası</Label>
                                                     <Input
                                                         placeholderTextColor="#9A9A9A"
                                                         maxLength={11}
@@ -186,10 +258,11 @@ class employeeAddSceen extends Component<Props, State> {
                           
                                             <View style={styles.input}>
                                                 <Item floatingLabel style={{ marginTop: 15, borderBottomColor: (touched.monthlySalary && errors.monthlySalary != null) ? 'red' : '#2069F3' }}>
-                                                    <Label style={{ color: (touched.monthlySalary && errors.monthlySalary != null) ? 'red' : '#959595' }}>Aylik Maaş</Label>
+                                                <Icon name="ios-card" style={{color:'#a5a5a5'}}  />
+                                                    <Label style={{ marginTop:-10,color: (touched.monthlySalary && errors.monthlySalary != null) ? 'red' : '#959595' }}>Aylik Maaş</Label>
                                                     <Input
                                                         placeholderTextColor="#9A9A9A"
-                                                        keyboardType="number-pad"
+                                                        keyboardType="numeric"
                                                         autoCapitalize="words"
                                                         onChangeText={handleChange("monthlySalary")}
                                                         onBlur={handleBlur("monthlySalary")}
@@ -200,11 +273,12 @@ class employeeAddSceen extends Component<Props, State> {
                                             </View>
                                             <View style={styles.input}>
                                                 <Item floatingLabel style={{ marginTop: 15, borderBottomColor: (touched.dailyPriceFood && errors.dailyPriceFood != null) ? 'red' : '#2069F3' }}>
-                                                    <Label style={{ color: (touched.dailyPriceFood && errors.dailyPriceFood != null) ? 'red' : '#959595' }}>Günlük Yemek Ücreti</Label>
+                                                <Icon name="ios-pizza" style={{color:'#a5a5a5'}}  />
+                                                    <Label style={{ marginTop:-10,color: (touched.dailyPriceFood && errors.dailyPriceFood != null) ? 'red' : '#959595' }}>Günlük Yemek Ücreti</Label>
                                                     <Input
                                                         placeholderTextColor="#9A9A9A"
                                              
-                                                        keyboardType="number-pad"
+                                                        keyboardType="numeric"
                                                         autoCapitalize="words"
                                                         onChangeText={handleChange("dailyPriceFood")}
                                                         onBlur={handleBlur("dailyPriceFood")}
@@ -214,7 +288,8 @@ class employeeAddSceen extends Component<Props, State> {
                                             </View>
                                             <View style={styles.input}>
                                                 <Item floatingLabel style={{ marginTop: 15, borderBottomColor: (touched.phoneNumber && errors.phoneNumber != null) ? 'red' : '#2069F3' }}>
-                                                    <Label style={{ color: (touched.phoneNumber && errors.phoneNumber != null) ? 'red' : '#959595' }}>0511 111 11 11</Label>
+                                                <Icon name="ios-call" style={{color:'#a5a5a5'}}  />
+                                                    <Label style={{ marginTop:-10,color: (touched.phoneNumber && errors.phoneNumber != null) ? 'red' : '#959595' }}>0511 111 11 11</Label>
                                                     <Input
                                                      maxLength={11}
                                                         placeholderTextColor="#9A9A9A"
@@ -227,29 +302,43 @@ class employeeAddSceen extends Component<Props, State> {
                                                 </Item>
                                                 <Text style={{width:'100%', color:'red'}}>{errors.phoneNumber}</Text>
                                             </View>
-                                            <Textarea style={{ marginTop: 15, borderBottomWidth: 1, borderBottomColor: (touched.address && errors.address != null) ? 'red' : '#2069F3' }} rowSpan={5}
-                                                // underline
-                                                value={values.address}
-                                                autoCapitalize="words"
-                                                placeholderTextColor={(touched.address && errors.address != null) ? 'red' : '#959595'}
-                                                onChangeText={handleChange("address")}
-                                                onBlur={handleBlur("address")}
+                                            <Item  floatingLabel style={{maxHeight:80,marginTop:20,borderBottomColor: (touched.adress && errors.adress != null) ? 'red' : '#2069F3'}}>
+                      
+                                            <Icon name="ios-home" style={{minHeight:60,color:'#a5a5a5'}}/>
+                         <Label style={{fontFamily:'Avenir Next',marginTop:-10,color:(touched.adress && errors.adress != null) ? 'red' : '#959595'}}>Adres</Label>
+                   
+<Input
 
-                                                placeholder="Adres" />
-                                 <View style={[styles.input, {flexDirection:'row'}]}>
+multiline
+style={{minHeight:100,maxHeight:100,fontFamily:'Avenir Next',fontSize:18}}
+
+// underlineColorAndroid="transparent"
+
+placeholderTextColor="#9A9A9A"
+value={values.address}
+autoCapitalize="words"
+onChangeText={handleChange("address")}
+onBlur={handleBlur("address")}
+
+/>
+</Item>
+
+                                 <View style={[styles.input, {flexDirection:'row',marginTop:20}]}>
                         <Switch 
                         {...propsNew}
                         onChange = {() => {{setFieldValue('AddAsUser', !values.AddAsUser)}}}
                         value={values.AddAsUser}
                          />
-                         <Text>Sisteme Giris Bilgileri Ekle</Text>
+                         <Text style={{marginLeft:10,fontFamily:'Avenir Next',fontSize:18,marginTop:-3}}>Sisteme Giris Bilgileri Ekle</Text>
                          </View>
                          {
                             values.AddAsUser && <View>
 
-                      <View style={styles.input}>
+                      <View style={[styles.input,{marginTop:10}]}>
                                                 <Item floatingLabel style={{ marginTop: 15, borderBottomColor: (touched.mail && errors.mail != null) ? 'red' : '#2069F3' }}>
-                                                    <Label style={{ color: (touched.mail && errors.mail != null) ? 'red' : '#959595' }}>Mail Adresi</Label>
+                                                <Icon name="ios-mail" style={{color:'#a5a5a5'}} />
+                                                    <Label style={{ marginTop:-10,color: (touched.mail && errors.mail != null) ? 'red' : '#959595' }}>Mail Adresi</Label>
+                                                    
                                                     <Input
                                                         placeholderTextColor="#9A9A9A"
                                                         autoCapitalize="words"
@@ -261,7 +350,8 @@ class employeeAddSceen extends Component<Props, State> {
                                             </View>
                                             <View style={styles.input}>
                                                 <Item floatingLabel style={{ marginTop: 15, borderBottomColor: (touched.password && errors.password != null) ? 'red' : '#2069F3' }}>
-                                                    <Label style={{ color: (touched.password && errors.password != null) ? 'red' : '#959595' }}>Sifre</Label>
+                                                <Icon name="ios-lock" style={{color:'#a5a5a5'}} />
+                                                    <Label style={{marginTop:-10, color: (touched.password && errors.password != null) ? 'red' : '#959595' }}>Sifre</Label>
                                                     <Input
                                             
                                                      secureTextEntry={true}

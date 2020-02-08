@@ -111,6 +111,7 @@ class editProduct extends Component<Props,state> {
 
   handleEditProduct(values: productData) {
     const { productEdit } = this.props;
+    console.log(this.state.status)
     productEdit(
       this.props.navigation.getParam("productId"),
     this.state.status, 

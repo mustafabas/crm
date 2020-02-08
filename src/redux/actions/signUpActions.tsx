@@ -1,12 +1,13 @@
-import { AsyncStorage } from "react-native";
+import AsyncStorage from '@react-native-community/async-storage';
+
 import axios from 'axios'
-import {WATER_USER_CREATE_CONTROL_EMAIL, WATER_USER_CREATE} from './../constants'
+import {WATER_USER_CREATE_CONTROL_EMAIL, WATER_USER_CREATE, WATER_USER_CREATE_EMAIL_CONTROL} from './../constants'
 import { Dispatch } from "react";
 import {SIGNUP_FAILED,SIGNUP_STARTED,SIGNUP_SUCCEED,RESET_PROPS, USER_CREATE_FIRST_STEP, SIGNUP2_SUCCEED, SIGNUP2_FAILED, SIGNUP2_STARTED} from './../types'
 import {Action} from '../states'
 import { UserFirstData } from "../reducers/signUpReducers";
 import { navigate } from "../services/Navigator";
-
+ 
 
 export interface BaseUser {
     nameSurname: string;
@@ -20,30 +21,31 @@ export interface BaseUser {
 
 export function createBaseUser(user :BaseUser) {
     return(dispatch : Dispatch<Action>) => {
-        dispatch(loading(true));
-
+        dispatch(loadingSecond(true));
 
 
         axios.post(WATER_USER_CREATE,{
         nameSurname: user.nameSurname,
     phoneNumber: user.phoneNumber,
     email: user.email,
-    password: user.phoneNumber,
-    companyName: user.phoneNumber,
-    address: user.phoneNumber,
-
+    password: user.password,
+    companyName: user.companyName,
+    address: user.address,
         }).then((res)=> {
             if(res.data.isSuccess) {
 
+                console.log(res.data.result)
+                AsyncStorage.setItem("userToken",res.data.result.token).then(()=>{
+                  AsyncStorage.setItem("userId",res.data.result.userId.toString()).then(()=>{
+                    dispatch(loginIsSucceedSecond(true,""));
+                    
 
-                AsyncStorage.multiSet([['userToken',res.data.result.token],['userId',res.data.result.userId.toString()]])
-                .then(() => {
-                  dispatch(loginIsSucceedSecond(true,""));
-                  dispatch(reset());
-                //   navigate('LoginPhoneVerify');
-        
-                })
-                .catch(error => {
+                    dispatch(reset());
+                  }).catch(er=>{
+                    dispatch(loginIsSucceedSecond(false,"Bir Hata Meydana Geldi"));
+                    dispatch(reset())
+                  })
+                }).catch(err=>{
                   dispatch(loginIsSucceedSecond(false,"Bir Hata Meydana Geldi"));
                   dispatch(reset())
                 })
@@ -75,11 +77,33 @@ export function controlEmail(NameSurname: string,password:string , email:string)
     dispatch(loading(true));
   
 
-    dispatch(signUpFirstSucceed(user))
-    dispatch(loginIsSucceed(true,""));
-    dispatch(reset());
+    axios.post(WATER_USER_CREATE_EMAIL_CONTROL, {
+      email : email
+    }).then((res)=> {
+      if(res.data.result) {
 
+        dispatch(signUpFirstSucceed(user))
+        dispatch(loginIsSucceed(true,""));
+        dispatch(reset());
+         
+          
 
+      }else {
+          if(res.data.message === "Error.User.EmailCheck.EmailFound") {
+            dispatch(loginIsSucceed(false,"Bu email adresi ile tanımlı kullanıcı bulundu. Şifrenizi unuttuysanız yeni şifre alabilirsiniz."));
+            dispatch(reset())
+          }
+          else {
+            dispatch(loginIsSucceed(false,"Bir Hata meydana geldi."));
+            dispatch(reset())
+          }
+          
+      }
+
+  }).catch(err =>{
+    dispatch(loginIsSucceed(false,"Bir Hata Meydana Geldi"));
+    dispatch(reset())
+  })
 
 
 //   axios.post(WATER_USER_CREATE_CONTROL_EMAIL,
@@ -148,4 +172,4 @@ export function controlEmail(NameSurname: string,password:string , email:string)
   export const reset = () => ({
     type : RESET_PROPS,
     payload:null
-  })
+  })  

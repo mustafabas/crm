@@ -4,6 +4,7 @@ import { Dispatch } from "react";
 import {EMPLOYEECOST_DELETE_SUCCEED,EMPLOYEECOST_DELETE_FAILED} from './../types'
 import {Action} from '../states'
 import { GetEmployeeCost } from './getEmployeeCostAction';
+import { reset } from './loginAction';
 
 
 export function employeeCostDelete(id:number) {
@@ -19,6 +20,7 @@ export function employeeCostDelete(id:number) {
       if(response.data.result){
         dispatch(employeeCostDeleteIsSucceed(true, "Maliyet Silindi!"));
         dispatch(GetEmployeeCost());
+        dispatch(reset())
       }
     }
   })
@@ -31,4 +33,6 @@ export function employeeCostDelete(id:number) {
     type : isSuccess ? EMPLOYEECOST_DELETE_SUCCEED : EMPLOYEECOST_DELETE_FAILED,
     payload : message
   })
+
+
   
