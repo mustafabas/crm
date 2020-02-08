@@ -15,7 +15,7 @@ import {
   Modal,
 } from 'react-native';
 import newStyles from "../../AuthScreens/Login/styles";
-import AsyncStorage from '@react-native-community/async-storage';
+import {AsyncStorage } from 'react-native'
 
 
 

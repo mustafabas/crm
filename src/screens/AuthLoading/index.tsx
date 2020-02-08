@@ -7,7 +7,7 @@ import {
   View
 } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
-import AsyncStorage from '@react-native-community/async-storage';
+import {AsyncStorage } from 'react-native'
 import { axiosBase } from "../../redux/services/HeaderConfig";
 import Axios from "axios";
 import { WATER_CREATE_NOTIFICATION } from "../../redux/constants";

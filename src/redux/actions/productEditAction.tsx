@@ -3,7 +3,7 @@ import {WATER_EDIT_PRODUCT, WATER_GET_PRODUCT_BY_ID} from './../constants'
 import { Dispatch } from "react";
 import {EDIT_PRODUCT_SUCCEED,EDIT_PRODUCT_FAILED, GET_PRODUCT_BY_ID, GET_PRODUCT_BY_ID_LOADING, EDIT_PRODUCT_LOADING} from './../types'
 import {Action} from '../states'
-import AsyncStorage from '@react-native-community/async-storage';
+import {AsyncStorage } from 'react-native'
 
 import { reset } from './loginAction';
 import { GetProducts } from './productAction';

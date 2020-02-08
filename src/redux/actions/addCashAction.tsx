@@ -4,7 +4,7 @@ import { Dispatch } from "react";
 import {ADD_CASH_SUCCEED,ADD_CASH_FAILED} from './../types'
 import {Action} from '../states'
 
-import AsyncStorage from '@react-native-community/async-storage';
+import {AsyncStorage } from 'react-native'
 
 import { GetOrders } from './orderAction';
 import { reset } from './loginAction';

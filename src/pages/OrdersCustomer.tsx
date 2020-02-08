@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { View, FlatList, ActivityIndicator, StatusBar, Text, TouchableOpacity, KeyboardAvoidingView, Platform, Modal, Alert } from "react-native";
-import AsyncStorage from '@react-native-community/async-storage';
+import {AsyncStorage } from 'react-native'
 
 import { NavigationScreenProp, NavigationState, ScrollView, NavigationEvents } from "react-navigation";
 import { connect } from "react-redux";

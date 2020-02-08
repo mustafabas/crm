@@ -14,7 +14,7 @@ import {
     ActivityIndicator,
     Modal,
 } from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
+import {AsyncStorage } from 'react-native'
 
 import { Icon, Input, Item, Tabs, Tab, TabHeading, Button, ScrollableTab } from 'native-base';
 import { Alert } from 'react-native';

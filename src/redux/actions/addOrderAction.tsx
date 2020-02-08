@@ -4,7 +4,7 @@ import { Dispatch } from "react";
 import {ADD_ORDER_SUCCEED,ADD_ORDER_FAILED, ADD_ORDER_IS_LOADING, GET_EMPLOYEE_TOKENS} from './../types'
 import {Action} from '../states'
 
-import AsyncStorage from '@react-native-community/async-storage';
+import {AsyncStorage } from 'react-native'
 
 import { GetOrders, GetCustomerDetail } from './orderAction';
 import { navigate } from '../services/Navigator';

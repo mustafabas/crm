@@ -16,7 +16,7 @@ import {
 } from 'react-native';
 import newStyles from "../../AuthScreens/Login/styles";
 
-import AsyncStorage from '@react-native-community/async-storage';
+import {AsyncStorage } from 'react-native'
 
 
 import { Icon,Text, Input, Item, Tabs, Tab, TabHeading, Button, ScrollableTab, ListItem, Left, Body, Right, Switch, Spinner, Radio } from 'native-base';

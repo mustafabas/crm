@@ -4,7 +4,7 @@ import { Dispatch } from "react";
 import {PRODUCT_GET,PRODUCT_LOADING } from './../types'
 import {Action} from '../states'
 import { IProductItem } from "../models/productModel";
-import AsyncStorage from '@react-native-community/async-storage';
+import {AsyncStorage } from 'react-native'
 
 
 
