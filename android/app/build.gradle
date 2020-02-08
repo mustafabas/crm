@@ -188,23 +188,17 @@ android {
 }
 
 dependencies {
-    implementation project(':react-native-firebase')
+
 
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.facebook.react:react-native:+"  // From node_modules
-    implementation 'com.google.firebase:firebase-analytics:17.2.2'
-    implementation project(':react-native-firebase')
-    implementation "com.google.android.gms:play-services-base:16.1.0"
-     implementation "com.google.firebase:firebase-core:16.0.9"
-    //   implementation "com.google.firebase:firebase-messaging:18.0.0"
-      implementation ("com.google.firebase:firebase-messaging:18.0.0"){
-        exclude group: 'com.google.firebase', module: 'firebase-iid'
-    }
-implementation 'com.google.firebase:firebase-iid:18.0.0"'
+    implementation 'com.google.firebase:firebase-analytics:+'
 
 
-//   implementation 'me.leolin:ShortcutBadger:1.1.21@aar'
-
+    implementation "com.google.android.gms:play-services-base:+"
+    implementation "com.google.firebase:firebase-core:+"
+    implementation "com.google.firebase:firebase-messaging:+"
+    implementation 'me.leolin:ShortcutBadger:1.1.21@aar' 
     if (enableHermes) {
         def hermesPath = "../../node_modules/hermes-engine/android/";
         debugImplementation files(hermesPath + "hermes-debug.aar")
