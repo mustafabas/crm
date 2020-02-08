@@ -28,7 +28,7 @@ import { showMessage } from "react-native-flash-message";
 import { GetEmployees } from "../../../redux/actions/employeeAction";
 // import { TextInputMask } from 'react-native-masked-text'
 
-import {MaskedInput,Text as TextWix,View as ViewWix} from 'react-native-ui-lib'; //eslint-disable-line
+
 
 interface Props {
     navigation: NavigationScreenProp<NavigationState>;
