@@ -8,7 +8,7 @@ import {
   Image,
   TouchableOpacity,
   StatusBar,
-  Alert,
+  Alert,FlatList
 } from "react-native";
 import { NavigationScreenProp, NavigationState, NavigationEvents } from "react-navigation";
 import { Formik } from "formik";
@@ -16,18 +16,20 @@ import * as Yup from "yup";
 import styles from "../../../pages/styles";
 
 // import RNPickerSelect from 'react-native-picker-select';
-import Icon from "react-native-vector-icons/Ionicons";
+
 import { connect } from "react-redux";
 import { AppState } from "../../../redux/store";
 import { GetProducts } from "../../../redux/actions/productAction";
 import { IProductItem } from "../../../redux/models/productAddModel";
-import { AddOrder } from "../../../redux/actions/addOrderAction";
+import { AddOrder, notificationEmployee } from "../../../redux/actions/addOrderAction";
 // import { IAddOrderItem } from "../redux/models/addOrderModel";
 import { GetProduct } from "../../../redux/actions/productForCustomerAction";
 import { IProductForCustomerItem } from "../../../redux/models/productForCustomerModel";
-import { Input, CheckBox,Picker, Item, Label, Button, Spinner, Card, CardItem,Body } from "native-base";
+import { Input, CheckBox,Picker, Item, Label, Button, Spinner, Card, CardItem,Body,Icon } from "native-base";
 import { showMessage } from "react-native-flash-message";
 import { InfoItem } from "../../../components/InfoItem";
+import RBSheet from "react-native-raw-bottom-sheet";
+import { NotificationService } from "../../../services/NotificationService";
 
 interface Props {
   navigation: NavigationScreenProp<NavigationState>;
@@ -36,7 +38,7 @@ interface Props {
   GetProducts: () => void;
   AddOrder: (productId: number, customerId: number, unitPrice: number, count: number,isPaid:boolean) => void;
   isSuccees: boolean;
-  
+  notificationEmployee : notificationEmployee;
   AddOrderMessage: string;
   GetProduct: (productId: number, customerId: number) => void;
   product: IProductForCustomerItem;
@@ -48,15 +50,18 @@ interface Props {
 }
 
 interface State {
-  productName: string,
-  productCode: string,
-  unitPrice: string,
-  date: string,
-  productId: number,
-  count: string,
-  isSuccess: boolean,
-  status: boolean,
-  selected2:boolean
+  productName: string;
+  productCode: string;
+  unitPrice: string;
+  date: string;
+  productId: number;
+  count: string;
+  isSuccess: boolean;
+  status: boolean;
+  selected2:boolean;
+  orderAddedSuccessfully: boolean;
+  selectedEmployee : number;
+  notificationIsSend : boolean;
 }
 
 interface Item {
@@ -131,9 +136,15 @@ class orderAdd extends Component<Props, State> {
       isSuccess: false,
       status:false,
       selected2: null,
-      selectedProductValue : null
+      selectedProductValue : null,
+      orderAddedSuccessfully : false,
+      selectedEmployee : 0,
+      notificationIsSend : false
+
     };
+   
   }
+
 
   handleAlert() {
     this.props.navigation.navigate("OrdersCustomer", { customerId: this.props.navigation.getParam("customerId") });
@@ -191,9 +202,7 @@ class orderAdd extends Component<Props, State> {
 
     return PickerModel;
   }
-  // componentDidMount() {
-  //   this.props.GetProducts();
-  // }
+
   componentWillMount() {
     console.log(this.props.product)
     this.props.GetProducts();
@@ -222,6 +231,89 @@ onValueChange2(value: string) {
 
 
   //  this.OrderInfo(Number(value))
+}
+
+insertAndSendPush() {
+  this.chooseEmployee.close();
+  showMessage({
+    message: "Sipariş ataması yapıldı.",
+    type: "success" ,
+    icon: 'auto'
+  }
+  );
+
+
+  let tmp = this.props.notificationEmployee.userWithToken.find(e => e.id == this.state.selectedEmployee);
+  if(tmp) {
+    const notificationService = new NotificationService(tmp.id,1,this.props.notificationEmployee.orderId,tmp.tokens);
+     notificationService.addNotification();
+
+  }
+  this.setState({notificationIsSend : true})
+  
+
+  
+}
+
+_renderChooseEmployeeContent(){
+  const selectedEmployee = this.state.selectedEmployee
+  return(
+    <View>
+      <TouchableOpacity onPress={()=> this.chooseEmployee.close()} style={{position :'absolute',right:5,top:5,zIndex:10}}>
+      <Icon name="ios-close" style={{fontFamily:40}} />
+      </TouchableOpacity>
+
+   <ScrollView style={{height:400}}>
+   <Text style={{textAlign:'center',marginRight:5,marginTop:10,fontFamily:'Avenir Next',fontSize:18}}>Siparişi Çalışanlara Ata</Text>
+
+
+<FlatList
+        data={this.props.notificationEmployee ? this.props.notificationEmployee.userWithToken : null}
+        renderItem={({ item }) => <TouchableOpacity onPress={()=>this.setState({selectedEmployee : (selectedEmployee === item.id ? 0 : item.id)})}
+        style={{borderWidth:3,borderRadius:10,marginTop:20,marginHorizontal:10,paddingVertical:5,borderColor:'#216AF4',backgroundColor:selectedEmployee === item.id ? '#216AF4' : 'white'}}>
+ <Text style={{fontFamily:'Avenir Next',fontSize:20,paddingVertical:5,textAlign:'center',color: selectedEmployee === item.id ? 'white' : 'black'}}>
+ {item.name}
+ 
+ </Text>
+ </TouchableOpacity>
+ }
+        keyExtractor={item => item.id.toString()}
+      />
+
+<Button onPress={()=> this.insertAndSendPush()} disabled={this.state.selectedEmployee === 0} style={{marginTop:20,justifyContent:'center',marginHorizontal:10,paddingVertical:5,borderRadius:5,backgroundColor:'#01C3E3',
+                    shadowRadius: 5.00,
+                    
+                    elevation: 12,
+
+                    shadowColor: "#006c7e",
+    shadowOffset: {width: 3, height: 3 },
+    shadowOpacity: .5,
+
+    
+                    }}>
+                      {this.props.isLoading ? <Spinner  color='01C3E3' /> :   <Text  style={{color:'white',fontFamily:"Avenir Next",fontWeight:'bold',fontSize:16}} >Gönder</Text>}
+                       
+           
+          </Button>
+
+          <Button  onPress={()=> this.chooseEmployee.close()} style={{justifyContent:'center',marginTop:20,marginHorizontal:10,paddingVertical:5,borderRadius:5,backgroundColor:'white',
+                    shadowRadius: 5.00,
+                    
+                    elevation: 12,
+
+                    shadowColor: "#969696",
+    shadowOffset: {width: 3, height: 3 },
+    shadowOpacity: .5,
+
+    
+                    }}>
+            {this.props.isLoading ? <Spinner /> : <Text style={{color:'#49B1FD',fontFamily:"Avenir Next",fontWeight:'bold',fontSize:16}} >Vazgeç</Text>}
+          </Button>
+
+
+   </ScrollView>
+    </View>
+  )
 }
 
 renderContent(){
@@ -372,6 +464,22 @@ shadowOpacity: .5,
                
    
   </Button>
+
+ {!this.state.notificationIsSend && this.state.orderAddedSuccessfully  && <Button   onPress={()=> this.chooseEmployee.open()} style={{justifyContent:'center',marginTop:0,marginBottom:30,marginHorizontal:40,borderRadius:20,backgroundColor:'white',
+                    shadowRadius: 5.00,
+                    
+                    elevation: 12,
+
+                    shadowColor: "#969696",
+    shadowOffset: {width: 3, height: 3 },
+    shadowOpacity: .5,
+
+    
+                    }}>
+           <Text  style={{color:'#49B1FD',fontFamily:"Avenir Next",fontWeight:'bold',fontSize:16}} >Siparişi Ata</Text>
+          </Button>
+      }
+
   
             </View>
           </View>
@@ -392,7 +500,13 @@ shadowOpacity: .5,
       color: '#2B6EDC',
     };
     if(this.props.isSuccees) {
-      this.props.navigation.goBack()
+      // this.props.navigation.goBack()
+   if(!this.state.orderAddedSuccessfully){
+    this.setState({ orderAddedSuccessfully: true})
+   }
+      this.chooseEmployee.open();
+
+
     }
     
     return (
@@ -414,7 +528,27 @@ shadowOpacity: .5,
         
           </ScrollView>
         </KeyboardAvoidingView>
+
+        <RBSheet
+              ref={ref => {
+                this.chooseEmployee = ref;
+              }}
+              height={500}
+              duration={200}
+              customStyles={{
+                container: {
+                    padding:20,
+                    borderRadius:10
+                }
+              }}
+            >
+              {this._renderChooseEmployeeContent()}
+            </RBSheet>
+
+
         {this.showSimpleMessage()}
+
+
       </View>
     );
   }
@@ -427,7 +561,8 @@ const mapStateToProps = (state: AppState) => ({
   product: state.productForCustomer.product,
   isTried : state.addOrder.isTried,
   isLoading : state.addOrder.isLoading,
-  AddOrderMessage : state.addOrder.AddOrderMessage
+  AddOrderMessage : state.addOrder.AddOrderMessage,
+  notificationEmployee : state.addOrder.notificationEmployee
 })
 function bindToAction(dispatch: any) {
   return {

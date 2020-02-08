@@ -66,7 +66,7 @@ export const ABOUT_US_CONTEXT_FAILED = "ABOUT_US_CONTEXTSucceed"
 
 export const GET_USER_INFO = "getUserInfo"
 export const GET_USER_INFO_LOADING = "getiUserInfoLoading"
-export const GET_USER_INFO_FAILED = "getUserInfoIsSucceed"
+export const GET_USER_INFO_FAILED = "getUserInfoIsFailed"
 
 
 export const GET_STORE_INFO = "getStoreInfo"
@@ -98,6 +98,8 @@ export const PRODUCT_GET = "ProductGet";
 export const PRODUCT_LOADING = "ProductLoading";
 
 export const ADD_ORDER_SUCCEED ="AddOrderSucceed";
+export const GET_EMPLOYEE_TOKENS = "GetEmployeeTokens"
+
 export const ADD_ORDER_FAILED ="AddOrderFailed";
 export const ADD_ORDER_IS_LOADING = "AddOrderIsLoading";
 

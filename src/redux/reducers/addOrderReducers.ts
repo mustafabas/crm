@@ -1,12 +1,14 @@
 import { AddOrder, Action } from "../states";
-import {ADD_ORDER_SUCCEED,ADD_ORDER_FAILED, RESET_PROPS, ADD_ORDER_IS_LOADING} from "../types";
+import {ADD_ORDER_SUCCEED,ADD_ORDER_FAILED, RESET_PROPS, ADD_ORDER_IS_LOADING, GET_EMPLOYEE_TOKENS} from "../types";
+import { notificationEmployee } from "../actions/addOrderAction";
 
 
 const initalState = {
     isSuccess: false,
     AddOrderMessage: "",
     isTried : false,
-    isLoading : false
+    isLoading : false,
+    notificationEmployee : {} as notificationEmployee
   };
 
 export default (state: AddOrder = initalState, action: Action) => {
@@ -40,6 +42,10 @@ export default (state: AddOrder = initalState, action: Action) => {
         isTried : false,
         isLoading : false
       }
+      case GET_EMPLOYEE_TOKENS:
+        return {
+          notificationEmployee : action.payload
+        }
     default:
       return state;
   }
