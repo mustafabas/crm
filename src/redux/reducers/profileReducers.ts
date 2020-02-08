@@ -112,7 +112,8 @@ export default (state: Profile = intialState, action: Action) => {
         return {
             ...state,
             context : action.payload,
-            loading :false
+            loading :false,
+
         }
     case  ABOUT_US_CONTEXT_LOADING :
         return {
@@ -161,12 +162,14 @@ export default (state: Profile = intialState, action: Action) => {
             userInfo : action.payload,
             loadingUserInfo : false,
             IsSuceedGetStoreInfo : true,
+            message : '',
         }
     case GET_STORE_INFO : 
     return {
         ...state,
         storeInfo : action.payload,
-        loadingGetStoreInfo : false
+        loadingGetStoreInfo : false,
+        message : '',
     }
     case GET_STORE_INFO_LOADING : 
     return {

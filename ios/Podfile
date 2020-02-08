@@ -33,7 +33,7 @@ target 'BayimSu' do
   pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
-
+pod 'Firebase/Messaging', '~> 6.16.0'
   target 'BayimSuTests' do
     inherit! :search_paths
     # Pods for testing

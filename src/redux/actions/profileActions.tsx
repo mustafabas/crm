@@ -146,8 +146,9 @@ export function getUserInfo() {
       
         axios.get(WATER_GET_USER_INFO + "?userId=" + userId).then((response)=> {
             var userInfo = {} as UserInfo
-
+          console.log(response)
             if(response.data.isSuccess){
+              console.log("Is Succeed")
                 let data = response.data.result.user
                 userInfo.email  = data.email
                 userInfo.nameSurname = data.nameSurname

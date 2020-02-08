@@ -173,42 +173,7 @@ class ProfileScreen extends Component<Props, State>{
     )
   }
 
-  // async sendPush() {
-  //   const serverKey = 'AAAAyE8TtxA:APA91bE8aRkNWapUGBcGjXrWUYk3WMrs2pQPTtLlyZstLeCIaXY8HeLDkQSqaUtQcKfG60pR_TzEEDACSSZFRqUu008rZus474nldtxXK7UDpqfRHj8TKx4wi_pQdVb9sxsHltbqve2S';
-  //   //const referenceKey = 'fhHDrbE70Tk:APA91bEWKlLbtaOsA56wdzM62L-rsQdxWj1XOAuzJHANh4O4UUtZeZjSTrc2PW56OXIrg8Yp7LOYIZ3hbuRY_c_ChcmOQW8K2GGbQFOPfbPBjTavUZH38_f-6yQxeQzyBM-hpfwYLlTi'; //Device Key
-  //   // const referenceKey = 'dLekuR5i-9A:APA91bGOT5ipe8rrtnQcjZ5VE9cc3BlBLZn5NafgWelFSSKL0z_LhKTczkWm84GhuPSxppRSHRh_Cny6F8T4-vj9HGNEsDNnKmul6EJ2-npXgtv1g45xD734v53AnYNo7Ouiv3YXpX-2'; //Device Key
-
-  //   const FIREBASE_API_KEY = serverKey;
-  //   const message = {
-  //     registration_ids: ['c44Ue4VCUvQ:APA91bF00rnxD9HZjCD--OguuoncyaP44PREG296k8k-H_-ZJ2U6o6hxnuA-KL6yFt_M0kfqXLNMlPUizeLtUtKnaMdLUljJwQc1m4sd9mQMlDIqAlWTxqqyM49_XzIBpvP2dvqghwz1'],
-  //     notification: {
-  //       title: "india vs south africa test",
-  //       body: "IND chose to bat",
-  //       "vibrate": 1,
-  //       "sound": 1,
-  //       "show_in_foreground": true,
-  //       "priority": "high",
-  //       "content_available": true,
-  //     },
-  //     data: {
-  //       title: "india vs south africa test",
-  //       body: "IND chose to bat",
-  //       score: 50,
-  //       wicket: 1,
-  //     }
-  //   }
-
-  //   let headers = new Headers({
-  //     "Content-Type": "application/json",
-  //     "Authorization": "key=" + FIREBASE_API_KEY
-  //   });
-
-  //   let response = await fetch("https://fcm.googleapis.com/fcm/send", { method: "POST", headers, body: JSON.stringify(message) })
-  //   response = await response.json();
-  //   console.log(response);
-
-  // }
-
+  
 
   _renderCustomerSheetContent() {
     return (
@@ -412,13 +377,17 @@ class ProfileScreen extends Component<Props, State>{
                 <Icon name="right" type="AntDesign" color={this.state.iconColor} style={{ fontSize: 20, marginTop: Platform.OS === 'ios' ? 5 : 0 }} />
 
               </TouchableOpacity>
-              <View style={styles.propsSeperator}></View>
-              {userInfo.userType === userType.companyUser && <TouchableOpacity onPress={() => this.props.navigation.navigate('companyInfo')} style={styles.profileContainer}>
+              
+              {userInfo.userType === userType.companyUser && <View>
+                <View style={styles.propsSeperator}></View> 
+              <TouchableOpacity onPress={() => this.props.navigation.navigate('companyInfo')} style={styles.profileContainer}>
                 <Icon name="ios-business" type="ionicon" color={this.state.iconColor} style={{ fontSize: 20, marginTop: Platform.OS === 'ios' ? 5 : 0 }} />
                 <Text style={styles.profileTextStyle}>Şirket Bilgileri</Text>
                 <Icon name="right" type="AntDesign" color={this.state.iconColor} style={{ fontSize: 20, marginTop: Platform.OS === 'ios' ? 5 : 0 }} />
 
-              </TouchableOpacity>}
+              </TouchableOpacity></View>
+              
+              }
 
 
               <View style={styles.propsSeperator}></View>
