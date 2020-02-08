@@ -3,7 +3,7 @@ import {WATER_EDIT_EMPLOYEE, WATER_GET_EMPLOYEEBYID} from './../constants'
 import { Dispatch } from "react";
 import {EMPLOYEE_EDIT_SUCCEED,EMPLOYEE_EDIT_FAILED, EMPLOYEE_GET_ONE, EMPLOYEE_EDIT_LOADING, EMPLOYEE_GET_EDIT_LOADING} from './../types'
 import {Action} from '../states'
-import AsyncStorage from '@react-native-community/async-storage';
+import {AsyncStorage } from 'react-native'
 import { IEmployeeItem, IEmployeeItemBaseResponseModel } from '../models/employeeModel';
 import { GetEmployees } from './employeeAction';
 import { reset } from './loginAction';

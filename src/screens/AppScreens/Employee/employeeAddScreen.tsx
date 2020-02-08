@@ -10,7 +10,7 @@ import {
     Alert,
 
 } from "react-native";
-import AsyncStorage from '@react-native-community/async-storage';
+import {AsyncStorage } from 'react-native'
 
 import { NavigationScreenProp, NavigationState, } from "react-navigation";
 import { Formik, ErrorMessage } from "formik";

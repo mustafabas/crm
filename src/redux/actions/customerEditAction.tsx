@@ -4,7 +4,7 @@ import { Dispatch } from "react";
 import {CUSTOMER_EDIT_FAILED,CUSTOMER_EDIT_SUCCEED, CUSTOMER_EDIT_LOADING, CUSTOMER_GETBY_ID_LOADING, CUSTOMER_GETBY_ID,} from './../types'
 import {Action} from '../states'
 import Axios from 'axios';
-import AsyncStorage from '@react-native-community/async-storage';
+import {AsyncStorage } from 'react-native'
 
 import { reset } from './loginAction';
 import { GetCustomers } from './homeAction';

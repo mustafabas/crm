@@ -4,7 +4,7 @@ import { Dispatch } from "react";
 import { EMPLOYEECOST_GET, EMPLOYEECOST_LOADING } from '../types'
 import { Action } from '../states'
 import { IEmployeeCostItem } from "../models/employeeCostModel";
-import AsyncStorage from '@react-native-community/async-storage';
+import {AsyncStorage } from 'react-native'
 
 
 export function GetEmployeeCost() {

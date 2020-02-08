@@ -1,7 +1,7 @@
 import React from 'react';
 import { Icon } from 'native-base';
 import { StyleSheet, View, Text, Image, I18nManager} from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
+import {AsyncStorage } from 'react-native'
 
 import AppIntroSlider from 'react-native-app-intro-slider';
 import { NavigationScreenProp, NavigationState } from 'react-navigation';

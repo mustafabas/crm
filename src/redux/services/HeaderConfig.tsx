@@ -1,7 +1,7 @@
 
 import axios, { AxiosInstance } from 'axios'
 import {WATER_BASE_URL_NEW} from '../constants'
-import AsyncStorage from '@react-native-community/async-storage';
+import {AsyncStorage } from 'react-native'
 
 
 

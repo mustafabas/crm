@@ -5,7 +5,7 @@ import { USER_GET, USER_LOADING, ABOUT_US_CONTEXT, GET_USER_INFO, GET_USER_INFO_
 import { Action } from '../states'
 import { IGetUserItem } from "../models/userModel";
 import { reset } from './loginAction';
-import AsyncStorage from '@react-native-community/async-storage';
+import {AsyncStorage } from 'react-native'
 
 
 

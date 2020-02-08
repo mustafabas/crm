@@ -3,7 +3,7 @@ import {WATER_ADD_EMPLOYEE} from './../constants'
 import { Dispatch } from "react";
 import {EMPLOYEE_ADD_SUCCEED,EMPLOYEE_ADD_FAILED, EMPLOYEE_ADD_LOADING} from './../types'
 import {Action} from '../states'
-import AsyncStorage from '@react-native-community/async-storage';
+import {AsyncStorage } from 'react-native'
 import { reset } from './loginAction';
 import { GetEmployees } from './employeeAction';
 

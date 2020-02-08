@@ -1,4 +1,4 @@
-import AsyncStorage from '@react-native-community/async-storage';
+import {AsyncStorage } from 'react-native'
 
 import axios from 'axios'
 import {WATER_PRODUCT_FOR_CUSTOMER} from './../constants'
