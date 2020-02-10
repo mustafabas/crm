@@ -42,7 +42,7 @@ import {
   Fade
 } from "rn-placeholder";
 import { InfoItem } from '../../../components/InfoItem';
-import { getCustomerOrderDetail, orderDetail } from '../../../redux/actions/orderDetailActions';
+import { getCustomerOrderDetail, orderDetail, OrderStatus, updateCustomerOrderStatus } from '../../../redux/actions/orderDetailActions';
 
 
 
@@ -53,13 +53,22 @@ interface Props {
   loading : boolean | null;
   message : string;
   orderDetail : orderDetail;
+  updateCustomerOrderStatus : (orderStatus : OrderStatus , orderId : number) => void;
+
+  loadingOrderUpdate :boolean;
+succeedOrderUpdate : boolean;
+orderUpdateMessage : string;
 
 }
 
 
 
+
 interface State {
-  
+  orderStatus : OrderStatus;
+  orderId : number;
+  orderStatusString: string[];
+
 }
 
 
@@ -67,6 +76,7 @@ interface State {
 
 
 class OrderDetailScreen extends Component<Props, State>{
+
 
 //   showSimpleMessage() {
 
@@ -108,13 +118,34 @@ class OrderDetailScreen extends Component<Props, State>{
     }
   })
 
+  showSimpleMessage() {
+    if (this.props.message) {
+
+        showMessage({
+            message: this.props.message,
+            type:  "danger",
+            icon: "auto"
+        }
+        );
+    }
+    else if (this.props.orderUpdateMessage) {
+      showMessage({
+        message: this.props.orderUpdateMessage,
+        type: this.props.succeedOrderUpdate ? "success" : "danger",
+        icon: "auto"
+    }
+    );
+    }
+
+}
+
 
   constructor(props: Props) {
     super(props);
     this.state = {
       refreshing: false,
       modalVisible: false,
-      orderId: 0,
+      orderId: this.props.navigation.getParam('orderId'),
       amount: 0,
       modalAmountVisible: false,
       modalPriceVisible: false,
@@ -124,6 +155,12 @@ class OrderDetailScreen extends Component<Props, State>{
       productName: "",
       page: 0,
       isPaid: false,
+      orderStatus : OrderStatus.null,
+      orderStatusString : ["Sipariş Durumu Yok",
+      "Siparişiniz Beklemede",
+      "Siparişiniz Tamamlandı",
+       "Siparişiniz İptal Edildi"]
+
     };
   }
 
@@ -134,11 +171,11 @@ class OrderDetailScreen extends Component<Props, State>{
 
   renderContent(){
 
-    if(this.props.loading || this.props.loading === null ) {
+    if((this.props.loading || this.props.loading === null) && !(this.props.orderDetail)) {
         return (
             <Spinner />
         )
-    }else if (this.props.loading === false && this.props.orderDetail){
+    }else if (this.props.orderDetail){
         let detail = this.props.orderDetail
     
 
@@ -224,6 +261,92 @@ class OrderDetailScreen extends Component<Props, State>{
       )
     }
   }
+  // Waiting = 1,
+  //       Exported =2,
+  //       Cannceled = 3
+  changeOrderStatusContent() {
+    // var orderStatus = this.props.orderDetail ? (this.props.orderDetail.orderStatus ? this.props.orderDetail.orderStatus : 0 ) : 0
+    console.log("stata",this.state.orderStatus)
+    console.log("props",this.props.orderDetail.orderStatus)
+    if(this.props.orderDetail && this.state.orderStatus === OrderStatus.null) {
+      if(this.props.orderDetail.orderStatus) {
+        this.setState({orderStatus : this.props.orderDetail.orderStatus});
+        
+      }
+  }
+  if(this.props.orderUpdateMessage ) {
+  
+    
+  }
+
+    return(
+      <View>
+        <TouchableOpacity onPress={()=> this.changeOrderStatus.close()}
+         style={{position:'absolute',right:0,zIndex:20}}>
+          <Icon name="ios-close" style={{fontSize:35}}/>
+        </TouchableOpacity>
+        <View style={{marginTop:5}}>
+          <Text style={{fontFamily:'Avenir Next',textAlign:'center',fontSize:18,fontWeight:'600'}}>Sipariş Durumunu Güncelle</Text>
+          <TouchableOpacity onPress={()=> this.setState({orderStatus : OrderStatus.Waiting})}
+        style={{borderWidth:3,borderRadius:10,marginTop:20,marginHorizontal:10,paddingVertical:5,borderColor:'#cbd25f',backgroundColor:this.state.orderStatus === OrderStatus.Waiting ? '#cbd25f' : 'white'}}>
+ <Text style={{fontFamily:'Avenir Next',fontSize:16,paddingVertical:5,textAlign:'center',color:this.state.orderStatus === OrderStatus.Waiting ? 'white' :'black'}}>
+    Sipariş Beklemede
+ 
+ </Text>
+ </TouchableOpacity>
+
+ <TouchableOpacity onPress={()=> this.setState({orderStatus : OrderStatus.Exported})}
+        style={{borderWidth:3,borderRadius:10,marginTop:20,marginHorizontal:10,paddingVertical:5,borderColor:'#0f5f00',backgroundColor: this.state.orderStatus === OrderStatus.Exported ? '#0f5f00' : 'white'}}>
+ <Text style={{fontFamily:'Avenir Next',fontSize:16,paddingVertical:5,textAlign:'center',color:this.state.orderStatus === OrderStatus.Exported ? 'white' :'black'}}>
+    Siparişi Tamamla
+ 
+ </Text>
+ </TouchableOpacity>
+
+ <TouchableOpacity onPress={()=> this.setState({orderStatus : OrderStatus.Cannceled})}
+        style={{borderWidth:3,borderRadius:10,marginTop:20,marginHorizontal:10,paddingVertical:5,borderColor:'#bc0606',backgroundColor: this.state.orderStatus === OrderStatus.Cannceled ? '#bc0606' : 'white'}}>
+ <Text style={{fontFamily:'Avenir Next',fontSize:16,paddingVertical:5,textAlign:'center',color:this.state.orderStatus === OrderStatus.Cannceled ? 'white' :'black'}}>
+    Siparişi İptal Et
+ 
+ </Text>
+ </TouchableOpacity>
+
+ <TouchableOpacity onPress={
+
+
+
+
+   () => { this.changeOrderStatus.close();
+     this.props.updateCustomerOrderStatus(this.state.orderStatus,this.state.orderId)}
+
+ }
+  disabled={this.state.orderStatus === OrderStatus.null || this.props.orderDetail.orderStatus === this.state.orderStatus}
+        style={{borderWidth:3,borderRadius:10,marginTop:20,marginHorizontal:10,paddingVertical:5,borderColor:'#216AF4',backgroundColor: '#216AF4', opacity : this.state.orderStatus === OrderStatus.null || this.props.orderDetail.orderStatus === this.state.orderStatus ? .3 : 1}}>
+ <Text style={{fontFamily:'Avenir Next',fontSize:16,paddingVertical:5,textAlign:'center',color:'white'}}>
+    Onayla
+ 
+ </Text>
+ </TouchableOpacity>
+
+        </View>
+      </View>
+    )
+
+  }
+
+  renderButtonText(){
+    if(!this.props.loadingOrderUpdate && !this.props.loading && this.props.orderDetail && this.props.orderDetail.orderStatus) {
+return(
+  <Text style={{color:'white',fontFamily:"Avenir Next",fontWeight:'bold',fontSize:16}} >{this.props.orderDetail ? (this.props.orderDetail.orderStatus ? this.state.orderStatusString[Number(this.props.orderDetail.orderStatus)] : "Sipariş Durumu Girilmemiş") : "Sipariş Durumu Girilmemiş"}</Text>
+)
+    }
+    else {
+      return (
+        <Spinner color="white" />
+      )
+    }
+
+  }
 
   render() {
     return (
@@ -236,7 +359,26 @@ class OrderDetailScreen extends Component<Props, State>{
         </ScrollView>
         {/* {this.showSimpleMessage()} */}
         <View style={{backgroundColor:'#EFF3F9',justifyContent:'flex-end',paddingVertical:20}}>
-        <Button  style={{justifyContent:'center',marginHorizontal:20,backgroundColor:'#216AF4',
+
+        <RBSheet
+          ref={ref => {
+            this.changeOrderStatus = ref;
+          }}
+          height={400}
+          duration={200}
+          customStyles={{
+            container: {
+                borderRadius:5,
+
+                padding:20
+            }
+          }}
+        >
+          {this.changeOrderStatusContent()}
+        </RBSheet>
+
+
+        <Button onPress={()=> this.changeOrderStatus.open()}  style={{justifyContent:'center',marginHorizontal:20,backgroundColor:'#216AF4',
                     shadowRadius: 5.00,
                     
                     elevation: 12,
@@ -247,9 +389,10 @@ class OrderDetailScreen extends Component<Props, State>{
 
     
                     }}>
-            <Text style={{color:'white',fontFamily:"Avenir Next",fontWeight:'bold',fontSize:16}} >Place Order</Text>
+                  {this.renderButtonText()}
           </Button>
         </View>
+        {this.showSimpleMessage()}
       </View>
 
     )
@@ -259,7 +402,10 @@ class OrderDetailScreen extends Component<Props, State>{
 const mapStateToProps = (state: AppState) => ({
 loading : state.orderDetail.isLoading,
 orderDetail : state.orderDetail.orderDetail,
-message :state.orderDetail.message
+message :state.orderDetail.message,
+loadingOrderUpdate : state.orderDetail.isLoadingOrderStatus,
+succeedOrderUpdate : state.orderDetail.isSuccedOrderStatusUpdate,
+orderUpdateMessage : state.orderDetail.orderStatusMessage,
 
 
 }
@@ -268,7 +414,9 @@ message :state.orderDetail.message
 function bindToAction(dispatch: any) {
   return {
     getCustomerOrderDetail : (orderId : number) => 
-                 dispatch(getCustomerOrderDetail(orderId))
+                 dispatch(getCustomerOrderDetail(orderId)),
+ updateCustomerOrderStatus : (orderStatus : OrderStatus , orderId : number) =>
+ dispatch(updateCustomerOrderStatus(orderStatus,orderId))
   };
 }
 

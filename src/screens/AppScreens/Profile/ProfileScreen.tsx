@@ -380,6 +380,22 @@ class ProfileScreen extends Component<Props, State>{
 
                 </TouchableOpacity></View>
 
+              
+              }
+
+
+            {userInfo.userType === userType.companyUser && 
+            <View>
+                <View style={styles.propsSeperator}></View> 
+              <TouchableOpacity onPress={() => this.props.navigation.navigate('Employee')} style={styles.profileContainer}>
+                <Icon name="ios-person" type="ionicon" color={this.state.iconColor} style={{ fontSize: 20, marginTop: Platform.OS === 'ios' ? 5 : 0 }} />
+                <Text style={styles.profileTextStyle}>Çalışanlar</Text>
+                <Icon name="right" type="AntDesign" color={this.state.iconColor} style={{ fontSize: 20, marginTop: Platform.OS === 'ios' ? 5 : 0 }} />
+
+              </TouchableOpacity></View>
+
+
+              
               }
 
 
