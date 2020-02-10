@@ -48,9 +48,6 @@ const title = "Home Screen"
 
 
 
-
-
-
 interface Props {
     title: title;
     children: any;
