@@ -1,4 +1,4 @@
-import AsyncStorage from "@react-native-community/async-storage";
+import {AsyncStorage} from "react-native";
 import axios from 'axios'
 import { WATER_INSERT_NOTIFICATION } from "../redux/constants";
 

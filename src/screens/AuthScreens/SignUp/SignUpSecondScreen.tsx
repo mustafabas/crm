@@ -150,7 +150,7 @@ shadowOpacity: .5,}}>
             {/* <Label style={{color:'white',fontFamily:"Avenir Next"}} >Email</Label> */}
            
             <Input 
-
+            maxLength={11}
              value={props.values.phoneNumber}
              onChangeText={props.handleChange("phoneNumber")}
              onBlur={ (props.touched.phoneNumber && props.errors.phoneNumber) ? ()=> {

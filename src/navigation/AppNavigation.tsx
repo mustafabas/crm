@@ -64,6 +64,8 @@ import CustomerDefinedPriceAddScreen from '../screens/AppScreens/Customer/Custom
 import CustomerDefinedPricesScreen from '../screens/AppScreens/Customer/CustomerDefinedPricesScreen'
 import ReportBaseScreen from '../screens/AppScreens/Report/ReportBaseScreen'
 import productsWithImagesScreen from "../screens/AppScreens/Product/productsWithImagesScreen";
+import NotificationScreen from "../screens/AppScreens/Notification/NotificationScreen";
+import OrderDetailScreen from '../screens/AppScreens/Customer/orderDetailScreen'
 // import newPricePage from "../pages/newPricePage";
 // import customerDefinedPricePage from "../pages/CustomerDefinedPrice"
 // import editOrder from "../pages/editOrder";
@@ -95,6 +97,23 @@ const introductionStack = createStackNavigator({
 //     // headerMode:"none"
   });
 
+  const notificationStack = createStackNavigator(
+    {
+      Notification : NotificationScreen
+    },{
+      defaultNavigationOptions: {
+        headerStyle: {
+          backgroundColor: '#216AF4',
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+          fontWeight: '600',
+          fontFamily:'Avenir Next',
+          fontSize:18
+        },
+      },
+    }
+  )
 
   const reportStack = createStackNavigator(
     {
@@ -207,7 +226,8 @@ const HomeStack = createStackNavigator({
   orderAdd : orderAdd,
   CustomerEdit : CustomerEditScreen,
   CustomerDefinedPriceAdd : CustomerDefinedPriceAddScreen,
-  CustomerDefinedPrices : CustomerDefinedPricesScreen
+  CustomerDefinedPrices : CustomerDefinedPricesScreen,
+  OrderDetail : OrderDetailScreen
 
 },{
   defaultNavigationOptions: {
@@ -265,24 +285,35 @@ const MainStack = createBottomTabNavigator(
         }
       }
     },
-    Employee: {
-      screen: EmployeeApp,
+    // Employee: {
+    //   screen: EmployeeApp,
 
-      navigationOptions: {
-        tabBarLabel: 'Çalışanlar',
-        // tabBarLabel: 'Çalışanlar',
-        tabBarIcon: ({ focused }) => {
+    //   navigationOptions: {
+    //     tabBarLabel: 'Çalışanlar',
+    //     // tabBarLabel: 'Çalışanlar',
+    //     tabBarIcon: ({ focused }) => {
 
-          return (
+    //       return (
         
               
-            <IconNew stroke={focused ? '#2069F3' :'black' } strokeWidth={3} fill={focused ? '#2069F3' :'black' } width="80" height="80" name="UserPlus" svgs={svgs} />
+    //         <IconNew stroke={focused ? '#2069F3' :'black' } strokeWidth={3} fill={focused ? '#2069F3' :'black' } width="80" height="80" name="UserPlus" svgs={svgs} />
           
         
-          )
-        }
-      },
+    //       )
+    //     }
+    //   },
 
+    // },
+    Notification: {
+      screen: notificationStack,
+      navigationOptions: {
+      tabBarLabel: 'Bildirimler',
+    tabBarIcon: ({ focused }) => {
+    return (
+    <IconNew stroke={focused ? '#2069F3' :'black' } strokeWidth={3} fill={focused ? '#2069F3' :'black' } width="80" height="80" name="Profile" svgs={svgs} />
+    )
+    }
+      }
     },
     Settings: {
       screen: reportStack,
