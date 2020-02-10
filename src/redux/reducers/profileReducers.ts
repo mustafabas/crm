@@ -149,6 +149,7 @@ export default (state: Profile = intialState, action: Action) => {
         return {
             ...state,
             loadingUserInfo: true,
+            message:null
         }
     case GET_USER_INFO_FAILED:
         return {
@@ -162,14 +163,15 @@ export default (state: Profile = intialState, action: Action) => {
             userInfo : action.payload,
             loadingUserInfo : false,
             IsSuceedGetStoreInfo : true,
-            message : '',
+            message : null,
         }
     case GET_STORE_INFO : 
     return {
         ...state,
         storeInfo : action.payload,
         loadingGetStoreInfo : false,
-        message : '',
+        message : null,
+        IsSuceedGetStoreInfo:true
     }
     case GET_STORE_INFO_LOADING : 
     return {

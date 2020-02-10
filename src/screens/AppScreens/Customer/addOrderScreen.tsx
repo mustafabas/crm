@@ -21,7 +21,7 @@ import { Alert } from 'react-native';
 import { SafeAreaView, NavigationScreenProp, NavigationState } from 'react-navigation';
 import { IOrderItem } from '../../../redux/models/orderModel';
 import RBSheet from 'react-native-raw-bottom-sheet';
-import styles from "../../../pages/styles";
+import stylesNew from "../../styles";
 import * as Yup from "yup";
 import { connect } from 'react-redux';
 import { GetOrders, GetOrdersMore } from '../../../redux/actions/orderAction';

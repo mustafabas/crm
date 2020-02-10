@@ -13,7 +13,7 @@ import {
 import { NavigationScreenProp, NavigationState, NavigationEvents } from "react-navigation";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import styles from "../../../pages/styles";
+import stylesNew from "../../styles";
 
 // import RNPickerSelect from 'react-native-picker-select';
 
@@ -122,8 +122,6 @@ class orderAdd extends Component<Props, State> {
 
 
   };
-
-
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -161,9 +159,10 @@ class orderAdd extends Component<Props, State> {
   }
 
   siparisOlustur(values: input) {
-    console.log("asdasd")
+
     const { AddOrder, navigation, isSuccees } = this.props;
     var customerId = navigation.getParam("customerId");
+    console.log(this.state.productId);
     if(this.state.productId===0) {
       showMessage({
         message: "Sipariş Eklemek için ürün seçmelisiniz.",
@@ -179,19 +178,17 @@ class orderAdd extends Component<Props, State> {
   }
 
   OrderInfo(productId: number) {
-  
     this.props.GetProduct(productId, this.props.navigation.getParam("customerId"));
-
     this.setState({
       productId: productId,
     });
-    
-
   }
-
   PickerMenuCreate() {
     var PickerModel: Item[] = [];
-
+    PickerModel.push({
+      value:0,
+      label:'Seçiniz'
+    });
     this.props.products.forEach((product: IProductItem) => {
       var productItem: Item = {
         label: product.productName,
@@ -216,15 +213,15 @@ class orderAdd extends Component<Props, State> {
 
  
 onValueChange2(value: string) {
-
+  console.log(value,  "value");
   this.setState({
     selected2: value,
-    selectedProductValue : this.props.products.find(task => (task.productId=== Number(value)), this)?.productCode
-    ,productId: value,
-  });
+    selectedProductValue : this.props.products.find(task => (task.productId=== Number(value)), this)?.productCode,
+    productId: value,
+  },   ()=> this.props.GetProduct(Number(value), this.props.navigation.getParam("customerId")));
 
-  console.log("asdasd"+value)
-  this.props.GetProduct(Number(value), this.props.navigation.getParam("customerId"));
+ 
+
 
 
   
@@ -317,6 +314,7 @@ _renderChooseEmployeeContent(){
 }
 
 renderContent(){
+
   const initialValues: input = {
     count: this.state.count,
     unitPrice: this.props.product.unitPrice ? String(this.props.product.unitPrice) : "",
@@ -391,8 +389,6 @@ headerBackButtonTextStyle={{color:'white'}}
                 Ürün Adedi:
                 </Label>
                 <Input
-                  style={styles.input}
-
                   placeholderTextColor="#9A9A9A"
                   keyboardType="numeric"
                   value={props.values.count}

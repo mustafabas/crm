@@ -15,7 +15,7 @@ import {
   Modal,
 } from 'react-native';
 import newStyles from "../../AuthScreens/Login/styles";
-import {AsyncStorage } from 'react-native'
+import { AsyncStorage } from 'react-native'
 
 
 
@@ -31,7 +31,7 @@ import { GetOrders, GetOrdersMore } from '../../../redux/actions/orderAction';
 import { AddCash } from '../../../redux/actions/addCashAction';
 import { orderDelete } from '../../../redux/actions/deleteOrderAction';
 import OrdersCustomer from '../../../pages/OrdersCustomer';
-import { AppState } from '../../../redux/store';
+import { AppState } from '../../../redux/store'
 import { Formik } from 'formik';
 import { getUserInfo, UserInfo, userType } from '../../../redux/actions/profileActions';
 import { logoutUserService, logOut } from '../../../redux/actions/loginAction';
@@ -85,20 +85,15 @@ class ProfileScreen extends Component<Props, State>{
 
 
   logOut() {
-    //  AsyncStorage.multiRemove(["userToken","userId"])
-    //   .then(() => { 
 
-
-    //   })
-    //   .catch(error => {
-
-    //   });
     AsyncStorage.removeItem("userToken").then(() => {
       AsyncStorage.removeItem("userId").then(() => {
-        AsyncStorage.removeItem("notificationToken").then(()=> {
-          this.props.navigation.navigate('AuthLoading')
+        AsyncStorage.removeItem("notificationToken").then(() => {
+          AsyncStorage.removeItem("UserType").then(()=>{
+                  this.props.navigation.navigate('AuthLoading');
+          })
         })
-        
+
       })
     })
 
@@ -110,7 +105,7 @@ class ProfileScreen extends Component<Props, State>{
 
   renderPremiumChooseContent() {
     return (
-      <View style={{ flex: 1, margin: 10,paddingVertical:100, justifyContent: 'space-evenly' }}>
+      <View style={{ flex: 1, margin: 10, paddingVertical: 100, justifyContent: 'space-evenly' }}>
         <TouchableOpacity style={{ position: 'absolute', left: 5, top: 10 }} onPress={() => this.setState({ premiumScreenIsFirst: true })}>
           <Icon name="arrowleft" type="AntDesign" style={{ fontSize: 30 }} />
         </TouchableOpacity>
@@ -148,7 +143,7 @@ class ProfileScreen extends Component<Props, State>{
           <Text style={{ color: 'white', textAlign: 'center', fontFamily: "Avenir Next", fontWeight: 'bold', fontSize: 16 }} >KREDİ KARTI İLE ÖDEME YAP</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={()=> {
+        <TouchableOpacity onPress={() => {
 
         }}
           style={{
@@ -173,7 +168,7 @@ class ProfileScreen extends Component<Props, State>{
     )
   }
 
-  
+
 
   _renderCustomerSheetContent() {
     return (
@@ -330,27 +325,25 @@ class ProfileScreen extends Component<Props, State>{
 
 
   renderContent() {
+
     if (this.props.loading && !(this.props.userInfo)) {
       return (
         <Spinner />
       )
 
     } else if (this.props.userInfo) {
-      var userInfo = this.props.userInfo
+      var userInfo = this.props.userInfo;
+      console.log(userInfo,"screen");
       return (
 
         <View style={[newStyles.inputContainer, { paddingTop: 10, marginTop: 10, paddingBottom: 10, justifyContent: 'flex-start', paddingRight: 0, paddingLeft: 10 }]}>
-
-
-
-
           {/* 
         <View style={{width:63,height:63,backgroundColor:'#2069F3',alignSelf:'center',borderRadius:31.5,justifyContent:'center'}}>
         <Text style={{alignSelf:'center',fontFamily:'Avenir Next',fontWeight:'600',fontSize:24,color:'white'}}>
           {this.props.userInfo.nameSurname ? this.props.userInfo.nameSurname.substr(0,1) : ""}
           </Text>
             </View> */}
-          <Text style={{ textAlign: 'center', fontSize: 20, fontFamily: 'Avenir Next', marginTop: 10 }}>{userInfo != null ? userInfo.nameSurname : ""}</Text>
+          <Text style={{ textAlign: 'center', fontSize: 20, fontFamily: 'Avenir Next', marginTop: 10 }}>{userInfo ? userInfo.nameSurname : ""}</Text>
 
           {/* <Text style={[styles.profileTextStyle,{fontSize:16,marginTop:20,textAlign:'center',marginRight:20,flex:0}]}>Hakkinda</Text> */}
 
@@ -377,16 +370,16 @@ class ProfileScreen extends Component<Props, State>{
                 <Icon name="right" type="AntDesign" color={this.state.iconColor} style={{ fontSize: 20, marginTop: Platform.OS === 'ios' ? 5 : 0 }} />
 
               </TouchableOpacity>
-              
-              {userInfo.userType === userType.companyUser && <View>
-                <View style={styles.propsSeperator}></View> 
-              <TouchableOpacity onPress={() => this.props.navigation.navigate('companyInfo')} style={styles.profileContainer}>
-                <Icon name="ios-business" type="ionicon" color={this.state.iconColor} style={{ fontSize: 20, marginTop: Platform.OS === 'ios' ? 5 : 0 }} />
-                <Text style={styles.profileTextStyle}>Şirket Bilgileri</Text>
-                <Icon name="right" type="AntDesign" color={this.state.iconColor} style={{ fontSize: 20, marginTop: Platform.OS === 'ios' ? 5 : 0 }} />
 
-              </TouchableOpacity></View>
-              
+              {userInfo.userType === userType.companyUser && <View>
+                <View style={styles.propsSeperator}></View>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate('companyInfo')} style={styles.profileContainer}>
+                  <Icon name="ios-business" type="ionicon" color={this.state.iconColor} style={{ fontSize: 20, marginTop: Platform.OS === 'ios' ? 5 : 0 }} />
+                  <Text style={styles.profileTextStyle}>Şirket Bilgileri</Text>
+                  <Icon name="right" type="AntDesign" color={this.state.iconColor} style={{ fontSize: 20, marginTop: Platform.OS === 'ios' ? 5 : 0 }} />
+
+                </TouchableOpacity></View>
+
               }
 
 
@@ -552,19 +545,6 @@ class ProfileScreen extends Component<Props, State>{
   }
 }
 
-const mapStateToProps = (state: AppState) => ({
-  loading: state.profile.loadingUserInfo,
-  userInfo: state.profile.userInfo,
-  message: state.profile.message
-
-});
-
-function bindToAction(dispatch: any, ) {
-  return {
-    getUserInfo: () =>
-      dispatch(getUserInfo())
-  };
-}
 
 const styles = StyleSheet.create({
   profileContainer: {
@@ -601,6 +581,22 @@ const styles = StyleSheet.create({
   }
 })
 
+const mapStateToProps = (state: AppState) => ({
+  loading: state.profile.loading,
+  userInfo: state.profile.userInfo,
+  message: state.profile.message
+
+});
+
+
+
+
+function bindToAction(dispatch: any, ) {
+  return {
+    getUserInfo: () =>
+      dispatch(getUserInfo())
+  };
+}
 
 
 export default connect(

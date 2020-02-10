@@ -14,7 +14,8 @@ import {
 import { NavigationScreenProp, NavigationState, ScrollView } from "react-navigation";
 import { connect } from "react-redux";
 import moment, { months } from "moment";
-import styles from "../../../pages/styles";
+import stylesNew from "../../styles";
+import styles from "../../styles";
 import { GetReport } from "../../../redux/actions/reportAction";
 import { AppState } from "../../../redux/store";
 import { IReportItem } from "../../../redux/models/reportModel";

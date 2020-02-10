@@ -13,7 +13,7 @@ import { NavigationScreenProp, NavigationState, } from "react-navigation";
 import { Formik } from "formik";
 import * as Yup from "yup";
 // import styles from "./styles";
-import styles from "../../../pages/styles";
+import stylesNew from "../../styles";
 
 import { customerEdit, Customer,getCustomerInfo } from "../../../redux/actions/customerEditAction";
 import { AppState } from '../../../redux/store'

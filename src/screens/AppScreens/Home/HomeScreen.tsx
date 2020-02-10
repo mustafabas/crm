@@ -17,7 +17,7 @@ import {
     headerHeight,
     SafeAreaWithHeader,
 } from './DimensionsHelper';
-import stylesNew from "../../../pages/styles";
+import stylesNew from "../../styles";
 
 import { Icon, Input, Item, Tabs, Tab, TabHeading, Button, ScrollableTab, Card, CardItem, Body } from 'native-base';
 import { Alert } from 'react-native';

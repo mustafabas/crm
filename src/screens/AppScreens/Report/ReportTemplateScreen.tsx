@@ -15,11 +15,10 @@ import { NavigationScreenProp, NavigationState, ScrollView } from "react-navigat
 import { connect } from "react-redux";
 import  moment ,{ months  } from "moment";
 import 'moment/min/locales' 
-import styles from "../../../pages/styles";
 import { GetReport } from "../../../redux/actions/reportAction";
 import { AppState } from "../../../redux/store";
 import { IReportItem } from "../../../redux/models/reportModel";
-
+import styles from "../../styles";
 import RBSheet from "react-native-raw-bottom-sheet";
 import {DatePicker as DateTimePicker, Spinner,Icon} from 'native-base'
 import {
@@ -731,12 +730,12 @@ disabled={false}
                         backgroundColor : '#001c58',marginHorizontal:10,borderRadius:7,padding:10,paddingHorizontal:10,justifyContent:'flex-end'}}>
                         
                         <View style={{flexDirection:'row',justifyContent:'space-between'}}>
-                            <View>
-                                <Text style={{color:'#c5c5c5',fontFamily:'Cabin-Bold',fontSize:20}}>Toplam</Text>
+                            <View style={{flex:0.5}}>
+                                <Text style={{color:'#c5c5c5',fontFamily:'Cabin-Bold',fontSize:20}}>Toplam Maliyet</Text>
                                 <Text style={{color:'white',fontFamily:'Cabin-Bold',fontSize:20}}>₺ {this.props.report.totalCost} </Text> 
                             </View>
                             <View style={{height:50,width:2,backgroundColor:'#a3a3a3'}}/>
-                            <View>
+                            <View style={{flex:0.5}}> 
                                 <Text style={{color:'#c5c5c5',fontFamily:'Cabin-Bold',fontSize:20,textAlign:'right'}}>Alınan</Text>
                                 <Text style={{color:'white',fontFamily:'Cabin-Bold',fontSize:20,textAlign:'right'}}>₺ {this.props.report.totalPaidAmount} </Text> 
                             </View>

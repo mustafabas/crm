@@ -15,7 +15,7 @@ import {AsyncStorage } from 'react-native'
 import { NavigationScreenProp, NavigationState, NavigationEvents, } from "react-navigation";
 import { Formik, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import styles from "../../../pages/styles";
+import stylesNew from "../../styles";
 import { employeeAdd } from "../../../redux/actions/employeeAddAction";
 import { AppState } from '../../../redux/store'
 import { connect } from "react-redux";

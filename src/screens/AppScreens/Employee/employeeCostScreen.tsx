@@ -12,7 +12,7 @@ import {
   Alert,
 } from "react-native";
 import { NavigationScreenProp, NavigationState, ScrollView } from "react-navigation";
-import styles from "../../../pages/styles";
+import stylesNew from "../../styles";
 import { GetEmployeeCost } from "../../../redux/actions/getEmployeeCostAction";
 import { AppState } from "../../../redux/store";
 import { IEmployeeCostItem } from "../../../redux/models/employeeCostModel";

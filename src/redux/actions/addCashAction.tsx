@@ -13,9 +13,6 @@ import { reset } from './loginAction';
 export function AddCash(customerId : number,orderId:number, amount:number) {
 
   return (dispatch : any) =>  {
-    console.log(customerId + " "  + orderId + " " + amount )
-
-
     AsyncStorage.getItem('userToken').then((res) => {
       let token = res;
 

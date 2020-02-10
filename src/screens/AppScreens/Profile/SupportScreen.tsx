@@ -13,7 +13,7 @@ import {
 import { NavigationScreenProp, NavigationState, } from "react-navigation";
 import { Formik, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import styles from "../../../pages/styles";
+import stylesNew from "../../styles";
 import {Input,CheckBox, Item, Label, ListItem,Body, Switch, Textarea, Button,Spinner,Icon } from 'native-base'
 
 import { AppState } from '../../../redux/store'

@@ -13,7 +13,7 @@ import { CheckBox, Input, Item, Label, Button, Spinner } from 'native-base'
 import { NavigationScreenProp, NavigationState, } from "react-navigation";
 import { Formik, setNestedObjectValues } from "formik";
 import * as Yup from "yup";
-import styles from "../../../pages/styles";
+import stylesNew from "../../styles";
 
 import { productEdit, getProductById, IProduct } from "../../../redux/actions/productEditAction";
 import { AppState } from '../../../redux/store'

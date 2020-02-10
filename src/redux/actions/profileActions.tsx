@@ -52,13 +52,13 @@ export function getStoreInfo() {
 
           axios.get(WATER_GET_STORE_INFO + '?userId='+ userId,{headers:headers}).then(res => {
               if(res.data.isSuccess) {
-                  let data = res.data.result
-                  store.active = data.active
-                  store.address = data.address
-                  store.storeId = data.storeId
-                  store.phoneNumber = data.phoneNumber
-                  store.status = data.status
-                  store.storeName = data.storeName
+                  let data = res.data.result;
+                  store.active = data.active;
+                  store.address = data.address;
+                  store.storeId = data.storeId;
+                  store.phoneNumber = data.phoneNumber;
+                  store.status = data.status;
+                  store.storeName = data.storeName;
 
                    console.log(store)
                   dispatch(getStore(store))
@@ -135,37 +135,43 @@ export function getUserInfo() {
         AsyncStorage.multiGet(['userToken', 'userId']).then((res) => {
             let token = res[0][1];
             let userId = res[1][1];
-            
+    
             const headers = {
               'Content-Type': 'application/json',
               'Authorization': `Bearer ${token}`
-          }
-    
-
-
-      
+          }    
         axios.get(WATER_GET_USER_INFO + "?userId=" + userId).then((response)=> {
             var userInfo = {} as UserInfo
-          console.log(response)
+
             if(response.data.isSuccess){
-              console.log("Is Succeed")
-                let data = response.data.result.user
-                userInfo.email  = data.email
-                userInfo.nameSurname = data.nameSurname
-                userInfo.oldPassword = data.oldPassword
-                userInfo.password = data.password
-                userInfo.userType = data.userType
-                dispatch(getUserInfoConst(userInfo))
+              if(response.data.result){
+                console.log(response,"response");
+                let data = response.data.result.user;
+                userInfo.email  = data.email;
+                userInfo.nameSurname = data.nameSurname;
+                userInfo.oldPassword = data.oldPassword;
+                userInfo.password = data.password;
+                userInfo.userType = data.userType;
+                dispatch(getUserInfoConst(userInfo));
+              }
+
+            
             }
             else {
-                dispatch(loading(false,"Bir Hata Meydana Geldi."))
+              console.log("data gelmedi");
+                dispatch(loading(false,"Bir Hata Meydana Geldi."));
+                dispatch(reset());
             }
         }).catch(err=>{
-            dispatch(loading(false,"Bir Hata Meydana Geldi."))
+          console.log(err);
+            dispatch(loading(false,"Bir Hata Meydana Geldi."));
+            dispatch(reset());
         })
 
     }).catch(err=> {
+      console.log(err);
         dispatch(loading(false,"Bir Hata Meydana Geldi."))
+        dispatch(reset());
     })
     }
 }
@@ -183,15 +189,15 @@ export function getAboutUs() {
 
 
             }else {
-                console.log("hata")
-                dispatch(loading(false,"Bir Hata Meydana Geldi"))
-                dispatch(reset())
+            
+                dispatch(loading(false,"Bir Hata Meydana Geldi"));
+                dispatch(reset());
             }
        
         }).catch(err=> {
-            console.log(err + "axios hata")
-            dispatch(loading(false,"Bir hata meydana geldi"))
-            dispatch(reset())
+
+            dispatch(loading(false,"Bir hata meydana geldi"));
+            dispatch(reset());
         })
     }}
     
@@ -217,31 +223,26 @@ export function getAboutUs() {
           }).then((res)=> {
 
             if(res.data.isSuccess){
-                        dispatch(updateSecurityInfo("Şifreniz Güncellendi."))
-                        dispatch(reset())
-                        dispatch(getUserInfo())
+                        dispatch(updateSecurityInfo("Şifreniz Güncellendi."));
+                        dispatch(reset());
+                        dispatch(getUserInfo());
                         
             }
             else {
-                dispatch(loadingUpdateSecurityInfo(true,"Bir Hata Meydana Geldi"))
-                dispatch(reset())
+                dispatch(loadingUpdateSecurityInfo(true,"Bir Hata Meydana Geldi"));
+                dispatch(reset());
             }
           }).catch(err => {
-            dispatch(loadingUpdateSecurityInfo(true,"Bir Hata Meydana Geldi"))
-            dispatch(reset())
+            dispatch(loadingUpdateSecurityInfo(true,"Bir Hata Meydana Geldi"));
+            dispatch(reset());
           })
     
 
         }).catch(err => {
-            dispatch(loadingUpdateSecurityInfo(true,"Bir Hata Meydana Geldi"))
-            dispatch(reset())
+            dispatch(loadingUpdateSecurityInfo(true,"Bir Hata Meydana Geldi"));
+            dispatch(reset());
         })
-
-
     }}
-
-
-
 
     export function editUserInfoGeneral(userGeneral  :UserInfo)  {
         return (dispatch : any) =>  {
@@ -249,17 +250,16 @@ export function getAboutUs() {
         AsyncStorage.multiGet(['userToken', 'userId']).then((res) => {
             let token = res[0][1];
             let userId = res[1][1];
-            
+        
             const headers = {
               'Content-Type': 'application/json',
               'Authorization': `Bearer ${token}`
           }
-
           axios.post(WATER_UPDATE_USER_INFO_GENERAL, {
             id: userId,
             nameSurname: userGeneral.nameSurname,
             mail: userGeneral.email,
-            password: "123456",
+            password: userGeneral.password,
             employeeId: 0
           }).then((res)=> {
 
@@ -267,7 +267,6 @@ export function getAboutUs() {
                         dispatch(updateUserGeneral("Profiliniz Güncellendi."))
                         dispatch(reset())
                         dispatch(getUserInfo())
-                        
             }
             else {
                 dispatch(loadingUpdateUserGeneral(true,"Bir Hata Meydana Geldi"))
@@ -291,7 +290,7 @@ export function getAboutUs() {
     export function sendSupportMessage(subject : string , message : string) {
       return (dispatch : any) =>  {
         dispatch(loadingSupportAction(true,""))
-    AsyncStorage.multiGet(['userToken', 'userId']).then((res) => {
+        AsyncStorage.multiGet(['userToken', 'userId']).then((res) => {
         let token = res[0][1];
         let userId = res[1][1];
         

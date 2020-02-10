@@ -29,7 +29,7 @@ import { employeeCost } from "../../../redux/actions/employeeCostAction"
 import { timingSafeEqual } from "crypto";
 import { type } from "os";
 import RBSheet from "react-native-raw-bottom-sheet";
-import styles from "../../../pages/styles";
+import stylesNew from "../../styles";
 import { stat } from "fs";
 import SvgIcon from 'react-native-svg-icon';
 import svgs from '../../../images/icomoon/SVG/svgs';
@@ -99,6 +99,7 @@ class Employee extends Component<Props, State> {
     };
 
     AsyncStorage.getItem("UserType").then((value) => {
+      
       this.setState({
         UserType: value,
       })
