@@ -182,4 +182,13 @@ export const GET_CUSTOMER_ORDER_DETAIL = "GetCustomeDetail";
 export const GET_CUSTOMER_ORDER_DETAIL_LOADING = "GetCustomerDetailLoading";
 export const GET_CUSTOMER_ORDER_DETAIL_FAILED = "GetCustomerDetailFailed";
 
+export const GET_CUSTOMER_ORDER_LIST = "GetCustomerOrderList";
+export const GET_CUSTOMER_ORDER_LIST_LOADING = "getCustomerOrderListLoading";
+export const GET_CUSTOMER_ORDER_LIST_FAILED = "getCustomerOrderListLoading";
+
+
+export const UPDATE_ORDER_DETAIL = "updateOrderDetail";
+export const UPDATE_ORDER_DETAIL_LOADING = "updateOrderDetailLoading";
+export const UPDATE_ORDER_DETAIL_FAILED = "updateOrderDetailFailed";
+
 

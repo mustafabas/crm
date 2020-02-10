@@ -66,6 +66,7 @@ import ReportBaseScreen from '../screens/AppScreens/Report/ReportBaseScreen'
 import productsWithImagesScreen from "../screens/AppScreens/Product/productsWithImagesScreen";
 import NotificationScreen from "../screens/AppScreens/Notification/NotificationScreen";
 import OrderDetailScreen from '../screens/AppScreens/Customer/orderDetailScreen'
+import OrderListScreen from '../screens/AppScreens/Order/OrderListScreen'
 // import newPricePage from "../pages/newPricePage";
 // import customerDefinedPricePage from "../pages/CustomerDefinedPrice"
 // import editOrder from "../pages/editOrder";
@@ -101,6 +102,25 @@ const introductionStack = createStackNavigator({
     {
       Notification : NotificationScreen
     },{
+      defaultNavigationOptions: {
+        headerStyle: {
+          backgroundColor: '#216AF4',
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+          fontWeight: '600',
+          fontFamily:'Avenir Next',
+          fontSize:18
+        },
+      },
+    }
+  )
+  const orderStack = createStackNavigator(
+    {
+      OrderList  : OrderListScreen
+    },
+    {
+      // headerMode: "none"
       defaultNavigationOptions: {
         headerStyle: {
           backgroundColor: '#216AF4',
@@ -150,7 +170,8 @@ const introductionStack = createStackNavigator({
       AddProduct: { screen: productAdd },
       companyInfo : CompanyEditScreen ,
       Support : SupportScreen,
-      RateUs : RateUsScreen
+      RateUs : RateUsScreen,
+      Employee : EmployeeApp
      //AddEmployee: { screen: employeeAdd },
  //     EditEmployee: { screen: editEmployee },
  //     EmployeeCost: { screen: employeeCost },
@@ -304,6 +325,20 @@ const MainStack = createBottomTabNavigator(
     //   },
 
     // },
+    Order: {
+      screen: orderStack,
+      navigationOptions: {
+      tabBarLabel: 'Siparişlerim',
+    tabBarIcon: ({ focused }) => {
+    return (
+    <IconNew stroke={focused ? '#2069F3' :'black' } strokeWidth={3} fill={focused ? '#2069F3' :'black' } width="80" height="80" name="Profile" svgs={svgs} />
+    )
+    }
+      }
+    },
+
+
+
     Notification: {
       screen: notificationStack,
       navigationOptions: {

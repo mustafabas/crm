@@ -20,6 +20,7 @@ interface State {
   userId: string | null;
   token: string | null;
   notificationToken: string | null;
+  isPermissionRequested : boolean;
 
 }
 class AuthLoading extends React.Component<Props, State> {
@@ -29,7 +30,8 @@ class AuthLoading extends React.Component<Props, State> {
     this.state = {
       userId: null,
       token: null,
-      notificationToken: null
+      notificationToken: null,
+      isPermissionRequested : false,
     }
   }
 
@@ -82,11 +84,22 @@ class AuthLoading extends React.Component<Props, State> {
         // user doesn't have a device token yet
       }
 
-    } else {
+    } else if(!this.state.isPermissionRequested && !enabled) {
 
       try {
-        await firebase.messaging().requestPermission();
-        // await this.requestPermissionForNotification(token, userId);
+        if(!this.state.isPermissionRequested) {
+          this.setState({
+            isPermissionRequested : true
+          })
+          await firebase.messaging().requestPermission();
+          await this.requestPermissionForNotification(token, userId);
+      }else {
+        this.props.navigation.navigate("MainStack")
+      }
+
+       
+        
+        
       } catch (error) {
 
       }

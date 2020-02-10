@@ -36,7 +36,7 @@ export function getNotifications() {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
       }
-      axios.get(WATER_GET_NOTIFICATIONS +`?userId=1167&page=1&pageSize=15`,{
+      axios.get(WATER_GET_NOTIFICATIONS +`?userId=${userId}&page=1&pageSize=15`,{
           headers : headers
         }).then((response) =>{
           
