@@ -31,7 +31,7 @@ import deleteEmployeeReducers from "./reducers/deleteEmployeeReducers";
 import getUserReducers from "./reducers/getUserReducers";
 import reportReducers from "./reducers/reportReducers";
 
-
+import notificationReducers from './reducers/notificationReducers'
 import getEmployeeCostReducers from "./reducers/getEmployeeCostReducers";
 
 import signUpReducers from './reducers/signUpReducers'
@@ -41,6 +41,7 @@ import editEmployeeReducers from "./reducers/editEmployeeReducers";
 import deleteOrderReducers from './reducers/deleteOrderReducers'
 import profileReducers from "./reducers/profileReducers";
 import deleteEmployeeCostReducers from './reducers/deleteEmployeeCostReducers';
+import orderDetailReducers from './reducers/orderDetailReducers'
 
 const persistConfig = {
   key: "root",
@@ -86,7 +87,9 @@ const rootReducer = combineReducers({
   editEmployeReducer : editEmployeeReducers,
   deleteOrder : deleteOrderReducers,
   profile : profileReducers,
-  deleteEmployeeCost : deleteEmployeeCostReducers
+  deleteEmployeeCost : deleteEmployeeCostReducers,
+  notification : notificationReducers,
+  orderDetail : orderDetailReducers,
   
 })
 

@@ -172,3 +172,14 @@ export const EMPLOYEECOST_EDIT_FAILED ="EmployeeCostEditFailed";
 
 export const EMPLOYEECOST_DELETE_SUCCEED ="EmployeeCostDeleteSucceed";
 export const EMPLOYEECOST_DELETE_FAILED ="EmployeeCostDeleteFailed";
+
+
+export const NOTIFICATION_LIST_GET = "NotificationListGet";
+export const NOTIFICATION_LIST_LOADING = "NotificationListLoading";
+export const NOTIFICATION_LIST_FAILED = "NotificationListFailed";
+
+export const GET_CUSTOMER_ORDER_DETAIL = "GetCustomeDetail";
+export const GET_CUSTOMER_ORDER_DETAIL_LOADING = "GetCustomerDetailLoading";
+export const GET_CUSTOMER_ORDER_DETAIL_FAILED = "GetCustomerDetailFailed";
+
+
