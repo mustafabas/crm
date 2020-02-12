@@ -59,7 +59,8 @@ interface Props {
   
     GetCustomers: (orderType: number, searchText: string, dayOfWeek: number, pageIndex: number) => void;
     GetCustomerMore: (orderType: number, searchText: string, dayOfWeek: number, pageIndex: number) => void;
-  
+    getNotificationCount: () => void;
+
     customerDelete: (customerId: number) =>  void;
     CustomerDeleteIsSuccess: boolean;
     isLoadingCustomerDelete:boolean;
@@ -225,6 +226,37 @@ class HomeScreen extends Component<Props,State>{
      
       
       componentDidMount(){
+
+        firebase.messaging().onMessage((message: RemoteMessage) => {
+          // Process your message as required
+          console.log(message, "not message");
+        });
+    
+        firebase.notifications().onNotificationDisplayed((notification: Notification) => {
+          // Process your notification as required
+          // ANDROID: Remote notifications do not contain the channel ID. You will have to specify this manually if you'd like to re-display the notification.
+          console.log(notification, "test not data");
+        });
+        firebase.notifications().onNotification((notification: Notification) => {
+          // Process your notification as required
+          showMessage({
+            message: notification.title,
+            description: notification.body,
+            type: "info",
+            backgroundColor: "#06005B", // background color
+            color: "#ffff", // text color,
+            onPress: () => {
+              /* THIS FUNC/CB WILL BE CALLED AFTER MESSAGE PRESS */
+            }
+    
+          }
+          );
+    
+    
+          console.log(notification, "test not data required");
+          this.props.getNotificationCount();
+    
+        });
 
       
       }
@@ -1012,6 +1044,8 @@ const mapStateToProps = (state: AppState) => ({
   
       customerDelete: (customerId: number) =>
         dispatch(customerDelete(customerId)),
+        getNotificationCount: () =>
+        dispatch(getNotificationCount()),
     };
   }
 

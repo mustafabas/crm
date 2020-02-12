@@ -23,7 +23,7 @@ import { AsyncStorage } from 'react-native'
 
 import { Icon, Text, Input, Item, Tabs, Tab, TabHeading, Button, ScrollableTab, ListItem, Left, Body, Right, Switch, Spinner, List } from 'native-base';
 import { Alert } from 'react-native';
-import { SafeAreaView, NavigationScreenProp, NavigationState } from 'react-navigation';
+import { SafeAreaView, NavigationScreenProp, NavigationState, NavigationEvents } from 'react-navigation';
 import { IOrderItem } from '../../../redux/models/orderModel';
 import RBSheet from 'react-native-raw-bottom-sheet';
 
@@ -34,10 +34,9 @@ import { AppState } from '../../../redux/store';
 import { Dimensions } from 'react-native';
 import Swiper from 'react-native-swiper'
 import { notificationListItem, getNotifications, INotificationItem } from '../../../redux/actions/notificationAction';
-
 import { SwipeListView, SwipeRow } from 'react-native-swipe-list-view';
-
-
+import { IconBadge } from '../../../components/NotificationIconBadge';
+import { DeleteNotification } from '../../../services/RequestService';
 
 
 interface Props {
@@ -45,31 +44,37 @@ interface Props {
   loading: boolean;
   message : string;
   notificationList : INotificationItem[]
-  getNotifications : () => void;
+  getNotifications : (isUpdate:boolean,page:number, pageSize:number) => void;
+  isFinishedMore:boolean;
 
 }
 
 interface State {
-    notificationListTmp : INotificationItem[]
+    notificationListTmp : INotificationItem[];
+    updatStateList:boolean;
+    page:number;
+    refreshing:boolean;
 }
 
+const PAGE_SIZE:number =15;
 class NotificationScreen extends Component<Props, State>{
 
 
 
   static navigationOptions = ({ navigation }) => ({
-    title: 'Bildirimler',
-
+    title: 'Bildirimler'
   })
 
   componentWillMount(){
-      this.props.getNotifications()
+      this.props.getNotifications(true, 1, PAGE_SIZE);
   }
 
   constructor(props) {
     super(props);
     this.state = {
         listType: 'FlatList',
+        updatStateList:false,
+        refreshing:false,
         // notificationListTmp: Array(20)
         //     .fill('')
         //     .map((_, i) => ({ key: `${i}`, text: `item #${i}` })),
@@ -104,18 +109,27 @@ deleteRow(rowMap, rowKey) {
         item => item.key === rowKey
     );
     newData.splice(prevIndex, 1);
+    const valueChoosed:INotificationItem = this.state.notificationListTmp.find(
+        item => item.key === rowKey
+    );
     this.setState({ notificationListTmp: newData });
+    DeleteNotification(valueChoosed.value.notificationId);
+
 }
 
-deleteSectionRow(rowMap, rowKey) {
+deleteSectionRow(rowMap:any, rowKey:any) {
     this.closeRow(rowMap, rowKey);
     const [section] = rowKey.split('.');
     const newData = [...this.state.sectionListData];
     const prevIndex = this.state.sectionListData[section].data.findIndex(
         item => item.key === rowKey
     );
+
+    
     newData[section].data.splice(prevIndex, 1);
     this.setState({ sectionListData: newData });
+
+      
 }
 
 onRowDidOpen = rowKey => {
@@ -126,119 +140,153 @@ onSwipeValueChange = swipeData => {
     const { key, value } = swipeData;
     this.rowSwipeAnimatedValues[key].setValue(Math.abs(value));
 };
+componentDidMount() {
 
+
+  }
+  maptoStateProps(){
+   
+    if((this.props.loading==false && this.state.notificationListTmp.length<1) || this.state.updatStateList || this.state.refreshing || this.state.page>1){
+        this.setState({notificationListTmp : this.props.notificationList, updatStateList:false,page:1, refreshing:false},()=>{
+            console.log(this.state.notificationListTmp,"state not");
+            console.log(this.state.notificationListTmp,"state props");
+        });   
+    }
+  }
+onRefresh(){
+    this.setState({ refreshing: true});
+    this.props.getNotifications(true, 1, PAGE_SIZE);
+    this.maptoStateProps();
+}
 render() {
 
+    this.maptoStateProps();
+            console.log(this.state.notificationListTmp, "list getted");
+            Array(this.props.notificationList.length)
+            .fill('')
+            .forEach((_, i) => {
+                this.rowSwipeAnimatedValues[`${i}`] = new Animated.Value(0);
+            });
 
-    if(this.props.notificationList.length > 1 && this.state.notificationListTmp.length < 1){
-        this.setState({notificationListTmp : this.props.notificationList})
-
-        Array(this.props.notificationList.length)
-        .fill('')
-        .forEach((_, i) => {
-            this.rowSwipeAnimatedValues[`${i}`] = new Animated.Value(0);
-        });
-    }
-    return (
-        <View style={styles.container}>
-
-
-
-
-
-                <SwipeListView
-                    contentContainerStyle={{paddingTop:20}}
-                    data={this.state.notificationListTmp}
-                    renderItem={data => (
-                        <TouchableHighlight
-                            onPress={() => this.props.navigation.navigate('OrderDetail',{orderId : data.item.value.orderId})}
-                            style={styles.rowFront}
-                            underlayColor="#bfbfbf"
-
-                        >
-                           <View style={{paddingHorizontal:20,paddingTop:10,paddingBottom:10}}>
-                           <View style={{flexDirection:'row'}}>
-                                <Image source={require('../../../images/order.png')} style={{marginRight:10,alignSelf:'center'}} />
-                                <Text style={{marginRight:5,fontFamily:'Avenir Next'}}>
-                                 {data.item.value.message}
-                                </Text>
-                                
-                            </View>
-                            <Text style={{marginRight:5,textAlign:'right',fontSize:14,color:'#bfbfbf',fontFamily:'Avenir Next'}}>
-                                 {data.item.value.createdDate}
-                             </Text>
-                           </View>
-                        </TouchableHighlight>
-                    )}
-                    disableRightSwipe={true}
-                    renderHiddenItem={(data, rowMap) => (
-                        <View style={styles.rowBack}>
-
-                            <TouchableOpacity
-                                style={[
-                                    styles.backRightBtn,
-                                    styles.backRightBtnLeft,
-                                ]}
-                                onPress={() =>
-                                    this.closeRow(rowMap, data.item.key)
-                                }
+            
+        return (
+            <View style={styles.container}>
+        <NavigationEvents
+      onWillFocus={payload =>{ this.props.getNotifications(true,1,PAGE_SIZE); this.setState({updatStateList : true})}}
+    />
+ 
+                    <SwipeListView
+                                            data={this.state.notificationListTmp}
+                        renderItem={data => (
+                            <TouchableHighlight
+                                onPress={() => this.props.navigation.navigate('OrderDetail',{orderId : data.item.value.orderId})}
+                                style={styles.rowFront}
+                                underlayColor="#bfbfbf"
+    
                             >
-                                
-                                <Icon name="ios-close" />
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                style={[
-                                    styles.backRightBtn,
-                                    styles.backRightBtnRight,
-                                ]}
-                                onPress={() =>
-                                    this.deleteRow(rowMap, data.item.key)
-                                }
-                            >
-                                <Animated.View
+                               <View style={{paddingHorizontal:20,paddingTop:10,paddingBottom:10, backgroundColor:data.item.value.viewed==false ?"#EEEEEE":"#ffff"}}>
+                               <View style={{flexDirection:'row'}}>
+                                    <Image source={require('../../../images/order.png')} style={{marginRight:10,alignSelf:'center'}} />
+                                    <Text style={{marginRight:5,fontFamily:'Avenir Next'}}>
+                                     {data.item.value.message}
+                                    </Text>
+                                    
+                                </View>
+                                <Text style={{marginRight:5,textAlign:'right',fontSize:14,color:'#bfbfbf',fontFamily:'Avenir Next'}}>
+                                     {data.item.value.createdDate}
+                                 </Text>
+                               </View>
+                            </TouchableHighlight>
+                        )}
+                        disableRightSwipe={true}
+                        refreshing={this.state.refreshing}
+                        onRefresh={() => this.onRefresh()}
+                        onEndReached={() => {
+                            var pagenew = this.state.page + 1;
+                            this.setState({ page: pagenew });
+                            if (pagenew == 1) {
+                              pagenew = pagenew + 1;
+                              this.setState({ page: pagenew });
+                            }
+                            this.setState({updatStateList:true});
+                            this.props.getNotifications(true, pagenew, PAGE_SIZE);
+                       
+                            console.log("pagenew",pagenew);
+                          }}
+                          onEndReachedThreshold={0.5}
+                          initialNumToRender={5}
+                            extraData={this.state.notificationListTmp}
+                        renderHiddenItem={(data, rowMap) => (
+                            <View style={styles.rowBack}>
+    
+                                <TouchableOpacity
                                     style={[
-                                        styles.trash,
-                                        {
-                                            transform: [
-                                                {
-                                                    scale: this.rowSwipeAnimatedValues[
-                                                        data.item.key
-                                                    ].interpolate({
-                                                        inputRange: [
-                                                            45,
-                                                            90,
-                                                        ],
-                                                        outputRange: [0, 1],
-                                                        extrapolate:
-                                                            'clamp',
-                                                    }),
-                                                },
-                                            ],
-                                        },
+                                        styles.backRightBtn,
+                                        styles.backRightBtnLeft,
                                     ]}
+                                    onPress={() =>
+                                        this.closeRow(rowMap, data.item.key)
+                                    }
                                 >
-                                    <Image
-                                        source={require('../../../images/bin.png')}
-                                        style={styles.trash}
-                                    />
-                                </Animated.View>
-                            </TouchableOpacity>
-                        </View>
-                    )}
-                    leftOpenValue={75}
-                    rightOpenValue={-150}
-                    previewRowKey={'0'}
-                    previewOpenValue={-40}
-                    previewOpenDelay={3000}
-                    onRowDidOpen={this.onRowDidOpen}
-                    onSwipeValueChange={this.onSwipeValueChange}
-                />
+                                    
+                                    <Icon name="ios-close" />
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    style={[
+                                        styles.backRightBtn,
+                                        styles.backRightBtnRight,
+                                    ]}
+                                    onPress={() =>
+                                        this.deleteRow(rowMap, data.item.key)
+                                    }
+                                >
+                                    <Animated.View
+                                        style={[
+                                            styles.trash,
+                                            {
+                                                transform: [
+                                                    {
+                                                        scale: this.rowSwipeAnimatedValues[
+                                                            data.item.key
+                                                        ].interpolate({
+                                                            inputRange: [
+                                                                45,
+                                                                90,
+                                                            ],
+                                                            outputRange: [0, 1],
+                                                            extrapolate:
+                                                                'clamp',
+                                                        }),
+                                                    },
+                                                ],
+                                            },
+                                        ]}
+                                    >
+                                        <Image
+                                            source={require('../../../images/bin.png')}
+                                            style={styles.trash}
+                                        />
+                                    </Animated.View>
+                                </TouchableOpacity>
+                            </View>
+                        )}
+                        leftOpenValue={75}
+                        rightOpenValue={-150}
+                        previewRowKey={'0'}
+                        previewOpenValue={-40}
+                        previewOpenDelay={3000}
+                        onRowDidOpen={this.onRowDidOpen}
+                        onSwipeValueChange={this.onSwipeValueChange}
+                    />
+    
+    
+             
+    
+            </View>
+        );
+        
+      
 
-
-         
-
-        </View>
-    );
 }
 }
 
@@ -332,14 +380,15 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state: AppState) => ({
 loading : state.notification.isLoading,
 message : state.notification.message,
-notificationList : state.notification.notificationListItem
+notificationList : state.notification.notificationListItem,
+isFinishedMore:state.notification.isMoreFinished
 
 });
 
 function bindToAction(dispatch: any) {
   return {
-    getNotifications : () => 
-    dispatch(getNotifications()),
+    getNotifications : (isUpdate:boolean,page:number, pageSize:number) => 
+    dispatch(getNotifications(isUpdate,page, pageSize)),
 
     };
 }

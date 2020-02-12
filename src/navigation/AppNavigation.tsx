@@ -1,23 +1,16 @@
 import React from "react";
 import {
-  
+
   createAppContainer,
   createSwitchNavigator,
 
 } from "react-navigation";
 
-import {createStackNavigator} from 'react-navigation-stack'
+import { createStackNavigator } from 'react-navigation-stack'
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { Dimensions, TouchableOpacity, View, Platform } from "react-native";
 
 const { width } = Dimensions.get("window");
-// import { createIconSetFromIcoMoon } from 'react-native-vector-icons'
-
-// import Icon from "react-native-vector-icons/Ionicons";
-
-// import Home from "../screens/AppScreens/Home";
-// import Blank from "../screens/AppScreens/Blank";
-// import SideBar from "../screens/AppScreens/SideBar";
 import Login from "../screens/AuthScreens/Login";
 import SignUpFirstScreen from '../screens/AuthScreens/SignUp/SignUpFirstScreen'
 import SignUpSecondScreen from '../screens/AuthScreens/SignUp/SignUpSecondScreen'
@@ -33,19 +26,13 @@ import employee from '../screens/AppScreens/Employee/home';
 import employeeAddScreen from '../screens/AppScreens/Employee/employeeAddScreen';
 import employeeEditScreen from '../screens/AppScreens/Employee/employeeEditScreen';
 import SecurtiyScreen from '../screens/AppScreens/Profile/SecurityScreen'
-// import IntroductionScreen from '../screens/AppScreens/Introduction/index'
-// import Customer from "../pages/customer";
-// import Employee from "../pages/employee";
-// import Settings from "../pages/settings";
+
 import RateUsScreen from '../screens/AppScreens/Profile/RateUsScreen'
 import addCustomer from "../screens/AppScreens/Customer/addCustomer";
 import productAdd from "../screens/AppScreens/Product/productAdd";
 import ProfileScreen from "../screens/AppScreens/Profile/ProfileScreen";
 import employeeCostScreen from "../screens/AppScreens/Employee/employeeCostScreen";
-// import OrdersCustomer from "../pages/OrdersCustomer";
-// import addOrder from "../pages/addOrder";
-// import editCustomer from "../pages/editCustomer";
-// import addProduct from "../pages/addProduct";
+
 import products from "../screens/AppScreens/Product/produts";
 import productEditScreen from "../screens/AppScreens/Product/productEdit";
 import CustomerEditScreen from '../screens/AppScreens/Customer/CustomerEditScreen'
@@ -67,118 +54,52 @@ import productsWithImagesScreen from "../screens/AppScreens/Product/productsWith
 import NotificationScreen from "../screens/AppScreens/Notification/NotificationScreen";
 import OrderDetailScreen from '../screens/AppScreens/Customer/orderDetailScreen'
 import OrderListScreen from '../screens/AppScreens/Order/OrderListScreen'
-// import newPricePage from "../pages/newPricePage";
-// import customerDefinedPricePage from "../pages/CustomerDefinedPrice"
-// import editOrder from "../pages/editOrder";
-// import employee from "../pages/employee";
-// import addEmployee from "../pages/addEmployee";
-// import editEmployee from "../pages/editEmployee";
-// import report from "../pages/report";
-// import employeeCost from "../pages/employeeCost";
-// import editEmployeeCost from "../pages/editEmployeeCost";
+import { IconBadge } from "../components/NotificationIconBadge";
+
 
 
 const introductionStack = createStackNavigator({
-  Introduction :IntroductionScreen
+  Introduction: IntroductionScreen
 
-},{
-  headerMode:'none'
+}, {
+  headerMode: 'none'
 })
- const EmployeeApp = createStackNavigator(
-   {
-     Employee: { screen: employee },
+const EmployeeApp = createStackNavigator(
+  {
+    Employee: { screen: employee },
     AddEmployee: { screen: employeeAddScreen },
     EditEmployee: { screen: employeeEditScreen },
     EmployeeCost: { screen: employeeCostScreen },
-//     EditEmployeeCost: { screen: editEmployeeCost },
+    //     EditEmployeeCost: { screen: editEmployeeCost },
 
   },
   {
-    initialRouteName:"Employee"
-//     // headerMode:"none"
+    initialRouteName: "Employee"
+    //     // headerMode:"none"
   });
 
-  const notificationStack = createStackNavigator(
-    {
-      Notification : NotificationScreen
-    },{
-      defaultNavigationOptions: {
-        headerStyle: {
-          backgroundColor: '#216AF4',
-        },
-        headerTintColor: '#fff',
-        headerTitleStyle: {
-          fontWeight: '600',
-          fontFamily:'Avenir Next',
-          fontSize:18
-        },
-      },
-    }
-  )
-  const orderStack = createStackNavigator(
-    {
-      OrderList  : OrderListScreen
+const notificationStack = createStackNavigator(
+  {
+    Notification: NotificationScreen
+  }, {
+  defaultNavigationOptions: {
+    headerStyle: {
+      backgroundColor: '#216AF4',
     },
-    {
-      // headerMode: "none"
-      defaultNavigationOptions: {
-        headerStyle: {
-          backgroundColor: '#216AF4',
-        },
-        headerTintColor: '#fff',
-        headerTitleStyle: {
-          fontWeight: '600',
-          fontFamily:'Avenir Next',
-          fontSize:18
-        },
-      },
-    }
-  )
-
-  const reportStack = createStackNavigator(
-    {
-      ReportBase : ReportBaseScreen,
-      ReportNew : ReportNewScreen,
-      ReportTemplate : ReportTemplateScreen,
-      ReportOld : ReportScreen,
-      ReportAnother : ReportAnotherScreen
+    headerTintColor: '#fff',
+    headerTitleStyle: {
+      fontWeight: '600',
+      fontFamily: 'Avenir Next',
+      fontSize: 18
     },
-    {
-      // headerMode: "none"
-      defaultNavigationOptions: {
-        headerStyle: {
-          backgroundColor: '#216AF4',
-        },
-        headerTintColor: '#fff',
-        headerTitleStyle: {
-          fontWeight: '600',
-          fontFamily:'Avenir Next',
-          fontSize:18
-        },
-      },
-    }
-  )
-
-  const ProfileStack = createStackNavigator(
-    {
-      ProfileScreen : ProfileScreen,
-      products : productsWithImagesScreen,
-      productEditScreen : productEditScreen,
-      AboutUs :AboutUsScreen,
-      profileEditGeneral : ProfileEditGeneralScreen,
-      Securtiy : SecurtiyScreen,
-      AddProduct: { screen: productAdd },
-      companyInfo : CompanyEditScreen ,
-      Support : SupportScreen,
-      RateUs : RateUsScreen,
-      Employee : EmployeeApp
-     //AddEmployee: { screen: employeeAdd },
- //     EditEmployee: { screen: editEmployee },
- //     EmployeeCost: { screen: employeeCost },
- //     EditEmployeeCost: { screen: editEmployeeCost },
- 
-   },
-   {
+  },
+}
+)
+const orderStack = createStackNavigator(
+  {
+    OrderList: OrderListScreen
+  },
+  {
     // headerMode: "none"
     defaultNavigationOptions: {
       headerStyle: {
@@ -187,24 +108,76 @@ const introductionStack = createStackNavigator({
       headerTintColor: '#fff',
       headerTitleStyle: {
         fontWeight: '600',
-        fontFamily:'Avenir Next',
-        fontSize:18
+        fontFamily: 'Avenir Next',
+        fontSize: 18
+      },
+    },
+  }
+)
+
+
+
+const reportStack = createStackNavigator(
+  {
+    ReportBase: ReportBaseScreen,
+    ReportNew: ReportNewScreen,
+    ReportTemplate: ReportTemplateScreen,
+    ReportOld: ReportScreen,
+    ReportAnother: ReportAnotherScreen
+  },
+  {
+    // headerMode: "none"
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: '#216AF4',
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: '600',
+        fontFamily: 'Avenir Next',
+        fontSize: 18
+      },
+    },
+  }
+)
+
+const ProfileStack = createStackNavigator(
+  {
+    ProfileScreen: ProfileScreen,
+    products: productsWithImagesScreen,
+    productEditScreen: productEditScreen,
+    AboutUs: AboutUsScreen,
+    profileEditGeneral: ProfileEditGeneralScreen,
+    Securtiy: SecurtiyScreen,
+    AddProduct: { screen: productAdd },
+    companyInfo: CompanyEditScreen,
+    Support: SupportScreen,
+    RateUs: RateUsScreen,
+    Employee: EmployeeApp
+    //AddEmployee: { screen: employeeAdd },
+    //     EditEmployee: { screen: editEmployee },
+    //     EmployeeCost: { screen: employeeCost },
+    //     EditEmployeeCost: { screen: editEmployeeCost },
+
+  },
+  {
+    // headerMode: "none"
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: '#216AF4',
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: '600',
+        fontFamily: 'Avenir Next',
+        fontSize: 18
       },
     },
   });
-  
-// const IconNew = createIconSetFromIcoMoon(icoMoonConfig)
+
 const CustomerStack = createStackNavigator(
   {
-    // Customer: { screen: Customer },
-    // CustomerAdd: { screen: addCustomer },
-    // OrdersCustomer: { screen: OrdersCustomer },
-    // AddOrder: { screen: addOrder },
-    // EditCustomer: { screen: editCustomer },
-    // NewPricePage: { screen: newPricePage },
-    // CustomerDefinedPricePage: { screen: customerDefinedPricePage },
-    // EditOrder: { screen: editOrder }
-    CustomerOrders : CustomerOrdersScreen
+    CustomerOrders: CustomerOrdersScreen
   },
   {
     // headerMode: "none"
@@ -215,46 +188,29 @@ const CustomerStack = createStackNavigator(
       headerTintColor: '#fff',
       headerTitleStyle: {
         fontWeight: '600',
-        fontFamily:'Avenir Next',
-        fontSize:18
+        fontFamily: 'Avenir Next',
+        fontSize: 18
       },
     },
   }
 
 );
 
-
-
-// const SettingsApp = createStackNavigator(
-//   {
-//     Settings: { screen: Settings },
-//     AddProduct: { screen: addProduct },
-//     EditProduct: { screen: editProduct },
-//     Products: { screen: products },
-//     Report: { screen: report },
-
-//   },
-//   {
-//     // headerMode: "none"
-//   }
-// )
-
-
 const HomeStack = createStackNavigator({
-  Home : Platform.OS === 'ios' ? HomeScreen : HomeScreenAndroid,
-  Customer : CustomerOrdersScreen,
-  addCustomer : addCustomer,
-  orderAdd : orderAdd,
-  CustomerEdit : CustomerEditScreen,
-  CustomerDefinedPriceAdd : CustomerDefinedPriceAddScreen,
-  CustomerDefinedPrices : CustomerDefinedPricesScreen,
-  OrderDetail : OrderDetailScreen
+  Home: Platform.OS === 'ios' ? HomeScreen : HomeScreenAndroid,
+  Customer: CustomerOrdersScreen,
+  addCustomer: addCustomer,
+  orderAdd: orderAdd,
+  CustomerEdit: CustomerEditScreen,
+  CustomerDefinedPriceAdd: CustomerDefinedPriceAddScreen,
+  CustomerDefinedPrices: CustomerDefinedPricesScreen,
+  OrderDetail: OrderDetailScreen
 
-},{
+}, {
   defaultNavigationOptions: {
     headerStyle: {
       backgroundColor: '#2069F3',
-      fontFamily : 'Avenir Next'
+      fontFamily: 'Avenir Next'
     },
     headerTintColor: '#fff',
     headerTitleStyle: {
@@ -265,17 +221,12 @@ const HomeStack = createStackNavigator({
 
 
 const AgreementStack = createStackNavigator({
-  UserAgreement : UserAgreementScreen,
-
-
-
-
-
-},{
+  UserAgreement: UserAgreementScreen,
+}, {
   defaultNavigationOptions: {
     headerStyle: {
       backgroundColor: '#2069F3',
-      fontFamily : 'Avenir Next'
+      fontFamily: 'Avenir Next'
     },
     headerTintColor: '#fff',
     headerTitleStyle: {
@@ -283,14 +234,7 @@ const AgreementStack = createStackNavigator({
     },
   },
 })
-
-
-
-
-
-
-// const Icon = createIconSetFromIcoMoon(require('../images/file1.svg'))
-const IconNew = (props) => <SvgIcon {...props} style={{marginTop:55,marginLeft:55}} svgs={svgs} />
+const IconNew = (props) => <SvgIcon {...props} style={{ marginTop: 55, marginLeft: 55 }} svgs={svgs} />
 
 const MainStack = createBottomTabNavigator(
   {
@@ -301,83 +245,52 @@ const MainStack = createBottomTabNavigator(
         tabBarIcon: ({ focused }) => {
 
           return (
-            <IconNew stroke={focused ? '#2069F3' :'black' }  strokeWidth={3} fill={focused ? '#2069F3' :'black' } width="80" height="80" name="User" svgs={svgs} />
+            <IconNew stroke={focused ? '#2069F3' : 'black'} strokeWidth={3} fill={focused ? '#2069F3' : 'black'} width="80" height="80" name="User" svgs={svgs} />
           )
         }
       }
     },
-    // Employee: {
-    //   screen: EmployeeApp,
-
-    //   navigationOptions: {
-    //     tabBarLabel: 'Çalışanlar',
-    //     // tabBarLabel: 'Çalışanlar',
-    //     tabBarIcon: ({ focused }) => {
-
-    //       return (
-        
-              
-    //         <IconNew stroke={focused ? '#2069F3' :'black' } strokeWidth={3} fill={focused ? '#2069F3' :'black' } width="80" height="80" name="UserPlus" svgs={svgs} />
-          
-        
-    //       )
-    //     }
-    //   },
-
-    // },
     Order: {
       screen: orderStack,
       navigationOptions: {
-      tabBarLabel: 'Siparişlerim',
-    tabBarIcon: ({ focused }) => {
-    return (
-    <IconNew stroke={focused ? '#2069F3' :'black' } strokeWidth={3} fill={focused ? '#2069F3' :'black' } width="80" height="80" name="Profile" svgs={svgs} />
-    )
-    }
-      }
-    },
-
-
-
-    Notification: {
-      screen: notificationStack,
-      navigationOptions: {
-      tabBarLabel: 'Bildirimler',
-    tabBarIcon: ({ focused }) => {
-    return (
-    <IconNew stroke={focused ? '#2069F3' :'black' } strokeWidth={3} fill={focused ? '#2069F3' :'black' } width="80" height="80" name="Profile" svgs={svgs} />
-    )
-    }
+        tabBarLabel: 'Siparişler',
+        tabBarIcon: ({ focused }) => {
+          return (
+            <Icon name="ios-basket" style={{ color: focused ? "#2069F3" : "" }}  ></Icon>
+          )
+        }
       }
     },
     Settings: {
       screen: reportStack,
       navigationOptions: {
         tabBarLabel: 'Rapor',
-
-
-tabBarIcon: ({ focused }) => {
-
-  return (
-
-      
-    <IconNew fill={focused ? '#2069F3' :'black' } width="80" height="80" name="Report" svgs={svgs} />
-  
-
-  )
-}
+        tabBarIcon: ({ focused }) => {
+          return (
+            <IconNew fill={focused ? '#2069F3' : 'black'} width="80" height="80" name="Report" svgs={svgs} />
+          )
+        }
 
       }
+    },
+
+    Notification: {
+      screen: notificationStack,
+      navigationOptions: ({ screenProps}) => ({
+        tabBarIcon: ({focused}) =>
+        <IconBadge badgeCount={screenProps.badgeCount} focused={focused} name="ios-notifications-outline"/>
+
+      })
     },
     Profile: {
       screen: ProfileStack,
       navigationOptions: {
-      tabBarLabel: 'Profil',
-tabBarIcon: ({ focused }) => {
-  return (
-    <IconNew stroke={focused ? '#2069F3' :'black' } strokeWidth={3} fill={focused ? '#2069F3' :'black' } width="80" height="80" name="Profile" svgs={svgs} />
-  )
-}
+        tabBarLabel: 'Profil',
+        tabBarIcon: ({ focused }) => {
+          return (
+            <IconNew stroke={focused ? '#2069F3' : 'black'} strokeWidth={3} fill={focused ? '#2069F3' : 'black'} width="80" height="80" name="Profile" svgs={svgs} />
+          )
+        }
       }
     },
   },
@@ -391,11 +304,11 @@ tabBarIcon: ({ focused }) => {
 const LoginScreen = createStackNavigator(
   {
     Login: { screen: Login },
-    SignUpFirst :SignUpFirstScreen,
-    SignUpSecond : SignUpSecondScreen,
-    PhoneVerification:PhoneVerificationScreen,
+    SignUpFirst: SignUpFirstScreen,
+    SignUpSecond: SignUpSecondScreen,
+    PhoneVerification: PhoneVerificationScreen,
     Home: HomeScreen,
-    UserAgreement : UserAgreementScreen
+    UserAgreement: UserAgreementScreen
   },
   {
     initialRouteName: "Login",
@@ -404,13 +317,12 @@ const LoginScreen = createStackNavigator(
 );
 
 
-
 export default createAppContainer(
   createSwitchNavigator(
     {
       AuthLoading: AuthLoading,
       LoginScreen: LoginScreen,
-      introductionStack :introductionStack,
+      introductionStack: introductionStack,
       MainStack: MainStack,
 
       // AddCustomer: CustomerApp,
