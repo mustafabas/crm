@@ -35,6 +35,8 @@ import RBSheet from "react-native-raw-bottom-sheet";
 import { logoutUserService } from '../../../redux/actions/loginAction';
 import { showMessage } from 'react-native-flash-message';
 import { InfoItem } from '../../../components/InfoItem';
+import firebase from 'react-native-firebase';
+import { NotificationOpen } from 'react-native-firebase/notifications';
 
 import firebase from 'react-native-firebase';
 import { Notification } from 'react-native-firebase/notifications';
@@ -225,30 +227,41 @@ class HomeScreenAndroid extends Component<Props, State>{
       );
 
 
-      console.log(notification, "test not data required");
-      this.props.getNotificationCount();
-
-    });
-  }
-
-  renderTitle = () => {
-
-    if (this.state.HeaderTitle) {
-
-      let title = this.state.HeaderTitle;
-      if (this.state.HeaderTitle.length > 34) {
-        title = title.substr(0, 32) + "...";
+     componentWillMount() {
+        this.setState({ refreshing: false });
+        this._getCustomerList(this.state.orderType, this.state.searchText, this.state.dayOfWeek, this.state.page);
+        this.routeNotification()
+      
       }
-      let titleOpacity = this.state.scrollY.interpolate({
-        inputRange: [0, 41, 45, 48],
-        outputRange: [0, 0, 0, 1],
-        extrapolate: 'clamp'
-      });
-      let borderBottomColor = this.state.scrollY.interpolate({
-        inputRange: [56, 57],
-        outputRange: ["#ffffff", '#f2f2f2'],
-        extrapolate: 'clamp'
-      });
+
+      routeNotification(){
+
+        firebase.notifications().onNotificationOpened((notificationOpen) => {
+          const { title, body,
+            } = notificationOpen.notification;
+          // console.log("NotificationOpened Function")
+          // console.log(notificationOpen.notification.data)
+          let orderId = notificationOpen.notification.data.orderId
+            this.props.navigation.navigate('OrderDetail',{orderId : orderId})
+
+        });
+    
+
+
+       firebase.notifications().getInitialNotification()
+      .then((notificationOpen: NotificationOpen) => {
+        if (notificationOpen) {
+          const { title, body } = notificationOpen.notification;
+    
+          let orderId = notificationOpen.notification.data.orderId
+          this.props.navigation.navigate('OrderDetail',{orderId : orderId})
+        }
+        }
+      );
+
+        
+      }
+     
 
 
 
