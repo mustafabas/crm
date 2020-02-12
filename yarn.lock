@@ -6304,6 +6304,11 @@ react-native-app-intro-slider@^3.0.0:
   resolved "https://registry.yarnpkg.com/react-native-app-intro-slider/-/react-native-app-intro-slider-3.0.0.tgz#c3620b967503ce410b3d767252392bb6fb2edf97"
   integrity sha512-2XXUYnSeMYZTLhdRYHSwv8mhoyuEaYxmQfXrWQInH1QvjsnJtKgvORI3bJuJN+tNPg3aut6JYYCNOFsI5of32A==
 
+react-native-call-detection@^1.8.2:
+  version "1.8.2"
+  resolved "https://registry.yarnpkg.com/react-native-call-detection/-/react-native-call-detection-1.8.2.tgz#58ca34e2c0ff3202855c0d2727facf5824ebf938"
+  integrity sha512-n4gvmoDt8TqKhFSlp8A5R1qU2RHNjxzjOx+mqpw5wXTJbAYpCMTOzRX2aEkL9IClrSNoh23muJXFzJIRBXGKKw==
+
 react-native-color@0.0.10:
   version "0.0.10"
   resolved "https://registry.yarnpkg.com/react-native-color/-/react-native-color-0.0.10.tgz#9cbc0da191c67ae4fc3a04bef7bc54a685784c7d"
