@@ -175,6 +175,7 @@ export const EMPLOYEECOST_DELETE_FAILED ="EmployeeCostDeleteFailed";
 
 
 export const NOTIFICATION_LIST_GET = "NotificationListGet";
+export const NOTIFICATION_LIST_GET_MORE = "NotificationGetMore";
 export const NOTIFICATION_LIST_LOADING = "NotificationListLoading";
 
 export const NOTIFICATION_LIST_FAILED = "NotificationListFailed";

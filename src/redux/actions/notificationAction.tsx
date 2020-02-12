@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { WATER_GET_NOTIFICATIONS, WATER_NOTIFICATIONS_UPDATED_VIEWED, WATER_GET_NEW_NOTIFICATION_COUNT } from './../constants'
 import { Dispatch } from "react";
-import { NOTIFICATION_LIST_LOADING, NOTIFICATION_LIST_FAILED, NOTIFICATION_LIST_GET, NOTIFICATION_COUNT_LOADING, NOTIFICATION_COUNT_FAILED, NOTIFICATION_COUNT_GET } from './../types'
+import { NOTIFICATION_LIST_LOADING, NOTIFICATION_LIST_FAILED, NOTIFICATION_LIST_GET, NOTIFICATION_COUNT_LOADING, NOTIFICATION_COUNT_FAILED, NOTIFICATION_COUNT_GET, NOTIFICATION_LIST_GET_MORE } from './../types'
 import { Action } from '../states'
 
 import { AsyncStorage } from 'react-native'
@@ -38,9 +38,9 @@ function  UpdateNotificationViewed(userId: string, userToken: string) {
   axios.get(WATER_NOTIFICATIONS_UPDATED_VIEWED + `?userId=${userId}`, {
     headers: headers
   }).then((response) => {
-    console.log("updated seen", response);
     if (response.data.isSuccess) {
-      dispatch(getNotificationCount());
+      console.log("updated kanka");
+       dispatch(getNotificationCount());
     }
   })
     .catch(error => {
@@ -48,8 +48,8 @@ function  UpdateNotificationViewed(userId: string, userToken: string) {
     });
   }
 }
-
-export function getNotifications() {
+let counter :number = 0;
+export function getNotifications(isUpdate:boolean, page?:number, pageSize?:number) {
   return (dispatch: any) => {
     dispatch(isLoading(true, ''))
     AsyncStorage.multiGet(['userToken', 'userId']).then((res) => {
@@ -61,13 +61,16 @@ export function getNotifications() {
         'Authorization': `Bearer ${token}`
       }
 
-      axios.get(WATER_GET_NOTIFICATIONS + `?userId=${userId}&page=1&pageSize=15`, {
+      axios.get(WATER_GET_NOTIFICATIONS + `?userId=${userId}&page=${page ?page : 1}&pageSize=${pageSize ? pageSize:15}`, {
         headers: headers
       }).then((response) => {
 
         var notificationList: INotificationItem[] = []
-      
-        var count = 0
+        if(page==1 || !page){
+          counter=0;
+  
+        }
+  
         if (response.data.isSuccess) {
           
           response.data.result.forEach(element => {
@@ -81,17 +84,27 @@ export function getNotifications() {
 
 
             notificationList.push({
-              key: count.toString(),
+              key: counter.toString(),
               value: notificationItem
             })
 
-            count++;
+            counter++;
 
           });
           dispatch(isLoading(false,""));
-          dispatch(notification(notificationList))
-          dispatch(UpdateNotificationViewed(userId, token));
+          if(page==1 || !page){
+            dispatch(notification(notificationList));
+          }
+          else{
+            dispatch(notificationMore(notificationList));
 
+          }
+        
+          if(isUpdate)
+          {
+            console.log("geç to update");
+           dispatch(UpdateNotificationViewed(userId,token));
+          }
 
         } else {
           dispatch(isLoading(false, "Bildirimler alınırken hata oluştu"))
@@ -135,7 +148,7 @@ export function getNotificationCount() {
     if(response.data.isSuccess){
       console.log(response.data.result,`not data`)
       dispatch(notificationCount(response.data.result));   
-      dispatch(getNotifications());
+       dispatch(getNotifications(false, 1));
   
       }else {
 
@@ -170,5 +183,9 @@ export const notificationCount = (result: number) => ({
 })
 export const notification = (notificationList: INotificationItem[]) => ({
   type: NOTIFICATION_LIST_GET,
+  payload: notificationList
+})
+export const notificationMore = (notificationList: INotificationItem[]) => ({
+  type: NOTIFICATION_LIST_GET_MORE,
   payload: notificationList
 })

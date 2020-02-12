@@ -23,7 +23,7 @@ import {AsyncStorage } from 'react-native'
 
 import { Icon, Text, Input, Item, Tabs, Tab, TabHeading, Button, ScrollableTab, ListItem, Left, Body, Right, Switch, Spinner, List } from 'native-base';
 import { Alert } from 'react-native';
-import { SafeAreaView, NavigationScreenProp, NavigationState } from 'react-navigation';
+import { SafeAreaView, NavigationScreenProp, NavigationState, NavigationEvents } from 'react-navigation';
 import { IOrderItem } from '../../../redux/models/orderModel';
 import RBSheet from 'react-native-raw-bottom-sheet';
 
@@ -44,6 +44,7 @@ import Swiper from 'react-native-swiper'
 import { notificationListItem, getNotifications, INotificationItem } from '../../../redux/actions/notificationAction';
 import { SwipeListView, SwipeRow } from 'react-native-swipe-list-view';
 import { IconBadge } from '../../../components/NotificationIconBadge';
+import { DeleteNotification } from '../../../services/RequestService';
 
 
 interface Props {
@@ -51,14 +52,19 @@ interface Props {
   loading: boolean;
   message : string;
   notificationList : INotificationItem[]
-  getNotifications : () => void;
+  getNotifications : (isUpdate:boolean,page:number, pageSize:number) => void;
+  isFinishedMore:boolean;
 
 }
 
 interface State {
-    notificationListTmp : INotificationItem[]
+    notificationListTmp : INotificationItem[];
+    updatStateList:boolean;
+    page:number;
+    refreshing:boolean;
 }
 
+const PAGE_SIZE:number =15;
 class NotificationScreen extends Component<Props, State>{
 
 
@@ -68,13 +74,15 @@ class NotificationScreen extends Component<Props, State>{
   })
 
   componentWillMount(){
-      this.props.getNotifications()
+      this.props.getNotifications(true, 1, PAGE_SIZE);
   }
 
   constructor(props) {
     super(props);
     this.state = {
         listType: 'FlatList',
+        updatStateList:false,
+        refreshing:false,
         // notificationListTmp: Array(20)
         //     .fill('')
         //     .map((_, i) => ({ key: `${i}`, text: `item #${i}` })),
@@ -111,18 +119,27 @@ deleteRow(rowMap, rowKey) {
         item => item.key === rowKey
     );
     newData.splice(prevIndex, 1);
+    const valueChoosed:INotificationItem = this.state.notificationListTmp.find(
+        item => item.key === rowKey
+    );
     this.setState({ notificationListTmp: newData });
+    DeleteNotification(valueChoosed.value.notificationId);
+
 }
 
-deleteSectionRow(rowMap, rowKey) {
+deleteSectionRow(rowMap:any, rowKey:any) {
     this.closeRow(rowMap, rowKey);
     const [section] = rowKey.split('.');
     const newData = [...this.state.sectionListData];
     const prevIndex = this.state.sectionListData[section].data.findIndex(
         item => item.key === rowKey
     );
+
+    
     newData[section].data.splice(prevIndex, 1);
     this.setState({ sectionListData: newData });
+
+      
 }
 
 onRowDidOpen = rowKey => {
@@ -137,14 +154,23 @@ componentDidMount() {
 
 
   }
+  maptoStateProps(){
+   
+    if((this.props.loading==false && this.state.notificationListTmp.length<1) || this.state.updatStateList || this.state.refreshing || this.state.page>1){
+        this.setState({notificationListTmp : this.props.notificationList, updatStateList:false,page:1, refreshing:false},()=>{
+            console.log(this.state.notificationListTmp,"state not");
+            console.log(this.state.notificationListTmp,"state props");
+        });   
+    }
+  }
+onRefresh(){
+    this.setState({ refreshing: true});
+    this.props.getNotifications(true, 1, PAGE_SIZE);
+    this.maptoStateProps();
+}
 render() {
 
-    if(this.props.loading==false && this.state.notificationListTmp.length<1){
-        console.log("bildirim geldi");
-        this.setState({notificationListTmp : this.props.notificationList})
-    }
-
-        if(this.props.loading==false){
+    this.maptoStateProps();
             console.log(this.state.notificationListTmp, "list getted");
             Array(this.props.notificationList.length)
             .fill('')
@@ -152,9 +178,13 @@ render() {
                 this.rowSwipeAnimatedValues[`${i}`] = new Animated.Value(0);
             });
 
+            
         return (
             <View style={styles.container}>
-    
+        <NavigationEvents
+      onWillFocus={payload =>{ this.props.getNotifications(true,1,PAGE_SIZE); this.setState({updatStateList : true})}}
+    />
+ 
                     <SwipeListView
                                             data={this.state.notificationListTmp}
                         renderItem={data => (
@@ -179,6 +209,23 @@ render() {
                             </TouchableHighlight>
                         )}
                         disableRightSwipe={true}
+                        refreshing={this.state.refreshing}
+                        onRefresh={() => this.onRefresh()}
+                        onEndReached={() => {
+                            var pagenew = this.state.page + 1;
+                            this.setState({ page: pagenew });
+                            if (pagenew == 1) {
+                              pagenew = pagenew + 1;
+                              this.setState({ page: pagenew });
+                            }
+                            this.setState({updatStateList:true});
+                            this.props.getNotifications(true, pagenew, PAGE_SIZE);
+                       
+                            console.log("pagenew",pagenew);
+                          }}
+                          onEndReachedThreshold={0.5}
+                          initialNumToRender={5}
+                            extraData={this.state.notificationListTmp}
                         renderHiddenItem={(data, rowMap) => (
                             <View style={styles.rowBack}>
     
@@ -247,10 +294,8 @@ render() {
     
             </View>
         );
-        }
-        else{
-            return <View><Spinner></Spinner></View>
-        }
+        
+      
 
 }
 }
@@ -345,14 +390,15 @@ trash: {
 const mapStateToProps = (state: AppState) => ({
 loading : state.notification.isLoading,
 message : state.notification.message,
-notificationList : state.notification.notificationListItem
+notificationList : state.notification.notificationListItem,
+isFinishedMore:state.notification.isMoreFinished
 
 });
 
 function bindToAction(dispatch: any) {
   return {
-    getNotifications : () => 
-    dispatch(getNotifications()),
+    getNotifications : (isUpdate:boolean,page:number, pageSize:number) => 
+    dispatch(getNotifications(isUpdate,page, pageSize)),
 
   };
 }

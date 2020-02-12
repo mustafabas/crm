@@ -1,4 +1,4 @@
-import { NOTIFICATION_LIST_LOADING, NOTIFICATION_LIST_FAILED, NOTIFICATION_LIST_GET, RESET_PROPS, NOTIFICATION_COUNT_FAILED, NOTIFICATION_COUNT_LOADING, NOTIFICATION_COUNT_GET } from "../types";
+import { NOTIFICATION_LIST_LOADING, NOTIFICATION_LIST_FAILED, NOTIFICATION_LIST_GET, RESET_PROPS, NOTIFICATION_COUNT_FAILED, NOTIFICATION_COUNT_LOADING, NOTIFICATION_COUNT_GET, NOTIFICATION_LIST_GET_MORE } from "../types";
 import { Action } from '../states';
 
 import { notificationListItem, INotificationItem } from '../actions/notificationAction'
@@ -9,6 +9,7 @@ const intialState = {
   notCount: 0,
   message: "",
   messageCount: '',
+  isMoreFinished:false,
   notificationListItem: {} as INotificationItem[]
 };
 
@@ -19,6 +20,7 @@ export interface notificationState {
   notificationListItem: INotificationItem[];
   notCount: number;
   isLoadingCount: boolean;
+  isMoreFinished: boolean;
 }
 
 
@@ -38,6 +40,14 @@ export default (state: notificationState = intialState, action: Action) => {
         loginErrorMessage: '',
         notificationListItem: action.payload
       };
+      case NOTIFICATION_LIST_GET_MORE:
+        return {
+          ...state,
+          isLoading: false,
+          loginErrorMessage: '',
+          isMoreFinished:true,
+          notificationListItem: [...state.notificationListItem, ...action.payload]
+        };
     case NOTIFICATION_LIST_FAILED:
       return {
         ...state,
