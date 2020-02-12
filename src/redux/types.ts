@@ -176,7 +176,11 @@ export const EMPLOYEECOST_DELETE_FAILED ="EmployeeCostDeleteFailed";
 
 export const NOTIFICATION_LIST_GET = "NotificationListGet";
 export const NOTIFICATION_LIST_LOADING = "NotificationListLoading";
+
 export const NOTIFICATION_LIST_FAILED = "NotificationListFailed";
+export const NOTIFICATION_COUNT_LOADING ="NotificationCountLoading";
+export const NOTIFICATION_COUNT_FAILED = "NotificationCountFailed";
+export const NOTIFICATION_COUNT_GET = "NotificationCountGet";
 
 export const GET_CUSTOMER_ORDER_DETAIL = "GetCustomeDetail";
 export const GET_CUSTOMER_ORDER_DETAIL_LOADING = "GetCustomerDetailLoading";

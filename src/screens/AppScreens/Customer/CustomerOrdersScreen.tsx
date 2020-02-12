@@ -23,17 +23,17 @@ import { SafeAreaView, NavigationScreenProp, NavigationState } from 'react-navig
 import { IOrderItem } from '../../../redux/models/orderModel';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import stylesNew from "../../styles";
+import styles from "../../styles";
 import * as Yup from "yup";
 import { connect } from 'react-redux';
 import { GetOrders, GetOrdersMore, GetCustomerDetail } from '../../../redux/actions/orderAction';
 import { AddCash } from '../../../redux/actions/addCashAction';
 import { orderDelete } from '../../../redux/actions/deleteOrderAction';
-import OrdersCustomer from '../../../pages/OrdersCustomer';
 import { AppState } from '../../../redux/store';
 import { Formik } from 'formik';
 import { showMessage } from 'react-native-flash-message';
 import { ICustomerDetailItem } from '../../../redux/models/homeModel';
-import customer from '../../../pages/customer';
+
 import {
   Placeholder,
   PlaceholderMedia,

@@ -180,7 +180,7 @@ export function getCustomerOrderDetail(orderId : number) {
           'Authorization': `Bearer ${token}`
       }
       console.log(userId)
-      axios.get("http://crmapi.fillsoftware.com/api/Order?userId=1167&page=1&pageSize=20&hasToTransport=true",{
+      axios.get("http://crmapi.fillsoftware.com/api/Order?userId="+userId+"&page=1&pageSize=20&hasToTransport=true",{
           headers : headers
         }).then((response) =>{
           

@@ -1,4 +1,4 @@
-import { AsyncStorage } from 'react-native'
+﻿import { AsyncStorage } from 'react-native'
 
 import axios from 'axios'
 import { WATER_USER_CREATE_CONTROL_EMAIL, WATER_USER_CREATE, WATER_USER_CREATE_EMAIL_CONTROL } from './../constants'
@@ -101,7 +101,7 @@ export function controlEmail(NameSurname: string, password: string, email: strin
       }
 
     }).catch(err => {
-      dispatch(loginIsSucceed(false, "Bir Hata Meydana Geldi"));
+      dispatch(loginIsSucceed(false, err));
       dispatch(reset())
     })
 
