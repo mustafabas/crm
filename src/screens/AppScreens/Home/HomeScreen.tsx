@@ -403,7 +403,7 @@ class HomeScreen extends Component<Props,State>{
                <View style={{ width: 33, height: 33, borderRadius: 16.5, backgroundColor: '#2069F3', justifyContent: 'center', alignItems: 'center' }}>
                    <Text style={{ color: 'white' }}>{item.nameSurname.substring(0, 1)}</Text>
                </View>
-               <View style={{flex:.3,justifyContent:'center',marginTop:-5}}>
+               <View style={{flex:.3,marginTop:item.nameSurname.length > 6 ? 5 : 0}}>
                    
                    <Text style={{ color: '#2069F3', fontWeight: '600', fontSize: 16, fontFamily: 'Avenir Next' }}>
                        {item.nameSurname}

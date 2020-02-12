@@ -94,14 +94,73 @@ class OrderListScreen extends Component<Props, {}> {
 
         return (
 
-        <TouchableOpacity onPress={()=>         this.props.navigation.navigate('OrderDetail',{orderId : item.orderId})} style={[styles.inputContainer, { paddingVertical: '5%',paddingHorizontal:'3%',marginTop: 0,  justifyContent: 'flex-start', borderWidth: 1, borderColor: '#d3d3d3' }]}>
+        <TouchableOpacity onPress={()=>         this.props.navigation.navigate('OrderDetail',{orderId : item.orderId})} style={[styles.inputContainer, { paddingVertical: '5%',paddingHorizontal:'3%',justifyContent:'flex-start',  borderWidth: 1, borderColor: '#d3d3d3' }]}>
 
 
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-            <View>
+        <View style={{ flex:1}}>
+
                 {/* <Text style={{ borderWidth: 1, borderRadius: 5, padding: 7, borderColor: '#c58585', marginRight: 50,textAlign:'center' }}>S.No : {item.orderId}</Text> */}
-        
-                <View style={{}}>
+        {/* asda */}
+            <View style={{flexDirection:'row'}}>
+            <Text  style={{flex:.6,fontFamily:'Avenir Next'}}>
+                    {item.companyName ? item.companyName : item.customerName}
+                </Text>
+
+                <Text  style={{textAlign:'right',flex:.4,fontFamily:'Avenir Next'}}>
+                    {item.productName}
+                </Text>
+
+            </View>
+
+            <View style={{flexDirection:'row',marginTop:15,}}>
+            <Text style={{ color: '#727272',flex:.6,fontFamily:'Avenir Next'}}>
+                     {item.createdDate}
+        </Text>
+
+                
+
+                <View style={{ flexDirection: 'row',flex:.4,justifyContent:'flex-end'}}>
+                        <Text style={{ color: '#767676',fontFamily:'Avenir Next' }}>
+                            Adet: 
+        </Text>
+                        <Text style={{ marginLeft:5,fontFamily:'Avenir Next'}}>
+                            {item.count}
+        </Text>
+                    </View>
+
+            </View>
+
+
+            <View style={{flexDirection:'row',marginTop:15,}}>
+            
+
+        <Text style={{  color: color,textAlign:'left',fontWeight:'800',fontFamily:'Avenir Next',flex:.6 }}>
+                        {textSecond}
+        </Text>
+
+        <View style={{ flexDirection: 'row',justifyContent:'flex-end',flex:.4}}>
+                        <Text style={{ color: '#767676' ,fontFamily:'Avenir Next'}}>
+                            Birim:
+        </Text>
+                        <Text style={{ marginLeft:5,fontFamily:'Avenir Next' }}>
+                            {item.displayUnitPrice}
+        </Text>
+                    </View>
+
+            </View>
+
+            <View style={{ flexDirection: 'row',marginTop:15,justifyContent:'flex-end'}}>
+                        <Text style={{ color: '#767676' ,fontFamily:'Avenir Next'}}>
+                            Toplam: 
+        </Text>
+                        <Text style={{ marginLeft:5,fontFamily:'Avenir Next'}}>
+                            {item.displayTotalPrice}
+        </Text>
+                    </View>
+
+
+       {/* -------------asd */}
+                {/* <View >
 
 
                 <Text  style={{marginTop:3}}>
@@ -135,6 +194,9 @@ class OrderListScreen extends Component<Props, {}> {
                     </View>
          */}
                 </View>
+                 {/* */} 
+                
+                
                 {/* <TouchableOpacity disabled={moneyIsTaken}
                 //  onPress={()=> this.props.navigation.navigate('CreditCart', {basketId: basketId, userId:userId})} 
                   style={{ borderBottomColor: 'red', borderBottomWidth: moneyIsTaken ? 0 : 1, alignItems: 'center', marginHorizontal: 45 }}>
@@ -142,12 +204,12 @@ class OrderListScreen extends Component<Props, {}> {
                        {moneyIsTaken ? "" : "Tekrar Öde"}
                     </Text>
                 </TouchableOpacity> */}
-            </View>
+
             {/* <View style={{ backgroundColor: '#ababab', height: '50%', width: .5, alignSelf: 'flex-end' }}>
         
             </View> */}
             
-            <View style={{marginTop:5}} >
+            {/* <View style={{marginTop:5}} >
 
                
 
@@ -191,10 +253,10 @@ class OrderListScreen extends Component<Props, {}> {
                 }}> */}
                     
                 {/* </View> */}
-            </View>
+            {/* </View> */}
             
             
-        </View>
+        {/* </View> */} 
         
         {/*   asdasdas */}
         

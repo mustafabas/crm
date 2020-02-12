@@ -87,7 +87,7 @@ class Login extends Component<Props, {}> {
     if (this.props.isFinished && (!this.props.isSucceed)) {
 
       showMessage({
-        message: "Email veya sifre hatali",
+        message: this.props.loginErrorMessage,
         type: "danger",
         icon: 'auto'
       }

@@ -10,6 +10,7 @@ import {AsyncStorage } from 'react-native'
 import { navigate } from '../services/Navigator';
 import { reset} from './loginAction';
 import { addOrder } from './addOrderAction';
+import { getNotifications } from './notificationAction';
 
 export enum OrderStatus
     {
@@ -62,15 +63,13 @@ export function updateCustomerOrderStatus(orderStatus : OrderStatus, orderId : n
       headers : headers
     }).then((response) =>{
       
-
-
-
   if(response.data.isSuccess){
     
 
      dispatch(updateOrderStatus("Sipariş Durumunuz Güncellendi."))
      dispatch(reset())
      dispatch(getCustomerOrderDetail(orderId))
+     dispatch(getCustomerOrders())
 
     }else {
         dispatch(isLoadingStatusUpdate(false,"Sipariş durumunuz güncellenemedi daha sonra tekrar deneyim."))

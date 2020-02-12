@@ -274,10 +274,6 @@ class OrderDetailScreen extends Component<Props, State>{
         
       }
   }
-  if(this.props.orderUpdateMessage ) {
-  
-    
-  }
 
     return(
       <View>
@@ -335,6 +331,7 @@ class OrderDetailScreen extends Component<Props, State>{
   }
 
   renderButtonText(){
+    console.log(Number(this.props.orderDetail.orderStatus))
     if(!this.props.loadingOrderUpdate && !this.props.loading && this.props.orderDetail && this.props.orderDetail.orderStatus) {
 return(
   <Text style={{color:'white',fontFamily:"Avenir Next",fontWeight:'bold',fontSize:16}} >{this.props.orderDetail ? (this.props.orderDetail.orderStatus ? this.state.orderStatusString[Number(this.props.orderDetail.orderStatus)] : "Sipariş Durumu Girilmemiş") : "Sipariş Durumu Girilmemiş"}</Text>

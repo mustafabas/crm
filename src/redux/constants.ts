@@ -1,6 +1,6 @@
-export const WATER_BASE_URL_NEW ="http://crmapi.fillsoftware.com";
+export const WATER_BASE_URL_NEW ="https://crmapi.fillsoftware.com";
 
-export const WATER_BASE_URL ="http://api.fillsoftware.com/api";
+export const WATER_BASE_URL ="https://api.fillsoftware.com/api";
 
 
 export const WATER_CUSTOMERS_HOME_GET = WATER_BASE_URL_NEW+"/api/customer?orderType=";
