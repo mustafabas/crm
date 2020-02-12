@@ -60,18 +60,10 @@ export function getNotifications(isUpdate:boolean, page?:number, pageSize?:numbe
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       }
-
-      axios.get(WATER_GET_NOTIFICATIONS + `?userId=${userId}&page=${page ?page : 1}&pageSize=${pageSize ? pageSize:15}`, {
-        headers: headers
-      }).then((response) => {
-
-        var notificationList: INotificationItem[] = []
-        if(page==1 || !page){
-          counter=0;
-  
-        }
-
-        if (response.data.isSuccess) {
+      console.log(WATER_GET_NOTIFICATIONS +`?userId=${userId}&page=1&pageSize=15`)
+      axios.get(WATER_GET_NOTIFICATIONS +`?userId=${userId}&page=1&pageSize=15`,{
+          headers : headers
+        }).then((response) =>{
           
           response.data.result.forEach(element => {
             var notificationItem = {} as notificationListItem;

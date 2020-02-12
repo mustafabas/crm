@@ -94,7 +94,7 @@ class OrderListScreen extends Component<Props, {}> {
 
         return (
 
-        <View style={[styles.inputContainer, { paddingVertical: '5%',paddingHorizontal:'3%',marginTop: 0,  justifyContent: 'flex-start', borderWidth: 1, borderColor: '#d3d3d3' }]}>
+        <TouchableOpacity onPress={()=>         this.props.navigation.navigate('OrderDetail',{orderId : item.orderId})} style={[styles.inputContainer, { paddingVertical: '5%',paddingHorizontal:'3%',marginTop: 0,  justifyContent: 'flex-start', borderWidth: 1, borderColor: '#d3d3d3' }]}>
 
 
         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -209,7 +209,7 @@ class OrderListScreen extends Component<Props, {}> {
         
         
         
-        </View>
+        </TouchableOpacity>
         
         )
     }

@@ -64,27 +64,39 @@ const introductionStack = createStackNavigator({
 }, {
   headerMode: 'none'
 })
-const EmployeeApp = createStackNavigator(
-  {
-    Employee: { screen: employee },
-    AddEmployee: { screen: employeeAddScreen },
-    EditEmployee: { screen: employeeEditScreen },
-    EmployeeCost: { screen: employeeCostScreen },
-    //     EditEmployeeCost: { screen: editEmployeeCost },
+//  const EmployeeApp = createStackNavigator(
+//    {
+  
+// //     EditEmployeeCost: { screen: editEmployeeCost },
 
-  },
-  {
-    initialRouteName: "Employee"
-    //     // headerMode:"none"
-  });
+//   },
+//   {
+//     initialRouteName:"Employee",
+//     headerMode:"none"
+//   });
 
-const notificationStack = createStackNavigator(
-  {
-    Notification: NotificationScreen
-  }, {
-  defaultNavigationOptions: {
-    headerStyle: {
-      backgroundColor: '#216AF4',
+  const notificationStack = createStackNavigator(
+    {
+      Notification : NotificationScreen,
+      OrderDetail : OrderDetailScreen
+    },{
+      defaultNavigationOptions: {
+        headerStyle: {
+          backgroundColor: '#216AF4',
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+          fontWeight: '600',
+          fontFamily:'Avenir Next',
+          fontSize:18
+        },
+      },
+    }
+  )
+  const orderStack = createStackNavigator(
+    {
+      OrderList  : OrderListScreen,
+      OrderDetail : OrderDetailScreen
     },
     headerTintColor: '#fff',
     headerTitleStyle: {
@@ -141,26 +153,30 @@ const reportStack = createStackNavigator(
   }
 )
 
-const ProfileStack = createStackNavigator(
-  {
-    ProfileScreen: ProfileScreen,
-    products: productsWithImagesScreen,
-    productEditScreen: productEditScreen,
-    AboutUs: AboutUsScreen,
-    profileEditGeneral: ProfileEditGeneralScreen,
-    Securtiy: SecurtiyScreen,
-    AddProduct: { screen: productAdd },
-    companyInfo: CompanyEditScreen,
-    Support: SupportScreen,
-    RateUs: RateUsScreen,
-    Employee: EmployeeApp
-    //AddEmployee: { screen: employeeAdd },
-    //     EditEmployee: { screen: editEmployee },
-    //     EmployeeCost: { screen: employeeCost },
-    //     EditEmployeeCost: { screen: editEmployeeCost },
+  const ProfileStack = createStackNavigator(
+    {
+      ProfileScreen : ProfileScreen,
+      products : productsWithImagesScreen,
+      productEditScreen : productEditScreen,
+      AboutUs :AboutUsScreen,
+      profileEditGeneral : ProfileEditGeneralScreen,
+      Securtiy : SecurtiyScreen,
+      AddProduct: { screen: productAdd },
+      companyInfo : CompanyEditScreen ,
+      Support : SupportScreen,
+      RateUs : RateUsScreen,
 
-  },
-  {
+         Employee: { screen: employee },
+    AddEmployee: { screen: employeeAddScreen },
+    EditEmployee: { screen: employeeEditScreen },
+    EmployeeCost: { screen: employeeCostScreen },
+     //AddEmployee: { screen: employeeAdd },
+ //     EditEmployee: { screen: editEmployee },
+ //     EmployeeCost: { screen: employeeCost },
+ //     EditEmployeeCost: { screen: editEmployeeCost },
+ 
+   },
+   {
     // headerMode: "none"
     defaultNavigationOptions: {
       headerStyle: {

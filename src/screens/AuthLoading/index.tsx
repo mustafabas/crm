@@ -101,9 +101,10 @@ class AuthLoading extends React.Component<Props, State> {
         
         
       } catch (error) {
-
+        this.props.navigation.navigate("MainStack")
       }
     }
+    this.props.navigation.navigate("MainStack")
   }
 
 
