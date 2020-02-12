@@ -247,7 +247,7 @@ insertAndSendPush() {
 
   }
   this.setState({notificationIsSend : true})
-  
+  this.props.navigation.goBack()
 
   
 }
@@ -445,7 +445,7 @@ Pesin Odeme
 
 
 
-              <Button onPress={props.handleSubmit}  style={{justifyContent:'center',marginTop:30,marginBottom:30,marginHorizontal:40,borderRadius:20,backgroundColor:'#01C3E3',
+              <Button disabled={ this.state.orderAddedSuccessfully } onPress={props.handleSubmit}  style={{justifyContent:'center',marginTop:30,marginBottom:30,marginHorizontal:40,borderRadius:20,backgroundColor:'#01C3E3',
             shadowRadius: 5.00,
             
             elevation: 12,

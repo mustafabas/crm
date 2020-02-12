@@ -190,7 +190,7 @@ class employeeCostScreen extends Component<Props, State> {
                 </View>
                 <View style={{ alignSelf: 'flex-end', flexDirection: 'column' }}>
                   <TouchableOpacity
-                    style={styles.iconButtonOrder}
+                    style={{alignSelf:'flex-end'}}
                     onPress={() => this.openModal(item.id, item.employeId)}>
                     <Icon name="ios-more" style={{color: '#2069F3'}} />
                   </TouchableOpacity>

@@ -1,4 +1,4 @@
-import { NOTIFICATION_LIST_LOADING, NOTIFICATION_LIST_FAILED, NOTIFICATION_LIST_GET,RESET_PROPS, GET_CUSTOMER_ORDER_DETAIL_LOADING, GET_CUSTOMER_ORDER_DETAIL, GET_CUSTOMER_ORDER_DETAIL_FAILED, UPDATE_ORDER_DETAIL, UPDATE_ORDER_DETAIL_LOADING, UPDATE_ORDER_DETAIL_FAILED, GET_CUSTOMER_ORDER_LIST_LOADING, GET_CUSTOMER_ORDER_LIST_FAILED, GET_CUSTOMER_ORDER_LIST } from "../types";
+import { NOTIFICATION_LIST_LOADING, NOTIFICATION_LIST_FAILED, NOTIFICATION_LIST_GET,RESET_PROPS, GET_CUSTOMER_ORDER_DETAIL_LOADING, GET_CUSTOMER_ORDER_DETAIL, GET_CUSTOMER_ORDER_DETAIL_FAILED, UPDATE_ORDER_DETAIL, UPDATE_ORDER_DETAIL_LOADING, UPDATE_ORDER_DETAIL_FAILED, GET_CUSTOMER_ORDER_LIST_LOADING, GET_CUSTOMER_ORDER_LIST_FAILED, GET_CUSTOMER_ORDER_LIST, GET_CUSTOMER_ORDER_LIST_MORE } from "../types";
 import {Action} from '../states';
 
 import {notificationListItem, INotificationItem} from '../actions/notificationAction'
@@ -44,6 +44,13 @@ export default (state: orderDetailState = intialState, action: Action) => {
         isLodingOrderList : false,
         messageOrderList : action.payload
       };
+
+    case GET_CUSTOMER_ORDER_LIST_MORE : 
+    return {
+      ...state,
+      isLoadingOrderList : false,
+      orderList : [...state.orderList, ...action.payload]
+    }
     case GET_CUSTOMER_ORDER_LIST :
       return {
         ...state,
