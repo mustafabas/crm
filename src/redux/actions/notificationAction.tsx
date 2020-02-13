@@ -1,18 +1,12 @@
 import axios from 'axios'
 import { WATER_GET_NOTIFICATIONS, WATER_NOTIFICATIONS_UPDATED_VIEWED, WATER_GET_NEW_NOTIFICATION_COUNT } from './../constants'
 import { Dispatch } from "react";
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 import { NOTIFICATION_LIST_LOADING, NOTIFICATION_LIST_FAILED, NOTIFICATION_LIST_GET, NOTIFICATION_COUNT_LOADING, NOTIFICATION_COUNT_FAILED, NOTIFICATION_COUNT_GET, NOTIFICATION_LIST_GET_MORE, NOTIFICATION_LIST_LOADING_MORE } from './../types'
 import { Action } from '../states'
-=======
-import {NOTIFICATION_LIST_LOADING, NOTIFICATION_LIST_FAILED, NOTIFICATION_LIST_GET} from './../types'
-import {Action} from '../states'
->>>>>>> s
-=======
-import { NOTIFICATION_LIST_LOADING, NOTIFICATION_LIST_FAILED, NOTIFICATION_LIST_GET, NOTIFICATION_COUNT_LOADING, NOTIFICATION_COUNT_FAILED, NOTIFICATION_COUNT_GET, NOTIFICATION_LIST_GET_MORE } from './../types'
-import { Action } from '../states'
->>>>>>> asd
+
+
+
 
 import { AsyncStorage } from 'react-native'
 

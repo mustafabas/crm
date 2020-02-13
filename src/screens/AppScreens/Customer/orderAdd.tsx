@@ -13,7 +13,7 @@ import {
 import { NavigationScreenProp, NavigationState, NavigationEvents } from "react-navigation";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import styles from "../../styles";
+// import styles from "../../styles";
 
 // import RNPickerSelect from 'react-native-picker-select';
 

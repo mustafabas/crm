@@ -32,67 +32,68 @@ import { connect } from 'react-redux';
 import { AppState } from '../../../redux/store';
 
 import { Dimensions } from 'react-native';
-import Swiper from 'react-native-swiper'
-import { notificationListItem, getNotifications, INotificationItem } from '../../../redux/actions/notificationAction';
+
+import { getNotifications, INotificationItem } from '../../../redux/actions/notificationAction';
 import { SwipeListView, SwipeRow } from 'react-native-swipe-list-view';
-import { IconBadge } from '../../../components/NotificationIconBadge';
 import { DeleteNotification } from '../../../services/RequestService';
 
 
 interface Props {
-  navigation: NavigationScreenProp<NavigationState>;
-  loading: boolean;
-  message : string;
-  notificationList : INotificationItem[]
-  getNotifications : (isUpdate:boolean,page:number, pageSize:number) => void;
-  isFinishedMore:boolean;
+    navigation: NavigationScreenProp<NavigationState>;
+    loading: boolean;
+    message: string;
+    notificationList: INotificationItem[]
+    getNotifications: (isUpdate: boolean, page: number, pageSize: number) => void;
+    isFinishedMore: boolean;
 
 }
 
 interface State {
-    notificationListTmp : INotificationItem[];
-    updatStateList:boolean;
-    page:number;
-    refreshing:boolean;
+    notificationListTmp: INotificationItem[];
+    updatStateList: boolean;
+    page: number;
+    refreshing: boolean;
 }
 
-const PAGE_SIZE:number =15;
+const PAGE_SIZE: number = 15;
 class NotificationScreen extends Component<Props, State>{
 
 
 
-  static navigationOptions = ({ navigation }) => ({
-    title: 'Bildirimler'
-  })
+    static navigationOptions = ({ navigation }) => ({
+        title: 'Bildirimler'
+    })
 
-  componentWillMount(){
-      this.props.getNotifications(true, 1, PAGE_SIZE);
-  }
+    componentWillMount() {
+        this.props.getNotifications(true, 1, PAGE_SIZE);
+    }
 
-  constructor(props) {
-    super(props);
-    this.state = {
-        listType: 'FlatList',
-        updatStateList:false,
-        refreshing:false,
-        // notificationListTmp: Array(20)
-        //     .fill('')
-        //     .map((_, i) => ({ key: `${i}`, text: `item #${i}` })),
-        sectionListData: Array(5)
-            .fill('')
-            .map((_, i) => ({
-                title: `title${i + 1}`,
-                data: [
-                    ...Array(5)
-                        .fill('')
-                        .map((_, j) => ({
-                            key: `${i}.${j}`,
-                            text: `item #${j}`,
-                        })),
-                ],
-            })),
-            notificationListTmp : []
-    };
+    constructor(props: any) {
+        super(props);
+        this.state = {
+            listType: 'FlatList',
+            updatStateList: false,
+            refreshing: false,
+            // notificationListTmp: Array(20)
+            //     .fill('')
+            //     .map((_, i) => ({ key: `${i}`, text: `item #${i}` })),
+            sectionListData: Array(5)
+                .fill('')
+                .map((_, i) => ({
+                    title: `title${i + 1}`,
+                    data: [
+                        ...Array(5)
+                            .fill('')
+                            .map((_, j) => ({
+                                key: `${i}.${j}`,
+                                text: `item #${j}`,
+                            })),
+                    ],
+                })),
+            notificationListTmp: []
+        };
+
+        this.rowSwipeAnimatedValues = {};
 
     }
 
@@ -102,192 +103,203 @@ class NotificationScreen extends Component<Props, State>{
         }
     }
 
-deleteRow(rowMap, rowKey) {
-    this.closeRow(rowMap, rowKey);
-    const newData = [...this.state.notificationListTmp];
-    const prevIndex = this.state.notificationListTmp.findIndex(
-        item => item.key === rowKey
-    );
-    newData.splice(prevIndex, 1);
-    const valueChoosed:INotificationItem = this.state.notificationListTmp.find(
-        item => item.key === rowKey
-    );
-    this.setState({ notificationListTmp: newData });
-    DeleteNotification(valueChoosed.value.notificationId);
-
-}
-
-deleteSectionRow(rowMap:any, rowKey:any) {
-    this.closeRow(rowMap, rowKey);
-    const [section] = rowKey.split('.');
-    const newData = [...this.state.sectionListData];
-    const prevIndex = this.state.sectionListData[section].data.findIndex(
-        item => item.key === rowKey
-    );
-
     
-    newData[section].data.splice(prevIndex, 1);
-    this.setState({ sectionListData: newData });
 
-      
-}
+    deleteRow(rowMap, rowKey) {
+        
+        this.closeRow(rowMap, rowKey);
+        const newData = [...this.state.notificationListTmp];
+        const prevIndex = this.state.notificationListTmp.findIndex(
+            item => item.key === rowKey
+        );
+        newData.splice(prevIndex, 1);
+        const valueChoosed: INotificationItem = this.state.notificationListTmp.find(
+            item => item.key === rowKey
+        );
+        this.setState({ notificationListTmp: newData });
+        DeleteNotification(valueChoosed.value.notificationId);
 
-onRowDidOpen = rowKey => {
-    console.log('This row opened', rowKey);
-};
-
-onSwipeValueChange = swipeData => {
-    const { key, value } = swipeData;
-    this.rowSwipeAnimatedValues[key].setValue(Math.abs(value));
-};
-componentDidMount() {
-
-
-  }
-  maptoStateProps(){
-   
-    if((this.props.loading==false && this.state.notificationListTmp.length<1) || this.state.updatStateList || this.state.refreshing || this.state.page>1){
-        this.setState({notificationListTmp : this.props.notificationList, updatStateList:false,page:1, refreshing:false},()=>{
-            console.log(this.state.notificationListTmp,"state not");
-            console.log(this.state.notificationListTmp,"state props");
-        });   
     }
-  }
-onRefresh(){
-    this.setState({ refreshing: true});
-    this.props.getNotifications(true, 1, PAGE_SIZE);
-    this.maptoStateProps();
-}
-render() {
 
-    this.maptoStateProps();
-            console.log(this.state.notificationListTmp, "list getted");
-            Array(this.props.notificationList.length)
+    deleteSectionRow(rowMap: any, rowKey: any) {
+        this.closeRow(rowMap, rowKey);
+        const [section] = rowKey.split('.');
+        const newData = [...this.state.sectionListData];
+        const prevIndex = this.state.sectionListData[section].data.findIndex(
+            item => item.key === rowKey
+        );
+
+
+        newData[section].data.splice(prevIndex, 1);
+        this.setState({ sectionListData: newData });
+
+
+    }
+
+    onRowDidOpen = rowKey => {
+        console.log('This row opened', rowKey);
+    };
+
+    onSwipeValueChange = swipeData => {
+        const { key, value } = swipeData;
+        this.rowSwipeAnimatedValues[key].setValue(Math.abs(value));
+    };
+    componentDidMount() {
+
+    }
+
+    maptoStateProps() {
+            console.log(this.props.isFinishedMore,"isFinishedMore");
+
+        if ((this.props.loading == false && this.state.notificationListTmp.length < 1) || this.props.notificationList.length > this.state.notificationListTmp.length || this.state.refreshing ) {
+            this.setState({ notificationListTmp: this.props.notificationList, updatStateList: false, page: 1, refreshing: false }, () => {
+                this.props.notificationList.forEach(element => {
+                    this.setState(element => {
+                        const list = this.state.notificationListTmp.concat(element);
+                        return {
+                          list
+                        };
+                      });
+
+                });
+            });
+        }
+    }
+
+    onRefresh() {
+        this.setState({ refreshing: true });
+        this.props.getNotifications(true, 1, PAGE_SIZE);
+        this.maptoStateProps();
+    }
+    render() {
+
+        this.maptoStateProps();
+
+
+        Array(this.props.notificationList.length)
             .fill('')
             .forEach((_, i) => {
                 this.rowSwipeAnimatedValues[`${i}`] = new Animated.Value(0);
             });
 
-            
+
         return (
             <View style={styles.container}>
-        <NavigationEvents
-      onWillFocus={payload =>{ this.props.getNotifications(true,1,PAGE_SIZE); this.setState({updatStateList : true})}}
-    />
- 
-                    <SwipeListView
-                                            data={this.state.notificationListTmp}
-                        renderItem={data => (
-                            <TouchableHighlight
-                                onPress={() => this.props.navigation.navigate('OrderDetail',{orderId : data.item.value.orderId})}
-                                style={styles.rowFront}
-                                underlayColor="#bfbfbf"
-    
-                            >
-                               <View style={{paddingHorizontal:20,paddingTop:10,paddingBottom:10, backgroundColor:data.item.value.viewed==false ?"#EEEEEE":"#ffff"}}>
-                               <View style={{flexDirection:'row'}}>
-                                    <Image source={require('../../../images/order.png')} style={{marginRight:10,alignSelf:'center'}} />
-                                    <Text style={{marginRight:5,fontFamily:'Avenir Next'}}>
-                                     {data.item.value.message}
+                <NavigationEvents
+                    onWillFocus={payload => { this.props.getNotifications(true, 1, PAGE_SIZE); this.setState({ updatStateList: true }) }}
+                />
+
+                <SwipeListView
+                    data={this.state.notificationListTmp}
+                    renderItem={data => (
+                        <TouchableHighlight
+                            onPress={() => this.props.navigation.navigate('OrderDetail', { orderId: data.item.value.orderId })}
+                            style={styles.rowFront}
+                            underlayColor="#bfbfbf"
+
+                        >
+                            <View style={{ paddingHorizontal: 20, paddingTop: 10, paddingBottom: 10,  backgroundColor: data.item.value.viewed == false ? "#EEEEEE" : "#ffff" }}>
+                                <View style={{ flexDirection: 'row' }}>
+                                    <Image source={require('../../../images/order.png')} style={{ marginRight: 10, alignSelf: 'center' }} />
+                                    <Text style={{ paddingRight: 10, fontFamily: 'Avenir Next' }}>
+                                        {data.item.value.message}
                                     </Text>
-                                    
+
                                 </View>
-                                <Text style={{marginRight:5,textAlign:'right',fontSize:14,color:'#bfbfbf',fontFamily:'Avenir Next'}}>
-                                     {data.item.value.createdDate}
-                                 </Text>
-                               </View>
-                            </TouchableHighlight>
-                        )}
-                        disableRightSwipe={true}
-                        refreshing={this.state.refreshing}
-                        onRefresh={() => this.onRefresh()}
-                        onEndReached={() => {
-                            var pagenew = this.state.page + 1;
-                            this.setState({ page: pagenew });
-                            if (pagenew == 1) {
-                              pagenew = pagenew + 1;
-                              this.setState({ page: pagenew });
-                            }
-                            this.setState({updatStateList:true});
-                            this.props.getNotifications(true, pagenew, PAGE_SIZE);
-                       
-                            console.log("pagenew",pagenew);
-                          }}
-                          onEndReachedThreshold={0.5}
-                          initialNumToRender={5}
-                            extraData={this.state.notificationListTmp}
-                        renderHiddenItem={(data, rowMap) => (
-                            <View style={styles.rowBack}>
-    
-                                <TouchableOpacity
-                                    style={[
-                                        styles.backRightBtn,
-                                        styles.backRightBtnLeft,
-                                    ]}
-                                    onPress={() =>
-                                        this.closeRow(rowMap, data.item.key)
-                                    }
-                                >
-                                    
-                                    <Icon name="ios-close" />
-                                </TouchableOpacity>
-                                <TouchableOpacity
-                                    style={[
-                                        styles.backRightBtn,
-                                        styles.backRightBtnRight,
-                                    ]}
-                                    onPress={() =>
-                                        this.deleteRow(rowMap, data.item.key)
-                                    }
-                                >
-                                    <Animated.View
-                                        style={[
-                                            styles.trash,
-                                            {
-                                                transform: [
-                                                    {
-                                                        scale: this.rowSwipeAnimatedValues[
-                                                            data.item.key
-                                                        ].interpolate({
-                                                            inputRange: [
-                                                                45,
-                                                                90,
-                                                            ],
-                                                            outputRange: [0, 1],
-                                                            extrapolate:
-                                                                'clamp',
-                                                        }),
-                                                    },
-                                                ],
-                                            },
-                                        ]}
-                                    >
-                                        <Image
-                                            source={require('../../../images/bin.png')}
-                                            style={styles.trash}
-                                        />
-                                    </Animated.View>
-                                </TouchableOpacity>
+                                <Text style={{ paddingRight: 5, textAlign: 'right', fontSize: 14, color: '#bfbfbf', fontFamily: 'Avenir Next' }}>
+                                    {data.item.value.createdDate}
+                                </Text>
                             </View>
-                        )}
-                        leftOpenValue={75}
-                        rightOpenValue={-150}
-                        previewRowKey={'0'}
-                        previewOpenValue={-40}
-                        previewOpenDelay={3000}
-                        onRowDidOpen={this.onRowDidOpen}
-                        onSwipeValueChange={this.onSwipeValueChange}
-                    />
-    
-    
-             
-    
+                        </TouchableHighlight>
+                    )}
+                    disableRightSwipe={true}
+                    refreshing={this.state.refreshing}
+                    onRefresh={() => this.onRefresh()}
+                    onEndReached={() => {
+                        var pagenew = this.state.page + 1;
+                        this.setState({ page: pagenew });
+                        if (pagenew == 1) {
+                            pagenew = pagenew + 1;
+                            this.setState({ page: pagenew });
+                        }
+                        this.setState({ updatStateList: this.props.isFinishedMore });
+                        this.props.getNotifications(true, pagenew, PAGE_SIZE);
+                    }}
+                    onEndReachedThreshold={0.5}
+                    initialNumToRender={5}
+                    extraData={this.state.notificationListTmp}
+                    renderHiddenItem={(data, rowMap) => (
+                        <View style={styles.rowBack}>
+
+                            <TouchableOpacity
+                                style={[
+                                    styles.backRightBtn,
+                                    styles.backRightBtnLeft,
+                                ]}
+                                onPress={() =>
+                                    this.closeRow(rowMap, data.item.key)
+                                }
+                            >
+
+                                <Icon name="ios-close" />
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={[
+                                    styles.backRightBtn,
+                                    styles.backRightBtnRight,
+                                ]}
+                                onPress={() =>
+                                    this.deleteRow(rowMap, data.item.key)
+                                }
+                            >
+                                <Animated.View
+                                    style={[
+                                        styles.trash,
+                                        {
+                                            transform: [
+                                                {
+                                                    scale: this.rowSwipeAnimatedValues[
+                                                        data.item.key
+                                                    ].interpolate({
+                                                        inputRange: [
+                                                            45,
+                                                            90,
+                                                        ],
+                                                        outputRange: [0, 1],
+                                                        extrapolate:
+                                                            'clamp',
+                                                    }),
+                                                },
+                                            ],
+                                        },
+                                    ]}
+                                >
+                                    <Image
+                                        source={require('../../../images/bin.png')}
+                                        style={styles.trash}
+                                    />
+                                </Animated.View>
+                            </TouchableOpacity>
+                        </View>
+                    )}
+                    leftOpenValue={75}
+                    rightOpenValue={-150}
+                    previewRowKey={'0'}
+                    previewOpenValue={-40}
+                    previewOpenDelay={3000}
+                    onRowDidOpen={this.onRowDidOpen}
+                    onSwipeValueChange={this.onSwipeValueChange}
+                />
+
+
+
+
             </View>
         );
-        
-      
 
-}
+
+
+    }
 }
 
 const styles = StyleSheet.create({
@@ -378,17 +390,17 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state: AppState) => ({
-loading : state.notification.isLoading,
-message : state.notification.message,
-notificationList : state.notification.notificationListItem,
-isFinishedMore:state.notification.isMoreFinished
+    loading: state.notification.isLoading,
+    message: state.notification.message,
+    notificationList: state.notification.notificationListItem,
+    isFinishedMore: state.notification.isMoreFinished
 
 });
 
 function bindToAction(dispatch: any) {
-  return {
-    getNotifications : (isUpdate:boolean,page:number, pageSize:number) => 
-    dispatch(getNotifications(isUpdate,page, pageSize)),
+    return {
+        getNotifications: (isUpdate: boolean, page: number, pageSize: number) =>
+            dispatch(getNotifications(isUpdate, page, pageSize)),
 
     };
 }

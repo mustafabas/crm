@@ -227,10 +227,23 @@ class HomeScreen extends Component<Props,State>{
       
       componentDidMount(){
 
-        firebase.messaging().onMessage((message: RemoteMessage) => {
-          // Process your message as required
-          console.log(message, "not message");
-        });
+        // firebase.messaging().onMessage((message: RemoteMessage) => {
+        //   // Process your message as required
+        //   console.log(message, "not message");
+        //   showMessage({
+        //     message: message.title,
+        //     description: message.body,
+        //     type: "info",
+        //     backgroundColor: "#06005B", // background color
+        //     color: "#ffff", // text color,
+        //     onPress: () => {
+        //       /* THIS FUNC/CB WILL BE CALLED AFTER MESSAGE PRESS */
+        //     }
+    
+        //   }
+        //   );
+
+        // });
     
         firebase.notifications().onNotificationDisplayed((notification: Notification) => {
           // Process your notification as required
@@ -239,6 +252,7 @@ class HomeScreen extends Component<Props,State>{
         });
         firebase.notifications().onNotification((notification: Notification) => {
           // Process your notification as required
+          console.log("diger mesage")
           showMessage({
             message: notification.title,
             description: notification.body,
@@ -246,7 +260,11 @@ class HomeScreen extends Component<Props,State>{
             backgroundColor: "#06005B", // background color
             color: "#ffff", // text color,
             onPress: () => {
-              /* THIS FUNC/CB WILL BE CALLED AFTER MESSAGE PRESS */
+                let orderId = notification.data.orderId
+                if(orderId) {
+                  this.props.navigation.navigate('OrderDetail',{orderId : orderId})
+                }
+               
             }
     
           }

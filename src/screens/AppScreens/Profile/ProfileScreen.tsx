@@ -40,7 +40,7 @@ import Rate, { AndroidMarket } from 'react-native-rate'
 import { Dimensions } from 'react-native';
 import Swiper from 'react-native-swiper'
 
-
+import {deleteNotificaitonToken} from '../../../services/RequestService'
 
 
 
@@ -86,16 +86,31 @@ class ProfileScreen extends Component<Props, State>{
 
   logOut() {
 
-    AsyncStorage.removeItem("userToken").then(() => {
-      AsyncStorage.removeItem("userId").then(() => {
-        AsyncStorage.removeItem("notificationToken").then(() => {
-          AsyncStorage.removeItem("UserType").then(()=>{
-                  this.props.navigation.navigate('AuthLoading');
-          })
-        })
+    AsyncStorage.multiGet(['userToken', 'userId',"notificationToken"]).then((res) => {
+      let token = res[0][1];
+      let userId = res[1][1];
+      let notificationToken = res[2][1]
 
+
+      AsyncStorage.removeItem("userToken").then(() => {
+
+          AsyncStorage.removeItem("userId").then(() => {
+         
+            AsyncStorage.removeItem("notificationToken").then(() => {
+                     AsyncStorage.removeItem("UserType").then(()=>{
+                            deleteNotificaitonToken(userId,token,notificationToken);
+
+                             this.props.navigation.navigate('AuthLoading');
+                     })
+                   })
+                 })
+
+        
       })
+
     })
+
+  
 
   }
   componentWillMount() {
