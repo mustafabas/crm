@@ -19,10 +19,9 @@ export  class IconBadge extends Component<Props, {}> {
 
   render() {
     const { name } = this.props;
-    console.log("badge c", this.props.badgeCount);
     return (
-        <View style={{ width: 24, height: 24, margin: 5 }}>
-          <Icon name={name}  style={{color: this.props.focused ? '#2069F3':''}} />
+        <View style={{ width: 32, height: 32, margin: 5 }}>
+          <Icon name={name}  style={{color: this.props.focused ? '#2069F3':'', fontSize:32}} />
           {this.props.badgeCount && this.props.badgeCount!=0 && (
             <View
               style={{
@@ -36,7 +35,7 @@ export  class IconBadge extends Component<Props, {}> {
                 height: 16,
                 justifyContent: 'center',
                 alignItems: 'center',
-              }}
+              }} 
             >
             
               <Text style={{ color: 'white', fontSize: 10, fontWeight: 'bold' }}>
