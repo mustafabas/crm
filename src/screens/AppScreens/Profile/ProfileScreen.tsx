@@ -141,8 +141,12 @@ class ProfileScreen extends Component<Props, State>{
           }}>
           <Text style={{ color: 'white', textAlign: 'center', fontFamily: "Avenir Next", fontWeight: 'bold', fontSize: 16 }} >HAVALE İLE ÖDEME YAP</Text>
         </TouchableOpacity>
+        <Text>
 
-        <TouchableOpacity
+          </Text>
+
+
+        {/* <TouchableOpacity
           style={{
             justifyContent: 'center', marginHorizontal: 40, paddingVertical: 30, borderRadius: 5, backgroundColor: '#01C3E3',
             shadowRadius: 5.00,
@@ -175,7 +179,7 @@ class ProfileScreen extends Component<Props, State>{
           }}>
           <Text style={{ color: 'white', textAlign: 'center', fontFamily: "Avenir Next", fontWeight: 'bold', fontSize: 16 }} >MARKET ÜZERİNDEN ÖDEME YAP</Text>
         </TouchableOpacity>
-
+ */}
 
 
 
@@ -469,7 +473,7 @@ class ProfileScreen extends Component<Props, State>{
 
 
 
-              <TouchableOpacity onPress={() => this.CustomerListSheet.open()} style={styles.profileContainer}>
+              {/* <TouchableOpacity onPress={() => this.CustomerListSheet.open()} style={styles.profileContainer}>
                 <Icon name="rss" type="Entypo" color={this.state.iconColor} style={{ fontSize: 20, marginTop: Platform.OS === 'ios' ? 5 : 0 }} />
                 <Text style={styles.profileTextStyle}>Ek Özelliklere Sahip Ol</Text>
                 <Icon name="right" type="AntDesign" color={this.state.iconColor} style={{ fontSize: 20, marginTop: Platform.OS === 'ios' ? 5 : 0 }} />
@@ -477,7 +481,7 @@ class ProfileScreen extends Component<Props, State>{
               </TouchableOpacity>
 
 
-              <View style={styles.propsSeperator}></View>
+              <View style={styles.propsSeperator}></View> */}
 
               <TouchableOpacity onPress={() => {
 

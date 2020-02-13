@@ -220,7 +220,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    alignItems: 'center',
+    // alignItems: 'center',
     paddingTop: 8,
     paddingBottom: 8,
     paddingLeft: 18,
@@ -316,9 +316,9 @@ const styles = StyleSheet.create({
   },
   musteri_adi: {
     color: "#333",
-    textAlignVertical: 'bottom',
-    includeFontPadding: false,
-    flex: 0,
+    // textAlignVertical: 'bottom',
+    // includeFontPadding: false,
+    // flex: 0,
     fontSize: 17,
   },
   alt_bilgi: {
@@ -502,9 +502,9 @@ const styles = StyleSheet.create({
   },
 
   iconButtonCustomer: {
-    marginHorizontal: 2,
-    paddingLeft: 16,
-    flex: 0.5,
+    // marginHorizontal: 2,
+    // paddingLeft: 16,
+    // flex: 0.5,
     textAlign: "right",
   },
   iconButtonOrder: {

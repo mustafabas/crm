@@ -145,7 +145,7 @@ const reportStack = createStackNavigator(
 const ProfileStack = createStackNavigator(
   {
     ProfileScreen: ProfileScreen,
-    products: productsWithImagesScreen,
+    products: products,
     productEditScreen: productEditScreen,
     AboutUs: AboutUsScreen,
     profileEditGeneral: ProfileEditGeneralScreen,

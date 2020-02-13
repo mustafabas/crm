@@ -46,6 +46,7 @@ interface Props {
     getNotifications: (isUpdate: boolean, page: number, pageSize: number) => void;
     isFinishedMore: boolean;
 
+
 }
 
 interface State {
@@ -53,6 +54,7 @@ interface State {
     updatStateList: boolean;
     page: number;
     refreshing: boolean;
+    deleteRow : boolean;
 }
 
 const PAGE_SIZE: number = 15;
@@ -74,6 +76,7 @@ class NotificationScreen extends Component<Props, State>{
             listType: 'FlatList',
             updatStateList: false,
             refreshing: false,
+            deleteRow : false,
             // notificationListTmp: Array(20)
             //     .fill('')
             //     .map((_, i) => ({ key: `${i}`, text: `item #${i}` })),
@@ -103,38 +106,44 @@ class NotificationScreen extends Component<Props, State>{
         }
     }
 
-    
-
     deleteRow(rowMap, rowKey) {
-        
         this.closeRow(rowMap, rowKey);
         const newData = [...this.state.notificationListTmp];
         const prevIndex = this.state.notificationListTmp.findIndex(
             item => item.key === rowKey
         );
         newData.splice(prevIndex, 1);
+        console.log(newData)
         const valueChoosed: INotificationItem = this.state.notificationListTmp.find(
             item => item.key === rowKey
         );
-        this.setState({ notificationListTmp: newData });
-        DeleteNotification(valueChoosed.value.notificationId);
-
+        console.log(this.state.refreshing)
+        this.setState({ notificationListTmp: newData ,deleteRow : true} , ()=> DeleteNotification(valueChoosed.value.notificationId));
     }
 
-    deleteSectionRow(rowMap: any, rowKey: any) {
+
+    // deleteRow(rowMap, rowKey) {
+    //     this.closeRow(rowMap, rowKey);
+    //     const newData = [...this.state.notificationListTmp];
+    //     const prevIndex = this.state.notificationListTmp.findIndex(
+    //         item => item.key === rowKey
+    //     );
+    //     newData.splice(prevIndex, 1);
+    //     this.setState({ notificationListTmp: newData });
+    // }
+
+    deleteSectionRow(rowMap, rowKey) {
         this.closeRow(rowMap, rowKey);
         const [section] = rowKey.split('.');
         const newData = [...this.state.sectionListData];
         const prevIndex = this.state.sectionListData[section].data.findIndex(
             item => item.key === rowKey
         );
-
-
         newData[section].data.splice(prevIndex, 1);
         this.setState({ sectionListData: newData });
-
-
+        
     }
+    
 
     onRowDidOpen = rowKey => {
         console.log('This row opened', rowKey);
@@ -151,7 +160,7 @@ class NotificationScreen extends Component<Props, State>{
     maptoStateProps() {
             console.log(this.props.isFinishedMore,"isFinishedMore");
 
-        if ((this.props.loading == false && this.state.notificationListTmp.length < 1) || this.props.notificationList.length > this.state.notificationListTmp.length || this.state.refreshing ) {
+        if ((this.props.loading == false && this.props.notificationList.length > 0 && this.state.notificationListTmp.length < 1) || (this.props.notificationList.length > this.state.notificationListTmp.length && !this.state.deleteRow)|| this.state.refreshing ) {
             this.setState({ notificationListTmp: this.props.notificationList, updatStateList: false, page: 1, refreshing: false }, () => {
                 this.props.notificationList.forEach(element => {
                     this.setState(element => {
@@ -167,7 +176,7 @@ class NotificationScreen extends Component<Props, State>{
     }
 
     onRefresh() {
-        this.setState({ refreshing: true });
+        this.setState({ refreshing: true,deleteRow : false });
         this.props.getNotifications(true, 1, PAGE_SIZE);
         this.maptoStateProps();
     }
@@ -186,7 +195,9 @@ class NotificationScreen extends Component<Props, State>{
         return (
             <View style={styles.container}>
                 <NavigationEvents
-                    onWillFocus={payload => { this.props.getNotifications(true, 1, PAGE_SIZE); this.setState({ updatStateList: true }) }}
+                    onWillFocus={() => { 
+                        this.props.getNotifications(true, 1, PAGE_SIZE); this.setState({ updatStateList: true })
+                    } }
                 />
 
                 <SwipeListView
@@ -212,12 +223,13 @@ class NotificationScreen extends Component<Props, State>{
                             </View>
                         </TouchableHighlight>
                     )}
+                    disableLeftSwipe={true}
                     disableRightSwipe={true}
                     refreshing={this.state.refreshing}
                     onRefresh={() => this.onRefresh()}
                     onEndReached={() => {
                         var pagenew = this.state.page + 1;
-                        this.setState({ page: pagenew });
+                        this.setState({ page: pagenew,deleteRow :false });
                         if (pagenew == 1) {
                             pagenew = pagenew + 1;
                             this.setState({ page: pagenew });
@@ -227,7 +239,7 @@ class NotificationScreen extends Component<Props, State>{
                     }}
                     onEndReachedThreshold={0.5}
                     initialNumToRender={5}
-                    extraData={this.state.notificationListTmp}
+                    // extraData={this.state.notificationListTmp}
                     renderHiddenItem={(data, rowMap) => (
                         <View style={styles.rowBack}>
 
