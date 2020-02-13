@@ -113,9 +113,8 @@ class NotificationScreen extends Component<Props, State>{
         const valueChoosed: INotificationItem = this.state.notificationListTmp.find(
             item => item.key === rowKey
         );
-        this.setState({ notificationListTmp: newData });
         DeleteNotification(valueChoosed.value.notificationId);
-
+        this.setState({ notificationListTmp: newData });
     }
 
     deleteSectionRow(rowMap: any, rowKey: any) {
