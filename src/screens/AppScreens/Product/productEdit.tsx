@@ -21,7 +21,7 @@ import { connect } from "react-redux";
 import Icon from "react-native-vector-icons/Ionicons";
 import { showMessage } from "react-native-flash-message";
 // import { Icon } from "react-native-vector-icons/Icon";
-
+import styles from "../Customer/styles";
 interface Props {
   navigation: NavigationScreenProp<NavigationState>;
   isSuccees : boolean;

@@ -15,7 +15,7 @@ import * as Yup from "yup";
 import { connect } from "react-redux";
 import { AppState } from '../../../redux/store'
 import { OrderStatus, orderListItem,getCustomerOrders } from "../../../redux/actions/orderDetailActions";
-
+import { InfoItem } from '../../../components/InfoItem';
 
 
 interface Props {
@@ -294,10 +294,12 @@ class OrderListScreen extends Component<Props, {}> {
         
         else if (this.props.loading === false && this.props.orderList.length  < 1){
             return(
-                <View style={[styles.inputContainer,{padding:20 ,backgroundColor:'#dcdca4',flexDirection:'row',justifyContent:'flex-start'}]}>
-                    <Icon name="ios-alert" size={30} />
-                    <Text style={{textAlign:'center',fontSize:16,fontFamily:'Roboto-Regular',marginLeft:20,marginTop:4}}>Siparişiniz Bulunmamaktadır.</Text>
-                </View>
+                <View style={{flex:1,justifyContent:'center'}}>
+                    <InfoItem text="Siparişiniz Bulunmamaktadır." />
+
+                    </View>
+
+
             )
         }else {
             return(

@@ -21,7 +21,7 @@ import { connect } from "react-redux";
 
 import { showMessage } from "react-native-flash-message";
 import { sendSupportMessage } from "../../../redux/actions/profileActions";
-
+import styles from '../Customer/styles'
 
 interface Props {
   navigation: NavigationScreenProp<NavigationState>;

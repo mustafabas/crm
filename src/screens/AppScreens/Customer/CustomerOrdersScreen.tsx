@@ -479,13 +479,13 @@ componentDidMount(){
 
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
 
-              <View style={{ justifyContent: 'center' }}>
+             
 
-                <Text style={{ color: '#2069F3', fontWeight: '600', fontSize: 20, fontFamily: 'Avenir Next' }}>
+                <Text style={{ color: '#2069F3', fontWeight: '600', fontSize: 20, fontFamily: 'Avenir Next' ,alignSelf:'center',flex:.8}}>
 
                   {item.productName}
                 </Text>
-              </View>
+
               {/* <View style={{width:1,height:'80%',backgroundColor:'#CFD3D7'}} /> */}
               <View style={{ alignItems: 'flex-end' }}>
                 <TouchableOpacity onPress={() => this.openModal(item.orderId, item.unitPrice, item.count, item.productId, item.productName, item.isPaid)}>

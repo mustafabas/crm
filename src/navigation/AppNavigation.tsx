@@ -97,7 +97,8 @@ const notificationStack = createStackNavigator(
 )
 const orderStack = createStackNavigator(
   {
-    OrderList: OrderListScreen
+    OrderList: OrderListScreen,
+    OrderDetail: OrderDetailScreen
   },
   {
     // headerMode: "none"

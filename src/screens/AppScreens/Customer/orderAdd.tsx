@@ -30,7 +30,7 @@ import { showMessage } from "react-native-flash-message";
 import { InfoItem } from "../../../components/InfoItem";
 import RBSheet from "react-native-raw-bottom-sheet";
 import { NotificationService } from "../../../services/NotificationService";
-
+import styles from "./styles";
 interface Props {
   navigation: NavigationScreenProp<NavigationState>;
   isProductLoading: boolean;

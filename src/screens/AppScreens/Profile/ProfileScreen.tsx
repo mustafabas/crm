@@ -183,7 +183,7 @@ class ProfileScreen extends Component<Props, State>{
           </TouchableOpacity>
         </View>
 
-        <View style={{ height: '30%' }}>
+        <View style={{ height: 200 }}>
           <Swiper autoplay  >
             <View style={{
               flex: 1,
@@ -438,7 +438,7 @@ class ProfileScreen extends Component<Props, State>{
                 ref={ref => {
                   this.CustomerListSheet = ref;
                 }}
-                height={Dimensions.get('screen').height - 100}
+                height={Dimensions.get('screen').height - 50}
                 duration={200}
                 customStyles={{
                   container: {

@@ -27,6 +27,8 @@ import { stat } from "fs";
 import { showMessage } from "react-native-flash-message";
 import { GetEmployees } from "../../../redux/actions/employeeAction";
 import { UserInfo, editUserSecurityInfo } from "../../../redux/actions/profileActions";
+
+import styles from '../Customer/styles'
 interface Props {
     navigation: NavigationScreenProp<NavigationState>;
     userInfo : UserInfo;

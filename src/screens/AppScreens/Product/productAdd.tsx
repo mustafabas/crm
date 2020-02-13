@@ -25,7 +25,7 @@ import { Dimensions } from "react-native";
 import { ImageBackground } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
 import ImageResizer from 'react-native-image-resizer';
-
+import styles from "../Customer/styles";
 
 interface Props {
     navigation: NavigationScreenProp<NavigationState>;
