@@ -16,6 +16,7 @@ import { NavigationScreenProp, NavigationState, } from "react-navigation";
 import { Formik, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import stylesNew from "../../styles";
+import styles from "../../styles";
 import { employeeAdd } from "../../../redux/actions/employeeAddAction";
 import { AppState } from '../../../redux/store'
 import { connect } from "react-redux";
@@ -188,57 +189,6 @@ class employeeAddSceen extends Component<Props, State> {
                                                 </Item>
                                           
                                             </View>
-                                            {/* <View style={{borderBottomWidth:1,borderBottomColor:'#2069F3',marginTop:20}}>
-                                            <View style={{flexDirection:'row'}}>
-                                            <Icon name="ios-card" style={{color:'#a5a5a5'}}  />
-                                                    <Label style={{ marginTop:5,marginLeft:5,color: (touched.monthlySalary && errors.monthlySalary != null) ? 'red' : '#959595' }}>Aylik Maaş</Label>
-                                                   
-                                            </View> */}
-                                            
-                                            {/* <TextInputMask
-                                            style={{fontSize:18,fontFamily:"Avenir Next",marginTop:5,marginBottom:5}}
-  type={'money'}
-  options={{
-    precision: 2,
-    separator: ',',
-    delimiter: '.',
-    unit: '₺',
-    suffixUnit: ''
-  }}
-  value={values.nameSurname}
-  onChangeText={handleChange("nameSurname")}
-/> */}
-{/* <MaskedInput
-            renderMaskedText={this.renderPrice}
-            keyboardType={'numeric'}
-          /> */}
-
-
-
-  
-                                            {/* </View>  */}
-                                               
-                                            
-
-                                            {/* <View style={[styles.input]}>
-                                                <Item floatingLabel style={{ marginTop: 20, borderBottomColor: (touched.nameSurname && errors.nameSurname != null) ? 'red' : '#2069F3' }}>
-                                                <Icon name="ios-person" style={{color:'#a5a5a5'}}  />
-                                                    <Label style={{ marginTop:-10,color: (touched.nameSurname && errors.nameSurname != null) ? 'red' : '#959595' }}>Adı Soyadı</Label>
-                                                    {/* <Input
-                                                        style={{ fontFamily: 'Avenir Next', fontSize: 18 }}
-                                                        placeholderTextColor="#9A9A9A"
-                                           
-                                                        autoCapitalize="words"
-                                                        onChangeText={handleChange("nameSurname")}
-                                                        onBlur={handleBlur("nameSurname")}
-                                                    /> */}
-
-
-                                               
-                           
-                                                {/* </Item> */}
-                                          
-                                            {/* // </View> */}
 
                                             <View style={styles.input}>
                                                 <Item floatingLabel style={{ marginTop: 15, borderBottomColor: (touched.identityNumber && errors.identityNumber != null) ? 'red' : '#2069F3' }}>

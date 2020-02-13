@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { WATER_GET_NOTIFICATIONS, WATER_NOTIFICATIONS_UPDATED_VIEWED, WATER_GET_NEW_NOTIFICATION_COUNT } from './../constants'
 import { Dispatch } from "react";
-import { NOTIFICATION_LIST_LOADING, NOTIFICATION_LIST_FAILED, NOTIFICATION_LIST_GET, NOTIFICATION_COUNT_LOADING, NOTIFICATION_COUNT_FAILED, NOTIFICATION_COUNT_GET, NOTIFICATION_LIST_GET_MORE } from './../types'
+import { NOTIFICATION_LIST_LOADING, NOTIFICATION_LIST_FAILED, NOTIFICATION_LIST_GET, NOTIFICATION_COUNT_LOADING, NOTIFICATION_COUNT_FAILED, NOTIFICATION_COUNT_GET, NOTIFICATION_LIST_GET_MORE, NOTIFICATION_LIST_LOADING_MORE } from './../types'
 import { Action } from '../states'
 
 import { AsyncStorage } from 'react-native'
@@ -70,7 +70,7 @@ export function getNotifications(isUpdate:boolean, page?:number, pageSize?:numbe
           counter=0;
   
         }
-  
+
         if (response.data.isSuccess) {
           
           response.data.result.forEach(element => {
@@ -97,7 +97,9 @@ export function getNotifications(isUpdate:boolean, page?:number, pageSize?:numbe
           }
           else{
             dispatch(notificationMore(notificationList));
-
+            dispatch(isLoadingMore(false));
+      
+           
           }
         
           if(isUpdate)
@@ -128,6 +130,7 @@ export function getNotifications(isUpdate:boolean, page?:number, pageSize?:numbe
   }
 
 }
+
 
 export function getNotificationCount() {
   return (dispatch: any) => {
@@ -172,6 +175,10 @@ export function getNotificationCount() {
 export const isLoading = (loading: boolean, message: string) => ({
   type: NOTIFICATION_LIST_LOADING ? NOTIFICATION_LIST_LOADING : NOTIFICATION_LIST_FAILED,
   payload: message
+})
+export const isLoadingMore = (loading: boolean) => ({
+  type: NOTIFICATION_LIST_LOADING_MORE,
+  payload: loading
 })
 export const isLoadingCount= (loading: boolean, message: string) => ({
   type: NOTIFICATION_COUNT_LOADING ? NOTIFICATION_COUNT_LOADING : NOTIFICATION_COUNT_FAILED,
