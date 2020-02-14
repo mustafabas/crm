@@ -64,7 +64,7 @@ export function getNotifications(isUpdate:boolean, page?:number, pageSize?:numbe
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       }
-
+      console.log(WATER_GET_NOTIFICATIONS + `?userId=${userId}&page=${page ?page : 1}&pageSize=${pageSize ? pageSize:15}`)
       axios.get(WATER_GET_NOTIFICATIONS + `?userId=${userId}&page=${page ?page : 1}&pageSize=${pageSize ? pageSize:15}`, {
         headers: headers
       }).then((response) => {
@@ -96,7 +96,7 @@ export function getNotifications(isUpdate:boolean, page?:number, pageSize?:numbe
 
           });
           dispatch(isLoading(false,""));
-          if(page==1 || !page){
+          if(page===1 || !page){
             dispatch(notification(notificationList));
           }
           else{

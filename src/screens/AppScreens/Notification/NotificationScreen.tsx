@@ -192,11 +192,12 @@ class NotificationScreen extends Component<Props, State>{
                     <InfoItem text="Bildiriminiz yok." />
                 </View>
             )
-        }else if(this.props.loading === false && this.props.notificationList.length > 1) {
+        }else  {
             return (
 
                 <FlatList
                 data={this.props.notificationList}
+                extraData ={this.props.notificationList}
                 renderItem={data => (
                     <TouchableHighlight
                         onPress={() => this.props.navigation.navigate('OrderDetail', { orderId: data.item.value.orderId })}
@@ -246,13 +247,7 @@ class NotificationScreen extends Component<Props, State>{
             }
                 onEndReachedThreshold={0.5}
                 initialNumToRender={5}
-                ListFooterComponent={
-                    this.props.loading ? (
-                      <View>
-                        <ActivityIndicator />
-                      </View>
-                    ) : null
-                  }
+                
         
         
         

@@ -131,7 +131,7 @@ class Products extends Component<Props, State> {
 
   _renderView() {
     const { products, isLoading, navigation } = this.props;
-    if (this.props.isProductLoading) {
+    if (this.props.isProductLoading && this.props.products.length < 1) {
       return (<ActivityIndicator></ActivityIndicator>);
     }
     if(this.props.isProductLoading === false && this.props.products.length < 1)
