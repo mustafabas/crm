@@ -37,6 +37,7 @@ import { showMessage } from 'react-native-flash-message';
 import { InfoItem } from '../../../components/InfoItem';
 import firebase from 'react-native-firebase';
 import { NotificationOpen } from 'react-native-firebase/notifications';
+import { getNotificationCount } from '../../../redux/actions/notificationAction';
 
 
 
