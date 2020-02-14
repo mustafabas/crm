@@ -14,7 +14,7 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 // import styles from "./styles";
 import stylesNew from "../../styles";
-
+import styles from "../../styles";
 import { customerEdit, Customer,getCustomerInfo } from "../../../redux/actions/customerEditAction";
 import { AppState } from '../../../redux/store'
 import { connect } from "react-redux";

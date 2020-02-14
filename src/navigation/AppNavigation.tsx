@@ -64,19 +64,16 @@ const introductionStack = createStackNavigator({
 }, {
   headerMode: 'none'
 })
-const EmployeeApp = createStackNavigator(
-  {
-    Employee: { screen: employee },
-    AddEmployee: { screen: employeeAddScreen },
-    EditEmployee: { screen: employeeEditScreen },
-    EmployeeCost: { screen: employeeCostScreen },
-    //     EditEmployeeCost: { screen: editEmployeeCost },
+// const EmployeeApp = createStackNavigator(
+//   {
+    
+//     //     EditEmployeeCost: { screen: editEmployeeCost },
 
-  },
-  {
-    initialRouteName: "Employee"
-    //     // headerMode:"none"
-  });
+//   },
+//   {
+//     initialRouteName: "Employee",
+//         // headerMode:"none"
+//   });
 
 const notificationStack = createStackNavigator(
   {
@@ -154,7 +151,11 @@ const ProfileStack = createStackNavigator(
     companyInfo: CompanyEditScreen,
     Support: SupportScreen,
     RateUs: RateUsScreen,
-    Employee: EmployeeApp
+    Employee: { screen: employee },
+    AddEmployee: { screen: employeeAddScreen },
+    EditEmployee: { screen: employeeEditScreen },
+    EmployeeCost: { screen: employeeCostScreen },
+
     //AddEmployee: { screen: employeeAdd },
     //     EditEmployee: { screen: editEmployee },
     //     EmployeeCost: { screen: employeeCost },

@@ -4,7 +4,7 @@ import { Action } from '../states';
 import { notificationListItem, INotificationItem } from '../actions/notificationAction'
 
 const intialState = {
-  isLoading: false,
+  isLoading: false || null,
   isLoadingCount: false,
   notCount: 0,
   message: "",
@@ -14,7 +14,7 @@ const intialState = {
 };
 
 export interface notificationState {
-  isLoading: boolean;
+  isLoading: boolean | null;
   message: string;
   messageCount: string;
   notificationListItem: INotificationItem[];

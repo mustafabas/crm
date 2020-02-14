@@ -461,7 +461,7 @@ shadowOpacity: .5,
    
   </Button>
 
- {!this.state.notificationIsSend && this.state.orderAddedSuccessfully  && <Button   onPress={()=> this.chooseEmployee.open()} style={{justifyContent:'center',marginTop:0,marginBottom:30,marginHorizontal:40,borderRadius:20,backgroundColor:'white',
+ {!this.state.notificationIsSend && this.state.orderAddedSuccessfully && this.props.notificationEmployee && this.props.notificationEmployee.userWithToken.length > 0  && <Button   onPress={()=> this.chooseEmployee.open()} style={{justifyContent:'center',marginTop:0,marginBottom:30,marginHorizontal:40,borderRadius:20,backgroundColor:'white',
                     shadowRadius: 5.00,
                     
                     elevation: 12,
@@ -500,7 +500,13 @@ shadowOpacity: .5,
    if(!this.state.orderAddedSuccessfully){
     this.setState({ orderAddedSuccessfully: true})
    }
-      this.chooseEmployee.open();
+   if(this.props.notificationEmployee && this.props.notificationEmployee.userWithToken > 0){
+    this.chooseEmployee.open();
+   }
+   else{
+     this.props.navigation.goBack()
+   }
+     
 
 
     }

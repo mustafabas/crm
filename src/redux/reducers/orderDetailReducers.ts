@@ -48,7 +48,7 @@ export default (state: orderDetailState = intialState, action: Action) => {
     case GET_CUSTOMER_ORDER_LIST_MORE : 
     return {
       ...state,
-      isLoadingOrderList : false,
+      isLodingOrderList : false,
       orderList : [...state.orderList, ...action.payload]
     }
     case GET_CUSTOMER_ORDER_LIST :

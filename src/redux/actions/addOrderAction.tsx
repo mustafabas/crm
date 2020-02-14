@@ -9,6 +9,7 @@ import {AsyncStorage } from 'react-native'
 import { GetOrders, GetCustomerDetail } from './orderAction';
 import { navigate } from '../services/Navigator';
 import { reset, loading } from './loginAction';
+import { getCustomerOrders } from './orderDetailActions';
 
 
 export function chooseEmployee(userId : string) {
@@ -83,7 +84,7 @@ dispatch(isLoading(true))
           dispatch(reset())
           dispatch(GetOrders(customerId, 1, 10))
           dispatch(GetCustomerDetail(customerId));
-
+          dispatch(getCustomerOrders())
         }
       }
     })

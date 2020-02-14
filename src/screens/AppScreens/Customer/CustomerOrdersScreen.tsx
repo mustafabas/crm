@@ -655,7 +655,7 @@ componentDidMount(){
   
       <View style={{flex:.7}}>
         {this.props.customerDetailModel?.nameSurname && !this.props.isCustomerDetailLoading &&
-          <Text style={{ alignSelf: 'center', color: '#2069F3', fontWeight: '600', fontSize: 24, fontFamily: 'Avenir Next' }}>
+          <Text style={{ textAlign:'left', color: '#2069F3', fontWeight: '600', fontSize: 24, fontFamily: 'Avenir Next' }}>
             {this.props.customerDetailModel.nameSurname}
           </Text>
 

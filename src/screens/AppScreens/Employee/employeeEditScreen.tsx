@@ -27,6 +27,7 @@ import { stat } from "fs";
 import { showMessage } from "react-native-flash-message";
 import { getEmployeeById, employeeEdit, employe } from "../../../redux/actions/editEmployeeAction";
 import { IEmployeeItemBaseResponseModel } from "../../../redux/models/employeeModel";
+import styles from '../Customer/styles'
 interface Props {
     navigation: NavigationScreenProp<NavigationState>;
     isSuccees: boolean;

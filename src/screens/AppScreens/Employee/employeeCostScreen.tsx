@@ -22,7 +22,8 @@ import { Icon, Card, CardItem, Body } from "native-base";
 import { connect } from "react-redux";
 import { stat } from "fs";
 import { showMessage } from "react-native-flash-message";
-
+import styles from '../Customer/styles'
+import { InfoItem } from "../../../components/InfoItem";
 
 interface Props {
   navigation: NavigationScreenProp<NavigationState>;
@@ -202,19 +203,9 @@ class employeeCostScreen extends Component<Props, State> {
         />);
       }
       else {
-        return (<View >
+        return (<View style={{justifyContent:'center',flex:1}} >
 
-          <Card style={{ borderColor: '#f5f5f5' }}>
-
-            <CardItem>
-              <Body style={{ flexDirection: "column", justifyContent: "center", alignItems: "center" }} >
-                <Icon name="ios-information-circle-outline" style={{ fontSize: 40, }} ></Icon>
-                <Text>
-                  Sisteme eklediğiniz herhangi bir maliyet bulunmamaktadır.
-              </Text>
-              </Body>
-            </CardItem>
-          </Card>
+<InfoItem text="Sisteme eklediğiniz çalışan bulunmakatadır." />
         </View>);
       }
     }

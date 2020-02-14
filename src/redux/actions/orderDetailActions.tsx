@@ -179,8 +179,8 @@ export function getCustomerOrderDetail(orderId : number) {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
       }
-      console.log(WATER_GET_ORDER_LIST + `?userId=${userId}&page=${page ? page : 1}&pageSize=5&`)
-      axios.get(WATER_GET_ORDER_LIST + `?userId=${userId}&page=${page ? page : 1}&pageSize=5&`,{
+
+      axios.get(WATER_GET_ORDER_LIST + `?userId=${userId}&page=${page ? page : 1}&pageSize=15&`,{
           headers : headers
         }).then((response) =>{
           

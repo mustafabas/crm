@@ -328,6 +328,7 @@ class OrderListScreen extends Component<Props, {}> {
             onEndReached={() => {
 
 
+              if(this.props.orderList.length > 14){
                 var pagenew = this.state.page + 1;
                 this.setState({ page: pagenew });
                 if (pagenew == 1) {
@@ -335,7 +336,12 @@ class OrderListScreen extends Component<Props, {}> {
                   this.setState({ page: pagenew });
                 }
                 this.props.getCustomerOrders(pagenew);
-              }}
+              
+              }
+            
+            }
+        }
+
               onEndReachedThreshold={0.5}
               initialNumToRender={5}
               ListFooterComponent={
