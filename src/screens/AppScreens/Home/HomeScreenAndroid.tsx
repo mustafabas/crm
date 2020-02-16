@@ -329,7 +329,7 @@ stopListenerTapped() {
 
     });
 
-    // this.startListenerTapped()
+    this.startListenerTapped()
 
 
   }
