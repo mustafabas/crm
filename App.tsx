@@ -5,11 +5,27 @@ import {View} from 'react-native'
 
 import configureStore from "./src/redux/store";
 import { PersistGate } from "redux-persist/integration/react";
-import FlashMessage from "react-native-flash-message";
+import FlashMessage, { showMessage } from "react-native-flash-message";
 import  AppBase  from "./AppBase";
 import NotificationScreen from "./src/screens/AppScreens/Notification/NotificationScreen";
-
+import NetInfo from "@react-native-community/netinfo";
 export default class App extends Component {
+
+  componentDidMount() {
+    NetInfo.addEventListener(state => {
+      console.log("Connection type", state.type);
+      console.log("Is connected?", state.isConnected);
+
+      if(state.isConnected == false) {
+        showMessage({
+          message: "İnternet Bağlantınız yok. Lütfen internet bağlantınızı kontrol edin.",
+          type: "warning",
+          icon: "auto"
+      }
+      );
+      }
+    });
+  }
   render() {
     return (
       <View style={{ flex: 1 }}>

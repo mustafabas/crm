@@ -1,6 +1,10 @@
 export const CUSTOMER_GET = "CustomerGet";
 export const CUSTOMER_GET_MORE = "CustomerGetMore";
+export const CUSTOMER_GET_MORE_LOADING = "CustomerGetMoreLoading"
 export const HOME_LOADING_CUSTOMERS = "HomeLoadingCustomers";
+export const DETECT_USER_FROM_CALL = "DetectUserFromCall";
+export const DETECT_USER_FROM_CALL_LOADING = "DetectUserFromCallLoading";
+
 
 export const ORDERS_GET = "OrdersGet";
 export const ORDERS_GET_MORE = "OrdersGetMore";

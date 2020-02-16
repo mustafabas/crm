@@ -1,9 +1,9 @@
 import {AsyncStorage } from 'react-native'
 
 import axios from 'axios'
-import { WATER_CUSTOMERS_HOME_GET } from './../constants'
+import { WATER_CUSTOMERS_HOME_GET, WATER_CUSTOMER_CALL_DETECT } from './../constants'
 import { Dispatch } from "react";
-import { CUSTOMER_GET, HOME_LOADING_CUSTOMERS, CUSTOMER_GET_MORE } from './../types'
+import { CUSTOMER_GET, HOME_LOADING_CUSTOMERS, CUSTOMER_GET_MORE, CUSTOMER_GET_MORE_LOADING, DETECT_USER_FROM_CALL, DETECT_USER_FROM_CALL_LOADING } from './../types'
 import { Action } from '../states'
 import { ICustomerItem } from "../models/homeModel";
 
@@ -78,6 +78,7 @@ console.log("Girdi")
 
 export function GetCustomerMore(orderType: number, searchText: string, dayOfWeek: number, pageIndex: number) {
   return (dispatch: Dispatch<Action>) => {
+    dispatch(customerGetMoreLoading(true));
 
     AsyncStorage.multiGet(['userToken', 'userId']).then((res) => {
       let token = res[0][1];
@@ -124,23 +125,85 @@ export function GetCustomerMore(orderType: number, searchText: string, dayOfWeek
 
 
         else {
+          dispatch(customerGetMoreLoading(false));
 
         }
       })
       .catch((err) => {
         // dispatch(loading(false));
-        console.log(err);
+        // console.log(err);
+
+        dispatch(customerGetMoreLoading(false));
 
       });
  
 
   })
-
-  
-
-
   }
 }
+
+
+export function detectUserFromCall(phoneNumber : string) {
+
+  return (dispatch: Dispatch<Action>) => {
+
+    dispatch(loadingFromCall(true));
+
+    AsyncStorage.multiGet(['userToken', 'userId']).then((res) => {
+      let token = res[0][1];
+      let userId = res[1][1];
+      
+      const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+    }
+
+    console.log(userId,"useriIDD",phoneNumber)
+
+    axios.get(WATER_CUSTOMER_CALL_DETECT + `?userId=${userId}&phoneNumber=${phoneNumber}`,{
+      headers: headers 
+    }
+
+    )
+      .then((response) => {
+
+        if (response.data.isSuccess && response.data.result) {
+          let customerId = response.data.result
+          console.log(response.data)
+          dispatch(detectUserCall(customerId))
+        }
+
+
+        else {
+          console.log("Girdime")
+          dispatch(loadingFromCall(false));
+        }
+      })
+      .catch((err) => {
+        console.log("Girdime")
+        dispatch(loadingFromCall(false));
+
+      });
+
+
+  })
+
+   
+  }
+
+}
+
+export const loadingFromCall = (loading : boolean) => ({
+  type : DETECT_USER_FROM_CALL_LOADING,
+  payload : loading
+})
+
+export const detectUserCall = (customerId : number) => ({
+  type : DETECT_USER_FROM_CALL,
+  payload : customerId
+})
+
+
 
 export const loading = (loader: boolean) => ({
   type: HOME_LOADING_CUSTOMERS,
@@ -155,3 +218,10 @@ export const customersMore = (customers: ICustomerItem[]) => ({
   type: CUSTOMER_GET_MORE,
   payload: customers
 })
+
+export const customerGetMoreLoading = (loading : boolean) => ({
+  type : CUSTOMER_GET_MORE_LOADING,
+  payload: loading
+})
+
+

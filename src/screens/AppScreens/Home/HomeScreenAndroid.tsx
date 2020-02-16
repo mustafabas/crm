@@ -19,13 +19,13 @@ import {
 } from './DimensionsHelper';
 import stylesNew from "../../styles";
 
-import { Icon, Input, Item, Tabs, Tab, TabHeading, Button, ScrollableTab, Card, CardItem, Body } from 'native-base';
+import { Icon, Input, Item, Tabs, Tab, TabHeading, Button, ScrollableTab, Card, CardItem, Body, Spinner } from 'native-base';
 import { Alert } from 'react-native';
 import { NavigationScreenProps, NavigationState, NavigationScreenProp } from 'react-navigation';
 import { Dimensions } from 'react-native';
 import { ICustomerItem } from '../../../redux/models/homeModel';
 import { connect } from 'react-redux';
-import { GetCustomers, GetCustomerMore } from '../../../redux/actions/homeAction';
+import { GetCustomers, GetCustomerMore, detectUserFromCall } from '../../../redux/actions/homeAction';
 import { customerDelete } from '../../../redux/actions/customerDeleteAction';
 import { AppState } from '../../../redux/store';
 
@@ -40,7 +40,7 @@ import firebase from 'react-native-firebase';
 import { Notification } from 'react-native-firebase/notifications';
 import { RemoteMessage } from 'react-native-firebase/messaging';
 import { getNotificationCount, getNotifications } from '../../../redux/actions/notificationAction';
-
+import CallDetectorManager from 'react-native-call-detection'
 
 const vw: number = SafeAreaWithHeader.vw;
 const vh: number = SafeAreaWithHeader.vh;
@@ -71,6 +71,10 @@ interface Props {
   isLoadingCustomerDelete: boolean;
   message: string;
   totalRecords: number;
+  customerMoreLoading : boolean;
+  detectUserFromCall : (phoneNumber : string)  => void;
+  detectingCustomerLoading : boolean;
+  detectedCustomerId : number | null;
 }
 
 
@@ -100,6 +104,8 @@ interface State {
   today: Date;
   isShowDeleteView: boolean;
   isAnyCustomerValid: boolean;
+  detectedPhoneNumber : string;
+  
 
 }
 
@@ -181,12 +187,14 @@ class HomeScreenAndroid extends Component<Props, State>{
       today: new Date(),
       isShowDeleteView: false,
       isAnyCustomerValid: false,
+      detectedPhoneNumber : ''
     };
   }
 
 
 
   headerHeight: number = statusBarHeight + headerHeight;
+
 
 
   _getCustomerList(orderType: number, searchText: string, dayOfWeek: number, page: number) {
@@ -228,6 +236,66 @@ class HomeScreenAndroid extends Component<Props, State>{
     
   }
 
+  startListenerTapped() {
+    this.callDetector = new CallDetectorManager((event,phonenumber)=> {
+    // For iOS event will be either "Connected",
+    // "Disconnected","Dialing" and "Incoming"
+    
+    // For Android event will be either "Offhook",
+    // "Disconnected", "Incoming" or "Missed"
+    
+ 
+    if (event === 'Disconnected') {
+    // Do something call got disconnected
+    } 
+    else if (event === 'Connected') {
+    // Do something call got connected
+    // This clause will only be executed for iOS
+    } 
+    else if (event === 'Incoming') {
+    // Do something call got incoming
+    }
+    else if (event === 'Dialing') {
+    // Do something call got dialing
+    // This clause will only be executed for iOS
+    } 
+    else if (event === 'Offhook') {
+
+      if(phonenumber){
+        this.setState({detectedPhoneNumber : phonenumber} ,()=>{
+          this.props.detectUserFromCall(phonenumber);
+          this.customerDetectFromCall.open()
+        })
+
+      }
+    //Device call state: Off-hook. 
+    // At least one call exists that is dialing,
+    // active, or on hold, 
+    // and no calls are ringing or waiting.
+    // This clause will only be executed for Android
+
+
+    }
+    else if (event === 'Missed') {
+    	// Do something call got missed
+    	// This clause will only be executed for Android
+    }
+},
+false, // if you want to read the phone number of the incoming call [ANDROID], otherwise false
+()=>{}, // callback if your permission got denied [ANDROID] [only if you want to read incoming number] default: console.error
+{
+title: 'Phone State Permission',
+message: 'This app needs access to your phone state in order to react and/or to adapt to incoming calls.'
+} // a custom permission request message to explain to your user, why you need the permission [recommended] - this is the default one
+)
+}
+ 
+stopListenerTapped() {
+    this.callDetector && this.callDetector.dispose();
+}
+ 
+
+
 
   componentDidMount() {
     firebase.messaging().onMessage((message: RemoteMessage) => {
@@ -260,6 +328,10 @@ class HomeScreenAndroid extends Component<Props, State>{
       this.props.getNotificationCount();
 
     });
+
+    this.startListenerTapped()
+
+
   }
 
   renderTitle = () => {
@@ -314,6 +386,7 @@ class HomeScreenAndroid extends Component<Props, State>{
     this.setState({
       orderType: page,
       selectedState: page,
+      page : 1,
       scrollY: new Animated.Value(0.001)
     })
     this._getCustomerList(page, this.state.searchText, this.state.dayOfWeek, 1);
@@ -321,7 +394,7 @@ class HomeScreenAndroid extends Component<Props, State>{
 
 
   onRefresh() {
-    this.setState({ refreshing: true });
+    this.setState({ refreshing: true,page : 1 });
     this._getCustomerList(this.state.orderType, this.state.searchText, this.state.dayOfWeek, 1);
     this.setState({ refreshing: false });
   }
@@ -412,18 +485,22 @@ class HomeScreenAndroid extends Component<Props, State>{
         onEndReached={() => {
 
 
-          var pagenew = this.state.page + 1;
-          this.setState({ page: pagenew });
-          if (pagenew == 1) {
-            pagenew = pagenew + 1;
-            this.setState({ page: pagenew });
+          if(this.props.customers.length > 14 && !this.props.customerMoreLoading) {
+           var pagenew = this.state.page + 1;
+           this.setState({ page: pagenew });
+           if (pagenew == 1) {
+             pagenew = pagenew + 1;
+             this.setState({ page: pagenew });
+           }
+           this.props.GetCustomerMore(this.state.orderType, this.state.searchText, this.state.dayOfWeek, pagenew);
+         }
+        
           }
-          this.props.GetCustomerMore(this.state.orderType, this.state.searchText, this.state.dayOfWeek, pagenew);
-        }}
+         }
         onEndReachedThreshold={0.5}
         initialNumToRender={5}
         ListFooterComponent={
-          this.state.loadingMore ? (
+          this.props.customerMoreLoading ? (
             <View>
               <ActivityIndicator />
             </View>
@@ -617,6 +694,75 @@ class HomeScreenAndroid extends Component<Props, State>{
     )
   };
 
+  renderDetectCallContainer() {
+    if(this.props.detectingCustomerLoading) {
+      return (
+        
+        <View>
+        <TouchableOpacity onPress={()=> this.customerDetectFromCall.close()}
+        style={{position:'absolute',right:5,top:5,zIndex:1}}>
+          <Icon name="ios-close" />
+          
+        </TouchableOpacity>
+        <Text style={{textAlign:'center',marginRight:5,marginTop:10,fontFamily:'Avenir Next',fontSize:16}}>Müşteri Aranıyor</Text>
+     
+        <Spinner />
+
+      </View>
+      )
+    }
+    else if(this.props.detectingCustomerLoading === false && this.props.detectedCustomerId && this.props.detectedCustomerId > 0) {
+
+      return(
+       
+        <View>
+        <TouchableOpacity onPress={()=> this.customerDetectFromCall.close()}
+         style={{position:'absolute',right:5,top:5,zIndex:1}}>
+          <Icon name="ios-close" />
+        </TouchableOpacity>
+      <Text style={{textAlign:'center',marginRight:5,marginTop:10,fontFamily:'Avenir Next',fontSize:16}}>Telefon Numarası : {this.props.detectedCustomerId}</Text>
+        <TouchableOpacity
+        onPress={()=>{
+          this.customerDetectFromCall.close()
+          this.props.navigation.navigate("orderAdd", { customerId: this.props.detectedCustomerId })}}
+        style={{borderWidth:3,borderRadius:10,marginTop:20,marginHorizontal:10,paddingVertical:5,borderColor:'#216AF4',backgroundColor: '#216AF4' }}>
+ <Text style={{fontFamily:'Avenir Next',fontSize:16,padding:5,textAlign:'center',color:  'white' }}>
+    Müşteri Bulundu Sipariş Eklemek ister misiniz?
+ 
+ </Text>
+ </TouchableOpacity>
+
+        
+
+      </View>
+  
+      )
+    }
+    else if(this.props.detectingCustomerLoading === false && this.props.detectedCustomerId === 0) {
+      return (
+        <View>
+        <TouchableOpacity onPress={()=> this.customerDetectFromCall.close()}
+        style={{position:'absolute',right:5,top:5,zIndex:1}}>
+          <Icon name="ios-close" />
+        </TouchableOpacity>
+      <Text style={{textAlign:'center',marginRight:5,marginTop:10,fontFamily:'Avenir Next',fontSize:16}}>Telefon Numarası : {this.state.detectedPhoneNumber}</Text>
+        <TouchableOpacity
+        onPress={()=> {
+          this.customerDetectFromCall.close()
+          this.props.navigation.navigate('addCustomer',{phoneNumber : this.state.detectedPhoneNumber})} }
+        style={{borderWidth:3,borderRadius:10,marginTop:20,marginHorizontal:10,paddingVertical:5,borderColor:'#216AF4',backgroundColor: '#216AF4' }}>
+ <Text style={{fontFamily:'Avenir Next',fontSize:16,paddingVertical:5,textAlign:'center',color:  'white' }}>
+    Müşteri bulunamadı bu numaraya müşteri eklemek ister misiniz?
+ 
+ </Text>
+ </TouchableOpacity>
+
+        
+
+      </View>
+      )
+    }
+  }
   render() {
     return (
       <View style={styles.outerContainer}>
@@ -689,6 +835,28 @@ class HomeScreenAndroid extends Component<Props, State>{
             }>
 
             {this.state.isShowDeleteView ? this._renderCustomerDeleteContent() : this._renderCustomerSheetContent()}
+          </RBSheet>
+
+
+          <RBSheet
+            ref={ref => {
+              this.customerDetectFromCall = ref;
+            }}
+            height={200}
+            duration={200}
+            customStyles={{
+              container: {
+
+
+                padding: 20,
+                backgroundColor: '#EFF3F9',
+                borderTopLeftRadius: 15,
+                borderTopRightRadius: 15
+              }
+            }
+            }>
+
+            {this.renderDetectCallContainer()}
           </RBSheet>
 
           <RBSheet
@@ -823,7 +991,10 @@ const mapStateToProps = (state: AppState) => ({
   CustomerDeleteIsSuccess: state.customerDelete.isSuccessCustomerDelete,
   isLoadingCustomerDelete: state.customerDelete.isLoadingCustomerDelete,
   message: state.customerDelete.message,
-  totalRecords: state.home.totalRecords
+  totalRecords: state.home.totalRecords,
+  customerMoreLoading : state.home.customerMoreLoading,
+  detectedCustomerId : state.home.detectedCustomerId,
+  detectingCustomerLoading : state.home.detectingCustomerLoading,
 })
 function bindToAction(dispatch: any) {
   return {
@@ -836,6 +1007,8 @@ function bindToAction(dispatch: any) {
       dispatch(customerDelete(customerId)),
     getNotificationCount: () =>
       dispatch(getNotificationCount()),
+      detectUserFromCall : (phoneNumber : string) => 
+      dispatch(detectUserFromCall(phoneNumber))
   };
 }
 
