@@ -21,11 +21,13 @@ export function employeeEdit(nameSurname:string, monthlySalary:number,email:stri
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
     }
+    console.log(WATER_EDIT_EMPLOYEE)
+    console.log("nameSurname", nameSurname,"monthlySalary",monthlySalary,"email",email,"password",password,"phoneNumber",phoneNumber,"identityNumber",identityNumber,"address",address,"dailyFoodPrice",dailyPriceFood,"userId",userId,"employeId",employeeId,"active",active)
     axios.post(WATER_EDIT_EMPLOYEE,
       {
           nameSurname: nameSurname,
           monthlySalary: monthlySalary,
-          email: addAsAUser ==true ?  email : "",
+          email: addAsAUser == true ?  email : "",
           password: addAsAUser ==true ?  password : "",
           phoneNumber: phoneNumber,
           identityNumber: identityNumber,

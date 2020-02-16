@@ -487,7 +487,7 @@ class ProfileScreen extends Component<Props, State>{
 
                 const options = {
                   AppleAppID: "1495596894",
-                  //     GooglePackageName:"com.mywebsite.myapp",
+                      GooglePackageName:"com.bayimsu"
                   //     AmazonPackageName:"com.mywebsite.myapp",
                   //     OtherAndroidURL:"http://www.randomappstore.com/app/47172391",
                   //     preferredAndroidMarket: AndroidMarket.Google,

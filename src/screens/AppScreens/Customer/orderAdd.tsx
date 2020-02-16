@@ -500,7 +500,7 @@ shadowOpacity: .5,
    if(!this.state.orderAddedSuccessfully){
     this.setState({ orderAddedSuccessfully: true})
    }
-   if(this.props.notificationEmployee && this.props.notificationEmployee.userWithToken > 0){
+   if(this.props.notificationEmployee && this.props.notificationEmployee.userWithToken.length > 0){
     this.chooseEmployee.open();
    }
    else{

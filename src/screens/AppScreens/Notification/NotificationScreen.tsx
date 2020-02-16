@@ -15,6 +15,7 @@ import {
     Modal,
     SectionList,
     TouchableHighlight,
+    RefreshControl,
 } from 'react-native';
 import newStyles from "../../AuthScreens/Login/styles";
 import { AsyncStorage } from 'react-native'
@@ -160,6 +161,10 @@ class NotificationScreen extends Component<Props, State>{
 
     maptoStateProps() {
             console.log(this.props.isFinishedMore,"isFinishedMore");
+            if(this.props.loading === false && this.state.refreshing) {
+                this.setState({refreshing : false})
+            }
+
 
         if ((this.props.loading == false && this.props.notificationList.length > 0 && this.state.notificationListTmp.length < 1) || (this.props.notificationList.length > this.state.notificationListTmp.length && !this.state.deleteRow)|| this.state.refreshing ) {
             this.setState({ notificationListTmp: this.props.notificationList, updatStateList: false, page: 1, refreshing: false }, () => {
@@ -187,10 +192,12 @@ class NotificationScreen extends Component<Props, State>{
                     <InfoItem text="Bildiriminiz yok." />
                 </View>
             )
-        }else if(this.props.loading === false && this.props.notificationList.length > 1) {
+        }else  {
             return (
-                <SwipeListView
-                data={this.state.notificationListTmp}
+
+                <FlatList
+                data={this.props.notificationList}
+                extraData ={this.props.notificationList}
                 renderItem={data => (
                     <TouchableHighlight
                         onPress={() => this.props.navigation.navigate('OrderDetail', { orderId: data.item.value.orderId })}
@@ -212,12 +219,20 @@ class NotificationScreen extends Component<Props, State>{
                         </View>
                     </TouchableHighlight>
                 )}
-                disableLeftSwipe={true}
-                disableRightSwipe={true}
-                refreshing={this.state.refreshing}
-                onRefresh={() => this.onRefresh()}
+
+
+                // refreshing={this.state.refreshing}
+                refreshControl={
+                    <RefreshControl
+                        colors={["#9Bd35A", "#689F38"]}
+                        refreshing={this.props.loading && this.state.refreshing}
+                        onRefresh={()=> this.onRefresh()}
+                    />
+                }
+                
+
                 onEndReached={() => {
-                   if(this.props.notificationList.length  > 19) {
+                   if(this.props.notificationList.length  > (PAGE_SIZE - 1)) {
                     var pagenew = this.state.page + 1;
                     this.setState({ page: pagenew,deleteRow :false });
                     if (pagenew == 1) {
@@ -232,97 +247,153 @@ class NotificationScreen extends Component<Props, State>{
             }
                 onEndReachedThreshold={0.5}
                 initialNumToRender={5}
-                // extraData={this.state.notificationListTmp}
-                renderHiddenItem={(data, rowMap) => (
-                    <View style={styles.rowBack}>
+                
+        
+        
+        
+                
+        
+              />
 
-                        <TouchableOpacity
-                            style={[
-                                styles.backRightBtn,
-                                styles.backRightBtnLeft,
-                            ]}
-                            onPress={() =>
-                                this.closeRow(rowMap, data.item.key)
-                            }
-                        >
+            //     <SwipeListView
+            //     data={this.state.notificationListTmp}
+            //     renderItem={data => (
+            //         <TouchableHighlight
+            //             onPress={() => this.props.navigation.navigate('OrderDetail', { orderId: data.item.value.orderId })}
+            //             style={styles.rowFront}
+            //             underlayColor="#bfbfbf"
 
-                            <Icon name="ios-close" />
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            style={[
-                                styles.backRightBtn,
-                                styles.backRightBtnRight,
-                            ]}
-                            onPress={() =>
-                                this.deleteRow(rowMap, data.item.key)
-                            }
-                        >
-                            <Animated.View
-                                style={[
-                                    styles.trash,
-                                    {
-                                        transform: [
-                                            {
-                                                scale: this.rowSwipeAnimatedValues[
-                                                    data.item.key
-                                                ].interpolate({
-                                                    inputRange: [
-                                                        45,
-                                                        90,
-                                                    ],
-                                                    outputRange: [0, 1],
-                                                    extrapolate:
-                                                        'clamp',
-                                                }),
-                                            },
-                                        ],
-                                    },
-                                ]}
-                            >
-                                <Image
-                                    source={require('../../../images/bin.png')}
-                                    style={styles.trash}
-                                />
-                            </Animated.View>
-                        </TouchableOpacity>
-                    </View>
-                )}
-                leftOpenValue={75}
-                rightOpenValue={-150}
-                previewRowKey={'0'}
-                previewOpenValue={-40}
-                previewOpenDelay={3000}
-                onRowDidOpen={this.onRowDidOpen}
-                onSwipeValueChange={this.onSwipeValueChange}
-            />
+            //         >
+            //             <View style={{ paddingHorizontal: 20, paddingTop: 10, paddingBottom: 10,  backgroundColor: data.item.value.viewed == false ? "#EEEEEE" : "#ffff" }}>
+            //                 <View style={{ flexDirection: 'row' }}>
+            //                     <Image source={require('../../../images/order.png')} style={{ marginRight: 10, alignSelf: 'center' }} />
+            //                     <Text style={{ paddingRight: 10, fontFamily: 'Avenir Next' }}>
+            //                         {data.item.value.message}
+            //                     </Text>
+
+            //                 </View>
+            //                 <Text style={{ paddingRight: 5, textAlign: 'right', fontSize: 14, color: '#bfbfbf', fontFamily: 'Avenir Next' }}>
+            //                     {data.item.value.createdDate}
+            //                 </Text>
+            //             </View>
+            //         </TouchableHighlight>
+            //     )}
+            //     disableLeftSwipe={true}
+            //     disableRightSwipe={true}
+            //     refreshing={this.state.refreshing}
+            //     onRefresh={() => this.onRefresh()}
+            //     onEndReached={() => {
+            //        if(this.props.notificationList.length  > 19) {
+            //         var pagenew = this.state.page + 1;
+            //         this.setState({ page: pagenew,deleteRow :false });
+            //         if (pagenew == 1) {
+            //             pagenew = pagenew + 1;
+            //             this.setState({ page: pagenew });
+            //         }
+            //         this.setState({ updatStateList: this.props.isFinishedMore });
+            //         this.props.getNotifications(true, pagenew, PAGE_SIZE);
+            //        }
+            //     }
+            
+            // }
+            //     onEndReachedThreshold={0.5}
+            //     initialNumToRender={5}
+            //     // extraData={this.state.notificationListTmp}
+            //     renderHiddenItem={(data, rowMap) => (
+            //         <View style={styles.rowBack}>
+
+            //             <TouchableOpacity
+            //                 style={[
+            //                     styles.backRightBtn,
+            //                     styles.backRightBtnLeft,
+            //                 ]}
+            //                 onPress={() =>
+            //                     this.closeRow(rowMap, data.item.key)
+            //                 }
+            //             >
+
+            //                 <Icon name="ios-close" />
+            //             </TouchableOpacity>
+            //             <TouchableOpacity
+            //                 style={[
+            //                     styles.backRightBtn,
+            //                     styles.backRightBtnRight,
+            //                 ]}
+            //                 onPress={() =>
+            //                     this.deleteRow(rowMap, data.item.key)
+            //                 }
+            //             >
+            //                 <Animated.View
+            //                     style={[
+            //                         styles.trash,
+            //                         {
+            //                             transform: [
+            //                                 {
+            //                                     scale: this.rowSwipeAnimatedValues[
+            //                                         data.item.key
+            //                                     ].interpolate({
+            //                                         inputRange: [
+            //                                             45,
+            //                                             90,
+            //                                         ],
+            //                                         outputRange: [0, 1],
+            //                                         extrapolate:
+            //                                             'clamp',
+            //                                     }),
+            //                                 },
+            //                             ],
+            //                         },
+            //                     ]}
+            //                 >
+            //                     <Image
+            //                         source={require('../../../images/bin.png')}
+            //                         style={styles.trash}
+            //                     />
+            //                 </Animated.View>
+            //             </TouchableOpacity>
+            //         </View>
+            //     )}
+            //     leftOpenValue={75}
+            //     rightOpenValue={-150}
+            //     previewRowKey={'0'}
+            //     previewOpenValue={-40}
+            //     previewOpenDelay={3000}
+            //     onRowDidOpen={this.onRowDidOpen}
+            //     onSwipeValueChange={this.onSwipeValueChange}
+            // />
 
             )
         }
     }
     onRefresh() {
-        this.setState({ refreshing: true,deleteRow : false });
+        // this.setState({ refreshing: true,deleteRow : false });
+        this.setState({refreshing : true,page: 1 })
         this.props.getNotifications(true, 1, PAGE_SIZE);
-        this.maptoStateProps();
+
+
+
+
+        // this.maptoStateProps();
     }
     render() {
 
-        this.maptoStateProps();
+        // this.maptoStateProps();
 
 
-        Array(this.props.notificationList.length)
-            .fill('')
-            .forEach((_, i) => {
-                this.rowSwipeAnimatedValues[`${i}`] = new Animated.Value(0);
-            });
+        // Array(this.props.notificationList.length)
+        //     .fill('')
+        //     .forEach((_, i) => {
+        //         this.rowSwipeAnimatedValues[`${i}`] = new Animated.Value(0);
+        //     });
 
 
         return (
             <View style={styles.container}>
-                <NavigationEvents
-                    onWillFocus={() => { 
-                        this.props.getNotifications(true, 1, PAGE_SIZE); this.setState({ updatStateList: true })
-                    } }
-                />
+                {/* <NavigationEvents
+                    // onWillFocus={() => { 
+                    //     this.props.getNotifications(true, 1, PAGE_SIZE); this.setState({ updatStateList: true })
+                    // } }
+                /> */}
 
              {this.renderContent()}
 

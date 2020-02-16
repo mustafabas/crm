@@ -27,6 +27,11 @@ export interface State {
   export interface HomeState{
       customers:ICustomerItem[];
       isHomeLoading :boolean | null;
+      customerMoreLoading : boolean,
+      detectedCustomerId : number | null,
+      detectingCustomerLoading : boolean;
+
+
   }
 
   export interface UserState {

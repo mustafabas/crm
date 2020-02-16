@@ -37,6 +37,7 @@ import { showMessage } from 'react-native-flash-message';
 import { InfoItem } from '../../../components/InfoItem';
 import firebase from 'react-native-firebase';
 import { NotificationOpen } from 'react-native-firebase/notifications';
+import { getNotificationCount } from '../../../redux/actions/notificationAction';
 
 
 
@@ -66,6 +67,7 @@ interface Props {
     isLoadingCustomerDelete:boolean;
     message : string;
     totalRecords : number;
+    customerMoreLoading : boolean;
   }
 
 
@@ -388,6 +390,7 @@ class HomeScreen extends Component<Props,State>{
         this.setState({
             orderType : page ,
             selectedState : page,
+            page : 1,
             scrollY :  new Animated.Value(0.001)})
 
         // this.forceUpdate()
@@ -400,9 +403,11 @@ class HomeScreen extends Component<Props,State>{
 
     onRefresh() {
         // this.setState({ page: 1 });
-        this.setState({ refreshing: true });
-        this._getCustomerList(this.state.orderType, this.state.searchText, this.state.dayOfWeek, 1);
-        this.setState({ refreshing: false });
+        this.setState({ refreshing: true ,page : 1},()=>{
+          this._getCustomerList(this.state.orderType, this.state.searchText, this.state.dayOfWeek, 1);
+          this.setState({ refreshing: false });
+        });
+       
       }
 
 
@@ -498,18 +503,22 @@ class HomeScreen extends Component<Props,State>{
            onEndReached={() => {
 
 
-             var pagenew = this.state.page + 1;
-             this.setState({ page: pagenew });
-             if (pagenew == 1) {
-               pagenew = pagenew + 1;
-               this.setState({ page: pagenew });
-             }
-             this.props.GetCustomerMore(this.state.orderType, this.state.searchText, this.state.dayOfWeek, pagenew);
-           }}
+           if(this.props.customers.length > 14 && !this.props.customerMoreLoading) {
+            var pagenew = this.state.page + 1;
+            this.setState({ page: pagenew });
+            if (pagenew == 1) {
+              pagenew = pagenew + 1;
+              this.setState({ page: pagenew });
+            }
+            this.props.GetCustomerMore(this.state.orderType, this.state.searchText, this.state.dayOfWeek, pagenew);
+          }
+         
+           }
+          }
            onEndReachedThreshold={0.5}
            initialNumToRender={5}
            ListFooterComponent={
-             this.state.loadingMore ? (
+             this.props.customerMoreLoading ? (
                <View>
                  <ActivityIndicator />
                </View>
@@ -1051,7 +1060,8 @@ const mapStateToProps = (state: AppState) => ({
     CustomerDeleteIsSuccess: state.customerDelete.isSuccessCustomerDelete,
     isLoadingCustomerDelete : state.customerDelete.isLoadingCustomerDelete,
     message : state.customerDelete.message,
-    totalRecords : state.home.totalRecords
+    totalRecords : state.home.totalRecords,
+    customerMoreLoading : state.home.customerMoreLoading
   })
   function bindToAction(dispatch: any) {
     return {

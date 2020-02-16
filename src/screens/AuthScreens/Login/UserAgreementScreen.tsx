@@ -22,7 +22,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 import RBSheet from "react-native-raw-bottom-sheet";
 import {DatePicker as DateTimePicker, Spinner} from 'native-base'
 
-
+import styles from '../../AppScreens/Home/styles'
 interface Props {
     navigation: NavigationScreenProp<NavigationState>;
 
