@@ -23,7 +23,7 @@ export default class HomeComponent extends Component {
 
   startListenerTapped() {
     callDetector = new CallDetectorManager((event:any, number:any) => {
-        console.log(number,`number`)
+
         var updatedCallStates = this.state.callStates
         updatedCallStates.push(event + ' - ' + number)
         var previousDS = this.state.ds
@@ -38,7 +38,7 @@ export default class HomeComponent extends Component {
           } 
           else if (event === 'Incoming') {
           // Do something call got incoming
-          console.log("incoming number", number);
+
 
           }
           else if (event === 'Dialing') {
@@ -51,7 +51,7 @@ export default class HomeComponent extends Component {
           // active, or on hold, 
           // and no calls are ringing or waiting.
           // This clause will only be executed for Android
-          console.log("incoming number", number);
+
           }
           else if (event === 'Missed') {
             // Do something call got missed
@@ -68,10 +68,7 @@ export default class HomeComponent extends Component {
   }
 
   callFriendTapped() {
-    Linking.openURL('tel:5555555555')
-      .catch(err => {
-        console.log(err)
-      });
+
   }
 
   stopListenerTapped() {
@@ -79,7 +76,7 @@ export default class HomeComponent extends Component {
   }
 
   render() {
-    console.log(this.state.callStates)
+
     return (
       <View style={styles.container}>
         <Button

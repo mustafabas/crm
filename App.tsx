@@ -13,8 +13,8 @@ export default class App extends Component {
 
   componentDidMount() {
     NetInfo.addEventListener(state => {
-      console.log("Connection type", state.type);
-      console.log("Is connected?", state.isConnected);
+
+
 
       if(state.isConnected == false) {
         showMessage({

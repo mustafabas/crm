@@ -23,7 +23,7 @@ interface Props{
     
   }
   render() {
-    console.log(this.props.notCount);
+
     return (
       <AppContainer screenProps={{badgeCount:this.props.notCount ? this.props.notCount.toString():"0"}}  />
     );

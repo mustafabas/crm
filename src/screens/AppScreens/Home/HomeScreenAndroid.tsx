@@ -243,10 +243,7 @@ class HomeScreenAndroid extends Component<Props, State>{
     
     // For Android event will be either "Offhook",
     // "Disconnected", "Incoming" or "Missed"
-    console.log(phonenumber, `phone umbe`)
-      if(phonenumber){
-        console.log(event)
-      }
+
     if (event === 'Disconnected') {
     // Do something call got disconnected
     } 

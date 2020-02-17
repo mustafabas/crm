@@ -65,7 +65,7 @@ dispatch(isLoading(true))
     .then((response) =>{
     if(response.data.isSuccess){
         if(response.data.result){
-          // console.log(response.data.result)
+
 
           let data = response.data.result.userWithTokenItemResponses;
           var notificationItemList: { id: any; name: any; tokens: any; }[]  = []
