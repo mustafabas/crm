@@ -721,7 +721,7 @@ stopListenerTapped() {
          style={{position:'absolute',right:5,top:5,zIndex:1}}>
           <Icon name="ios-close" />
         </TouchableOpacity>
-      <Text style={{textAlign:'center',marginRight:5,marginTop:10,fontFamily:'Avenir Next',fontSize:16}}>Telefon Numarası : {this.props.detectedCustomerId}</Text>
+      <Text style={{textAlign:'center',marginRight:5,marginTop:10,fontFamily:'Avenir Next',fontSize:16}}>Telefon Numarası : {this.state.detectedPhoneNumber}</Text>
         <TouchableOpacity
         onPress={()=>{
           this.customerDetectFromCall.close()

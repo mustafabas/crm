@@ -130,7 +130,7 @@ class orderAdd extends Component<Props, State> {
       productCode: "",
       unitPrice: "",
       date: "",
-      count: "",
+      count: "1",
       isSuccess: false,
       status:false,
       selected2: null,
