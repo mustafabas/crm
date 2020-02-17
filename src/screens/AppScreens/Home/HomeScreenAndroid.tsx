@@ -243,8 +243,10 @@ class HomeScreenAndroid extends Component<Props, State>{
     
     // For Android event will be either "Offhook",
     // "Disconnected", "Incoming" or "Missed"
-    
- 
+    console.log(phonenumber, `phone umbe`)
+      if(phonenumber){
+        console.log(event)
+      }
     if (event === 'Disconnected') {
     // Do something call got disconnected
     } 
@@ -254,6 +256,15 @@ class HomeScreenAndroid extends Component<Props, State>{
     } 
     else if (event === 'Incoming') {
     // Do something call got incoming
+    console.log(phonenumber, `phone umbe`)
+    if(phonenumber){
+      this.setState({detectedPhoneNumber : phonenumber} ,()=>{
+        
+        this.props.detectUserFromCall(phonenumber);
+        this.customerDetectFromCall.open()
+      })
+
+    }
     }
     else if (event === 'Dialing') {
     // Do something call got dialing
@@ -261,13 +272,6 @@ class HomeScreenAndroid extends Component<Props, State>{
     } 
     else if (event === 'Offhook') {
 
-      if(phonenumber){
-        this.setState({detectedPhoneNumber : phonenumber} ,()=>{
-          this.props.detectUserFromCall(phonenumber);
-          this.customerDetectFromCall.open()
-        })
-
-      }
     //Device call state: Off-hook. 
     // At least one call exists that is dialing,
     // active, or on hold, 
@@ -281,11 +285,11 @@ class HomeScreenAndroid extends Component<Props, State>{
     	// This clause will only be executed for Android
     }
 },
-false, // if you want to read the phone number of the incoming call [ANDROID], otherwise false
+true, // if you want to read the phone number of the incoming call [ANDROID], otherwise false
 ()=>{}, // callback if your permission got denied [ANDROID] [only if you want to read incoming number] default: console.error
 {
-title: 'Phone State Permission',
-message: 'This app needs access to your phone state in order to react and/or to adapt to incoming calls.'
+title: 'Telefon izni',
+message: 'Bu izin gelen aramaları görmek içindir, onaylamak ister misiniz?'
 } // a custom permission request message to explain to your user, why you need the permission [recommended] - this is the default one
 )
 }
