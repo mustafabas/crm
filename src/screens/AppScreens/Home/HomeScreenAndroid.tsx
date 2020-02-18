@@ -284,7 +284,7 @@ class HomeScreenAndroid extends Component<Props, State>{
 },
 true, // if you want to read the phone number of the incoming call [ANDROID], otherwise false
 ()=>{}, // callback if your permission got denied [ANDROID] [only if you want to read incoming number] default: console.error
-{
+ {
 title: 'Telefon izni',
 message: 'Bu izin gelen aramaları görmek içindir, onaylamak ister misiniz?'
 } // a custom permission request message to explain to your user, why you need the permission [recommended] - this is the default one
@@ -330,7 +330,10 @@ stopListenerTapped() {
 
     });
 
-    this.startListenerTapped()
+    if(Platform.OS === 'android') {
+      this.startListenerTapped()
+    }
+  
 
 
   }
@@ -486,7 +489,7 @@ stopListenerTapped() {
         onEndReached={() => {
 
 
-          if(this.props.customers.length > 14 && !this.props.customerMoreLoading) {
+          if(this.props.customers && this.props.customers.length > 14 && !this.props.customerMoreLoading) {
            var pagenew = this.state.page + 1;
            this.setState({ page: pagenew });
            if (pagenew == 1) {

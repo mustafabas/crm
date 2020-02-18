@@ -328,7 +328,7 @@ class OrderListScreen extends Component<Props, {}> {
             onEndReached={() => {
 
 
-              if(this.props.orderList.length > 14){
+              if(this.props.orderList && this.props.orderList.length > 14){
                 var pagenew = this.state.page + 1;
                 this.setState({ page: pagenew });
                 if (pagenew == 1) {

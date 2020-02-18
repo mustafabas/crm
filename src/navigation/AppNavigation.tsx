@@ -279,7 +279,7 @@ const MainStack = createBottomTabNavigator(
     Notification: {
       screen: notificationStack,
       navigationOptions: ({ screenProps}) => ({
-        tabBarLabel : "Bildirim",
+        tabBarLabel : "Bildirimler",
         tabBarIcon: ({focused}) =>
         <IconBadge badgeCount={screenProps.badgeCount} focused={focused} name="ios-notifications-outline"/>
 

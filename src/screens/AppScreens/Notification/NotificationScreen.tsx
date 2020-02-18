@@ -82,46 +82,46 @@ class NotificationScreen extends Component<Props, State>{
             // notificationListTmp: Array(20)
             //     .fill('')
             //     .map((_, i) => ({ key: `${i}`, text: `item #${i}` })),
-            sectionListData: Array(5)
-                .fill('')
-                .map((_, i) => ({
-                    title: `title${i + 1}`,
-                    data: [
-                        ...Array(5)
-                            .fill('')
-                            .map((_, j) => ({
-                                key: `${i}.${j}`,
-                                text: `item #${j}`,
-                            })),
-                    ],
-                })),
+            // sectionListData: Array(5)
+            //     .fill('')
+            //     .map((_, i) => ({
+            //         title: `title${i + 1}`,
+            //         data: [
+            //             ...Array(5)
+            //                 .fill('')
+            //                 .map((_, j) => ({
+            //                     key: `${i}.${j}`,
+            //                     text: `item #${j}`,
+            //                 })),
+            //         ],
+            //     })),
             notificationListTmp: []
         };
 
-        this.rowSwipeAnimatedValues = {};
+        // this.rowSwipeAnimatedValues = {};
 
     }
 
-    closeRow(rowMap, rowKey) {
-        if (rowMap[rowKey]) {
-            rowMap[rowKey].closeRow();
-        }
-    }
+    // closeRow(rowMap, rowKey) {
+    //     if (rowMap[rowKey]) {
+    //         rowMap[rowKey].closeRow();
+    //     }
+    // }
 
-    deleteRow(rowMap, rowKey) {
-        this.closeRow(rowMap, rowKey);
-        const newData = [...this.state.notificationListTmp];
-        const prevIndex = this.state.notificationListTmp.findIndex(
-            item => item.key === rowKey
-        );
-        newData.splice(prevIndex, 1);
-        console.log(newData)
-        const valueChoosed: INotificationItem = this.state.notificationListTmp.find(
-            item => item.key === rowKey
-        );
-        console.log(this.state.refreshing)
-        this.setState({ notificationListTmp: newData ,deleteRow : true} , ()=> DeleteNotification(valueChoosed.value.notificationId));
-    }
+    // deleteRow(rowMap, rowKey) {
+    //     this.closeRow(rowMap, rowKey);
+    //     const newData = [...this.state.notificationListTmp];
+    //     const prevIndex = this.state.notificationListTmp.findIndex(
+    //         item => item.key === rowKey
+    //     );
+    //     newData.splice(prevIndex, 1);
+    //     console.log(newData)
+    //     const valueChoosed: INotificationItem = this.state.notificationListTmp.find(
+    //         item => item.key === rowKey
+    //     );
+    //     console.log(this.state.refreshing)
+    //     this.setState({ notificationListTmp: newData ,deleteRow : true} , ()=> DeleteNotification(valueChoosed.value.notificationId));
+    // }
 
 
     // deleteRow(rowMap, rowKey) {
@@ -134,40 +134,39 @@ class NotificationScreen extends Component<Props, State>{
     //     this.setState({ notificationListTmp: newData });
     // }
 
-    deleteSectionRow(rowMap, rowKey) {
-        this.closeRow(rowMap, rowKey);
-        const [section] = rowKey.split('.');
-        const newData = [...this.state.sectionListData];
-        const prevIndex = this.state.sectionListData[section].data.findIndex(
-            item => item.key === rowKey
-        );
-        newData[section].data.splice(prevIndex, 1);
-        this.setState({ sectionListData: newData });
+    // deleteSectionRow(rowMap, rowKey) {
+    //     this.closeRow(rowMap, rowKey);
+    //     const [section] = rowKey.split('.');
+    //     const newData = [...this.state.sectionListData];
+    //     const prevIndex = this.state.sectionListData[section].data.findIndex(
+    //         item => item.key === rowKey
+    //     );
+    //     newData[section].data.splice(prevIndex, 1);
+    //     this.setState({ sectionListData: newData });
         
-    }
+    // }
     
 
-    onRowDidOpen = rowKey => {
-        console.log('This row opened', rowKey);
-    };
+    // onRowDidOpen = rowKey => {
+    //     console.log('This row opened', rowKey);
+    // };
 
-    onSwipeValueChange = swipeData => {
-        const { key, value } = swipeData;
-        this.rowSwipeAnimatedValues[key].setValue(Math.abs(value));
-    };
+    // onSwipeValueChange = swipeData => {
+    //     const { key, value } = swipeData;
+    //     this.rowSwipeAnimatedValues[key].setValue(Math.abs(value));
+    // };
     componentDidMount() {
 
     }
 
     maptoStateProps() {
-            console.log(this.props.isFinishedMore,"isFinishedMore");
             if(this.props.loading === false && this.state.refreshing) {
                 this.setState({refreshing : false})
             }
 
 
-        if ((this.props.loading == false && this.props.notificationList.length > 0 && this.state.notificationListTmp.length < 1) || (this.props.notificationList.length > this.state.notificationListTmp.length && !this.state.deleteRow)|| this.state.refreshing ) {
-            this.setState({ notificationListTmp: this.props.notificationList, updatStateList: false, page: 1, refreshing: false }, () => {
+        if ((this.props.loading == false && this.props.notificationList.length > 0 )) {
+            this.setState({  updatStateList: false, page: 1, refreshing: false }, () => {
                 this.props.notificationList.forEach(element => {
                     this.setState(element => {
                         const list = this.state.notificationListTmp.concat(element);
@@ -232,7 +231,7 @@ class NotificationScreen extends Component<Props, State>{
                 
 
                 onEndReached={() => {
-                   if(this.props.notificationList.length  > (PAGE_SIZE - 1)) {
+                   if(this.props.notificationList && this.props.notificationList.length > (PAGE_SIZE - 1)) {
                     var pagenew = this.state.page + 1;
                     this.setState({ page: pagenew,deleteRow :false });
                     if (pagenew == 1) {
