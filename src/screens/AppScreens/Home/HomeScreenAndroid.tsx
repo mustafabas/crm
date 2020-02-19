@@ -256,7 +256,7 @@ class HomeScreenAndroid extends Component<Props, State>{
     console.log(phonenumber, `phone umbe`)
     if(phonenumber){
       this.setState({detectedPhoneNumber : phonenumber} ,()=>{
-        
+        console.log("ARAMA, Gelid", phonenumber)
         this.props.detectUserFromCall(phonenumber);
         this.customerDetectFromCall.open()
       })
