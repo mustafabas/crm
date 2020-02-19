@@ -47,13 +47,13 @@ export function getCustomerInfo(customerId : number) {
           customer.fountainCount = data.fountainCount
           customer.nameSurname = data.nameSurname
           customer.phoneNumber = data.phoneNumber
-          console.log(data)
+
           dispatch(getCustomer(customer))
           dispatch(getCustomerLoading(false))
         }
       })
       .catch(error => {      
-        console.log(error) 
+
         dispatch(getCustomerLoading(false))
       });
 
@@ -65,15 +65,15 @@ export function getCustomerInfo(customerId : number) {
 }
 export function customerEdit(id:number, nameSurname:string,  companyName:string,dayOfWeek :number,fountainCount:number,dayOfWeeks:string,adress : string,phoneNumber : string) {
   return (dispatch :any) =>  {
-    console.log("Adres : "+ adress)
-    console.log(id)
+
+
 
 
 
     AsyncStorage.multiGet(['userToken', 'userId']).then((res) => {
       let token = res[0][1];
       let userId = res[1][1];
-      console.log(userId)
+
       const headers = {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
@@ -112,7 +112,7 @@ export function customerEdit(id:number, nameSurname:string,  companyName:string,
 
 
   }).catch(err=> {
-    console.log("hata")
+
   })
  
   }

@@ -26,7 +26,7 @@ export function getCustomerPrice(customerId:number) {
 
     
     var WATER_CUSTOMER_DEFINED_PRICE_WITH_CUSTOMERID= WATER_CUSTOMER_DEFINED_PRICE+customerId;
-console.log(WATER_CUSTOMER_DEFINED_PRICE_WITH_CUSTOMERID)
+
   axios.get(WATER_CUSTOMER_DEFINED_PRICE_WITH_CUSTOMERID,
     
     )

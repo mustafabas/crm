@@ -157,9 +157,9 @@ class OrderDetailScreen extends Component<Props, State>{
       isPaid: false,
       orderStatus : OrderStatus.null,
       orderStatusString : ["Sipariş Durumu Yok",
-      "Siparişiniz Beklemede",
-      "Siparişiniz Tamamlandı",
-       "Siparişiniz İptal Edildi"]
+      "Sipariş Beklemede",
+      "Sipariş Tamamlandı",
+       "Sipariş İptal Edildi"]
 
     };
   }
@@ -215,7 +215,11 @@ class OrderDetailScreen extends Component<Props, State>{
                
                
                
-                <TouchableOpacity style={{}}>
+                <TouchableOpacity disabled={!detail.customerAddress}   onPress={() => {
+            Platform.OS === "ios" ? Linking.openURL('http://maps.apple.com/maps?daddr=' + detail.customerAddress ): Linking.openURL('http://maps.google.com/maps?daddr=' + detail.customerAddress)
+
+
+          }}>
       <Text style={{fontFamily:'Avenir Next',fontWeight:'500',color:'#8c8c8c',marginLeft:10}}>{detail.customerAddress ? detail.customerAddress : "Adres Bilgisi Bulunamadı."}</Text>
             </TouchableOpacity>
 
@@ -223,7 +227,12 @@ class OrderDetailScreen extends Component<Props, State>{
 
             
         
-           <TouchableOpacity >
+           <TouchableOpacity disabled={!detail.customerAddress} 
+           onPress={() => {
+            Platform.OS === "ios" ? Linking.openURL('http://maps.apple.com/maps?daddr=' + detail.customerAddress ): Linking.openURL('http://maps.google.com/maps?daddr=' + detail.customerAddress)
+
+
+          }}>
            <Icon name="ios-eye" style={{fontSize:20,color:'#216AF4'}}/>
            </TouchableOpacity>
              </View>
@@ -241,7 +250,9 @@ class OrderDetailScreen extends Component<Props, State>{
                
                
                
-                <TouchableOpacity style={{}}>
+                <TouchableOpacity disabled={!detail.customerPhoneNumber}
+                
+                onPress={() => Linking.openURL(`tel:${detail.customerPhoneNumber}`)}>
             <Text style={{fontFamily:'Avenir Next',fontWeight:'500',color:'#8c8c8c',marginLeft:10}}>{detail.customerPhoneNumber ?detail.customerPhoneNumber : "İletişim Bilgisi Bulunamadı"}</Text>
             </TouchableOpacity>
 
@@ -249,7 +260,8 @@ class OrderDetailScreen extends Component<Props, State>{
 
             
         
-           <TouchableOpacity >
+           <TouchableOpacity disabled={!detail.customerPhoneNumber}
+           onPress={() => Linking.openURL(`tel:${detail.customerPhoneNumber}`)}>
            <Icon name="ios-eye" style={{fontSize:20,color:'#216AF4'}}/>
            </TouchableOpacity>
              </View>

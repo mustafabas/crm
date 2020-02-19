@@ -21,13 +21,14 @@ import { Alert } from 'react-native';
 import { SafeAreaView, NavigationScreenProp, NavigationState } from 'react-navigation';
 import { IOrderItem } from '../../../redux/models/orderModel';
 import RBSheet from 'react-native-raw-bottom-sheet';
-import stylesNew from "../../styles";
+import styles from "../../styles";
+
 import * as Yup from "yup";
 import { connect } from 'react-redux';
 import { GetOrders, GetOrdersMore } from '../../../redux/actions/orderAction';
 import { AddCash } from '../../../redux/actions/addCashAction';
 import { orderDelete } from '../../../redux/actions/deleteOrderAction';
-import OrdersCustomer from '../../../pages/OrdersCustomer';
+
 import { AppState } from '../../../redux/store';
 import { Formik } from 'formik';
 

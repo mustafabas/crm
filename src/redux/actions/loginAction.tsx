@@ -38,7 +38,7 @@ export function loginUserService(username:string, password:string) {
     })
     .catch(error => { 
       console.log(error)
-      dispatch(loginIsSucceed(false,"Bir hata oluştu."));
+      dispatch(loginIsSucceed(false,error));
       dispatch(reset());
     });
     }
@@ -52,8 +52,8 @@ export function loginUserService(username:string, password:string) {
     }
   }
   })
-  .catch(() => {
-    dispatch(loginIsSucceed(false, "Bir hata oluştu."));
+  .catch((err) => {
+    dispatch(loginIsSucceed(false,err));
     // dispatch(reset());
     dispatch(reset());
 

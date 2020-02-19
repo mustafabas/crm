@@ -26,6 +26,7 @@ import { Item, Label, Input, Textarea, Button, Spinner, Switch, Icon } from "nat
 import { stat } from "fs";
 import { showMessage } from "react-native-flash-message";
 import { GetEmployees } from "../../../redux/actions/employeeAction";
+import styles from '../Customer/styles'
 import { UserInfo, editUserInfoGeneral, storeInfo, getStoreInfo, updateStore, updateStoreInfo } from "../../../redux/actions/profileActions";
 interface Props {
     navigation: NavigationScreenProp<NavigationState>;

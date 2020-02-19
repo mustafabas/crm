@@ -11,7 +11,7 @@ import {AsyncStorage } from 'react-native'
 export function customerPriceAdd(productId:number, customerId:number, price:number) {
 
   return (dispatch : Dispatch<Action>) =>  {
-console.log(WATER_CUSTOMER_PRICE_ADD)
+
 
 AsyncStorage.multiGet(['userToken', 'userId']).then((res) => {
   let token = res[0][1];
@@ -36,7 +36,7 @@ if(response.data.isSuccess){
   }
 })
 .catch(error => {  
-  console.log(error)
+
   dispatch(customerPriceAddIsSucceed(false,"Bir hata oluştu."));
   dispatch(reset())
 });

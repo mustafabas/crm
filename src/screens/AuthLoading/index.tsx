@@ -4,7 +4,9 @@ import {
 
   StatusBar,
   StyleSheet,
-  View
+  View,
+  PermissionsAndroid,
+  Platform
 } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import {AsyncStorage } from 'react-native'
@@ -23,6 +25,18 @@ interface State {
   isPermissionRequested : boolean;
 
 }
+
+
+const requestPermissionsPhoneLogAndroid = async (permissionMessage) => {
+  await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.READ_PHONE_STATE)
+  .then(async (gotPermission) => gotPermission
+      ? true
+      : await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.READ_PHONE_STATE, permissionMessage)
+          .then((result) => result === PermissionsAndroid.RESULTS.GRANTED)
+    )
+}
+
+
 class AuthLoading extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
@@ -33,6 +47,11 @@ class AuthLoading extends React.Component<Props, State> {
       notificationToken: null,
       isPermissionRequested : false,
     }
+    Platform.OS === 'android' ? requestPermissionsPhoneLogAndroid({
+      title: 'Telefon izni',
+      message: 'Bu izin gelen aramaları görmek içindir, onaylamak ister misiniz?'
+      }) : null
+
   }
 
 
@@ -101,9 +120,10 @@ class AuthLoading extends React.Component<Props, State> {
         
         
       } catch (error) {
-
+        this.props.navigation.navigate("MainStack")
       }
     }
+    this.props.navigation.navigate("MainStack")
   }
 
 

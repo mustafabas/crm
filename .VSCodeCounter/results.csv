@@ -1,0 +1,230 @@
+filename, language, JSON, Properties, JavaScript, TypeScript React, Log, Batch, Markdown, Groovy, C++, Objective-C, TypeScript, XML, HTML, CSS, Java, comment, blank, total
+c:\Users\bilal\Desktop\BayimSu\crm\.eslintrc.js, JavaScript, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4
+c:\Users\bilal\Desktop\BayimSu\crm\.gitattributes, Properties, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2
+c:\Users\bilal\Desktop\BayimSu\crm\.prettierrc.js, JavaScript, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 7
+c:\Users\bilal\Desktop\BayimSu\crm\.watchmanconfig, JSON, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1
+c:\Users\bilal\Desktop\BayimSu\crm\App.tsx, TypeScript React, 0, 0, 0, 36, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 41
+c:\Users\bilal\Desktop\BayimSu\crm\AppBase.tsx, TypeScript React, 0, 0, 0, 40, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 14, 54
+c:\Users\bilal\Desktop\BayimSu\crm\README.md, Markdown, 0, 0, 0, 0, 0, 0, 21, 0, 0, 0, 0, 0, 0, 0, 0, 0, 15, 36
+c:\Users\bilal\Desktop\BayimSu\crm\__tests__\App-test.js, JavaScript, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 15
+c:\Users\bilal\Desktop\BayimSu\crm\android\app\build.gradle, Groovy, 0, 0, 0, 0, 0, 0, 0, 92, 0, 0, 0, 0, 0, 0, 0, 108, 24, 224
+c:\Users\bilal\Desktop\BayimSu\crm\android\app\google-services.json, JSON, 47, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 47
+c:\Users\bilal\Desktop\BayimSu\crm\android\app\src\debug\AndroidManifest.xml, XML, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 3, 9
+c:\Users\bilal\Desktop\BayimSu\crm\android\app\src\main\AndroidManifest.xml, XML, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 37, 0, 0, 0, 0, 7, 44
+c:\Users\bilal\Desktop\BayimSu\crm\android\app\src\main\java\com\bayimsu\MainActivity.java, Java, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 19, 4, 8, 31
+c:\Users\bilal\Desktop\BayimSu\crm\android\app\src\main\java\com\bayimsu\MainApplication.java, Java, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 61, 11, 8, 80
+c:\Users\bilal\Desktop\BayimSu\crm\android\app\src\main\res\values\strings.xml, XML, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 1, 6
+c:\Users\bilal\Desktop\BayimSu\crm\android\app\src\main\res\values\styles.xml, XML, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 2, 3, 10
+c:\Users\bilal\Desktop\BayimSu\crm\android\app\src\main\res\xml\network_security_config.xml, XML, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 6
+c:\Users\bilal\Desktop\BayimSu\crm\android\assets\appcenter-config.json, JSON, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3
+c:\Users\bilal\Desktop\BayimSu\crm\android\build.gradle, Groovy, 0, 0, 0, 0, 0, 0, 0, 34, 0, 0, 0, 0, 0, 0, 0, 9, 6, 49
+c:\Users\bilal\Desktop\BayimSu\crm\android\gradle.properties, Properties, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 13, 9, 29
+c:\Users\bilal\Desktop\BayimSu\crm\android\gradle\wrapper\gradle-wrapper.properties, Properties, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 6
+c:\Users\bilal\Desktop\BayimSu\crm\android\gradlew.bat, Batch, 0, 0, 0, 0, 0, 76, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 25, 101
+c:\Users\bilal\Desktop\BayimSu\crm\android\settings.gradle, Groovy, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 1, 6
+c:\Users\bilal\Desktop\BayimSu\crm\app.json, JSON, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4
+c:\Users\bilal\Desktop\BayimSu\crm\babel.config.js, JavaScript, 0, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 9
+c:\Users\bilal\Desktop\BayimSu\crm\debug.log, Log, 0, 0, 0, 0, 18, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 19
+c:\Users\bilal\Desktop\BayimSu\crm\index.js, JavaScript, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 11
+c:\Users\bilal\Desktop\BayimSu\crm\ios\BayimSuTests\BayimSuTests.m, Objective-C, 0, 0, 0, 0, 0, 0, 0, 0, 0, 51, 0, 0, 0, 0, 0, 6, 16, 73
+c:\Users\bilal\Desktop\BayimSu\crm\ios\BayimSu\AppDelegate.h, C++, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 6, 5, 16
+c:\Users\bilal\Desktop\BayimSu\crm\ios\BayimSu\AppDelegate.m, Objective-C, 0, 0, 0, 0, 0, 0, 0, 0, 0, 42, 0, 0, 0, 0, 0, 6, 18, 66
+c:\Users\bilal\Desktop\BayimSu\crm\ios\BayimSu\Base.lproj\LaunchScreen.xib, XML, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 46, 0, 0, 0, 0, 1, 47
+c:\Users\bilal\Desktop\BayimSu\crm\ios\BayimSu\Images.xcassets\AppIcon.appiconset\Contents.json, JSON, 122, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 122
+c:\Users\bilal\Desktop\BayimSu\crm\ios\BayimSu\Images.xcassets\Contents.json, JSON, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6
+c:\Users\bilal\Desktop\BayimSu\crm\ios\BayimSu\Images.xcassets\README.md, Markdown, 0, 0, 0, 0, 0, 0, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 25
+c:\Users\bilal\Desktop\BayimSu\crm\ios\BayimSu\Images.xcassets\bayimsulogo.imageset\Contents.json, JSON, 21, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 21
+c:\Users\bilal\Desktop\BayimSu\crm\ios\BayimSu\main.m, Objective-C, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 6, 4, 17
+c:\Users\bilal\Desktop\BayimSu\crm\jest.config.js, JavaScript, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 5
+c:\Users\bilal\Desktop\BayimSu\crm\metro.config.js, JavaScript, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 2, 18
+c:\Users\bilal\Desktop\BayimSu\crm\package-lock.json, JSON, 10637, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 10638
+c:\Users\bilal\Desktop\BayimSu\crm\package.json, JSON, 95, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 96
+c:\Users\bilal\Desktop\BayimSu\crm\react-native.config.js, JavaScript, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1
+c:\Users\bilal\Desktop\BayimSu\crm\src\components\AutoExpandingTextInput.tsx, TypeScript React, 0, 0, 0, 24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 26
+c:\Users\bilal\Desktop\BayimSu\crm\src\components\AvatarItem.tsx, TypeScript React, 0, 0, 0, 52, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 56
+c:\Users\bilal\Desktop\BayimSu\crm\src\components\Button.tsx, TypeScript React, 0, 0, 0, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 39
+c:\Users\bilal\Desktop\BayimSu\crm\src\components\CallDetecterComponent.tsx, TypeScript React, 0, 0, 0, 101, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 13, 21, 135
+c:\Users\bilal\Desktop\BayimSu\crm\src\components\Cursor.tsx, TypeScript React, 0, 0, 0, 69, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 3, 73
+c:\Users\bilal\Desktop\BayimSu\crm\src\components\EmployeeItem.tsx, TypeScript React, 0, 0, 0, 39, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 48
+c:\Users\bilal\Desktop\BayimSu\crm\src\components\Graph.tsx, TypeScript React, 0, 0, 0, 68, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 74
+c:\Users\bilal\Desktop\BayimSu\crm\src\components\Header.tsx, TypeScript React, 0, 0, 0, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 69
+c:\Users\bilal\Desktop\BayimSu\crm\src\components\HeaderLeft.tsx, TypeScript React, 0, 0, 0, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 68
+c:\Users\bilal\Desktop\BayimSu\crm\src\components\HeaderLeftRight.tsx, TypeScript React, 0, 0, 0, 72, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 76
+c:\Users\bilal\Desktop\BayimSu\crm\src\components\IconBadge.tsx, TypeScript React, 0, 0, 0, 31, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 36
+c:\Users\bilal\Desktop\BayimSu\crm\src\components\InfoItem.tsx, TypeScript React, 0, 0, 0, 44, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 49
+c:\Users\bilal\Desktop\BayimSu\crm\src\components\Input.tsx, TypeScript React, 0, 0, 0, 29, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 33
+c:\Users\bilal\Desktop\BayimSu\crm\src\components\ListItem.tsx, TypeScript React, 0, 0, 0, 38, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 42
+c:\Users\bilal\Desktop\BayimSu\crm\src\components\NotificationIconBadge.tsx, TypeScript React, 0, 0, 0, 43, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 7, 51
+c:\Users\bilal\Desktop\BayimSu\crm\src\components\index.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 1, 8
+c:\Users\bilal\Desktop\BayimSu\crm\src\constants\colors.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 1, 8
+c:\Users\bilal\Desktop\BayimSu\crm\src\constants\index.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 2
+c:\Users\bilal\Desktop\BayimSu\crm\src\images\file1.svg, XML, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 1, 7
+c:\Users\bilal\Desktop\BayimSu\crm\src\images\icomoon\SVG\file-1.svg, XML, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 1, 1, 9
+c:\Users\bilal\Desktop\BayimSu\crm\src\images\icomoon\SVG\svgs.tsx, TypeScript React, 0, 0, 0, 52, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 9, 64
+c:\Users\bilal\Desktop\BayimSu\crm\src\images\icomoon\SVG\user-plus-1.svg, XML, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 1, 1, 9
+c:\Users\bilal\Desktop\BayimSu\crm\src\images\icomoon\SVG\user.svg, XML, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 1, 1, 7
+c:\Users\bilal\Desktop\BayimSu\crm\src\images\icomoon\SVG\users-1.svg, XML, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 1, 1, 9
+c:\Users\bilal\Desktop\BayimSu\crm\src\images\icomoon\demo-external-svg.html, HTML, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 41, 0, 0, 0, 1, 42
+c:\Users\bilal\Desktop\BayimSu\crm\src\images\icomoon\demo-files\demo.css, CSS, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 146, 0, 0, 2, 148
+c:\Users\bilal\Desktop\BayimSu\crm\src\images\icomoon\demo.html, HTML, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 71, 0, 0, 0, 2, 73
+c:\Users\bilal\Desktop\BayimSu\crm\src\images\icomoon\selection.json, JSON, 310, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 310
+c:\Users\bilal\Desktop\BayimSu\crm\src\images\icomoon\style.css, CSS, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 20, 0, 7, 6, 33
+c:\Users\bilal\Desktop\BayimSu\crm\src\images\icomoon\svgxuse.js, JavaScript, 0, 0, 206, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 24, 1, 231
+c:\Users\bilal\Desktop\BayimSu\crm\src\images\icomoon\symbol-defs.svg, XML, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 30, 0, 0, 0, 0, 1, 31
+c:\Users\bilal\Desktop\BayimSu\crm\src\images\user-plus 1.svg, XML, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 1, 7
+c:\Users\bilal\Desktop\BayimSu\crm\src\images\user.svg, XML, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 1, 5
+c:\Users\bilal\Desktop\BayimSu\crm\src\images\users 1.svg, XML, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 1, 7
+c:\Users\bilal\Desktop\BayimSu\crm\src\navigation\AppNavigation.tsx, TypeScript React, 0, 0, 0, 283, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 18, 37, 338
+c:\Users\bilal\Desktop\BayimSu\crm\src\package-lock.json, JSON, 59, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 60
+c:\Users\bilal\Desktop\BayimSu\crm\src\package.json, JSON, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 8
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\actions\addCashAction.tsx, TypeScript React, 0, 0, 0, 47, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 20, 67
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\actions\addOrderAction.tsx, TypeScript React, 0, 0, 0, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 39, 123
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\actions\addUserAction.tsx, TypeScript React, 0, 0, 0, 29, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 37
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\actions\createUserAction.tsx, TypeScript React, 0, 0, 0, 40, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 50
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\actions\customerAddAction.tsx, TypeScript React, 0, 0, 0, 65, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 25, 90
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\actions\customerDefinedPriceAction.tsx, TypeScript React, 0, 0, 0, 52, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 34, 87
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\actions\customerDeleteAction.tsx, TypeScript React, 0, 0, 0, 54, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 19, 73
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\actions\customerEditAction.tsx, TypeScript React, 0, 0, 0, 105, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 38, 144
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\actions\customerPriceEditAction.tsx, TypeScript React, 0, 0, 0, 30, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 37
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\actions\customerPriceGetProductAction.tsx, TypeScript React, 0, 0, 0, 53, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 27, 80
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\actions\customerpriceAddAction.tsx, TypeScript React, 0, 0, 0, 44, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 15, 59
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\actions\deleteEmployeeAction.tsx, TypeScript React, 0, 0, 0, 30, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 39
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\actions\deleteEmployeeCostAction.tsx, TypeScript React, 0, 0, 0, 30, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 39
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\actions\deleteOrderAction.tsx, TypeScript React, 0, 0, 0, 45, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 17, 62
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\actions\editEmployeeAction.tsx, TypeScript React, 0, 0, 0, 120, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 16, 137
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\actions\editEmployeeCostAction.tsx, TypeScript React, 0, 0, 0, 28, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 38
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\actions\editOrderAction.tsx, TypeScript React, 0, 0, 0, 31, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 39
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\actions\employeeAction.tsx, TypeScript React, 0, 0, 0, 55, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 17, 72
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\actions\employeeAddAction.tsx, TypeScript React, 0, 0, 0, 60, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 69
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\actions\employeeCostAction.tsx, TypeScript React, 0, 0, 0, 41, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 16, 57
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\actions\fetch.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 43, 0, 0, 0, 0, 0, 7, 50
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\actions\getEmployeeCostAction.tsx, TypeScript React, 0, 0, 0, 49, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 14, 64
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\actions\getUserAction.tsx, TypeScript React, 0, 0, 0, 39, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 24, 64
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\actions\homeAction.tsx, TypeScript React, 0, 0, 0, 163, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 63, 228
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\actions\loginAction.tsx, TypeScript React, 0, 0, 0, 79, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 33, 113
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\actions\notificationAction.tsx, TypeScript React, 0, 0, 0, 153, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 42, 195
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\actions\orderAction.tsx, TypeScript React, 0, 0, 0, 156, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 47, 203
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\actions\orderDetailActions.tsx, TypeScript React, 0, 0, 0, 210, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 70, 280
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\actions\productAction.tsx, TypeScript React, 0, 0, 0, 55, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 26, 81
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\actions\productAddAction.tsx, TypeScript React, 0, 0, 0, 54, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 64
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\actions\productEditAction.tsx, TypeScript React, 0, 0, 0, 112, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 40, 152
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\actions\productForCustomerAction.tsx, TypeScript React, 0, 0, 0, 53, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 19, 72
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\actions\profileActions.tsx, TypeScript React, 0, 0, 0, 315, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 95, 410
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\actions\reportAction.tsx, TypeScript React, 0, 0, 0, 117, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 37, 154
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\actions\signUpActions.tsx, TypeScript React, 0, 0, 0, 106, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 21, 48, 175
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\constants.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 57, 0, 0, 0, 0, 0, 20, 77
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\models\addCashModel.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 5
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\models\addCustomerPriceModel.tsx, TypeScript React, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\models\addEmployeeModel.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11, 0, 0, 0, 0, 0, 1, 12
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\models\addOrderModel.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 7
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\models\addUserModel.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 2, 8
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\models\customerAddModel.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 1, 6
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\models\customerDefinedPriceModel.tsx, TypeScript React, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\models\customerDeleteModel.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 1, 5
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\models\customerEditModel.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 1, 7
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\models\customerPriceProductModel.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 1, 5
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\models\editOrderModel.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0, 0, 8
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\models\employeeCostModel.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 7
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\models\employeeModel.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 32, 0, 0, 0, 0, 0, 3, 35
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\models\homeModel.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 18, 0, 0, 0, 0, 0, 6, 24
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\models\orderModel.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 14, 0, 0, 0, 0, 0, 2, 16
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\models\productAddModel.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 7
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\models\productEditModel.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 1, 8
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\models\productForCustomerModel.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 1, 7
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\models\productModel.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 1, 8
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\models\reportModel.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 14, 0, 0, 0, 0, 0, 4, 18
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\models\userModel.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 5, 12
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\reducers\addCashReducers.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 30, 0, 0, 0, 0, 0, 3, 33
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\reducers\addCustomerPriceReducers.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 30, 0, 0, 0, 0, 0, 4, 34
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\reducers\addEmployeeReducers.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 39, 0, 0, 0, 0, 0, 3, 42
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\reducers\addOrderReducers.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 49, 0, 0, 0, 0, 0, 3, 52
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\reducers\addUserReducers.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 24, 0, 0, 0, 0, 0, 3, 27
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\reducers\customerAddReducers.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 43, 0, 0, 0, 0, 0, 5, 48
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\reducers\customerDefinedPriceReducers.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 23, 0, 0, 0, 0, 0, 5, 28
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\reducers\customerDeleteReducers.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 37, 0, 0, 0, 0, 0, 6, 43
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\reducers\customerEditReducers.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 46, 0, 0, 0, 0, 0, 5, 51
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\reducers\customerPriceEditReducers.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 24, 0, 0, 0, 0, 0, 3, 27
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\reducers\customerPriceGetProductReducers.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 23, 0, 0, 0, 0, 0, 5, 28
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\reducers\deleteEmployeeCostReducers.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 26, 0, 0, 0, 0, 0, 3, 29
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\reducers\deleteEmployeeReducers.tsx, TypeScript React, 0, 0, 0, 26, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 29
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\reducers\deleteOrderReducers.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 30, 0, 0, 0, 0, 0, 3, 33
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\reducers\editEmployeeCostReducers.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 24, 0, 0, 0, 0, 0, 3, 27
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\reducers\editEmployeeReducers.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 54, 0, 0, 0, 0, 0, 3, 57
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\reducers\editOrderReducers.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 24, 0, 0, 0, 0, 0, 3, 27
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\reducers\employeeCostReducers.tsx, TypeScript React, 0, 0, 0, 36, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 41
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\reducers\employeeReducers.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 23, 0, 0, 0, 0, 0, 5, 28
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\reducers\getEmployeeCostReducers.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 23, 0, 0, 0, 0, 0, 4, 27
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\reducers\getProductReducers.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 23, 0, 0, 0, 0, 0, 5, 28
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\reducers\getUserReducers.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 31, 0, 0, 0, 0, 0, 6, 37
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\reducers\homeReducers.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 53, 0, 0, 0, 0, 0, 7, 60
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\reducers\index.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 34, 0, 0, 0, 0, 0, 3, 37
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\reducers\loginReducers.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 44, 0, 0, 0, 0, 0, 4, 48
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\reducers\notificationReducers.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 86, 0, 0, 0, 0, 0, 8, 94
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\reducers\orderDetailReducers.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 106, 0, 0, 0, 0, 0, 12, 118
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\reducers\orderReducers.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 73, 0, 0, 0, 0, 0, 4, 77
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\reducers\productAddReducers.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 37, 0, 0, 0, 0, 0, 4, 41
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\reducers\productEditReducers.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 57, 0, 0, 0, 0, 0, 8, 65
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\reducers\productForCustomerReducers.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 30, 0, 0, 0, 0, 0, 6, 36
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\reducers\profileReducers.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 191, 0, 0, 0, 0, 0, 18, 209
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\reducers\reportReducers.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 38, 0, 0, 0, 0, 8, 5, 51
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\reducers\signUpReducers.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 111, 0, 0, 0, 0, 0, 8, 119
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\services\HeaderConfig.tsx, TypeScript React, 0, 0, 0, 12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 22
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\services\Navigator.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 24, 0, 0, 0, 0, 0, 10, 34
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\services\user.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 41, 0, 0, 0, 0, 0, 8, 49
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\states.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 194, 0, 0, 0, 0, 0, 44, 238
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\store.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 89, 0, 0, 0, 0, 1, 17, 107
+c:\Users\bilal\Desktop\BayimSu\crm\src\redux\types.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 141, 0, 0, 0, 0, 0, 64, 205
+c:\Users\bilal\Desktop\BayimSu\crm\src\screens\AppScreens\Blank\index.tsx, TypeScript React, 0, 0, 0, 22, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 26
+c:\Users\bilal\Desktop\BayimSu\crm\src\screens\AppScreens\Blank\styles.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 18, 0, 0, 0, 0, 0, 2, 20
+c:\Users\bilal\Desktop\BayimSu\crm\src\screens\AppScreens\Customer\CustomerDefinedPriceAddScreen.tsx, TypeScript React, 0, 0, 0, 233, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 89, 325
+c:\Users\bilal\Desktop\BayimSu\crm\src\screens\AppScreens\Customer\CustomerDefinedPricesScreen.tsx, TypeScript React, 0, 0, 0, 289, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 70, 366
+c:\Users\bilal\Desktop\BayimSu\crm\src\screens\AppScreens\Customer\CustomerEditScreen.tsx, TypeScript React, 0, 0, 0, 422, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 62, 128, 612
+c:\Users\bilal\Desktop\BayimSu\crm\src\screens\AppScreens\Customer\CustomerOrdersScreen.tsx, TypeScript React, 0, 0, 0, 687, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11, 194, 892
+c:\Users\bilal\Desktop\BayimSu\crm\src\screens\AppScreens\Customer\addCustomer.tsx, TypeScript React, 0, 0, 0, 377, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 20, 99, 496
+c:\Users\bilal\Desktop\BayimSu\crm\src\screens\AppScreens\Customer\addOrderScreen.tsx, TypeScript React, 0, 0, 0, 580, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 143, 730
+c:\Users\bilal\Desktop\BayimSu\crm\src\screens\AppScreens\Customer\orderAdd.tsx, TypeScript React, 0, 0, 0, 428, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 17, 138, 583
+c:\Users\bilal\Desktop\BayimSu\crm\src\screens\AppScreens\Customer\orderDetailScreen.tsx, TypeScript React, 0, 0, 0, 301, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 22, 122, 445
+c:\Users\bilal\Desktop\BayimSu\crm\src\screens\AppScreens\Customer\styles.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 825, 0, 0, 0, 0, 47, 100, 972
+c:\Users\bilal\Desktop\BayimSu\crm\src\screens\AppScreens\Employee\employeeAddScreen.tsx, TypeScript React, 0, 0, 0, 312, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 43, 361
+c:\Users\bilal\Desktop\BayimSu\crm\src\screens\AppScreens\Employee\employeeCostScreen.tsx, TypeScript React, 0, 0, 0, 250, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 43, 293
+c:\Users\bilal\Desktop\BayimSu\crm\src\screens\AppScreens\Employee\employeeEditScreen.tsx, TypeScript React, 0, 0, 0, 344, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 44, 393
+c:\Users\bilal\Desktop\BayimSu\crm\src\screens\AppScreens\Employee\home.tsx, TypeScript React, 0, 0, 0, 531, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 75, 608
+c:\Users\bilal\Desktop\BayimSu\crm\src\screens\AppScreens\Home\DimensionsHelper.tsx, TypeScript React, 0, 0, 0, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 16
+c:\Users\bilal\Desktop\BayimSu\crm\src\screens\AppScreens\Home\HomeScreen.tsx, TypeScript React, 0, 0, 0, 803, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 58, 225, 1086
+c:\Users\bilal\Desktop\BayimSu\crm\src\screens\AppScreens\Home\HomeScreenAndroid.tsx, TypeScript React, 0, 0, 0, 811, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 32, 182, 1025
+c:\Users\bilal\Desktop\BayimSu\crm\src\screens\AppScreens\Home\index.tsx, TypeScript React, 0, 0, 0, 94, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11, 105
+c:\Users\bilal\Desktop\BayimSu\crm\src\screens\AppScreens\Home\styles.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 13, 0, 0, 0, 0, 0, 2, 15
+c:\Users\bilal\Desktop\BayimSu\crm\src\screens\AppScreens\Introduction\index.tsx, TypeScript React, 0, 0, 0, 124, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 66, 192
+c:\Users\bilal\Desktop\BayimSu\crm\src\screens\AppScreens\Notification\NotificationScreen.tsx, TypeScript React, 0, 0, 0, 253, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 175, 95, 523
+c:\Users\bilal\Desktop\BayimSu\crm\src\screens\AppScreens\Order\OrderListScreen.tsx, TypeScript React, 0, 0, 0, 273, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 82, 114, 469
+c:\Users\bilal\Desktop\BayimSu\crm\src\screens\AppScreens\Product\productAdd.tsx, TypeScript React, 0, 0, 0, 337, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 14, 67, 418
+c:\Users\bilal\Desktop\BayimSu\crm\src\screens\AppScreens\Product\productEdit.tsx, TypeScript React, 0, 0, 0, 239, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 48, 295
+c:\Users\bilal\Desktop\BayimSu\crm\src\screens\AppScreens\Product\productsWithImagesScreen.tsx, TypeScript React, 0, 0, 0, 247, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 68, 320
+c:\Users\bilal\Desktop\BayimSu\crm\src\screens\AppScreens\Product\produts.tsx, TypeScript React, 0, 0, 0, 218, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 64, 286
+c:\Users\bilal\Desktop\BayimSu\crm\src\screens\AppScreens\Profile\AboutUsScreen.tsx, TypeScript React, 0, 0, 0, 74, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 30, 104
+c:\Users\bilal\Desktop\BayimSu\crm\src\screens\AppScreens\Profile\CompanyEditScreen.tsx, TypeScript React, 0, 0, 0, 202, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 34, 240
+c:\Users\bilal\Desktop\BayimSu\crm\src\screens\AppScreens\Profile\ProfileEditGeneralScreen.tsx, TypeScript React, 0, 0, 0, 172, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11, 29, 212
+c:\Users\bilal\Desktop\BayimSu\crm\src\screens\AppScreens\Profile\ProfileScreen.tsx, TypeScript React, 0, 0, 0, 409, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 58, 178, 645
+c:\Users\bilal\Desktop\BayimSu\crm\src\screens\AppScreens\Profile\RateUsScreen.tsx, TypeScript React, 0, 0, 0, 31, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 5, 44
+c:\Users\bilal\Desktop\BayimSu\crm\src\screens\AppScreens\Profile\SecurityScreen.tsx, TypeScript React, 0, 0, 0, 218, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11, 41, 270
+c:\Users\bilal\Desktop\BayimSu\crm\src\screens\AppScreens\Profile\SupportScreen.tsx, TypeScript React, 0, 0, 0, 144, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 70, 219
+c:\Users\bilal\Desktop\BayimSu\crm\src\screens\AppScreens\Report\ReportAnotherScreen.tsx, TypeScript React, 0, 0, 0, 132, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 24, 168
+c:\Users\bilal\Desktop\BayimSu\crm\src\screens\AppScreens\Report\ReportBaseScreen.tsx, TypeScript React, 0, 0, 0, 91, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 23, 120
+c:\Users\bilal\Desktop\BayimSu\crm\src\screens\AppScreens\Report\ReportNewScreen.tsx, TypeScript React, 0, 0, 0, 202, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 16, 63, 281
+c:\Users\bilal\Desktop\BayimSu\crm\src\screens\AppScreens\Report\ReportScreen.tsx, TypeScript React, 0, 0, 0, 214, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 39, 258
+c:\Users\bilal\Desktop\BayimSu\crm\src\screens\AppScreens\Report\ReportTemplateScreen.tsx, TypeScript React, 0, 0, 0, 800, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 73, 219, 1092
+c:\Users\bilal\Desktop\BayimSu\crm\src\screens\AppScreens\SideBar\index.tsx, TypeScript React, 0, 0, 0, 29, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 34
+c:\Users\bilal\Desktop\BayimSu\crm\src\screens\AuthLoading\index.tsx, TypeScript React, 0, 0, 0, 137, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 48, 188
+c:\Users\bilal\Desktop\BayimSu\crm\src\screens\AuthScreens\Introduction\IntroductionScreen.tsx, TypeScript React, 0, 0, 0, 115, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 26, 149
+c:\Users\bilal\Desktop\BayimSu\crm\src\screens\AuthScreens\Login\UserAgreementScreen.tsx, TypeScript React, 0, 0, 0, 133, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 40, 173
+c:\Users\bilal\Desktop\BayimSu\crm\src\screens\AuthScreens\Login\index.tsx, TypeScript React, 0, 0, 0, 211, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 93, 313
+c:\Users\bilal\Desktop\BayimSu\crm\src\screens\AuthScreens\Login\styles.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 76, 0, 0, 0, 0, 1, 9, 86
+c:\Users\bilal\Desktop\BayimSu\crm\src\screens\AuthScreens\SignUp\PhoneVerificationScreen.tsx, TypeScript React, 0, 0, 0, 196, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 75, 283
+c:\Users\bilal\Desktop\BayimSu\crm\src\screens\AuthScreens\SignUp\SignUpFirstScreen.tsx, TypeScript React, 0, 0, 0, 226, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 111, 346
+c:\Users\bilal\Desktop\BayimSu\crm\src\screens\AuthScreens\SignUp\SignUpSecondScreen.tsx, TypeScript React, 0, 0, 0, 224, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 109, 341
+c:\Users\bilal\Desktop\BayimSu\crm\src\screens\styles.ts, TypeScript, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 818, 0, 0, 0, 0, 54, 100, 972
+c:\Users\bilal\Desktop\BayimSu\crm\src\services\NotificationService.tsx, TypeScript React, 0, 0, 0, 71, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 31, 102
+c:\Users\bilal\Desktop\BayimSu\crm\src\services\RequestService.tsx, TypeScript React, 0, 0, 0, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 24, 59
+c:\Users\bilal\Desktop\BayimSu\crm\src\styles.tsx, TypeScript React, 0, 0, 0, 825, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 47, 100, 972
+c:\Users\bilal\Desktop\BayimSu\crm\tsconfig.json, JSON, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 16
+Total, -, 11327, 13, 251, 17057, 18, 76, 36, 131, 5, 100, 4015, 183, 112, 166, 80, 1244, 5428, 40242

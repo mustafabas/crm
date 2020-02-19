@@ -51,7 +51,6 @@ const loginSchema = Yup.object().shape({
     .max(50)
     .required(),
   password: Yup.string()
-    .matches(/^[a-zA-Z0-9_-]+$/)
     .min(6)
     .required()
 });
@@ -87,7 +86,7 @@ class Login extends Component<Props, {}> {
     if (this.props.isFinished && (!this.props.isSucceed)) {
 
       showMessage({
-        message: "Email veya sifre hatali",
+        message: this.props.loginErrorMessage,
         type: "danger",
         icon: 'auto'
       }

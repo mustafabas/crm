@@ -1,9 +1,10 @@
-export const WATER_BASE_URL_NEW ="http://crmapi.fillsoftware.com";
+export const WATER_BASE_URL_NEW ="https://crmapi.fillsoftware.com";
 
-export const WATER_BASE_URL ="http://api.fillsoftware.com/api";
+export const WATER_BASE_URL ="https://api.fillsoftware.com/api";
 
 
 export const WATER_CUSTOMERS_HOME_GET = WATER_BASE_URL_NEW+"/api/customer?orderType=";
+export const WATER_CUSTOMER_CALL_DETECT = WATER_BASE_URL_NEW + '/api/customer/CustomerByPhone'
 export const WATER_USER_LOGIN = WATER_BASE_URL_NEW+"/api/User/login";
 export const WATER_CUSTOMER_ORDERS_GET = WATER_BASE_URL_NEW+"/api/customer/CustomerOrder?customerid=";
 export const WATER_CUSTOMER_ORDERS_GET_DETAIL = WATER_BASE_URL_NEW+"/api/customer/CustomerForDetail?customerId=";
@@ -66,8 +67,11 @@ export const WATER_USER_CREATE_CONTROL_EMAIL = WATER_BASE_URL_NEW + "/api/UserCr
 
 export const WATER_CREATE_NOTIFICATION = WATER_BASE_URL_NEW + "/api/User/AddUserToken"
 
-export const WATER_GET_NOTIFICATIONS = WATER_BASE_URL_NEW + '/api/notification'
-
+export const WATER_GET_NOTIFICATIONS =  WATER_BASE_URL_NEW+'/api/notification'
+export const WATER_GET_NEW_NOTIFICATION_COUNT  = WATER_BASE_URL_NEW+"/api/notification/NewNotificationCount";
+export const WATER_NOTIFICATIONS_UPDATED_VIEWED = WATER_BASE_URL_NEW+'/api/notification/UpdateSeen'
+export const WATER_NOTIFICATION_DELETE_BYID=  WATER_BASE_URL_NEW+"/api/notification";
+export const WATER_NOTIFICATION_TOKEN_DELETE = WATER_BASE_URL_NEW + "/api/User/TokenDelete"
 export const WATER_GET_CUSTOMER_ORDER_DETAIL = WATER_BASE_URL_NEW  + '/api/Order/OrderDetail'
 
 export const WATER_UPDATE_CUSTOMER_ORDER_STATUS = WATER_BASE_URL_NEW + '/api/Order/UpdateOrderStatus'

@@ -13,7 +13,7 @@ import {
 import { NavigationScreenProp, NavigationState, NavigationEvents } from "react-navigation";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import stylesNew from "../../styles";
+// import styles from "../../styles";
 
 // import RNPickerSelect from 'react-native-picker-select';
 
@@ -30,7 +30,7 @@ import { showMessage } from "react-native-flash-message";
 import { InfoItem } from "../../../components/InfoItem";
 import RBSheet from "react-native-raw-bottom-sheet";
 import { NotificationService } from "../../../services/NotificationService";
-
+import styles from "./styles";
 interface Props {
   navigation: NavigationScreenProp<NavigationState>;
   isProductLoading: boolean;
@@ -130,7 +130,7 @@ class orderAdd extends Component<Props, State> {
       productCode: "",
       unitPrice: "",
       date: "",
-      count: "",
+      count: "1",
       isSuccess: false,
       status:false,
       selected2: null,
@@ -247,7 +247,7 @@ insertAndSendPush() {
 
   }
   this.setState({notificationIsSend : true})
-  
+  this.props.navigation.goBack()
 
   
 }
@@ -445,7 +445,7 @@ Pesin Odeme
 
 
 
-              <Button onPress={props.handleSubmit}  style={{justifyContent:'center',marginTop:30,marginBottom:30,marginHorizontal:40,borderRadius:20,backgroundColor:'#01C3E3',
+              <Button disabled={ this.state.orderAddedSuccessfully } onPress={props.handleSubmit}  style={{justifyContent:'center',marginTop:30,marginBottom:30,marginHorizontal:40,borderRadius:20,backgroundColor:'#01C3E3',
             shadowRadius: 5.00,
             
             elevation: 12,
@@ -461,7 +461,7 @@ shadowOpacity: .5,
    
   </Button>
 
- {!this.state.notificationIsSend && this.state.orderAddedSuccessfully  && <Button   onPress={()=> this.chooseEmployee.open()} style={{justifyContent:'center',marginTop:0,marginBottom:30,marginHorizontal:40,borderRadius:20,backgroundColor:'white',
+ {!this.state.notificationIsSend && this.state.orderAddedSuccessfully && this.props.notificationEmployee && this.props.notificationEmployee.userWithToken.length > 0  && <Button   onPress={()=> this.chooseEmployee.open()} style={{justifyContent:'center',marginTop:0,marginBottom:30,marginHorizontal:40,borderRadius:20,backgroundColor:'white',
                     shadowRadius: 5.00,
                     
                     elevation: 12,
@@ -500,7 +500,13 @@ shadowOpacity: .5,
    if(!this.state.orderAddedSuccessfully){
     this.setState({ orderAddedSuccessfully: true})
    }
-      this.chooseEmployee.open();
+   if(this.props.notificationEmployee && this.props.notificationEmployee.userWithToken.length > 0){
+    this.chooseEmployee.open();
+   }
+   else{
+     this.props.navigation.goBack()
+   }
+     
 
 
     }

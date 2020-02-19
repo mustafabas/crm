@@ -1,6 +1,10 @@
 export const CUSTOMER_GET = "CustomerGet";
 export const CUSTOMER_GET_MORE = "CustomerGetMore";
+export const CUSTOMER_GET_MORE_LOADING = "CustomerGetMoreLoading"
 export const HOME_LOADING_CUSTOMERS = "HomeLoadingCustomers";
+export const DETECT_USER_FROM_CALL = "DetectUserFromCall";
+export const DETECT_USER_FROM_CALL_LOADING = "DetectUserFromCallLoading";
+
 
 export const ORDERS_GET = "OrdersGet";
 export const ORDERS_GET_MORE = "OrdersGetMore";
@@ -175,14 +179,20 @@ export const EMPLOYEECOST_DELETE_FAILED ="EmployeeCostDeleteFailed";
 
 
 export const NOTIFICATION_LIST_GET = "NotificationListGet";
+export const NOTIFICATION_LIST_GET_MORE = "NotificationGetMore";
 export const NOTIFICATION_LIST_LOADING = "NotificationListLoading";
+export const NOTIFICATION_LIST_LOADING_MORE = "NotificationListLoadingMore";
 export const NOTIFICATION_LIST_FAILED = "NotificationListFailed";
+export const NOTIFICATION_COUNT_LOADING ="NotificationCountLoading";
+export const NOTIFICATION_COUNT_FAILED = "NotificationCountFailed";
+export const NOTIFICATION_COUNT_GET = "NotificationCountGet";
 
 export const GET_CUSTOMER_ORDER_DETAIL = "GetCustomeDetail";
 export const GET_CUSTOMER_ORDER_DETAIL_LOADING = "GetCustomerDetailLoading";
 export const GET_CUSTOMER_ORDER_DETAIL_FAILED = "GetCustomerDetailFailed";
 
 export const GET_CUSTOMER_ORDER_LIST = "GetCustomerOrderList";
+export const GET_CUSTOMER_ORDER_LIST_MORE = "GetCustomerOrderListMore";
 export const GET_CUSTOMER_ORDER_LIST_LOADING = "getCustomerOrderListLoading";
 export const GET_CUSTOMER_ORDER_LIST_FAILED = "getCustomerOrderListLoading";
 

@@ -9,6 +9,7 @@ import {AsyncStorage } from 'react-native'
 import { GetOrders, GetCustomerDetail } from './orderAction';
 import { navigate } from '../services/Navigator';
 import { reset, loading } from './loginAction';
+import { getCustomerOrders } from './orderDetailActions';
 
 
 export function chooseEmployee(userId : string) {
@@ -64,7 +65,7 @@ dispatch(isLoading(true))
     .then((response) =>{
     if(response.data.isSuccess){
         if(response.data.result){
-          // console.log(response.data.result)
+
 
           let data = response.data.result.userWithTokenItemResponses;
           var notificationItemList: { id: any; name: any; tokens: any; }[]  = []
@@ -83,7 +84,7 @@ dispatch(isLoading(true))
           dispatch(reset())
           dispatch(GetOrders(customerId, 1, 10))
           dispatch(GetCustomerDetail(customerId));
-
+          dispatch(getCustomerOrders())
         }
       }
     })

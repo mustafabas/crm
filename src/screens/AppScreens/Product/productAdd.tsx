@@ -25,7 +25,7 @@ import { Dimensions } from "react-native";
 import { ImageBackground } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
 import ImageResizer from 'react-native-image-resizer';
-
+import styles from "../Customer/styles";
 
 interface Props {
     navigation: NavigationScreenProp<NavigationState>;
@@ -347,15 +347,14 @@ ImageResizer.createResizedImage(request.uri, request.width, request.height, 'JPE
                                                 </Item>
 
                                             </View>
-                                         <View style={{marginTop:20,alignItems:'center'}}>
+
+
+                                         {/* <View style={{marginTop:20,alignItems:'center'}}>
                                          <TouchableOpacity  onPress={()=> this.imagePickerSheet.open()} style={{flexDirection:'row',backgroundColor:'#EFF3F9',borderRadius:20,width:imageLength, height:imageLength,justifyContent:'center',alignItems:'center'}}>
                                               {/* <ImageBackground source={this.state.avatarSource} style={{width:imageLength , height : imageLength,backgroundColor:'#EFF3F9',justifyContent:'center',alignItems:'center',borderRadius:20}}> */}
-                                             {this.state.imageLoading ? <Spinner /> :  this.state.avatarSource ? <Image source={this.state.avatarSource} style={{width:imageLength , height : imageLength,justifyContent:'center',alignItems:'center',borderRadius:20}}/> : <Text style={{fontFamily:'Avenir Next',fontSize:20,color:'#216AF4'}}>Fotoğraf Ekle</Text>}
-
-                                              
-                                             
+                                             {/* {this.state.imageLoading ? <Spinner /> :  this.state.avatarSource ? <Image source={this.state.avatarSource} style={{width:imageLength , height : imageLength,justifyContent:'center',alignItems:'center',borderRadius:20}}/> : <Text style={{fontFamily:'Avenir Next',fontSize:20,color:'#216AF4'}}>Fotoğraf Ekle</Text>}
                                           </TouchableOpacity>
-                                         </View>
+                                         </View> */} 
 
                                             <Button onPress={() => props.handleSubmit()}
                                                 style={{

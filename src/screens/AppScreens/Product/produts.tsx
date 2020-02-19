@@ -131,7 +131,7 @@ class Products extends Component<Props, State> {
 
   _renderView() {
     const { products, isLoading, navigation } = this.props;
-    if (this.props.isProductLoading) {
+    if (this.props.isProductLoading && this.props.products.length < 1) {
       return (<ActivityIndicator></ActivityIndicator>);
     }
     if(this.props.isProductLoading === false && this.props.products.length < 1)
@@ -160,12 +160,17 @@ class Products extends Component<Props, State> {
         onRefresh={() => this.onRefresh()}
         data={this.props.products}
         renderItem={({ item }) => (
-          <View style={[styles.row,{backgroundColor:'#EFF3F9',flexDirection:'column'}]}>
-          <View style={{flexDirection:'row',justifyContent:'space-between'}}> 
-          <Text style={styles.musteri_adi}>{item.productName}</Text>
+          <View style={{    elevation: 6.5,
+            borderRadius: 10,
+
+            flex: 1,
+            marginHorizontal:10,marginVertical:10,padding:10,
+            justifyContent: 'flex-start',backgroundColor:'#EFF3F9',flexDirection:'column',}}>
+          <View style={{flexDirection:'row',justifyContent:'space-between',marginBottom:20}}> 
+          <Text style={[styles.musteri_adi,]}>{item.productName}</Text>
 
           <TouchableOpacity
-              style={[styles.iconButtonCustomer,{alignContent:'flex-end',marginBottom:30}]}
+              style={[styles.iconButtonCustomer,]}
 
               onPress={() => this.openModal(item.productCode, item.productName, item.price, item.productId, item.productStatus)}>
 
@@ -253,7 +258,7 @@ class Products extends Component<Props, State> {
             {this._renderProductSheetContent()}
           </RBSheet>
 
-          <View style={{ }}></View>
+
         </KeyboardAvoidingView>
         {this._renderView()}
        

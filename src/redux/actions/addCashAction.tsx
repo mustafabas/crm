@@ -37,11 +37,11 @@ export function AddCash(customerId : number,orderId:number, amount:number) {
           dispatch(GetOrders(customerId, 1, 10))
         }
       }else {
-        console.log("hata")
+
       }
     })
     .catch(error => { 
-      console.log(error)
+
       dispatch(addCash(false,"Ödeme Alınırken bir hata oluştu."));
       dispatch(reset())
     });

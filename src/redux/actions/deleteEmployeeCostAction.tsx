@@ -25,7 +25,7 @@ export function employeeCostDelete(id:number) {
     }
   })
   .catch(error => { 
-    console.log(error);
+
   });
   }
 }

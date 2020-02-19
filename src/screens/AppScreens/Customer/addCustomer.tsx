@@ -13,7 +13,7 @@ import {
 import { NavigationScreenProp, NavigationState, } from "react-navigation";
 import { Formik, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import stylesNew from "../../styles";
+import styles from "./styles";
 import {Input,CheckBox, Item, Label, ListItem,Body, Switch, Textarea, Button,Spinner,Icon } from 'native-base'
 import { customerAdd } from "../../../redux/actions/customerAddAction";
 import { AppState } from '../redux/store'
@@ -54,7 +54,7 @@ const initialValues: any = {
   sirketAdi: "",
   fountainCount: "",
   adress : "",
-  phoneNumber : "",
+  phoneNumber :  "",
   AllDays : true,
   monday : false,
   tuesday : false,
@@ -217,7 +217,20 @@ class addCustomer extends Component<Props, CustomerInserState> {
           <ScrollView bounces={false}>
 
             <Formik
-              initialValues={initialValues}
+
+              initialValues={{musteriAdiSoyadi: "",
+              sirketAdi: "",
+              fountainCount: "",
+              adress : "",
+              phoneNumber : this.props.navigation.getParam('phoneNumber'),
+              AllDays : true,
+              monday : false,
+              tuesday : false,
+              wednesday : false,
+              thusday : false,
+              friday : false,
+              saturday : false,
+              sunday : false}}
               validationSchema={girdiler}
               onSubmit={values => this.handleAddCustomer(values)}
             >

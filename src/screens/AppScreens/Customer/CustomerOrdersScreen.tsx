@@ -23,17 +23,17 @@ import { SafeAreaView, NavigationScreenProp, NavigationState } from 'react-navig
 import { IOrderItem } from '../../../redux/models/orderModel';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import stylesNew from "../../styles";
+import styles from "../../styles";
 import * as Yup from "yup";
 import { connect } from 'react-redux';
 import { GetOrders, GetOrdersMore, GetCustomerDetail } from '../../../redux/actions/orderAction';
 import { AddCash } from '../../../redux/actions/addCashAction';
 import { orderDelete } from '../../../redux/actions/deleteOrderAction';
-import OrdersCustomer from '../../../pages/OrdersCustomer';
 import { AppState } from '../../../redux/store';
 import { Formik } from 'formik';
 import { showMessage } from 'react-native-flash-message';
 import { ICustomerDetailItem } from '../../../redux/models/homeModel';
-import customer from '../../../pages/customer';
+
 import {
   Placeholder,
   PlaceholderMedia,
@@ -479,13 +479,13 @@ componentDidMount(){
 
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
 
-              <View style={{ justifyContent: 'center' }}>
+             
 
-                <Text style={{ color: '#2069F3', fontWeight: '600', fontSize: 20, fontFamily: 'Avenir Next' }}>
+                <Text style={{ color: '#2069F3', fontWeight: '600', fontSize: 20, fontFamily: 'Avenir Next' ,alignSelf:'center',flex:.8}}>
 
                   {item.productName}
                 </Text>
-              </View>
+
               {/* <View style={{width:1,height:'80%',backgroundColor:'#CFD3D7'}} /> */}
               <View style={{ alignItems: 'flex-end' }}>
                 <TouchableOpacity onPress={() => this.openModal(item.orderId, item.unitPrice, item.count, item.productId, item.productName, item.isPaid)}>
@@ -653,9 +653,9 @@ componentDidMount(){
     <View style={{ flexDirection: 'row', justifyContent: 'space-between', borderBottomColor: '#CFD3D7', paddingBottom: 5, borderBottomWidth: 1 }}>
 
   
-      <View>
+      <View style={{flex:.7}}>
         {this.props.customerDetailModel?.nameSurname && !this.props.isCustomerDetailLoading &&
-          <Text style={{ alignSelf: 'center', color: '#2069F3', fontWeight: '600', fontSize: 24, fontFamily: 'Avenir Next' }}>
+          <Text style={{ textAlign:'left', color: '#2069F3', fontWeight: '600', fontSize: 24, fontFamily: 'Avenir Next' }}>
             {this.props.customerDetailModel.nameSurname}
           </Text>
 

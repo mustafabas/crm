@@ -1,7 +1,7 @@
 import axios from 'axios'
 import {WATER_GET_NOTIFICATIONS, WATER_GET_CUSTOMER_ORDER_DETAIL,WATER_UPDATE_CUSTOMER_ORDER_STATUS, WATER_ADD_ORDER, WATER_GET_ORDER_LIST} from './../constants'
 import { Dispatch } from "react";
-import { GET_CUSTOMER_ORDER_DETAIL, GET_CUSTOMER_ORDER_DETAIL_LOADING, GET_CUSTOMER_ORDER_DETAIL_FAILED, UPDATE_ORDER_DETAIL, UPDATE_ORDER_DETAIL_LOADING, UPDATE_ORDER_DETAIL_FAILED, GET_CUSTOMER_ORDER_LIST_LOADING, GET_CUSTOMER_ORDER_LIST_FAILED, GET_CUSTOMER_ORDER_LIST} from './../types'
+import { GET_CUSTOMER_ORDER_DETAIL, GET_CUSTOMER_ORDER_DETAIL_LOADING, GET_CUSTOMER_ORDER_DETAIL_FAILED, UPDATE_ORDER_DETAIL, UPDATE_ORDER_DETAIL_LOADING, UPDATE_ORDER_DETAIL_FAILED, GET_CUSTOMER_ORDER_LIST_LOADING, GET_CUSTOMER_ORDER_LIST_FAILED, GET_CUSTOMER_ORDER_LIST, GET_CUSTOMER_ORDER_LIST_MORE} from './../types'
 import {Action} from '../states'
 
 import {AsyncStorage } from 'react-native'
@@ -10,6 +10,7 @@ import {AsyncStorage } from 'react-native'
 import { navigate } from '../services/Navigator';
 import { reset} from './loginAction';
 import { addOrder } from './addOrderAction';
+import { getNotifications } from './notificationAction';
 
 export enum OrderStatus
     {
@@ -62,15 +63,13 @@ export function updateCustomerOrderStatus(orderStatus : OrderStatus, orderId : n
       headers : headers
     }).then((response) =>{
       
-
-
-
   if(response.data.isSuccess){
     
 
      dispatch(updateOrderStatus("Sipariş Durumunuz Güncellendi."))
      dispatch(reset())
      dispatch(getCustomerOrderDetail(orderId))
+     dispatch(getCustomerOrders(1))
 
     }else {
         dispatch(isLoadingStatusUpdate(false,"Sipariş durumunuz güncellenemedi daha sonra tekrar deneyim."))
@@ -167,8 +166,9 @@ export function getCustomerOrderDetail(orderId : number) {
 
 
 
+  
 
-  export function getCustomerOrders() {
+  export function getCustomerOrders(page? : number) {
     return (dispatch : Any) =>  {
         dispatch(isLoadingOrderList(true,''))
       AsyncStorage.multiGet(['userToken', 'userId']).then((res) => {
@@ -179,8 +179,8 @@ export function getCustomerOrderDetail(orderId : number) {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
       }
-      console.log(userId)
-      axios.get("http://crmapi.fillsoftware.com/api/Order?userId=1167&page=1&pageSize=20&hasToTransport=true",{
+
+      axios.get(WATER_GET_ORDER_LIST + `?userId=${userId}&page=${page ? page : 1}&pageSize=15&`,{
           headers : headers
         }).then((response) =>{
           
@@ -205,9 +205,17 @@ export function getCustomerOrderDetail(orderId : number) {
     orderStatus: element.orderStatus,
           })
         });
+          if(page){
 
-         dispatch(getOrderList(orderList))
-         dispatch(reset())
+            dispatch(getOrderListMore(orderList))
+            dispatch(reset())
+          }
+          else {
+            dispatch(getOrderList(orderList))
+            dispatch(reset())
+          }
+        
+        
         }else {
             dispatch(isLoadingOrderList(false,"Sipariş listelenirken bir hata oluştu."))
             dispatch(reset())
@@ -235,6 +243,13 @@ export const isLoadingOrderList = (loading : boolean, message : string) => ({
   type : loading  ? GET_CUSTOMER_ORDER_LIST_LOADING : GET_CUSTOMER_ORDER_LIST_FAILED,
   payload : message
 })
+
+export const getOrderListMore = (orderList : orderListItem[]) => ({
+  type : GET_CUSTOMER_ORDER_LIST_MORE,
+  payload : orderList
+})
+
+
 
 export const getOrderList = (orderList : orderListItem[]) => ({
   type : GET_CUSTOMER_ORDER_LIST,

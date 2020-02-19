@@ -4,7 +4,7 @@ import {
 
     KeyboardAvoidingView,
     ScrollView,
-    Platform, TouchableOpacity, Text,Image, StatusBar, StyleSheet, Switch,FlatList, AsyncStorage, ActivityIndicator
+    Platform, TouchableOpacity, Text,Image, StatusBar, StyleSheet, Switch,FlatList, AsyncStorage, ActivityIndicator, RefreshControl
 } from "react-native";
 import { NavigationScreenProp, NavigationState, SafeAreaView } from "react-navigation";
 import {Icon} from 'native-base'
@@ -15,7 +15,7 @@ import * as Yup from "yup";
 import { connect } from "react-redux";
 import { AppState } from '../../../redux/store'
 import { OrderStatus, orderListItem,getCustomerOrders } from "../../../redux/actions/orderDetailActions";
-
+import { InfoItem } from '../../../components/InfoItem';
 
 
 interface Props {
@@ -23,7 +23,8 @@ interface Props {
     message : string;
     orderList : orderListItem[];
     loading : boolean | null;
-    getCustomerOrders : () => void;
+    getCustomerOrders : (page? : number) => void;
+    page : number;
 
     // isTriedOrderStatus:boolean;
 
@@ -37,8 +38,8 @@ class OrderListScreen extends Component<Props, {}> {
     constructor(props) {
         super(props);
         this.state = {
-          userId : ""
-    
+          userId : "",
+          page : 0
         };
       }
 
@@ -50,6 +51,7 @@ class OrderListScreen extends Component<Props, {}> {
     };
 
     renderStatusbarOnlyIOS() {
+        
 
 
 
@@ -57,9 +59,9 @@ class OrderListScreen extends Component<Props, {}> {
     renderItem(item : orderListItem) {
         var color = "red"
         var colorInBasket  = "#f25f5f"
-        var colorMoneyApproved = "#659b7c"
+        var colorMoneyApproved = "#cad161"
         var colorCompleted = "#659b7c"
-        var colorWaitingForMoney = "#bbc276"
+        var colorWaitingForMoney = "#b38100"
         var textFirst = ""
         var textSecond = ""
         var moneyIsTaken = false
@@ -94,14 +96,73 @@ class OrderListScreen extends Component<Props, {}> {
 
         return (
 
-        <View style={[styles.inputContainer, { paddingVertical: '5%',paddingHorizontal:'3%',marginTop: 0,  justifyContent: 'flex-start', borderWidth: 1, borderColor: '#d3d3d3' }]}>
+        <TouchableOpacity onPress={()=>         this.props.navigation.navigate('OrderDetail',{orderId : item.orderId})} style={[styles.inputContainer, { paddingVertical: '5%',paddingHorizontal:'3%',justifyContent:'flex-start',  }]}>
 
 
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-            <View>
+        <View style={{ flex:1}}>
+
                 {/* <Text style={{ borderWidth: 1, borderRadius: 5, padding: 7, borderColor: '#c58585', marginRight: 50,textAlign:'center' }}>S.No : {item.orderId}</Text> */}
-        
-                <View style={{}}>
+        {/* asda */}
+            <View style={{flexDirection:'row'}}>
+            <Text  style={{flex:.6,fontFamily:'Avenir Next',color:'#2069F3',fontSize:16,fontWeight:"600"}}>
+                    {item.companyName ? item.companyName : item.customerName}
+                </Text>
+
+                <Text  style={{textAlign:'right',flex:.4,fontFamily:'Avenir Next'}}>
+                    {item.productName}
+                </Text>
+
+            </View>
+
+            <View style={{flexDirection:'row',marginTop:15,}}>
+            <Text style={{ color: '#727272',flex:.6,fontFamily:'Avenir Next'}}>
+                     {item.createdDate}
+        </Text>
+
+                
+
+                <View style={{ flexDirection: 'row',flex:.4,justifyContent:'flex-end'}}>
+                        <Text style={{ color: '#767676',fontFamily:'Avenir Next' }}>
+                            Adet: 
+        </Text>
+                        <Text style={{ marginLeft:5,fontFamily:'Avenir Next'}}>
+                            {item.count}
+        </Text>
+                    </View>
+
+            </View>
+
+
+            <View style={{flexDirection:'row',marginTop:15,}}>
+            
+
+        <Text style={{  color: color,textAlign:'left',fontFamily:'Avenir Next',flex:.6 }}>
+                        {textSecond}
+        </Text>
+
+        <View style={{ flexDirection: 'row',justifyContent:'flex-end',flex:.4}}>
+                        <Text style={{ color: '#767676' ,fontFamily:'Avenir Next'}}>
+                            Birim:
+        </Text>
+                        <Text style={{ marginLeft:5,fontFamily:'Avenir Next' }}>
+                            {item.displayUnitPrice}
+        </Text>
+                    </View>
+
+            </View>
+
+            <View style={{ flexDirection: 'row',marginTop:15,justifyContent:'flex-end'}}>
+                        <Text style={{ color: '#767676' ,fontFamily:'Avenir Next'}}>
+                            Toplam: 
+        </Text>
+                        <Text style={{ marginLeft:5,fontFamily:'Avenir Next'}}>
+                            {item.displayTotalPrice}
+        </Text>
+                    </View>
+
+
+       {/* -------------asd */}
+                {/* <View >
 
 
                 <Text  style={{marginTop:3}}>
@@ -135,6 +196,9 @@ class OrderListScreen extends Component<Props, {}> {
                     </View>
          */}
                 </View>
+                 {/* */} 
+                
+                
                 {/* <TouchableOpacity disabled={moneyIsTaken}
                 //  onPress={()=> this.props.navigation.navigate('CreditCart', {basketId: basketId, userId:userId})} 
                   style={{ borderBottomColor: 'red', borderBottomWidth: moneyIsTaken ? 0 : 1, alignItems: 'center', marginHorizontal: 45 }}>
@@ -142,12 +206,12 @@ class OrderListScreen extends Component<Props, {}> {
                        {moneyIsTaken ? "" : "Tekrar Öde"}
                     </Text>
                 </TouchableOpacity> */}
-            </View>
+
             {/* <View style={{ backgroundColor: '#ababab', height: '50%', width: .5, alignSelf: 'flex-end' }}>
         
             </View> */}
             
-            <View style={{marginTop:5}} >
+            {/* <View style={{marginTop:5}} >
 
                
 
@@ -191,10 +255,10 @@ class OrderListScreen extends Component<Props, {}> {
                 }}> */}
                     
                 {/* </View> */}
-            </View>
+            {/* </View> */}
             
             
-        </View>
+        {/* </View> */} 
         
         {/*   asdasdas */}
         
@@ -209,13 +273,20 @@ class OrderListScreen extends Component<Props, {}> {
         
         
         
-        </View>
+        </TouchableOpacity>
         
         )
     }
+    refreshController(){
+        this.setState({refreshing : true,page: 1 })
+        this.props.getCustomerOrders()
 
+    }
     renderList(){
-        if(this.props.loading) {
+        if(this.props.loading === false && this.state.refreshing) {
+            this.setState({refreshing : false})
+        }
+        if(this.props.loading && this.props.orderList.length < 1) {
             return (
                 <ActivityIndicator style={{flex:1}} />
             )
@@ -223,16 +294,25 @@ class OrderListScreen extends Component<Props, {}> {
         
         else if (this.props.loading === false && this.props.orderList.length  < 1){
             return(
-                <View style={[styles.inputContainer,{padding:20 ,backgroundColor:'#dcdca4',flexDirection:'row',justifyContent:'flex-start'}]}>
-                    <Icon name="ios-alert" size={30} />
-                    <Text style={{textAlign:'center',fontSize:16,fontFamily:'Roboto-Regular',marginLeft:20,marginTop:4}}>Siparişiniz Bulunmamaktadır.</Text>
-                </View>
+                <View style={{flex:1,justifyContent:'center'}}>
+                    <InfoItem text="Siparişiniz Bulunmamaktadır." />
+
+                    </View>
+
+
             )
         }else {
             return(
                 <FlatList
         // contentContainerStyle={{margin:10}}
 //  style={{flex:1}}
+        refreshControl={
+            <RefreshControl
+                colors={["#9Bd35A", "#689F38"]}
+                refreshing={this.props.loading && this.state.refreshing}
+                onRefresh={()=> this.refreshController()}
+            />
+        }
         style={{paddingTop:20}}
         data={this.props.orderList}
         extraData ={this.props.orderList}
@@ -244,6 +324,34 @@ class OrderListScreen extends Component<Props, {}> {
 
 
             }}
+            
+            onEndReached={() => {
+
+
+              if(this.props.orderList && this.props.orderList.length > 14){
+                var pagenew = this.state.page + 1;
+                this.setState({ page: pagenew });
+                if (pagenew == 1) {
+                  pagenew = pagenew + 1;
+                  this.setState({ page: pagenew });
+                }
+                this.props.getCustomerOrders(pagenew);
+              
+              }
+            
+            }
+        }
+
+              onEndReachedThreshold={0.5}
+              initialNumToRender={5}
+              ListFooterComponent={
+                this.props.loading ? (
+                  <View>
+                    <ActivityIndicator />
+                  </View>
+                ) : null
+              }
+            
 
 
 
@@ -297,8 +405,8 @@ const styles = StyleSheet.create({
 
     },container: {
         flex: 1,
-        backgroundColor: "#e3e3e3",
-        justifyContent: "center"
+
+
       },
       headStyle: {
         paddingVertical: 30,
@@ -315,7 +423,8 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         padding: 5,
         marginBottom:10,
-        shadowColor: '#adadad',backgroundColor: 'white',
+        backgroundColor:"#EFF3F9",
+        shadowColor: '#EFF3F9',
         marginLeft:10,marginRight:10,
         shadowOffset: {width: 3, height: 3 },
         shadowOpacity: .5,
@@ -349,8 +458,8 @@ const mapStateToProps = (state : AppState) => ({
   
   function bindToAction(dispatch : any) {
     return {
-        getCustomerOrders : () => 
-        dispatch(getCustomerOrders()),
+        getCustomerOrders : (page? : number) => 
+        dispatch(getCustomerOrders(page)),
     };
   
   }

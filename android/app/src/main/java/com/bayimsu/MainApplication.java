@@ -11,7 +11,7 @@ import java.lang.reflect.InvocationTargetException;
 import io.invertase.firebase.messaging.RNFirebaseMessagingPackage; // <-- Add this line
 import io.invertase.firebase.notifications.RNFirebaseNotificationsPackage;
 import java.util.List;
-
+import com.pritesh.calldetection.CallDetectionManager;
 public class MainApplication extends Application implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost =
@@ -29,6 +29,7 @@ public class MainApplication extends Application implements ReactApplication {
           // packages.add(new MyReactNativePackage());
           packages.add(new RNFirebaseMessagingPackage());
           packages.add(new RNFirebaseNotificationsPackage());
+          packages.add(new CallDetectionManager(MainApplication.this));
           return packages;
         }
 

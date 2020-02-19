@@ -27,6 +27,7 @@ import { stat } from "fs";
 import { showMessage } from "react-native-flash-message";
 import { getEmployeeById, employeeEdit, employe } from "../../../redux/actions/editEmployeeAction";
 import { IEmployeeItemBaseResponseModel } from "../../../redux/models/employeeModel";
+import styles from '../Customer/styles'
 interface Props {
     navigation: NavigationScreenProp<NavigationState>;
     isSuccees: boolean;
@@ -60,7 +61,15 @@ const girdiler = Yup.object().shape({
         .positive("Pozitif değer giriniz!"),
     dailyPriceFood: Yup.string(),
     phoneNumber: Yup.number()
-        .positive("Pozitif değer giriniz!")
+        .positive("Pozitif değer giriniz!"),
+        mail: Yup.string()
+        .email("Email Adresini girin")
+        .min(4)
+        .max(50),
+      password: Yup.string()
+        .min(6)
+        .max(16)
+    
 });
 
 

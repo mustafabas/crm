@@ -40,7 +40,7 @@ import Rate, { AndroidMarket } from 'react-native-rate'
 import { Dimensions } from 'react-native';
 import Swiper from 'react-native-swiper'
 
-
+import {deleteNotificaitonToken} from '../../../services/RequestService'
 
 
 
@@ -86,16 +86,31 @@ class ProfileScreen extends Component<Props, State>{
 
   logOut() {
 
-    AsyncStorage.removeItem("userToken").then(() => {
-      AsyncStorage.removeItem("userId").then(() => {
-        AsyncStorage.removeItem("notificationToken").then(() => {
-          AsyncStorage.removeItem("UserType").then(()=>{
-                  this.props.navigation.navigate('AuthLoading');
-          })
-        })
+    AsyncStorage.multiGet(['userToken', 'userId',"notificationToken"]).then((res) => {
+      let token = res[0][1];
+      let userId = res[1][1];
+      let notificationToken = res[2][1]
 
+
+      AsyncStorage.removeItem("userToken").then(() => {
+
+          AsyncStorage.removeItem("userId").then(() => {
+         
+            AsyncStorage.removeItem("notificationToken").then(() => {
+                     AsyncStorage.removeItem("UserType").then(()=>{
+                            deleteNotificaitonToken(userId,token,notificationToken);
+
+                             this.props.navigation.navigate('AuthLoading');
+                     })
+                   })
+                 })
+
+        
       })
+
     })
+
+  
 
   }
   componentWillMount() {
@@ -126,8 +141,12 @@ class ProfileScreen extends Component<Props, State>{
           }}>
           <Text style={{ color: 'white', textAlign: 'center', fontFamily: "Avenir Next", fontWeight: 'bold', fontSize: 16 }} >HAVALE İLE ÖDEME YAP</Text>
         </TouchableOpacity>
+        <Text>
 
-        <TouchableOpacity
+          </Text>
+
+
+        {/* <TouchableOpacity
           style={{
             justifyContent: 'center', marginHorizontal: 40, paddingVertical: 30, borderRadius: 5, backgroundColor: '#01C3E3',
             shadowRadius: 5.00,
@@ -160,7 +179,7 @@ class ProfileScreen extends Component<Props, State>{
           }}>
           <Text style={{ color: 'white', textAlign: 'center', fontFamily: "Avenir Next", fontWeight: 'bold', fontSize: 16 }} >MARKET ÜZERİNDEN ÖDEME YAP</Text>
         </TouchableOpacity>
-
+ */}
 
 
 
@@ -183,7 +202,7 @@ class ProfileScreen extends Component<Props, State>{
           </TouchableOpacity>
         </View>
 
-        <View style={{ height: '30%' }}>
+        <View style={{ height: 200 }}>
           <Swiper autoplay  >
             <View style={{
               flex: 1,
@@ -438,7 +457,7 @@ class ProfileScreen extends Component<Props, State>{
                 ref={ref => {
                   this.CustomerListSheet = ref;
                 }}
-                height={Dimensions.get('screen').height - 100}
+                height={Dimensions.get('screen').height - 50}
                 duration={200}
                 customStyles={{
                   container: {
@@ -454,7 +473,7 @@ class ProfileScreen extends Component<Props, State>{
 
 
 
-              <TouchableOpacity onPress={() => this.CustomerListSheet.open()} style={styles.profileContainer}>
+              {/* <TouchableOpacity onPress={() => this.CustomerListSheet.open()} style={styles.profileContainer}>
                 <Icon name="rss" type="Entypo" color={this.state.iconColor} style={{ fontSize: 20, marginTop: Platform.OS === 'ios' ? 5 : 0 }} />
                 <Text style={styles.profileTextStyle}>Ek Özelliklere Sahip Ol</Text>
                 <Icon name="right" type="AntDesign" color={this.state.iconColor} style={{ fontSize: 20, marginTop: Platform.OS === 'ios' ? 5 : 0 }} />
@@ -462,13 +481,13 @@ class ProfileScreen extends Component<Props, State>{
               </TouchableOpacity>
 
 
-              <View style={styles.propsSeperator}></View>
+              <View style={styles.propsSeperator}></View> */}
 
               <TouchableOpacity onPress={() => {
 
                 const options = {
                   AppleAppID: "1495596894",
-                  //     GooglePackageName:"com.mywebsite.myapp",
+                      GooglePackageName:"com.bayimsu"
                   //     AmazonPackageName:"com.mywebsite.myapp",
                   //     OtherAndroidURL:"http://www.randomappstore.com/app/47172391",
                   //     preferredAndroidMarket: AndroidMarket.Google,

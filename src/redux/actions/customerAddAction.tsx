@@ -20,7 +20,7 @@ export function customerAdd(nameSurname: string, companyName: string, dayOfWeek:
     AsyncStorage.multiGet(['userToken', 'userId']).then((res) => {
       let token = res[0][1];
       let userId = res[1][1];
-      console.log(userId)
+
       const headers = {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
@@ -49,7 +49,7 @@ export function customerAdd(nameSurname: string, companyName: string, dayOfWeek:
   
           }
           else {
-            console.log(response.data.message)
+
             if(response.data.message === "Customer.Post.StoreCannotAddMoreThan5Customers"){
               dispatch(customerAddIsSucceed(false, "Limitli pakete sahip üyelerimiz tanımlanandan fazla müşteri ekleyememektedir. Lütfen destek sayfamızdan bizimle iletişime geçiniz"));
             }
@@ -63,7 +63,7 @@ export function customerAdd(nameSurname: string, companyName: string, dayOfWeek:
           }
         })
         .catch(error => {
-  console.log(error)
+
           dispatch(customerAddIsSucceed(false, "Bir hata oluştu."));
           dispatch(reset())
         });

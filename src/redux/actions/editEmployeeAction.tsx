@@ -11,7 +11,8 @@ import { reset } from './loginAction';
 
 export function employeeEdit(nameSurname:string, monthlySalary:number,email:string,password:string, phoneNumber:string, identityNumber:string, address:string, dailyPriceFood:number, employeeId :number, active:boolean, addAsAUser:boolean) {
 
-  console.log("active", addAsAUser ==true ?  email:"");
+  console.log(addAsAUser , email,password)
+  // console.log("active", addAsAUser == false ?  email:""); 
   return (dispatch : any) =>  {
     dispatch(employeEditLoading(true));
     AsyncStorage.multiGet(['userToken', 'userId']).then((res) => {
@@ -21,12 +22,14 @@ export function employeeEdit(nameSurname:string, monthlySalary:number,email:stri
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
     }
+    console.log(WATER_EDIT_EMPLOYEE)
+    console.log("nameSurname", nameSurname,"monthlySalary",monthlySalary,"email",email,"password",password,"phoneNumber",phoneNumber,"identityNumber",identityNumber,"address",address,"dailyFoodPrice",dailyPriceFood,"userId",userId,"employeId",employeeId,"active",active)
     axios.post(WATER_EDIT_EMPLOYEE,
       {
           nameSurname: nameSurname,
           monthlySalary: monthlySalary,
-          email: addAsAUser ==true ?  email : "",
-          password: addAsAUser ==true ?  password : "",
+          email: email,
+          password: password ,
           phoneNumber: phoneNumber,
           identityNumber: identityNumber,
           address: address,
@@ -34,6 +37,7 @@ export function employeeEdit(nameSurname:string, monthlySalary:number,email:stri
           userId:userId,
           employeId: employeeId,
           active: active,
+          addAsUser : addAsAUser
           
       },
       {

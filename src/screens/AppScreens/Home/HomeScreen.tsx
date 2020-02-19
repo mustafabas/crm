@@ -37,6 +37,7 @@ import { showMessage } from 'react-native-flash-message';
 import { InfoItem } from '../../../components/InfoItem';
 import firebase from 'react-native-firebase';
 import { NotificationOpen } from 'react-native-firebase/notifications';
+import { getNotificationCount } from '../../../redux/actions/notificationAction';
 
 
 
@@ -44,9 +45,6 @@ const vw: number = SafeAreaWithHeader.vw;
 const vh: number = SafeAreaWithHeader.vh;
 
 const title = "Home Screen"
-
-
-
 
 
 
@@ -62,12 +60,14 @@ interface Props {
   
     GetCustomers: (orderType: number, searchText: string, dayOfWeek: number, pageIndex: number) => void;
     GetCustomerMore: (orderType: number, searchText: string, dayOfWeek: number, pageIndex: number) => void;
-  
+    getNotificationCount: () => void;
+
     customerDelete: (customerId: number) =>  void;
     CustomerDeleteIsSuccess: boolean;
     isLoadingCustomerDelete:boolean;
     message : string;
     totalRecords : number;
+    customerMoreLoading : boolean;
   }
 
 
@@ -229,6 +229,55 @@ class HomeScreen extends Component<Props,State>{
       
       componentDidMount(){
 
+        // firebase.messaging().onMessage((message: RemoteMessage) => {
+        //   // Process your message as required
+        //   console.log(message, "not message");
+        //   showMessage({
+        //     message: message.title,
+        //     description: message.body,
+        //     type: "info",
+        //     backgroundColor: "#06005B", // background color
+        //     color: "#ffff", // text color,
+        //     onPress: () => {
+        //       /* THIS FUNC/CB WILL BE CALLED AFTER MESSAGE PRESS */
+        //     }
+    
+        //   }
+        //   );
+
+        // });
+    
+        firebase.notifications().onNotificationDisplayed((notification: Notification) => {
+          // Process your notification as required
+          // ANDROID: Remote notifications do not contain the channel ID. You will have to specify this manually if you'd like to re-display the notification.
+          console.log(notification, "test not data");
+        });
+        firebase.notifications().onNotification((notification: Notification) => {
+          // Process your notification as required
+          console.log("diger mesage")
+          showMessage({
+            message: notification.title,
+            description: notification.body,
+            type: "info",
+            backgroundColor: "#06005B", // background color
+            color: "#ffff", // text color,
+            onPress: () => {
+                let orderId = notification.data.orderId
+                if(orderId) {
+                  this.props.navigation.navigate('OrderDetail',{orderId : orderId})
+                }
+               
+            }
+    
+          }
+          );
+    
+    
+          console.log(notification, "test not data required");
+          this.props.getNotificationCount();
+    
+        });
+
       
       }
 
@@ -341,6 +390,7 @@ class HomeScreen extends Component<Props,State>{
         this.setState({
             orderType : page ,
             selectedState : page,
+            page : 1,
             scrollY :  new Animated.Value(0.001)})
 
         // this.forceUpdate()
@@ -353,9 +403,11 @@ class HomeScreen extends Component<Props,State>{
 
     onRefresh() {
         // this.setState({ page: 1 });
-        this.setState({ refreshing: true });
-        this._getCustomerList(this.state.orderType, this.state.searchText, this.state.dayOfWeek, 1);
-        this.setState({ refreshing: false });
+        this.setState({ refreshing: true ,page : 1},()=>{
+          this._getCustomerList(this.state.orderType, this.state.searchText, this.state.dayOfWeek, 1);
+          this.setState({ refreshing: false });
+        });
+       
       }
 
 
@@ -406,7 +458,7 @@ class HomeScreen extends Component<Props,State>{
                <View style={{ width: 33, height: 33, borderRadius: 16.5, backgroundColor: '#2069F3', justifyContent: 'center', alignItems: 'center' }}>
                    <Text style={{ color: 'white' }}>{item.nameSurname.substring(0, 1)}</Text>
                </View>
-               <View style={{flex:.3,justifyContent:'center',marginTop:-5}}>
+               <View style={{flex:.3,marginTop:item.nameSurname.length > 6 ? 5 : 0}}>
                    
                    <Text style={{ color: '#2069F3', fontWeight: '600', fontSize: 16, fontFamily: 'Avenir Next' }}>
                        {item.nameSurname}
@@ -451,18 +503,22 @@ class HomeScreen extends Component<Props,State>{
            onEndReached={() => {
 
 
-             var pagenew = this.state.page + 1;
-             this.setState({ page: pagenew });
-             if (pagenew == 1) {
-               pagenew = pagenew + 1;
-               this.setState({ page: pagenew });
-             }
-             this.props.GetCustomerMore(this.state.orderType, this.state.searchText, this.state.dayOfWeek, pagenew);
-           }}
+           if(this.props.customers.length > 14 && !this.props.customerMoreLoading) {
+            var pagenew = this.state.page + 1;
+            this.setState({ page: pagenew });
+            if (pagenew == 1) {
+              pagenew = pagenew + 1;
+              this.setState({ page: pagenew });
+            }
+            this.props.GetCustomerMore(this.state.orderType, this.state.searchText, this.state.dayOfWeek, pagenew);
+          }
+         
+           }
+          }
            onEndReachedThreshold={0.5}
            initialNumToRender={5}
            ListFooterComponent={
-             this.state.loadingMore ? (
+             this.props.customerMoreLoading ? (
                <View>
                  <ActivityIndicator />
                </View>
@@ -1004,7 +1060,8 @@ const mapStateToProps = (state: AppState) => ({
     CustomerDeleteIsSuccess: state.customerDelete.isSuccessCustomerDelete,
     isLoadingCustomerDelete : state.customerDelete.isLoadingCustomerDelete,
     message : state.customerDelete.message,
-    totalRecords : state.home.totalRecords
+    totalRecords : state.home.totalRecords,
+    customerMoreLoading : state.home.customerMoreLoading
   })
   function bindToAction(dispatch: any) {
     return {
@@ -1015,6 +1072,8 @@ const mapStateToProps = (state: AppState) => ({
   
       customerDelete: (customerId: number) =>
         dispatch(customerDelete(customerId)),
+        getNotificationCount: () =>
+        dispatch(getNotificationCount()),
     };
   }
 

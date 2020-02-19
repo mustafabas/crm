@@ -30,6 +30,7 @@ import { timingSafeEqual } from "crypto";
 import { type } from "os";
 import RBSheet from "react-native-raw-bottom-sheet";
 import stylesNew from "../../styles";
+import styles from "../../styles";
 import { stat } from "fs";
 import SvgIcon from 'react-native-svg-icon';
 import svgs from '../../../images/icomoon/SVG/svgs';
@@ -110,14 +111,6 @@ class Employee extends Component<Props, State> {
     if (navigation.getParam("Type") === "2") {
       return {
         title: 'Çalışanlar',
-        headerStyle: {
-          backgroundColor: '#216AF4',
-          justifyContent: 'center'
-        },
-        headerTintColor: '#fff',
-        headerTitleStyle: {
-          fontWeight: 'bold',
-        },
       }
     }
     else {
@@ -127,13 +120,7 @@ class Employee extends Component<Props, State> {
         headerRight: <TouchableOpacity style={{ marginRight: 20 }} onPress={() => navigation.navigate("AddEmployee")}>
           <Icon style={{ color: '#ffff' }} name="ios-add-circle" />
         </TouchableOpacity>,
-        headerStyle: {
-          backgroundColor: '#216AF4',
-        },
-        headerTintColor: '#fff',
-        headerTitleStyle: {
-          fontWeight: 'bold',
-        },
+      
       }
     }
   };

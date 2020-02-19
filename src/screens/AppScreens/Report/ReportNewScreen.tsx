@@ -133,15 +133,17 @@ componentWillMount(){
             data={data}
           />
 
-          <View style={{alignItems:'flex-start',marginTop:widthOfDimensions/15}}>
+          <View style={{marginTop:widthOfDimensions/15,flexShrink:1}}>
             
          
 
               <FlatList
         data={top5Item}
-        renderItem={({ item }) =>  <View style={{flexDirection:'row'}}>
+        renderItem={({ item }) =>  <View style={{flexDirection:'row',flexShrink:1,marginRight:20}}>
         <View style={{width:18,height:18,backgroundColor:colors[top5Item.indexOf(item)]}}></View>
-        <Text style={{fontFamily:'Avenir Next',marginLeft:10,color:'white'}}>{item.name}</Text>
+
+      <Text style={{fontFamily:'Avenir Next',marginLeft:10,color:'white',flexWrap:'wrap'}}>{item.name}</Text>
+
         </View>
         }
         ItemSeparatorComponent ={() => <View style={{marginTop:10}}>
