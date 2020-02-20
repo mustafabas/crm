@@ -28,7 +28,7 @@ export default class AppNew extends Component {
         var previousDS = this.state.ds
         this.setState({ callStates:  updatedCallStates, ds: previousDS.cloneWithRows(updatedCallStates)});
       },
-      false, // if you want to read the phone number of the incoming call [ANDROID], otherwise false
+      true, // if you want to read the phone number of the incoming call [ANDROID], otherwise false
       ()=>{}, // callback if your permission got denied [ANDROID] [only if you want to read incoming number] default: console.error
       {
         title: 'Phone State Permission',
