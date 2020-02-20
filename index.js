@@ -8,4 +8,4 @@ import HomeComponent from './src/components/CallDetecterComponent';
 import {name as appName} from './app.json';
 import AppNew from './AppNew'
 
-AppRegistry.registerComponent(appName, () => AppNew);
+AppRegistry.registerComponent(appName, () => App);

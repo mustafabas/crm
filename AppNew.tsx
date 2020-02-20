@@ -5,7 +5,7 @@ import {
   View,
   Button,
   Linking,
-  ListView
+  
 } from 'react-native';
 
 var callDetector = undefined
@@ -15,18 +15,17 @@ import CallDetectorManager from 'react-native-call-detection'
 export default class AppNew extends Component {
   constructor(props) {
     super(props)
-    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
-    this.state = {callStates : [], ds: ds} //call states
+
+
     this.startListenerTapped = this.startListenerTapped.bind(this);
   }
 
   startListenerTapped() {
     callDetector = new CallDetectorManager((event, number) => {
-        var updatedCallStates = this.state.callStates
-        updatedCallStates.push(event + ' - ' + number)
-        var previousDS = this.state.ds
-        this.setState({ callStates:  updatedCallStates, ds: previousDS.cloneWithRows(updatedCallStates)});
+
+
+       console.log(event + ' - ' + number)
       },
       true, // if you want to read the phone number of the incoming call [ANDROID], otherwise false
       ()=>{}, // callback if your permission got denied [ANDROID] [only if you want to read incoming number] default: console.error
@@ -49,7 +48,7 @@ export default class AppNew extends Component {
   }
 
   render() {
-    console.log(this.state.callStates)
+
     return (
       <View style={styles.container}>
         <Button
@@ -76,10 +75,7 @@ export default class AppNew extends Component {
           Call State Logs
         </Text>
 
-        <ListView
-          dataSource={this.state.ds}
-          renderRow={(rowData) => <Text style = {styles.callLogs}>{rowData}</Text>}
-        />
+
       </View>
     );
   }
