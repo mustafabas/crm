@@ -12,6 +12,7 @@ import io.invertase.firebase.messaging.RNFirebaseMessagingPackage; // <-- Add th
 import io.invertase.firebase.notifications.RNFirebaseNotificationsPackage;
 import java.util.List;
 import com.pritesh.calldetection.CallDetectionManager;
+import com.microsoft.codepush.react.CodePush;
 public class MainApplication extends Application implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost =
@@ -37,6 +38,12 @@ public class MainApplication extends Application implements ReactApplication {
         protected String getJSMainModuleName() {
           return "index";
         }
+
+        @Override
+        protected String getJSBundleFile() {
+            return CodePush.getJSBundleFile();
+        }
+        
       };
 
   @Override

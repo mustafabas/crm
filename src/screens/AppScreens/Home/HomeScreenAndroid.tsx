@@ -10,7 +10,7 @@ import {
   Image,
   Animated
   , TouchableOpacity,
-  ActivityIndicator, Picker
+  ActivityIndicator, Picker, PermissionsAndroid
 } from 'react-native';
 import {
   statusBarHeight,
@@ -46,7 +46,7 @@ const vw: number = SafeAreaWithHeader.vw;
 const vh: number = SafeAreaWithHeader.vh;
 
 const title = "Home Screen"
-
+import CallLogs from 'react-native-call-log'
 
 
 
@@ -297,6 +297,25 @@ stopListenerTapped() {
  
 
 
+  async getCallLog(){
+    const granted = await PermissionsAndroid.request(
+    PermissionsAndroid.PERMISSIONS.READ_CALL_LOG,
+    {
+      title: 'Call Log Example',
+      message:
+        'Access your call logs',
+      buttonNeutral: 'Ask Me Later',
+      buttonNegative: 'Cancel',
+      buttonPositive: 'OK',
+    }
+  )
+  if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+    console.log(CallLogs);
+    CallLogs.load(5).then(c => console.log(c));
+  } else {
+    console.log('Call Log permission denied');
+  }
+}
 
   componentDidMount() {
     firebase.messaging().onMessage((message: RemoteMessage) => {
@@ -334,7 +353,7 @@ stopListenerTapped() {
       this.startListenerTapped()
     }
   
-
+    this.getCallLog()
 
   }
 

@@ -81,6 +81,7 @@ project.ext.react = [
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
+apply from: "../../node_modules/react-native-code-push/android/codepush.gradle"
 
 /**
  * Set this to true to create two separate APKs instead of one:
@@ -131,7 +132,7 @@ android {
         applicationId "com.bayimsu"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 2
+        versionCode 17
         versionName "1.0.1"
     }
     splits {
@@ -162,13 +163,25 @@ android {
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
+    resValue "string", "CodePushDeploymentKey", '""'
+     applicationIdSuffix ".debug"
+
         }
+         releaseStaging {
+            resValue "string", "CodePushDeploymentKey", 'qFJ6mfOvJfI5Xo0U08n2131Hl1AcitRhwQaRc'
+            // Note: It is a good idea to provide matchingFallbacks for the new buildType you create to prevent build issues
+            // Add the following line if not already there
+            matchingFallbacks = ['release']
+
+        }
+        
         release {
             // Caution! In production, you need to generate your own keystore file.
             // see https://facebook.github.io/react-native/docs/signed-apk-android.
             signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            resValue "string", "CodePushDeploymentKey", 'zncY1lCIuuQkVhmZhkKCUhCKAErPoNb9wlZnX'
         }
     }
     // applicationVariants are e.g. debug, release
