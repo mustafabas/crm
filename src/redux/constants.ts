@@ -72,6 +72,8 @@ export const WATER_GET_NEW_NOTIFICATION_COUNT  = WATER_BASE_URL_NEW+"/api/notifi
 export const WATER_NOTIFICATIONS_UPDATED_VIEWED = WATER_BASE_URL_NEW+'/api/notification/UpdateSeen'
 export const WATER_NOTIFICATION_DELETE_BYID=  WATER_BASE_URL_NEW+"/api/notification";
 export const WATER_NOTIFICATION_TOKEN_DELETE = WATER_BASE_URL_NEW + "/api/User/TokenDelete"
+export const WATER_ANDROID_UPDATE_AVAILABLE = WATER_BASE_URL_NEW + '/api/andoridUpdate'
+
 export const WATER_GET_CUSTOMER_ORDER_DETAIL = WATER_BASE_URL_NEW  + '/api/Order/OrderDetail'
 
 export const WATER_UPDATE_CUSTOMER_ORDER_STATUS = WATER_BASE_URL_NEW + '/api/Order/UpdateOrderStatus'

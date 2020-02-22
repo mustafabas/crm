@@ -16,6 +16,7 @@ import Axios from "axios";
 import { WATER_CREATE_NOTIFICATION } from "../../redux/constants";
 import firebase from 'react-native-firebase'
 import VersionNumber from 'react-native-version-number';
+import { updateAndroidIfAvailable } from "../../services/RequestService";
 interface Props {
   navigation: NavigationScreenProp<NavigationState>;
 }
@@ -57,18 +58,9 @@ class AuthLoading extends React.Component<Props, State> {
 
 
   componentWillMount(){
-    // console.log(VersionNumber.appVersion);
-console.log(VersionNumber.buildVersion);
-// console.log(VersionNumber.bundleIdentifier);
-    Alert.alert(
-      'Uygulamaya Güncelleme Geldi',
-      'Yeni halini kullanmak için güncelleye bas',
-      [
-        
-        {text: 'Güncelle', onPress: () => console.log('OK Pressed')},
-      ],
-      {cancelable: false},
-    );
+    if(Platform.OS === "android") {
+      updateAndroidIfAvailable()
+    }
   }
 
 
