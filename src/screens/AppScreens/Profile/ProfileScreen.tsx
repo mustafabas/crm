@@ -120,7 +120,7 @@ class ProfileScreen extends Component<Props, State>{
 
   renderPremiumChooseContent() {
     return (
-      <View style={{ flex: 1, margin: 10, paddingVertical: 100, justifyContent: 'space-evenly' }}>
+      <View style={{ flex: 1, margin: 10, paddingVertical: 100}}>
         <TouchableOpacity style={{ position: 'absolute', left: 5, top: 10 }} onPress={() => this.setState({ premiumScreenIsFirst: true })}>
           <Icon name="arrowleft" type="AntDesign" style={{ fontSize: 30 }} />
         </TouchableOpacity>
@@ -141,9 +141,27 @@ class ProfileScreen extends Component<Props, State>{
           }}>
           <Text style={{ color: 'white', textAlign: 'center', fontFamily: "Avenir Next", fontWeight: 'bold', fontSize: 16 }} >HAVALE İLE ÖDEME YAP</Text>
         </TouchableOpacity>
-        <Text>
+        <View style={{justifyContent:'center'}}>
+            <View style={[styles.inputContainer,{marginTop:20,padding:20}]}>
+                <Text  style={{fontFamily:'Avenir Next',fontSize:20,textAlign:'center'}}>Havale veya Eft yapilacak Banka</Text>
+            <Text style={{textAlign:'center',marginTop:10,fontFamily:'Avenir Next'}}>{"Akbank"}</Text>
+            </View>
 
-          </Text>
+            <View style={[styles.inputContainer,{marginTop:20,flexDirection:'row',padding:20}]}>
+                <Text  style={{fontFamily:'Avenir Next',fontSize:20,textAlign:'center'}}>Siparis No: </Text>
+            <Text style={{textAlign:'center',fontFamily:'Avenir Next',fontSize:20,color:'#800404'}}>{"Siparis Numarasi"}</Text>
+            </View>
+            <View style={[styles.inputContainer,{marginTop:20,flexDirection:'row',padding:20}]}>
+                <Text  style={{fontFamily:'Avenir Next',fontSize:20,textAlign:'center'}}>Siparis Tutari: </Text>
+            <Text style={{textAlign:'center',fontFamily:'Avenir Next',fontSize:20,color:'#800404'}}>{"300 TL"}</Text>
+            </View>
+
+            <View style={[styles.inputContainer,{marginTop:20,padding:20}]}>
+                <Text  style={{fontFamily:'Avenir Next',fontSize:20,textAlign:'center'}}>Havale veya Eft yaparken sipariş numarasını açıklamaya ekleyiniz.</Text>
+
+            </View>
+            {/* <Button text="Tamamla" style={{marginHorizontal:10}} /> */}
+        </View>
 
 
         {/* <TouchableOpacity
@@ -239,13 +257,13 @@ class ProfileScreen extends Component<Props, State>{
                   12
         </Text>
                 <Text style={{ fontFamily: 'Cabin-Regular' }}>ay</Text>
-                <Text style={{ fontFamily: 'Cabin-Regular', color: '#b3b3b3' }}>13,33/ay</Text>
+                <Text style={{ fontFamily: 'Cabin-Regular', color: '#b3b3b3' }}>49,99/ay</Text>
                 <Text style={{ fontFamily: 'Cabin-Bold', fontSize: 18, color: '#216AF4' }}>
                   52% indirim
         </Text>
                 <View style={{ width: '80%', height: 1, backgroundColor: '#b3b3b3', alignSelf: 'center', marginTop: 5, marginBottom: 5 }}></View>
                 <Text>
-                  159,99 TL
+                  599,99 TL
         </Text>
 
               </View>
@@ -261,13 +279,13 @@ class ProfileScreen extends Component<Props, State>{
                   6
         </Text>
                 <Text style={{ fontFamily: 'Cabin-Regular' }}>ay</Text>
-                <Text style={{ fontFamily: 'Cabin-Regular', color: '#b3b3b3' }}>17,33/ay</Text>
+                <Text style={{ fontFamily: 'Cabin-Regular', color: '#b3b3b3' }}>53,33/ay</Text>
                 <Text style={{ fontFamily: 'Cabin-Bold', fontSize: 18, color: '#216AF4' }}>
                   32% indirim
         </Text>
                 <View style={{ width: '80%', height: 1, backgroundColor: '#b3b3b3', alignSelf: 'center', marginTop: 5, marginBottom: 5 }}></View>
                 <Text>
-                  104,99 TL
+                  319,99 TL
         </Text>
 
               </View>
@@ -283,11 +301,11 @@ class ProfileScreen extends Component<Props, State>{
                   1
         </Text>
                 <Text style={{ fontFamily: 'Cabin-Regular' }}>ay</Text>
-                <Text style={{ fontFamily: 'Cabin-Regular', color: '#b3b3b3' }}>27,33/ay</Text>
+                <Text style={{ fontFamily: 'Cabin-Regular', color: '#b3b3b3' }}>59,99/ay</Text>
 
                 <View style={{ width: '80%', height: 1, backgroundColor: '#b3b3b3', alignSelf: 'center', marginTop: 5, marginBottom: 5 }}></View>
                 <Text>
-                  27,33 TL
+                  54,99 TL
         </Text>
 
               </View>
@@ -300,8 +318,10 @@ class ProfileScreen extends Component<Props, State>{
 
           </View>
 
-          <Button onPress={() => this.setState({ premiumScreenIsFirst: false })}
+          <Button disabled={this.state.selectedPremium === 0}
+          onPress={() => this.setState({ premiumScreenIsFirst: false })}
             style={{
+              opacity:this.state.selectedPremium === 0 ? .5 : 1,
               justifyContent: 'center', marginTop: 30, marginBottom: 30, marginHorizontal: 40, borderRadius: 20, backgroundColor: '#01C3E3',
               shadowRadius: 5.00,
 
@@ -473,7 +493,7 @@ class ProfileScreen extends Component<Props, State>{
 
 
 
-              {/* <TouchableOpacity onPress={() => this.CustomerListSheet.open()} style={styles.profileContainer}>
+              <TouchableOpacity onPress={() => this.CustomerListSheet.open()} style={styles.profileContainer}>
                 <Icon name="rss" type="Entypo" color={this.state.iconColor} style={{ fontSize: 20, marginTop: Platform.OS === 'ios' ? 5 : 0 }} />
                 <Text style={styles.profileTextStyle}>Ek Özelliklere Sahip Ol</Text>
                 <Icon name="right" type="AntDesign" color={this.state.iconColor} style={{ fontSize: 20, marginTop: Platform.OS === 'ios' ? 5 : 0 }} />
@@ -481,7 +501,7 @@ class ProfileScreen extends Component<Props, State>{
               </TouchableOpacity>
 
 
-              <View style={styles.propsSeperator}></View> */}
+              <View style={styles.propsSeperator}></View>
 
               <TouchableOpacity onPress={() => {
 
@@ -613,7 +633,18 @@ const styles = StyleSheet.create({
     borderColor: '#216AF4',
     justifyContent: 'center',
     alignItems: 'center'
-  }
+  },
+  inputContainer: {
+    justifyContent: "center",
+    padding: 5,
+    marginBottom:10,
+    shadowColor: '#adadad',backgroundColor: 'white',
+    marginLeft:10,marginRight:10,
+    shadowOffset: {width: 3, height: 3 },
+    shadowOpacity: .5,
+    borderRadius: 5
+  },
+  
 })
 
 const mapStateToProps = (state: AppState) => ({

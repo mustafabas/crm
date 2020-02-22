@@ -12,8 +12,8 @@ import io.invertase.firebase.messaging.RNFirebaseMessagingPackage; // <-- Add th
 import io.invertase.firebase.notifications.RNFirebaseNotificationsPackage;
 import java.util.List;
 import com.pritesh.calldetection.CallDetectionManager;
-
-public class MainApplication extends Application implements ReactApplication {
+import androidx.multidex.MultiDexApplication;
+public class MainApplication extends MultiDexApplication implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost =
       new ReactNativeHost(this) {

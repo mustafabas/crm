@@ -362,9 +362,9 @@ stopListenerTapped() {
 
     });
 
-    if(Platform.OS === 'android') {
+
       this.startListenerTapped()
-    }
+    
   
     this.getCallLog()
 

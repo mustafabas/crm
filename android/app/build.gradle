@@ -134,6 +134,7 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 19
         versionName "1.0.2"
+        multiDexEnabled true
     }
     splits {
         abi {
@@ -204,6 +205,8 @@ dependencies {
     implementation "com.google.firebase:firebase-messaging:+"
     implementation 'me.leolin:ShortcutBadger:1.1.21@aar' 
     compile project(':react-native-call-detection')
+    def multidex_version = "2.0.1"
+    implementation 'androidx.multidex:multidex:$multidex_version'
     
     if (enableHermes) {
         def hermesPath = "../../node_modules/hermes-engine/android/";
