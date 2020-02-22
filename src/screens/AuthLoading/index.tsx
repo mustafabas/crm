@@ -6,7 +6,8 @@ import {
   StyleSheet,
   View,
   PermissionsAndroid,
-  Platform
+  Platform,
+  Alert
 } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import {AsyncStorage } from 'react-native'
@@ -52,6 +53,19 @@ class AuthLoading extends React.Component<Props, State> {
       message: 'Bu izin gelen aramaları görmek içindir, onaylamak ister misiniz?'
       }) : null
 
+  }
+
+
+  componentWillMount(){
+    Alert.alert(
+      'Uygulamaya Güncelleme Geldi',
+      'Yeni halini kullanmak için güncelleye bas',
+      [
+        
+        {text: 'Güncelle', onPress: () => console.log('OK Pressed')},
+      ],
+      {cancelable: false},
+    );
   }
 
 

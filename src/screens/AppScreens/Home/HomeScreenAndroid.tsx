@@ -301,20 +301,33 @@ stopListenerTapped() {
     const granted = await PermissionsAndroid.request(
     PermissionsAndroid.PERMISSIONS.READ_CALL_LOG,
     {
-      title: 'Call Log Example',
+      title: 'Müşterilerinizden gelen aramalar',
       message:
-        'Access your call logs',
+        'Müşterileriniz sizi aradığında bildirim alın',
       buttonNeutral: 'Ask Me Later',
       buttonNegative: 'Cancel',
       buttonPositive: 'OK',
     }
   )
-  if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-    console.log(CallLogs);
-    CallLogs.load(5).then(c => console.log(c));
-  } else {
-    console.log('Call Log permission denied');
-  }
+  // if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+  //   console.log(CallLogs);
+  //   CallLogs.load(5).then(c => {
+      
+  //     let LastPhoneNumber = c[0].phoneNumber
+  //     if(LastPhoneNumber){
+  //       this.setState({detectedPhoneNumber : LastPhoneNumber} ,()=>{
+          
+  //         this.props.detectUserFromCall(LastPhoneNumber);
+  //         this.customerDetectFromCall.open()
+  //       })
+  
+  //     }
+
+
+  //   });
+  // } else {
+  //   console.log('Call Log permission denied');
+  // }
 }
 
   componentDidMount() {
