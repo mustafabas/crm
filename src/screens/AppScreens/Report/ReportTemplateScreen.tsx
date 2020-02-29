@@ -404,8 +404,12 @@ console.log("Aylar")
             listOfMonths.push({monthId : moment().subtract(i,'month').format("M"),monthName : moment().subtract(i,'month').format("MMMM"),startOfMonth :moment().subtract(i,'month').startOf('month').format(),endOfMonth : moment().subtract(i, "M").endOf('month').format()})
         }
         this.setState({listOfMonth : listOfMonths})
-        this.toggleMarginLeft(0)
+        //bi aylik rapor baslangic icin
+        // this.toggleMarginLeft(0)
+        let nowOfDay = moment().format('DD.MM.YYYY')
 
+        this.setState({startDateString : nowOfDay , endDateString : nowOfDay})
+        this.props.GetReport(nowOfDay,nowOfDay)
     }
 
     onRefresh() {

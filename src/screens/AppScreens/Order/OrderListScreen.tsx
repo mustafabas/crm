@@ -111,6 +111,10 @@ class OrderListScreen extends Component<Props, {}> {
                 <Text  style={{textAlign:'right',flex:.4,fontFamily:'Avenir Next'}}>
                     {item.productName}
                 </Text>
+                {/* <TouchableOpacity sty>
+                    <Icon name="ios-more" />
+                </TouchableOpacity> */}
+
 
             </View>
 

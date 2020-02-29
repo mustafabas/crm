@@ -3,6 +3,7 @@ import axios from 'axios'
 import { WATER_NOTIFICATION_DELETE_BYID, WATER_NOTIFICATION_TOKEN_DELETE, WATER_ANDROID_UPDATE_AVAILABLE } from '../redux/constants'
 import { AsyncStorage, Alert, Linking } from 'react-native';
 import VersionNumber from 'react-native-version-number';
+
 export const updateAndroidIfAvailable = () => {
 
   console.log(VersionNumber.appVersion)
