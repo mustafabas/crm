@@ -31,6 +31,16 @@ import { InfoItem } from "../../../components/InfoItem";
 import RBSheet from "react-native-raw-bottom-sheet";
 import { NotificationService } from "../../../services/NotificationService";
 import styles from "./styles";
+
+
+interface product {
+  productId : number;
+  unitPrice : number;
+  productCount : number; 
+  productCode : string;
+
+
+}
 interface Props {
   navigation: NavigationScreenProp<NavigationState>;
   isProductLoading: boolean;
@@ -62,6 +72,8 @@ interface State {
   orderAddedSuccessfully: boolean;
   selectedEmployee : number;
   notificationIsSend : boolean;
+  productList : product[];
+
 }
 
 interface Item {
@@ -137,7 +149,8 @@ class orderAdd extends Component<Props, State> {
       selectedProductValue : null,
       orderAddedSuccessfully : false,
       selectedEmployee : 0,
-      notificationIsSend : false
+      notificationIsSend : false,
+      productList : [{productId:-1,productCount:1,unitPrice:0,productCode:""}],
 
     };
    
@@ -313,6 +326,28 @@ _renderChooseEmployeeContent(){
   )
 }
 
+changeValueOfProductList(type : string, value : string,index : number){
+
+  var list = this.state.productList ; 
+  var listItem = list[index];
+  if(type === "productId"){
+    // this.setState({
+    //   selected2: value,
+    //   // selectedProductValue : ,
+    //   productId: value,
+    // },   );
+    listItem.productCode = this.props.products.find(task => (task.productId=== Number(value)), this)?.productCode ?? ""
+     this.props.GetProduct(Number(value), this.props.navigation.getParam("customerId"))
+  }
+  listItem = {
+    ...listItem,
+    [type] : value
+  }
+  list[index] = listItem
+  this.setState({productList : list});
+
+}
+
 renderContent(){
 
   const initialValues: input = {
@@ -337,91 +372,97 @@ renderContent(){
   }else {
     return (
        
-      <Formik
-      enableReinitialize
-      initialValues={initialValues}
-      validationSchema={girdiler}
-      onSubmit={values => this.siparisOlustur(values)}
-    >
-      {props => {
-        return (
-          <View>
-            <View>
-            </View>
-            <View style={[styles.rnpickerselect,{paddingTop:20,paddingRight:20}]}>
+    //   <Formik
+    //   enableReinitialize
+    //   initialValues={initialValues}
+    //   validationSchema={girdiler}
+    //   onSubmit={values => this.siparisOlustur(values)}
+    // >
+    //   {props => {
+    //     return (
+        
+    //   );
+    //   }}
+    // </Formik>
 
 
-  
-              </View>
-            <View style={[styles.inputContainer,{paddingTop:0}]}>
-            <Picker
+    <View>
+    <View>
+    </View>
+    <View style={[styles.rnpickerselect,{paddingTop:20,paddingRight:20}]}>
+
+
+
+      </View>
+    <View style={[styles.inputContainer,{paddingTop:0}]}>
+    <Picker
 placeholderStyle={{width:'100%'}}
 headerStyle={{backgroundColor:'#2069F3'}}
 headerTitleStyle={{color:'white',fontFamily:'Avenir Next',fontSize:18}}
 // headerStyle={{backgroundColor: '#2B6EDC'}}
 iosHeader="Ürünler"
 headerBackButtonTextStyle={{color:'white'}}
-        mode="dropdown"
-        iosIcon={<Icon name="ios-arrow-down" />}
-        style={{ width:'100%'}}
-        placeholder="Ürün Seçimi"
-        placeholderStyle={{ color: "#bfc6ea" }}
-        placeholderIconColor="#007aff"
-        selectedValue={this.state.selected2}
-        // onValueChange={this.onValueChange2.bind(this)}
-        onValueChange={(itemValue, itemIndex) =>
-          this.onValueChange2(itemValue)
-        }>
+mode="dropdown"
+iosIcon={<Icon name="ios-arrow-down" />}
+style={{ width:'100%'}}
+placeholder="Ürün Seçimi"
+placeholderStyle={{ color: "#bfc6ea" }}
+placeholderIconColor="#007aff"
+selectedValue={this.state.productList[index].productId}
+// onValueChange={this.onValueChange2.bind(this)}
+onValueChange={(itemValue, itemIndex) =>
+  this.changeValueOfProductList("productId",itemValue,index)
+}>
+
+{this.PickerMenuCreate().map((res)=> {
+    return (
+      <Picker.Item label={res.label} value={res.value} />
+    )
+})}
+
+
+</Picker>
+
+
+      <View style={styles.input}>
+       <Item floatingLabel>
+        <Label style={{fontFamily:'Avenir Next',fontSize:18,}}>
+        Ürün Adedi:
+        </Label>
+        <Input
+          placeholderTextColor="#9A9A9A"
+          keyboardType="numeric"
+          value={this.state.productList[index].productCount}
+          onChangeText={e => this.changeValueOfProductList("productCount",e,index)}
+          // onBlur={props.handleBlur("count")}
+        />
+       </Item>
+      </View>
+
+
+      <Text style={{fontFamily:'Avenir Next',fontSize:18,marginTop:20}}>Ürün Kodu: {this.state.selectedProductValue}</Text>
       
-        {this.PickerMenuCreate().map((res)=> {
-            return (
-              <Picker.Item label={res.label} value={res.value} />
-            )
-        })}
-        
+    <Item floatingLabel style={{marginTop:20}}>
+  <Label style={{fontFamily:'Avenir Next',fontSize:18}}>
+  Birim Fiyat: 
 
-      </Picker>
-
-
-              <View style={styles.input}>
-               <Item floatingLabel>
-                <Label style={{fontFamily:'Avenir Next',fontSize:18,}}>
-                Ürün Adedi:
-                </Label>
-                <Input
-                  placeholderTextColor="#9A9A9A"
-                  keyboardType="numeric"
-                  value={props.values.count}
-                  onChangeText={props.handleChange("count")}
-                  onBlur={props.handleBlur("count")}
-                />
-               </Item>
-              </View>
-
-
-              <Text style={{fontFamily:'Avenir Next',fontSize:18,marginTop:20}}>Ürün Kodu: {this.state.selectedProductValue}</Text>
-              
-            <Item floatingLabel style={{marginTop:20}}>
-          <Label style={{fontFamily:'Avenir Next',fontSize:18}}>
-          Birim Fiyat: 
-       
-          </Label>
-            
-             {/* <View style={styles.input}> */}
-                <Input
-                  // style={styles.input}
-                  // placeholder="Ürün Adedi"
-                  placeholderTextColor="#9A9A9A"
-                  keyboardType="numeric"
-                  value={String(props.values.unitPrice)}
-                  onChangeText={props.handleChange("unitPrice")}
-                  onBlur={props.handleBlur("unitPrice")}
-                />
-                </Item>
-              {/* </View>   */}
-              <View style={{margin:2}}></View>
-              <View style={{flexDirection:'row',marginTop:30}}>
-              <CheckBox
+  </Label>
+    
+     {/* <View style={styles.input}> */}
+        <Input
+          // style={styles.input}
+          // placeholder="Ürün Adedi"
+          placeholderTextColor="#9A9A9A"
+          keyboardType="numeric"
+          value={String(props.values.unitPrice)}
+          onChangeText={props.handleChange("unitPrice")}
+          onBlur={props.handleBlur("unitPrice")}
+        />
+        </Item>
+      {/* </View>   */}
+      <View style={{margin:2}}></View>
+      <View style={{flexDirection:'row',marginTop:30}}>
+      <CheckBox
 
 // containerStyle={styles.chechBoxContainer}             
 
@@ -433,55 +474,55 @@ onPress={() => this.setState({ status: !this.state.status })}
 <Label style={{marginLeft:20}}>
 Pesin Odeme
 </Label>
-              </View>
+      </View>
 
-                <Text style={styles.odenecekText}>Toplam Fiyat: {(Number(props.values.unitPrice.replace(",",".")) * Number(props.values.count))} TL</Text>
+        <Text style={styles.odenecekText}>Toplam Fiyat: {(Number(props.values.unitPrice.replace(",",".")) * Number(props.values.count))} TL</Text>
 
-              {/* <TouchableOpacity style={styles.siparisButtonContainer}>
-                <Text style={styles.amountButtonText}
-                 
-                >Sipariş Ekle</Text>
-              </TouchableOpacity> */}
+      {/* <TouchableOpacity style={styles.siparisButtonContainer}>
+        <Text style={styles.amountButtonText}
+         
+        >Sipariş Ekle</Text>
+      </TouchableOpacity> */}
 
 
 
-              <Button disabled={ this.state.orderAddedSuccessfully } onPress={props.handleSubmit}  style={{justifyContent:'center',marginTop:30,marginBottom:30,marginHorizontal:40,borderRadius:20,backgroundColor:'#01C3E3',
+      <Button disabled={ this.state.orderAddedSuccessfully } onPress={props.handleSubmit}  style={{justifyContent:'center',marginTop:30,marginBottom:30,marginHorizontal:40,borderRadius:20,backgroundColor:'#01C3E3',
+    shadowRadius: 5.00,
+    
+    elevation: 12,
+
+    shadowColor: "#006c7e",
+shadowOffset: {width: 3, height: 3 },
+shadowOpacity: .5,
+
+
+    }}>
+      {this.props.isLoading ? <Spinner  color='01C3E3' /> :   <Text  style={{color:'white',fontFamily:"Avenir Next",fontWeight:'bold',fontSize:16}} >Ekle</Text>}
+       
+
+</Button>
+
+{!this.state.notificationIsSend && this.state.orderAddedSuccessfully && this.props.notificationEmployee && this.props.notificationEmployee.userWithToken.length > 0  && <Button   onPress={()=> this.chooseEmployee.open()} style={{justifyContent:'center',marginTop:0,marginBottom:30,marginHorizontal:40,borderRadius:20,backgroundColor:'white',
             shadowRadius: 5.00,
             
             elevation: 12,
 
-            shadowColor: "#006c7e",
+            shadowColor: "#969696",
 shadowOffset: {width: 3, height: 3 },
 shadowOpacity: .5,
 
 
             }}>
-              {this.props.isLoading ? <Spinner  color='01C3E3' /> :   <Text  style={{color:'white',fontFamily:"Avenir Next",fontWeight:'bold',fontSize:16}} >Ekle</Text>}
-               
-   
+   <Text  style={{color:'#49B1FD',fontFamily:"Avenir Next",fontWeight:'bold',fontSize:16}} >Siparişi Ata</Text>
   </Button>
+}
 
- {!this.state.notificationIsSend && this.state.orderAddedSuccessfully && this.props.notificationEmployee && this.props.notificationEmployee.userWithToken.length > 0  && <Button   onPress={()=> this.chooseEmployee.open()} style={{justifyContent:'center',marginTop:0,marginBottom:30,marginHorizontal:40,borderRadius:20,backgroundColor:'white',
-                    shadowRadius: 5.00,
-                    
-                    elevation: 12,
 
-                    shadowColor: "#969696",
-    shadowOffset: {width: 3, height: 3 },
-    shadowOpacity: .5,
+    </View>
+  </View>
 
-    
-                    }}>
-           <Text  style={{color:'#49B1FD',fontFamily:"Avenir Next",fontWeight:'bold',fontSize:16}} >Siparişi Ata</Text>
-          </Button>
-      }
 
-  
-            </View>
-          </View>
-        );
-      }}
-    </Formik>
+
 
     )
   }
