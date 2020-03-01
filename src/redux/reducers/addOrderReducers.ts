@@ -46,10 +46,12 @@ export default (state: AddOrder = initalState, action: Action) => {
       }
       case GET_EMPLOYEE_TOKENS:
         return {
+          ...state,
           notificationEmployee : action.payload
         }
       case GET_LAST_ORDER_SUCCEED:
         return {
+          ...state,
           lastOrder : action.payload
         }
     default:

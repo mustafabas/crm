@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {WATER_ADD_ORDER,WATER_ADD_ORDER_MULTIPLE_PRODUCT, WATER_GET_LAST_ORDER} from './../constants'
+import {WATER_ADD_ORDER,WATER_ADD_ORDER_MULTIPLE_PRODUCT, WATER_GET_LAST_ORDER, WATER_ADD_ORDER_AGAIN} from './../constants'
 import { Dispatch } from "react";
 import {ADD_ORDER_SUCCEED,ADD_ORDER_FAILED, ADD_ORDER_IS_LOADING, GET_EMPLOYEE_TOKENS, GET_LAST_ORDER_SUCCEED} from './../types'
 import {Action} from '../states'
@@ -59,7 +59,7 @@ export function getLastOrder(customerId : number) {
 
 return (dispatch : Any) =>  {
 
-  
+
       AsyncStorage.multiGet(['userToken', 'userId']).then((res) => {
         let token = res[0][1];
         let userId = res[1][1];
@@ -105,9 +105,72 @@ return (dispatch : Any) =>  {
 
 }
 
+export function addOrderAgain(orderId : number,customerId : number) {
+
+  return (dispatch : Any) =>  {
+
+
+
+
+    dispatch(isLoading(true))
+        AsyncStorage.multiGet(['userToken', 'userId']).then((res) => {
+          let token = res[0][1];
+          let userId = res[1][1];
+          
+          const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        }
+        console.log(WATER_ADD_ORDER_AGAIN+ `?orderId=${orderId}&userId=${userId}`)
+        axios.get(WATER_ADD_ORDER_AGAIN+ `?orderId=${orderId}&userId=${userId}`,{
+            headers : headers
+          })
+        .then((response) =>{
+        if(response.data.isSuccess){
+            if(response.data.result){
+    
+    
+              let data = response.data.result.userWithTokenItemResponses;
+              var notificationItemList: { id: any; name: any; tokens: any; }[]  = []
+              data.forEach(((element:any) => {
+    
+                notificationItemList.push({id : element.id,name:element.name , tokens : element.tokens})
+                
+                
+              }));
+              var notificationEmployee = {} as notificationEmployee;
+              notificationEmployee.userWithToken = notificationItemList;
+              notificationEmployee.orderId = response.data.result.orderId;
+              dispatch(getEmployeeList(notificationEmployee));
+    
+              dispatch(addOrder(true, "Sipariş Alındı!"));
+              dispatch(reset())
+              dispatch(GetOrders(customerId, 1, 10))
+              dispatch(GetCustomerDetail(customerId));
+              dispatch(getCustomerOrders(false))
+            }
+          }
+        })
+        .catch(error => {   
+          console.log(error)
+          dispatch(addOrder(false,"Sipariş eklenirken bir hata oluştu."));
+          dispatch(reset())
+        });
+    
+      }).catch(err=> {
+        console.log(err)
+        dispatch(addOrder(false,"Bir Hata Meydana Geldi."));
+        dispatch(reset())
+      })
+      
+    
+      }
+
+
+  
+}
 
 export function AddOrderMultiple(productList : product[],isPaid : boolean,customerId : number) {
-
 
 
 
@@ -170,7 +233,7 @@ productList.map((element) => {
             dispatch(reset())
             dispatch(GetOrders(customerId, 1, 10))
             dispatch(GetCustomerDetail(customerId));
-            dispatch(getCustomerOrders())
+            dispatch(getCustomerOrders(false))
           }
         }
       })
@@ -243,7 +306,7 @@ dispatch(isLoading(true))
           dispatch(reset())
           dispatch(GetOrders(customerId, 1, 10))
           dispatch(GetCustomerDetail(customerId));
-          dispatch(getCustomerOrders())
+          dispatch(getCustomerOrders(false))
         }
       }
     })

@@ -91,7 +91,7 @@ export function updateCustomerOrderStatus(orderStatus : OrderStatus, orderId : n
      dispatch(updateOrderStatus("Sipariş Durumunuz Güncellendi."))
      dispatch(reset())
      dispatch(getCustomerOrderDetail(orderId))
-     dispatch(getCustomerOrders())
+     dispatch(getCustomerOrders(false))
 
     }else {
         dispatch(isLoadingStatusUpdate(false,"Sipariş durumunuz güncellenemedi daha sonra tekrar deneyim."))

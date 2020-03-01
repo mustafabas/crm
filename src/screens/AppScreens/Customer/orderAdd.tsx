@@ -21,7 +21,7 @@ import { connect } from "react-redux";
 import { AppState } from "../../../redux/store";
 import { GetProducts } from "../../../redux/actions/productAction";
 import { IProductItem } from "../../../redux/models/productAddModel";
-import { AddOrder, notificationEmployee ,AddOrderMultiple, lastOrderInterface, getLastOrder} from "../../../redux/actions/addOrderAction";
+import { AddOrder, notificationEmployee ,AddOrderMultiple, lastOrderInterface, getLastOrder, addOrderAgain} from "../../../redux/actions/addOrderAction";
 // import { IAddOrderItem } from "../redux/models/addOrderModel";
 import { GetProduct, resetProduct } from "../../../redux/actions/productForCustomerAction";
 import { IProductForCustomerItem } from "../../../redux/models/productForCustomerModel";
@@ -58,6 +58,7 @@ interface Props {
   isTried : boolean;
   isLoading : boolean;
   lastOrder : lastOrderInterface;
+  addOrderAgain : (orderId : number,customerId : number) => void;
   
 }
 
@@ -531,7 +532,8 @@ renderContent(){
   }else {
 
     var lastOrderProductList = ""
-    if(this.props.lastOrder &&  this.props.lastOrder.orderProducts) {
+    console.log(this.props.lastOrder, "lastOrder")
+    if(this.props.lastOrder && this.props.lastOrder.orderProducts &&  this.props.lastOrder.orderProducts.length > 0) {
       let indexOfList = this.props.lastOrder.orderProducts.length > 2 ? 3 : this.props.lastOrder.orderProducts.length
       for (let index = 0; index < indexOfList; index++) {
         lastOrderProductList = lastOrderProductList + ", " + this.props.lastOrder.orderProducts[index].productName;
@@ -627,10 +629,12 @@ shadowOpacity: .5,
   </Button>
 }
 
-<TouchableOpacity onPress={() => this.lastOrderList.open() }
-style={{alignSelf:'flex-end',width:"50%"}}>
-  <Text style={{fontFamily : "Avenir Next",textDecorationLine:"underline"}}>{lastOrderProductList} Siparişini Tekrarla</Text>
-</TouchableOpacity>
+{lastOrderProductList.length > 0 && 
+  <TouchableOpacity onPress={() => this.lastOrderList.open() }
+  style={{alignSelf:"center"}}>
+    <Text style={{fontFamily : "Avenir Next",textDecorationLine:"underline"}}>{lastOrderProductList} Siparişini Tekrarla</Text>
+  </TouchableOpacity>
+}
 
     </View>
   </View>
@@ -671,6 +675,9 @@ renderLastOrderList() {
         keyExtractor={item => item.productId}
       />
 <TouchableOpacity 
+onPress={()=> {
+  this.lastOrderList.close()
+  this.props.addOrderAgain(this.props.lastOrder.orderId,this.props.navigation.getParam("customerId"))}}
         style={{borderWidth:3,borderRadius:10,marginTop:20,marginHorizontal:10,paddingVertical:5,borderColor:'#216AF4',backgroundColor:'white'}}>
  <Text style={{fontFamily:'Avenir Next',fontSize:16,paddingVertical:5,textAlign:'center',color:  'black'}}>
     Siparişi Tekrarla
@@ -807,7 +814,9 @@ function bindToAction(dispatch: any) {
       AddOrderMultiple : (productList : product[],isPaid : boolean,customerId : number) =>
       dispatch(AddOrderMultiple(productList,isPaid,customerId)),
       getLastOrder : (customerId : number) => 
-      dispatch(getLastOrder(customerId ))
+      dispatch(getLastOrder(customerId )),
+      addOrderAgain : (orderId : number,customerId : number) => 
+      dispatch(addOrderAgain(orderId,customerId))
   };
 }
 
