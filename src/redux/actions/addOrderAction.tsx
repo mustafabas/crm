@@ -1,7 +1,7 @@
 import axios from 'axios'
-import {WATER_ADD_ORDER,WATER_ADD_ORDER_MULTIPLE_PRODUCT} from './../constants'
+import {WATER_ADD_ORDER,WATER_ADD_ORDER_MULTIPLE_PRODUCT, WATER_GET_LAST_ORDER} from './../constants'
 import { Dispatch } from "react";
-import {ADD_ORDER_SUCCEED,ADD_ORDER_FAILED, ADD_ORDER_IS_LOADING, GET_EMPLOYEE_TOKENS} from './../types'
+import {ADD_ORDER_SUCCEED,ADD_ORDER_FAILED, ADD_ORDER_IS_LOADING, GET_EMPLOYEE_TOKENS, GET_LAST_ORDER_SUCCEED} from './../types'
 import {Action} from '../states'
 
 import {AsyncStorage } from 'react-native'
@@ -39,7 +39,69 @@ interface addOrderInterface {
   isPaid : boolean;
   customerId : number;
   userId : number;
+}
+
+export interface lastOrderInterface {
+  orderId: number,
+  orderProducts: [
+      {
+        productId: number;
+        productName: string;
+        unitPrice: string;
+        count: number;
+        totalPrice: number;
+      }
+    ]
+}
+
+export function getLastOrder(customerId : number) {
+
+
+return (dispatch : Any) =>  {
+
   
+      AsyncStorage.multiGet(['userToken', 'userId']).then((res) => {
+        let token = res[0][1];
+        let userId = res[1][1];
+        
+        const headers = {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+      }
+
+      axios.get(WATER_GET_LAST_ORDER + `?customerId=${customerId}`,{
+          headers : headers
+        })
+      .then((response) =>{
+        var lastOrderItem = {} as lastOrderInterface;
+
+      if(response.data.isSuccess){
+          if(response.data.result){
+            let data = response.data.result;
+            lastOrderItem.orderId = data.orderId;
+            var orderList = []
+            data.orderProducts.forEach(element => {
+              orderList.push(element);
+
+            });
+            lastOrderItem.orderProducts = orderList;
+            dispatch(getLastOrderDispatch(lastOrderItem))
+          }
+        }
+      })
+      .catch(error => {   
+
+        dispatch(reset())
+      });
+  
+    }).catch(err=> {
+
+      dispatch(reset())
+    })
+    
+  
+    }
+
 
 }
 
@@ -217,4 +279,10 @@ export const isLoading = (loading : boolean) => ({
   export const getEmployeeList = (notificationEmployee : notificationEmployee) => ({
     type : GET_EMPLOYEE_TOKENS,
     payload : notificationEmployee
+  })
+
+
+  export const getLastOrderDispatch = (lastOrder : lastOrderInterface) => ({
+    type : GET_LAST_ORDER_SUCCEED,
+    payload : lastOrder
   })

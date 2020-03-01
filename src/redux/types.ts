@@ -103,6 +103,8 @@ export const PRODUCT_LOADING = "ProductLoading";
 
 export const ADD_ORDER_SUCCEED ="AddOrderSucceed";
 export const GET_EMPLOYEE_TOKENS = "GetEmployeeTokens"
+export const GET_LAST_ORDER_SUCCEED = "getLastOrderSucceed";
+
 
 export const ADD_ORDER_FAILED ="AddOrderFailed";
 export const ADD_ORDER_IS_LOADING = "AddOrderIsLoading";
