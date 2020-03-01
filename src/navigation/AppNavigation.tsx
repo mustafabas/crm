@@ -54,6 +54,7 @@ import productsWithImagesScreen from "../screens/AppScreens/Product/productsWith
 import NotificationScreen from "../screens/AppScreens/Notification/NotificationScreen";
 import OrderDetailScreen from '../screens/AppScreens/Customer/orderDetailScreen'
 import OrderListScreen from '../screens/AppScreens/Order/OrderListScreen'
+import getLastCallsScreen from '../screens/AppScreens/Home/getLastCallsScreen'
 import { IconBadge } from "../components/NotificationIconBadge";
 
 
@@ -207,7 +208,8 @@ const HomeStack = createStackNavigator({
   CustomerEdit: CustomerEditScreen,
   CustomerDefinedPriceAdd: CustomerDefinedPriceAddScreen,
   CustomerDefinedPrices: CustomerDefinedPricesScreen,
-  OrderDetail: OrderDetailScreen
+  OrderDetail: OrderDetailScreen,
+  getLastCalls : getLastCallsScreen
 
 }, {
   defaultNavigationOptions: {

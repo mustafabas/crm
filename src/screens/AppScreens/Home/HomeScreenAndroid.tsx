@@ -75,6 +75,7 @@ interface Props {
   detectUserFromCall : (phoneNumber : string)  => void;
   detectingCustomerLoading : boolean;
   detectedCustomer : ICustomerFromPhone | null;
+
 }
 
 
@@ -105,7 +106,8 @@ interface State {
   isShowDeleteView: boolean;
   isAnyCustomerValid: boolean;
   detectedPhoneNumber : string;
-  
+  lastFivePhoneNumber : string[];
+
 
 }
 
@@ -187,7 +189,8 @@ class HomeScreenAndroid extends Component<Props, State>{
       today: new Date(),
       isShowDeleteView: false,
       isAnyCustomerValid: false,
-      detectedPhoneNumber : ''
+      detectedPhoneNumber : '',
+      lastFivePhoneNumber : []
     };
   }
 
@@ -309,25 +312,26 @@ stopListenerTapped() {
       buttonPositive: 'OK',
     }
   )
-  // if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-  //   console.log(CallLogs);
-  //   CallLogs.load(5).then(c => {
+  if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+    console.log(CallLogs);
+    CallLogs.load(5).then(c => {
+      var list: string[] = []
+      c.map((element) => {
+        if(element.phoneNumber) {
+          list.push(element.phoneNumber)
+        }
+     
+      })
+      this.setState({lastFivePhoneNumber : list})
       
-  //     let LastPhoneNumber = c[0].phoneNumber
-  //     if(LastPhoneNumber){
-  //       this.setState({detectedPhoneNumber : LastPhoneNumber} ,()=>{
-          
-  //         this.props.detectUserFromCall(LastPhoneNumber);
-  //         this.customerDetectFromCall.open()
-  //       })
-  
-  //     }
+      // let LastPhoneNumber = c[0].phoneNumber
+      
 
 
-  //   });
-  // } else {
-  //   console.log('Call Log permission denied');
-  // }
+    });
+  } else {
+    console.log('Call Log permission denied');
+  }
 }
 
   componentDidMount() {
@@ -399,18 +403,20 @@ stopListenerTapped() {
 
             // borderBottomColor: borderBottomColor,
             zIndex: 1,
-            borderBottomWidth: 2
+            borderBottomWidth: 2,
+            paddingHorizontal:15
 
           }]}>
-          <View>
+           <TouchableOpacity onPress={() => this.props.navigation.navigate('getLastCalls',{phoneNumberList : this.state.lastFivePhoneNumber})} style={{ zIndex: -1,  marginBottom: 8 }}>
+            <Icon style={{ color: '#216AF4' }} name="ios-call" />
+          </TouchableOpacity>
 
-          </View>
           <TouchableOpacity>
             <Text style={styles.iOSTitle}>
               {this.state.HeaderTitle}
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => this.props.navigation.navigate('addCustomer')} style={{ zIndex: -1, marginLeft: -40, marginRight: 20, marginBottom: 8 }}>
+          <TouchableOpacity onPress={() => this.props.navigation.navigate('addCustomer')} style={{ zIndex: -1,  marginBottom: 8 }}>
             <Icon style={{ color: '#216AF4' }} name="ios-add-circle" />
           </TouchableOpacity>
         </View>
