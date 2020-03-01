@@ -8,12 +8,17 @@ import {Action} from '../states'
 import { IProductForCustomerItem } from "../models/productForCustomerModel";
 import { reset } from "./loginAction";
 
+export function resetProduct(){
+  return (dispatch : Dispatch<Action>) =>  {
+    dispatch(reset())
+  }
 
+}
 
 
 export function GetProduct(productId:number,customerId:number) {
 
-  return (dispatch : Dispatch<Action>) =>  {
+  return (dispatch : any) =>  {
 
     AsyncStorage.getItem("userToken").then((res) => {
       let userToken = res
@@ -42,6 +47,7 @@ export function GetProduct(productId:number,customerId:number) {
           productCode:response.data.result.productCode,
         }
         dispatch(products(productModel));
+        dispatch(resetProduct())
       }
      
     
@@ -69,4 +75,9 @@ export const loading = (loader : boolean) => ({
     payload : product,
   })
 
+
+  export const resetNew = () => ({
+    type : "reset",
+    payload : null
+  })
   
