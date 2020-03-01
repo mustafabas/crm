@@ -77,7 +77,8 @@ const introductionStack = createStackNavigator({
 
 const notificationStack = createStackNavigator(
   {
-    Notification: NotificationScreen
+    Notification: NotificationScreen,
+    OrderDetail: OrderDetailScreen
   }, {
   defaultNavigationOptions: {
     headerStyle: {

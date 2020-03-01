@@ -527,7 +527,7 @@ stopListenerTapped() {
                   <View style={{ width: 33, height: 33, borderRadius: 16.5, backgroundColor: '#2069F3', justifyContent: 'center', alignItems: 'center' }}>
                     <Text style={{ color: 'white' }}>{item.nameSurname.substring(0, 1)}</Text>
                   </View>
-                  <View style={{ flex: .3, justifyContent: 'center', marginTop: -5 }}>
+                  <View style={{ flex: .3, justifyContent: 'center', marginTop: Platform.OS === "ios" ? 0 : -5,marginLeft:10 }}>
               
                     <Text style={{ color: '#2069F3', fontWeight: '600', fontSize: 16, fontFamily: 'Avenir Next' }}>
                       {item.nameSurname}
