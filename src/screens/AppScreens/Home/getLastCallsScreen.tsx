@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { Header } from "../../../components";
 import styles from "./styles";
 
-import { Icon } from "native-base";
+import { Icon, Spinner } from "native-base";
 import RBSheet from "react-native-raw-bottom-sheet";
 import { AppState } from "../../../redux/store";
 import { detectUserFromCall } from "../../../redux/actions/homeAction";
@@ -28,12 +28,27 @@ interface State {
 }
 
 class getLastCallsScreen extends Component<Props, State> {
+
+
+    static navigationOptions = ({ navigation }: Props) => {
+        return {
+    
+          title: 'Son Aramalar',
+    
+    
+        }
+    
+    
+      };
+
+
   constructor(props: Props) {
     super(props);
     this.state = {
       page: 1,
       limit: 20,
       phoneList : this.props.navigation.getParam("phoneNumberList"),
+
       detectedPhoneNumber : "",
     };
   }
@@ -154,10 +169,16 @@ renderDetectCallContainer() {
           data={this.state.phoneList}
           renderItem={({ item }) => {
             return (
-                <TouchableOpacity  onPress= {()=> this.getCustomerByPhoneNumber(item)}>
-                    <Text>
-                        {item}
+                <TouchableOpacity  style={{padding:20,backgroundColor:"#EFF3F9",borderRadius:5,marginTop:10,marginHorizontal:10}}
+                onPress= {()=> this.getCustomerByPhoneNumber(item)}>
+                    <View style={{flexDirection :'row'}}>
+                    <Text style={{fontFamily : 'Avenir Next',fontSize:16,fontWeight:'600',color : "#216AF4"}}>
+                    Telefon Numarası: 
+                        </Text>
+                    <Text style={{fontFamily : 'Avenir Next',fontSize:16,marginLeft:10}}>
+                         {item}
                     </Text>
+                    </View>
                 </TouchableOpacity>
             );
           }}
