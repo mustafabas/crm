@@ -21,7 +21,7 @@ import { connect } from "react-redux";
 import { AppState } from "../../../redux/store";
 import { GetProducts } from "../../../redux/actions/productAction";
 import { IProductItem } from "../../../redux/models/productAddModel";
-import { AddOrder, notificationEmployee } from "../../../redux/actions/addOrderAction";
+import { AddOrder, notificationEmployee ,AddOrderMultiple} from "../../../redux/actions/addOrderAction";
 // import { IAddOrderItem } from "../redux/models/addOrderModel";
 import { GetProduct, resetProduct } from "../../../redux/actions/productForCustomerAction";
 import { IProductForCustomerItem } from "../../../redux/models/productForCustomerModel";
@@ -53,6 +53,7 @@ interface Props {
   GetProduct: (productId: number, customerId: number) => void;
   product: IProductForCustomerItem;
   resetProduct : () => void;
+  AddOrderMultiple : (productList : product[],isPaid : boolean,customerId : number) => void;
 
 
 
@@ -339,8 +340,11 @@ renderProducts(index : number){
 
 
 
-    <Picker
-placeholderStyle={{width:'95%',color: "#bfc6ea" }}
+    <View style={{flexDirection:'row'}}>
+<View style={{flex:.9}}>
+
+<Picker
+placeholderStyle={{color: "#bfc6ea"}}
 headerStyle={{backgroundColor:'#2069F3'}}
 headerTitleStyle={{color:'white',fontFamily:'Avenir Next',fontSize:18}}
 // headerStyle={{backgroundColor: '#2B6EDC'}}
@@ -348,7 +352,7 @@ iosHeader="Ürünler"
 headerBackButtonTextStyle={{color:'white'}}
 mode="dropdown"
 iosIcon={<Icon name="ios-arrow-down" />}
-style={{ width:'95%'}}
+style={{ flex:1}}
 placeholder="Ürün Seçimi"
 
 placeholderIconColor="#007aff"
@@ -366,6 +370,17 @@ onValueChange={(itemValue, itemIndex) =>
 
 
 </Picker>
+  </View>
+{index > 0 && this.state.productList.length - 1 === index && <TouchableOpacity 
+onPress={()=> {
+  var list = this.state.productList;
+  list.pop()
+  this.setState({productList:list})
+}}
+style={{flex:.1,marginTop:Platform.OS === 'ios' ? 5 : 0}}>
+  <Icon name="minus-circle" type="FontAwesome" style={{color:'#db5252'}} />
+</TouchableOpacity>}
+      </View>
 
 
 
@@ -377,7 +392,7 @@ onValueChange={(itemValue, itemIndex) =>
 
 <Item style={{flex:.5}} floatingLabel>
         <Label style={{fontFamily:'Avenir Next',fontSize:18,}}>
-        Ürün Adedi:
+        Adet:
         </Label>
         <Input
           placeholderTextColor="#9A9A9A"
@@ -424,8 +439,8 @@ onValueChange={(itemValue, itemIndex) =>
   }}
 
   
-  style={{marginLeft:10,marginTop:10}}>
-<Text style={{color:'#333',fontFamily:"Avenir Next",fontWeight:'bold',textDecorationLine:"underline"}} >Daha Fazla</Text>
+  style={{marginLeft:10,marginTop:10,backgroundColor:'#216AF4',borderRadius:5,padding:5,alignSelf: 'flex-start'}}>
+<Text style={{color:'white',fontFamily:"Avenir Next",fontWeight:'bold',textDecorationLine:"underline"}} >Daha Fazla Ekle</Text>
        
   </TouchableOpacity>}
   
@@ -470,6 +485,26 @@ renderListOfProducts(){
 
 
 
+}
+addOrderMulti(){
+
+  let lastProduct = this.state.productList[this.state.productList.length - 1];
+  if(lastProduct.productId!==null && lastProduct.productId > 0 && lastProduct.unitPrice!== null && lastProduct.unitPrice !== "", lastProduct.productCount !== null && lastProduct.productCount !== "") {
+    this.props.AddOrderMultiple(this.state.productList,this.state.status,this.props.navigation.getParam("customerId"));
+
+  }
+  else {
+    
+    showMessage({
+      message: "Lütfen tüm alanları doldurunuz",
+      type:"info",
+      icon: 'auto'
+    })
+  }
+
+
+
+  
 }
 
 renderContent(){
@@ -550,7 +585,7 @@ Pesin Odeme
 
 
       <Button disabled={ this.state.orderAddedSuccessfully }
-
+      onPress={()=> this.addOrderMulti()}
       style={{justifyContent:'center',marginTop:30,marginBottom:30,marginHorizontal:40,borderRadius:20,backgroundColor:'#01C3E3',
     shadowRadius: 5.00,
     
@@ -582,6 +617,10 @@ shadowOpacity: .5,
   </Button>
 }
 
+<TouchableOpacity onPress={() => this.lastOrderList.open() }
+style={{alignSelf:'flex-end',width:"50%"}}>
+  <Text style={{fontFamily : "Avenir Next",textDecorationLine:"underline"}}>Erikli Damacana  25, soda su 12, Siparişini Tekrarla</Text>
+</TouchableOpacity>
 
     </View>
   </View>
@@ -591,6 +630,40 @@ shadowOpacity: .5,
 
     )
   }
+}
+
+renderLastOrderList() {
+  return(
+    <View>
+      <TouchableOpacity
+      style={{position:'absolute',zIndex:1 , right:5,top:5}} onPress={()=> this.lastOrderList.close()} >
+        <Icon name="ios-close" style={{color:"#216AF4"}}/>
+      </TouchableOpacity>
+      <Text style={{textAlign:'center',fontFamily:'Avenir Next',fontWeight:"600",marginTop:10,fontSize:16,color:'#216AF4',marginBottom:10}}>Son Siparişi Tekrarla</Text>
+      <View style={{flexDirection:'row',marginTop:5}}>
+      <Text style={{flex:.4,fontFamily:'Avenir Next'}}>
+    Erikli Damacana
+      </Text>
+      <Text style={{flex:.3,textAlign:'right',fontFamily:'Avenir Next'}}>
+    25 Adet
+      </Text>
+      <Text style={{flex:.3,textAlign:'right',fontFamily:'Avenir Next'}}>
+    45TL
+      </Text>
+      </View>
+      <View style={{flexDirection:'row',marginTop:10}}>
+      <Text style={{flex:.4,fontFamily:'Avenir Next'}}>
+    10 lu  meyve suyu
+      </Text>
+      <Text style={{flex:.3,textAlign:'right',fontFamily:'Avenir Next'}}>
+    1500 Adet
+      </Text>
+      <Text style={{flex:.3,textAlign:'right',fontFamily:'Avenir Next'}}>
+    2500.5 TL
+      </Text>
+      </View>
+  </View>
+  )
 }
   render() {
     if(this.props.product && this.props.product.productId && this.state.productList[this.state.indexOfGottenProduct].productGotUnitPrice ===false && this.state.productList[this.state.indexOfGottenProduct].unitPrice !== this.props.product.unitPrice.toString()) {
@@ -663,6 +736,24 @@ shadowOpacity: .5,
               {this._renderChooseEmployeeContent()}
             </RBSheet>
 
+            <RBSheet
+              ref={ref => {
+                this.lastOrderList = ref;
+              }}
+              height={500}
+              duration={200}
+              customStyles={{
+                container: {
+                    padding:20,
+                    borderRadius:10
+                }
+              }}
+            >
+              {this.renderLastOrderList()}
+            </RBSheet>
+
+
+
 
         {this.showSimpleMessage()}
 
@@ -691,7 +782,9 @@ function bindToAction(dispatch: any) {
     GetProduct: (productId: number, customerId: number) =>
       dispatch(GetProduct(productId, customerId)),
       resetProduct : ()=>
-      dispatch(resetProduct())
+      dispatch(resetProduct()),
+      AddOrderMultiple : (productList : product[],isPaid : boolean,customerId : number) =>
+      dispatch(AddOrderMultiple(productList,isPaid,customerId))
   };
 }
 

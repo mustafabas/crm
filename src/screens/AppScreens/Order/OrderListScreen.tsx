@@ -14,8 +14,10 @@ import * as Yup from "yup";
 
 import { connect } from "react-redux";
 import { AppState } from '../../../redux/store'
-import { OrderStatus, orderListItem,getCustomerOrders } from "../../../redux/actions/orderDetailActions";
+import { OrderStatus, orderListItem,getCustomerOrders, updateCustomerOrderStatus } from "../../../redux/actions/orderDetailActions";
 import { InfoItem } from '../../../components/InfoItem';
+import RBSheet from "react-native-raw-bottom-sheet";
+import { showMessage } from "react-native-flash-message";
 
 
 interface Props {
@@ -25,21 +27,40 @@ interface Props {
     loading : boolean | null;
     getCustomerOrders : (page? : number) => void;
     page : number;
-
+    updateCustomerOrderStatus : (orderStatus : OrderStatus , orderId : number) => void;
+    orderStatusMessage : string;
     // isTriedOrderStatus:boolean;
+
+}
+
+interface State {
+    userId : string;
+    orderStatus : OrderStatus;
+    page : number;
+    orderStatusString : String[];
+    selectedOrderId : number;
+    item : orderListItem;
+    
 
 }
 
 
 
-
-class OrderListScreen extends Component<Props, {}> {
+class OrderListScreen extends Component<Props, State> {
     
     constructor(props) {
         super(props);
         this.state = {
           userId : "",
-          page : 0
+          page : 0,
+          orderStatus : OrderStatus.null,
+      orderStatusString : ["Sipariş Durumu Yok",
+      "Sipariş Beklemede",
+      "Sipariş Tamamlandı",
+       "Sipariş İptal Edildi"],
+       selectedOrderId:0
+       ,item : {} as  orderListItem
+
         };
       }
 
@@ -56,6 +77,22 @@ class OrderListScreen extends Component<Props, {}> {
 
 
     }
+
+    showSimpleMessage() {
+        if (this.props.orderStatusMessage) {
+    
+            showMessage({
+                message: this.props.orderStatusMessage,
+                type:  "info",
+                icon: "auto"
+            }
+            );
+        }
+
+    
+    }
+    
+
     renderItem(item : orderListItem) {
         var color = "red"
         var colorInBasket  = "#f25f5f"
@@ -104,16 +141,19 @@ class OrderListScreen extends Component<Props, {}> {
                 {/* <Text style={{ borderWidth: 1, borderRadius: 5, padding: 7, borderColor: '#c58585', marginRight: 50,textAlign:'center' }}>S.No : {item.orderId}</Text> */}
         {/* asda */}
             <View style={{flexDirection:'row'}}>
-            <Text  style={{flex:.6,fontFamily:'Avenir Next',color:'#2069F3',fontSize:16,fontWeight:"600"}}>
+            <Text  style={{flex:1,fontFamily:'Avenir Next',color:'#2069F3',fontSize:16,fontWeight:"600"}}>
                     {item.companyName ? item.companyName : item.customerName}
                 </Text>
 
-                <Text  style={{textAlign:'right',flex:.4,fontFamily:'Avenir Next'}}>
+                {/* <Text  style={{textAlign:'right',flex:.4,fontFamily:'Avenir Next'}}>
                     {item.productName}
-                </Text>
-                {/* <TouchableOpacity sty>
+                </Text> */}
+
+                <TouchableOpacity onPress={() => {
+                    this.setState({orderStatus : item.orderStatus,selectedOrderId : item.orderId,item : item} , () => this.changeOrderStatus.open())
+                }}>
                     <Icon name="ios-more" />
-                </TouchableOpacity> */}
+                </TouchableOpacity>
 
 
             </View>
@@ -286,6 +326,65 @@ class OrderListScreen extends Component<Props, {}> {
         this.props.getCustomerOrders()
 
     }
+
+    changeOrderStatusContent() {
+    
+        return(
+          <View>
+            <TouchableOpacity onPress={()=> this.changeOrderStatus.close()}
+             style={{position:'absolute',right:0,zIndex:20}}>
+              <Icon name="ios-close" style={{fontSize:35}}/>
+            </TouchableOpacity>
+            <View style={{marginTop:5}}>
+              <Text style={{fontFamily:'Avenir Next',textAlign:'center',fontSize:18,fontWeight:'600'}}>Sipariş Durumunu Güncelle</Text>
+              <TouchableOpacity onPress={()=> this.setState({orderStatus : OrderStatus.Waiting})}
+            style={{borderWidth:3,borderRadius:10,marginTop:20,marginHorizontal:10,paddingVertical:5,borderColor:'#cbd25f',backgroundColor:this.state.orderStatus === OrderStatus.Waiting ? '#cbd25f' : 'white'}}>
+     <Text style={{fontFamily:'Avenir Next',fontSize:16,paddingVertical:5,textAlign:'center',color:this.state.orderStatus === OrderStatus.Waiting ? 'white' :'black'}}>
+        Sipariş Beklemede
+     
+     </Text>
+     </TouchableOpacity>
+    
+     <TouchableOpacity onPress={()=> this.setState({orderStatus : OrderStatus.Exported})}
+            style={{borderWidth:3,borderRadius:10,marginTop:20,marginHorizontal:10,paddingVertical:5,borderColor:'#0f5f00',backgroundColor: this.state.orderStatus === OrderStatus.Exported ? '#0f5f00' : 'white'}}>
+     <Text style={{fontFamily:'Avenir Next',fontSize:16,paddingVertical:5,textAlign:'center',color:this.state.orderStatus === OrderStatus.Exported ? 'white' :'black'}}>
+        Siparişi Tamamla
+     
+     </Text>
+     </TouchableOpacity>
+    
+     <TouchableOpacity onPress={()=> this.setState({orderStatus : OrderStatus.Cannceled})}
+            style={{borderWidth:3,borderRadius:10,marginTop:20,marginHorizontal:10,paddingVertical:5,borderColor:'#bc0606',backgroundColor: this.state.orderStatus === OrderStatus.Cannceled ? '#bc0606' : 'white'}}>
+     <Text style={{fontFamily:'Avenir Next',fontSize:16,paddingVertical:5,textAlign:'center',color:this.state.orderStatus === OrderStatus.Cannceled ? 'white' :'black'}}>
+        Siparişi İptal Et
+     
+     </Text>
+     </TouchableOpacity>
+    
+     <TouchableOpacity onPress={
+    
+    
+    
+    
+       () => { this.changeOrderStatus.close();
+         this.props.updateCustomerOrderStatus(this.state.orderStatus,this.state.selectedOrderId)}
+    
+     }
+      disabled={this.state.orderStatus === OrderStatus.null || this.state.item.orderStatus === this.state.orderStatus}
+            style={{borderWidth:3,borderRadius:10,marginTop:20,marginHorizontal:10,paddingVertical:5,borderColor:'#216AF4',backgroundColor: '#216AF4', opacity : this.state.orderStatus === OrderStatus.null || this.state.item.orderStatus === this.state.orderStatus ? .3 : 1}}>
+     <Text style={{fontFamily:'Avenir Next',fontSize:16,paddingVertical:5,textAlign:'center',color:'white'}}>
+        Onayla
+     
+     </Text>
+     </TouchableOpacity>
+    
+            </View>
+          </View>
+        )
+    
+      }
+
+
     renderList(){
         if(this.props.loading === false && this.state.refreshing) {
             this.setState({refreshing : false})
@@ -376,10 +475,26 @@ class OrderListScreen extends Component<Props, {}> {
             <SafeAreaView style={[styles.container, {justifyContent:'flex-start' ,paddingTop:0}]} >
 
                 {this.renderList()}
+                <RBSheet
+          ref={ref => {
+            this.changeOrderStatus = ref;
+          }}
+          height={400}
+          duration={200}
+          customStyles={{
+            container: {
+                borderRadius:5,
 
-        
+                padding:20
+            }
+          }}
+        >
+          {this.changeOrderStatusContent()}
+        </RBSheet>
+        {this.showSimpleMessage()}
                
             </SafeAreaView>
+            
         );
     }
 
@@ -457,13 +572,17 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state : AppState) => ({
     orderList : state.orderDetail.orderList,
     loading : state.orderDetail.isLodingOrderList,
-    message : state.orderDetail.messageOrderList
+    message : state.orderDetail.messageOrderList,
+    orderStatusMessage : state.orderDetail.orderStatusMessage,
+
   })
   
   function bindToAction(dispatch : any) {
     return {
         getCustomerOrders : (page? : number) => 
         dispatch(getCustomerOrders(page)),
+        updateCustomerOrderStatus : (orderStatus : OrderStatus , orderId : number) =>
+        dispatch(updateCustomerOrderStatus(orderStatus,orderId))
     };
   
   }

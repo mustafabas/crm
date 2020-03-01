@@ -19,6 +19,7 @@ export const WATER_GET_PRODUCT = WATER_BASE_URL_NEW+"/api/Product/GetByUserId";
 export const WATER_EDIT_PRODUCT = WATER_BASE_URL_NEW+"/api/Product/Update";
 export const WATER_GET_PRODUCT_BY_ID = WATER_BASE_URL_NEW  +'/api/Product/GetProductById'
 export const WATER_ADD_ORDER = WATER_BASE_URL_NEW+"/api/Order";
+export const WATER_ADD_ORDER_MULTIPLE_PRODUCT = WATER_BASE_URL_NEW + "/api/Order/PostNew"
 
 export const WATER_GET_ORDER_LIST = WATER_BASE_URL_NEW + "/api/Order"
 export const WATER_INSERT_NOTIFICATION = WATER_BASE_URL_NEW + "/api/notification";
