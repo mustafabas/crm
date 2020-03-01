@@ -21,7 +21,7 @@ import { connect } from "react-redux";
 import { AppState } from "../../../redux/store";
 import { GetProducts } from "../../../redux/actions/productAction";
 import { IProductItem } from "../../../redux/models/productAddModel";
-import { AddOrder, notificationEmployee ,AddOrderMultiple} from "../../../redux/actions/addOrderAction";
+import { AddOrder, notificationEmployee ,AddOrderMultiple, lastOrderInterface, getLastOrder, addOrderAgain} from "../../../redux/actions/addOrderAction";
 // import { IAddOrderItem } from "../redux/models/addOrderModel";
 import { GetProduct, resetProduct } from "../../../redux/actions/productForCustomerAction";
 import { IProductForCustomerItem } from "../../../redux/models/productForCustomerModel";
@@ -51,15 +51,15 @@ interface Props {
   notificationEmployee : notificationEmployee;
   AddOrderMessage: string;
   GetProduct: (productId: number, customerId: number) => void;
+  getLastOrder : (customerId : number) => void;
   product: IProductForCustomerItem;
   resetProduct : () => void;
   AddOrderMultiple : (productList : product[],isPaid : boolean,customerId : number) => void;
-
-
-
-
   isTried : boolean;
   isLoading : boolean;
+  lastOrder : lastOrderInterface;
+  addOrderAgain : (orderId : number,customerId : number) => void;
+  
 }
 
 interface State {
@@ -228,6 +228,7 @@ indexOfGottenProduct : 0
     var date = new Date();
     dateAta = date.toLocaleDateString() + " " + date.toLocaleTimeString();
     this.setState({ date: dateAta });
+    this.props.getLastOrder(this.props.navigation.getParam("customerId"))
 
   }
 
@@ -529,6 +530,17 @@ renderContent(){
 </TouchableOpacity>
     </View>);
   }else {
+
+    var lastOrderProductList = ""
+    console.log(this.props.lastOrder, "lastOrder")
+    if(this.props.lastOrder && this.props.lastOrder.orderProducts &&  this.props.lastOrder.orderProducts.length > 0) {
+      let indexOfList = this.props.lastOrder.orderProducts.length > 2 ? 3 : this.props.lastOrder.orderProducts.length
+      for (let index = 0; index < indexOfList; index++) {
+        lastOrderProductList = lastOrderProductList + ", " + this.props.lastOrder.orderProducts[index].productName;
+      }
+   lastOrderProductList =lastOrderProductList.slice(2);
+    }
+    
     return (
        
     //   <Formik
@@ -617,10 +629,12 @@ shadowOpacity: .5,
   </Button>
 }
 
-<TouchableOpacity onPress={() => this.lastOrderList.open() }
-style={{alignSelf:'flex-end',width:"50%"}}>
-  <Text style={{fontFamily : "Avenir Next",textDecorationLine:"underline"}}>Erikli Damacana  25, soda su 12, Siparişini Tekrarla</Text>
-</TouchableOpacity>
+{lastOrderProductList.length > 0 && 
+  <TouchableOpacity onPress={() => this.lastOrderList.open() }
+  style={{alignSelf:"center"}}>
+    <Text style={{fontFamily : "Avenir Next",textDecorationLine:"underline"}}>{lastOrderProductList} Siparişini Tekrarla</Text>
+  </TouchableOpacity>
+}
 
     </View>
   </View>
@@ -634,34 +648,47 @@ style={{alignSelf:'flex-end',width:"50%"}}>
 
 renderLastOrderList() {
   return(
-    <View>
+    <View style={{flex:1}}>
       <TouchableOpacity
       style={{position:'absolute',zIndex:1 , right:5,top:5}} onPress={()=> this.lastOrderList.close()} >
         <Icon name="ios-close" style={{color:"#216AF4"}}/>
       </TouchableOpacity>
       <Text style={{textAlign:'center',fontFamily:'Avenir Next',fontWeight:"600",marginTop:10,fontSize:16,color:'#216AF4',marginBottom:10}}>Son Siparişi Tekrarla</Text>
-      <View style={{flexDirection:'row',marginTop:5}}>
-      <Text style={{flex:.4,fontFamily:'Avenir Next'}}>
-    Erikli Damacana
-      </Text>
-      <Text style={{flex:.3,textAlign:'right',fontFamily:'Avenir Next'}}>
-    25 Adet
-      </Text>
-      <Text style={{flex:.3,textAlign:'right',fontFamily:'Avenir Next'}}>
-    45TL
-      </Text>
-      </View>
-      <View style={{flexDirection:'row',marginTop:10}}>
-      <Text style={{flex:.4,fontFamily:'Avenir Next'}}>
-    10 lu  meyve suyu
-      </Text>
-      <Text style={{flex:.3,textAlign:'right',fontFamily:'Avenir Next'}}>
-    1500 Adet
-      </Text>
-      <Text style={{flex:.3,textAlign:'right',fontFamily:'Avenir Next'}}>
-    2500.5 TL
-      </Text>
-      </View>
+     
+
+
+      <ScrollView style={{flex:1}}>
+      <FlatList
+        data={this.props.lastOrder.orderProducts}
+        renderItem={({ item }) => <View style={{flexDirection:'row',marginTop:5}}>
+
+        <Text style={{flex:.4,fontFamily:'Avenir Next'}}>
+      {item.productName}
+        </Text>
+        <Text style={{flex:.3,textAlign:'right',fontFamily:'Avenir Next'}}>
+      {item.count} Adet
+        </Text>
+        <Text style={{flex:.3,textAlign:'right',fontFamily:'Avenir Next'}}>
+      {item.totalPrice}
+        </Text>
+        </View>}
+        keyExtractor={item => item.productId}
+      />
+<TouchableOpacity 
+onPress={()=> {
+  this.lastOrderList.close()
+  this.props.addOrderAgain(this.props.lastOrder.orderId,this.props.navigation.getParam("customerId"))}}
+        style={{borderWidth:3,borderRadius:10,marginTop:20,marginHorizontal:10,paddingVertical:5,borderColor:'#216AF4',backgroundColor:'white'}}>
+ <Text style={{fontFamily:'Avenir Next',fontSize:16,paddingVertical:5,textAlign:'center',color:  'black'}}>
+    Siparişi Tekrarla
+ 
+ </Text>
+ </TouchableOpacity>
+      
+      </ScrollView>
+
+
+ 
   </View>
   )
 }
@@ -771,7 +798,8 @@ const mapStateToProps = (state: AppState) => ({
   isTried : state.addOrder.isTried,
   isLoading : state.addOrder.isLoading,
   AddOrderMessage : state.addOrder.AddOrderMessage,
-  notificationEmployee : state.addOrder.notificationEmployee
+  notificationEmployee : state.addOrder.notificationEmployee,
+  lastOrder : state.addOrder.lastOrder
 })
 function bindToAction(dispatch: any) {
   return {
@@ -784,7 +812,11 @@ function bindToAction(dispatch: any) {
       resetProduct : ()=>
       dispatch(resetProduct()),
       AddOrderMultiple : (productList : product[],isPaid : boolean,customerId : number) =>
-      dispatch(AddOrderMultiple(productList,isPaid,customerId))
+      dispatch(AddOrderMultiple(productList,isPaid,customerId)),
+      getLastOrder : (customerId : number) => 
+      dispatch(getLastOrder(customerId )),
+      addOrderAgain : (orderId : number,customerId : number) => 
+      dispatch(addOrderAgain(orderId,customerId))
   };
 }
 

@@ -13,6 +13,7 @@ import { UserFirstData } from "./reducers/signUpReducers";
 import { IProduct } from "./actions/productEditAction";
 import { Customer } from "./actions/customerEditAction";
 import { productCountList } from "./actions/reportAction";
+import { lastOrderInterface } from "./actions/addOrderAction";
 
 export interface State {
     data: any[];
@@ -116,6 +117,8 @@ export interface AddOrder
     AddOrderMessage: string;
     isTried : boolean;
     isLoading : boolean;
+    lastOrder : lastOrderInterface;
+    
 
   }
 

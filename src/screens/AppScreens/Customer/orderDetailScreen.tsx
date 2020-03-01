@@ -308,13 +308,7 @@ class OrderDetailScreen extends Component<Props, State>{
  </Text>
  </TouchableOpacity>
 
- <TouchableOpacity onPress={()=> this.setState({orderStatus : OrderStatus.Cannceled})}
-        style={{borderWidth:3,borderRadius:10,marginTop:20,marginHorizontal:10,paddingVertical:5,borderColor:'#bc0606',backgroundColor: this.state.orderStatus === OrderStatus.Cannceled ? '#bc0606' : 'white'}}>
- <Text style={{fontFamily:'Avenir Next',fontSize:16,paddingVertical:5,textAlign:'center',color:this.state.orderStatus === OrderStatus.Cannceled ? 'white' :'black'}}>
-    Siparişi İptal Et
- 
- </Text>
- </TouchableOpacity>
+
 
  <TouchableOpacity onPress={
 

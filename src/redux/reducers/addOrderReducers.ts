@@ -1,6 +1,6 @@
 import { AddOrder, Action } from "../states";
-import {ADD_ORDER_SUCCEED,ADD_ORDER_FAILED, RESET_PROPS, ADD_ORDER_IS_LOADING, GET_EMPLOYEE_TOKENS} from "../types";
-import { notificationEmployee } from "../actions/addOrderAction";
+import {ADD_ORDER_SUCCEED,ADD_ORDER_FAILED, RESET_PROPS, ADD_ORDER_IS_LOADING, GET_EMPLOYEE_TOKENS, GET_LAST_ORDER_SUCCEED} from "../types";
+import { notificationEmployee, lastOrderInterface } from "../actions/addOrderAction";
 
 
 const initalState = {
@@ -8,7 +8,9 @@ const initalState = {
     AddOrderMessage: "",
     isTried : false,
     isLoading : false,
-    notificationEmployee : {} as notificationEmployee
+    notificationEmployee : {} as notificationEmployee,
+    lastOrder : {} as lastOrderInterface,
+    
   };
 
 export default (state: AddOrder = initalState, action: Action) => {
@@ -44,7 +46,13 @@ export default (state: AddOrder = initalState, action: Action) => {
       }
       case GET_EMPLOYEE_TOKENS:
         return {
+          ...state,
           notificationEmployee : action.payload
+        }
+      case GET_LAST_ORDER_SUCCEED:
+        return {
+          ...state,
+          lastOrder : action.payload
         }
     default:
       return state;

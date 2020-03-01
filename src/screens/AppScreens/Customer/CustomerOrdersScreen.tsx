@@ -473,7 +473,8 @@ componentDidMount(){
         renderItem={({ item }) =>
 
 
-          <View style={{ marginHorizontal: 0, flexDirection: 'column', backgroundColor: '#EFF3F9', paddingVertical: 10, paddingHorizontal: 10, justifyContent: 'space-between', borderRadius: 15 }}>
+          <TouchableOpacity onPress={()=> this.props.navigation.navigate('OrderDetail', {orderId: item.orderId})}
+           style={{ marginHorizontal: 0, flexDirection: 'column', backgroundColor: '#EFF3F9', paddingVertical: 10, paddingHorizontal: 10, justifyContent: 'space-between', borderRadius: 15 }}>
 
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                 <Text style={{ color: '#2069F3', fontWeight: '600', fontSize: 16, fontFamily: 'Avenir Next' ,alignSelf:'center',flex:.8}}>
@@ -551,7 +552,7 @@ componentDidMount(){
                 </View>
               </View>
             </View>
-          </View>
+          </TouchableOpacity>
         }
         keyExtractor={item => item.orderId.toString()}
 
