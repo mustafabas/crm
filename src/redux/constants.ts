@@ -4,7 +4,9 @@ export const WATER_BASE_URL ="https://api.fillsoftware.com/api";
 
 
 export const WATER_CUSTOMERS_HOME_GET = WATER_BASE_URL_NEW+"/api/customer?orderType=";
+export const WATER_CUSTOMERS_HOME_GET_NEW = WATER_BASE_URL_NEW+"/api/customer/GetNew?orderType=";
 export const WATER_CUSTOMER_CALL_DETECT = WATER_BASE_URL_NEW + '/api/customer/CustomerByPhone'
+export const WATER_CUSTOMER_CALL_DETECT_NEW = WATER_BASE_URL_NEW + '/api/customer/CustomerByPhoneNew'
 export const WATER_USER_LOGIN = WATER_BASE_URL_NEW+"/api/User/login";
 export const WATER_CUSTOMER_ORDERS_GET = WATER_BASE_URL_NEW+"/api/customer/CustomerOrder?customerid=";
 export const WATER_CUSTOMER_ORDERS_GET_DETAIL = WATER_BASE_URL_NEW+"/api/customer/CustomerForDetail?customerId=";

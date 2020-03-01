@@ -1,11 +1,11 @@
 import {AsyncStorage } from 'react-native'
 
 import axios from 'axios'
-import { WATER_CUSTOMERS_HOME_GET, WATER_CUSTOMER_CALL_DETECT } from './../constants'
+import { WATER_CUSTOMERS_HOME_GET, WATER_CUSTOMER_CALL_DETECT, WATER_CUSTOMER_CALL_DETECT_NEW, WATER_CUSTOMERS_HOME_GET_NEW } from './../constants'
 import { Dispatch } from "react";
 import { CUSTOMER_GET, HOME_LOADING_CUSTOMERS, CUSTOMER_GET_MORE, CUSTOMER_GET_MORE_LOADING, DETECT_USER_FROM_CALL, DETECT_USER_FROM_CALL_LOADING } from './../types'
 import { Action } from '../states'
-import { ICustomerItem } from "../models/homeModel";
+import { ICustomerItem, ICustomerFromPhone } from "../models/homeModel";
 
 
 export function GetCustomers(orderType: number, searchText: string, dayOfWeek: number, pageIndex: number) {
@@ -22,7 +22,7 @@ export function GetCustomers(orderType: number, searchText: string, dayOfWeek: n
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
     }
-    var WATER_CUSTOMERS_HOME_GET_ORDER_TYPE_SEARCH_TEXT = WATER_CUSTOMERS_HOME_GET + orderType + "&searchText=" + searchText + "&pageIndex=" + pageIndex + "&pageSize=15&dayOfWeek=" + dayOfWeek + `&userId=${userId}`;
+    var WATER_CUSTOMERS_HOME_GET_ORDER_TYPE_SEARCH_TEXT = WATER_CUSTOMERS_HOME_GET_NEW + orderType + "&searchText=" + searchText + "&pageIndex=" + pageIndex + "&pageSize=15&dayOfWeek=" + dayOfWeek + `&userId=${userId}`;
 console.log(WATER_CUSTOMERS_HOME_GET_ORDER_TYPE_SEARCH_TEXT)
     axios.get(WATER_CUSTOMERS_HOME_GET_ORDER_TYPE_SEARCH_TEXT,{
       headers: headers 
@@ -89,7 +89,7 @@ export function GetCustomerMore(orderType: number, searchText: string, dayOfWeek
         'Authorization': `Bearer ${token}`
     }
 
-    var WATER_CUSTOMERS_HOME_GET_ORDER_TYPE_SEARCH_TEXT = WATER_CUSTOMERS_HOME_GET + orderType + "&searchText=" + searchText + "&pageIndex=" + pageIndex + "&pageSize=10&dayOfWeek=" + dayOfWeek+"&userId="+userId;
+    var WATER_CUSTOMERS_HOME_GET_ORDER_TYPE_SEARCH_TEXT = WATER_CUSTOMERS_HOME_GET_NEW + orderType + "&searchText=" + searchText + "&pageIndex=" + pageIndex + "&pageSize=10&dayOfWeek=" + dayOfWeek+"&userId="+userId;
 
     console.log(WATER_CUSTOMERS_HOME_GET_ORDER_TYPE_SEARCH_TEXT);
     axios.get(WATER_CUSTOMERS_HOME_GET_ORDER_TYPE_SEARCH_TEXT,
@@ -148,6 +148,7 @@ export function detectUserFromCall(phoneNumber : string) {
   return (dispatch: Dispatch<Action>) => {
 
     dispatch(loadingFromCall(true));
+    console.log(phoneNumber);
 
     AsyncStorage.multiGet(['userToken', 'userId']).then((res) => {
       let token = res[0][1];
@@ -158,9 +159,9 @@ export function detectUserFromCall(phoneNumber : string) {
         'Authorization': `Bearer ${token}`
     }
 
-    console.log(userId,"useriIDD",phoneNumber)
 
-    axios.get(WATER_CUSTOMER_CALL_DETECT + `?userId=${userId}&phoneNumber=${phoneNumber}`,{
+
+    axios.get(WATER_CUSTOMER_CALL_DETECT_NEW + `?userId=${userId}&phoneNumber=${phoneNumber}`,{
       headers: headers 
     }
 
@@ -168,19 +169,29 @@ export function detectUserFromCall(phoneNumber : string) {
       .then((response) => {
 
         if (response.data.isSuccess && response.data.result) {
-          let customerId = response.data.result
-          console.log(response.data)
-          dispatch(detectUserCall(customerId))
+          let custmer = response.data.result
+          let customer : ICustomerFromPhone = {
+            customerName:custmer.customerName,
+            id:custmer.id,
+            detected:true
+          }
+
+          dispatch(detectUserCall(customer))
         }
 
 
         else {
-          console.log("Girdime")
+          let customer : ICustomerFromPhone = {
+            customerName:'',
+            id:0,
+            detected:false
+          }
+          dispatch(detectUserCall(customer))
           dispatch(loadingFromCall(false));
         }
       })
       .catch((err) => {
-        console.log("Girdime")
+        console.log(err)
         dispatch(loadingFromCall(false));
 
       });
@@ -198,9 +209,9 @@ export const loadingFromCall = (loading : boolean) => ({
   payload : loading
 })
 
-export const detectUserCall = (customerId : number) => ({
+export const detectUserCall = (customr : ICustomerFromPhone | null) => ({
   type : DETECT_USER_FROM_CALL,
-  payload : customerId
+  payload : customr
 })
 
 

@@ -59,7 +59,7 @@ class AuthLoading extends React.Component<Props, State> {
 
   componentWillMount(){
     if(Platform.OS === "android") {
-      updateAndroidIfAvailable()
+     // updateAndroidIfAvailable()
     }
   }
 

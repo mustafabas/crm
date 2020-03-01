@@ -23,7 +23,7 @@ import { Icon, Input, Item, Tabs, Tab, TabHeading, Button, ScrollableTab, Card, 
 import { Alert } from 'react-native';
 import { NavigationScreenProps, NavigationState, NavigationScreenProp } from 'react-navigation';
 import { Dimensions } from 'react-native';
-import { ICustomerItem } from '../../../redux/models/homeModel';
+import { ICustomerItem, ICustomerFromPhone } from '../../../redux/models/homeModel';
 import { connect } from 'react-redux';
 import { GetCustomers, GetCustomerMore, detectUserFromCall } from '../../../redux/actions/homeAction';
 import { customerDelete } from '../../../redux/actions/customerDeleteAction';
@@ -74,7 +74,7 @@ interface Props {
   customerMoreLoading : boolean;
   detectUserFromCall : (phoneNumber : string)  => void;
   detectingCustomerLoading : boolean;
-  detectedCustomerId : number | null;
+  detectedCustomer : ICustomerFromPhone | null;
 }
 
 
@@ -435,7 +435,61 @@ stopListenerTapped() {
     this.setState({ refreshing: false });
   }
 
+RenderCustomerItem(item:ICustomerItem){
+  if(this.state.customerId){
+    
+  }
+  <TouchableOpacity onPress={() => this.props.navigation.navigate("Customer", { customerId: item.customerId, nameSurname: item.nameSurname, companyName: item.companyName, displayTookTotalAmount: item.displayTookTotalAmount, restTotalAmount: item.displayRestTotalAmount, totalAmount: item.displayTotalAmount })} style={{ marginHorizontal: 5, backgroundColor: '#EFF3F9', paddingVertical: 10, paddingBottom: 20, paddingHorizontal: 5, paddingRight: 10, flex: 1, justifyContent: 'space-between', borderRadius: 15 }}>
+  <TouchableOpacity onPress={() => this.openModal(item)}
+    style={{ alignSelf: 'flex-end', marginRight: 10, marginBottom: 0 }}>
+    <Icon name="ios-more" />
+  </TouchableOpacity>
+  <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+    <View style={{ width: 33, height: 33, borderRadius: 16.5, backgroundColor: '#2069F3', justifyContent: 'center', alignItems: 'center' }}>
+      <Text style={{ color: 'white' }}>{item.nameSurname.substring(0, 1)}</Text>
+    </View>
+    <View style={{ flex: .3, justifyContent: 'center', marginTop: -5 }}>
 
+      <Text style={{ color: '#2069F3', fontWeight: '600', fontSize: 16, fontFamily: 'Avenir Next' }}>
+        {item.nameSurname}
+      </Text>
+    </View>
+
+    <View style={{ width: 1, height: '80%', backgroundColor: '#CFD3D7', marginRight: 10 }} />
+    <View style={{ flex: .2 }}>
+      <Text style={{ color: '#404243', fontSize: 12, fontFamily: 'Avenir Next' }}>
+        Alınan
+           </Text>
+      <Text style={{ color: '#404243', fontWeight: '600', fontSize: 14, fontFamily: 'Avenir Next' }}>
+        {item.displayTookTotalAmount}
+      </Text>
+    </View>
+    <View style={{ width: 1, height: '90%', backgroundColor: '#CFD3D7', marginRight: 10 }} />
+    <View style={{ flex: .2 }}>
+      <Text style={{ color: '#404243', fontSize: 12, fontFamily: 'Avenir Next' }}>
+        Kalan
+           </Text>
+      <Text style={{ color: '#404243', fontWeight: '600', fontSize: 14, fontFamily: 'Avenir Next' }}>
+        {item.displayRestTotalAmount}
+      </Text>
+    </View>
+    <View style={{ width: 1, height: '80%', backgroundColor: '#CFD3D7', marginRight: 10 }} />
+
+    <View style={{ flex: .2 }}>
+      <Text style={{ color: '#404243', fontSize: 12, fontFamily: 'Avenir Next' }}>
+        Toplam
+           </Text>
+      <Text style={{ color: '#404243', fontWeight: '600', fontSize: 14, fontFamily: 'Avenir Next' }}>
+        {item.displayTotalAmount}
+      </Text>
+    </View>
+
+  </View>
+
+
+</TouchableOpacity>}
+
+}
   renderGetPay() {
     const top = this.state.scrollY.interpolate({
       inputRange: [0, 20, 70, 90],
@@ -463,59 +517,17 @@ stopListenerTapped() {
         ref={(ref) => { this.flatListRef = ref; }}
 
         data={this.props.customers}
-        ListHeaderComponent={() => <View style={{ justifyContent: 'space-between', flexDirection: 'row', marginTop: -5, marginBottom: 5, marginHorizontal: 20 }}><Text style={{ fontWeight: "600", fontSize: 14, color: '#8F9599' }}>{this.state.orderType === 3 ? this.state.dayList[this.state.today.getDay()] : this.state.dayList[this.state.dayOfWeek]}</Text>
+        ListHeaderComponent={() => 
+        
+        
+        <View style={{ justifyContent: 'space-between', flexDirection: 'row', marginTop: -5, marginBottom: 5, marginHorizontal: 20 }}><Text style={{ fontWeight: "600", fontSize: 14, color: '#8F9599' }}>{this.state.orderType === 3 ? this.state.dayList[this.state.today.getDay()] : this.state.dayList[this.state.dayOfWeek]}</Text>
           <Text style={{ fontWeight: "600", fontSize: 14, color: '#8F9599' }}>{this.props.totalRecords}</Text>
         </View>}
         ItemSeparatorComponent={({ }) => <View style={{ height: 10 }}></View>}
-        renderItem={({ item }) => <TouchableOpacity onPress={() => this.props.navigation.navigate("Customer", { customerId: item.customerId, nameSurname: item.nameSurname, companyName: item.companyName, displayTookTotalAmount: item.displayTookTotalAmount, restTotalAmount: item.displayRestTotalAmount, totalAmount: item.displayTotalAmount })} style={{ marginHorizontal: 5, backgroundColor: '#EFF3F9', paddingVertical: 10, paddingBottom: 20, paddingHorizontal: 5, paddingRight: 10, flex: 1, justifyContent: 'space-between', borderRadius: 15 }}>
-          <TouchableOpacity onPress={() => this.openModal(item)}
-            style={{ alignSelf: 'flex-end', marginRight: 10, marginBottom: 0 }}>
-            <Icon name="ios-more" />
-          </TouchableOpacity>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-            <View style={{ width: 33, height: 33, borderRadius: 16.5, backgroundColor: '#2069F3', justifyContent: 'center', alignItems: 'center' }}>
-              <Text style={{ color: 'white' }}>{item.nameSurname.substring(0, 1)}</Text>
-            </View>
-            <View style={{ flex: .3, justifyContent: 'center', marginTop: -5 }}>
+        renderItem={({ item }) =>
 
-              <Text style={{ color: '#2069F3', fontWeight: '600', fontSize: 16, fontFamily: 'Avenir Next' }}>
-                {item.nameSurname}
-              </Text>
-            </View>
+            {this.RenderCustomerItem(item:ICustomerItem)}
 
-            <View style={{ width: 1, height: '80%', backgroundColor: '#CFD3D7', marginRight: 10 }} />
-            <View style={{ flex: .2 }}>
-              <Text style={{ color: '#404243', fontSize: 12, fontFamily: 'Avenir Next' }}>
-                Alınan
-                   </Text>
-              <Text style={{ color: '#404243', fontWeight: '600', fontSize: 14, fontFamily: 'Avenir Next' }}>
-                {item.displayTookTotalAmount}
-              </Text>
-            </View>
-            <View style={{ width: 1, height: '90%', backgroundColor: '#CFD3D7', marginRight: 10 }} />
-            <View style={{ flex: .2 }}>
-              <Text style={{ color: '#404243', fontSize: 12, fontFamily: 'Avenir Next' }}>
-                Kalan
-                   </Text>
-              <Text style={{ color: '#404243', fontWeight: '600', fontSize: 14, fontFamily: 'Avenir Next' }}>
-                {item.displayRestTotalAmount}
-              </Text>
-            </View>
-            <View style={{ width: 1, height: '80%', backgroundColor: '#CFD3D7', marginRight: 10 }} />
-
-            <View style={{ flex: .2 }}>
-              <Text style={{ color: '#404243', fontSize: 12, fontFamily: 'Avenir Next' }}>
-                Toplam
-                   </Text>
-              <Text style={{ color: '#404243', fontWeight: '600', fontSize: 14, fontFamily: 'Avenir Next' }}>
-                {item.displayTotalAmount}
-              </Text>
-            </View>
-
-          </View>
-
-
-        </TouchableOpacity>}
 
         keyExtractor={(item, index) => String(index)}
         onEndReached={() => {
@@ -747,34 +759,58 @@ stopListenerTapped() {
       </View>
       )
     }
-    else if(this.props.detectingCustomerLoading === false && this.props.detectedCustomerId && this.props.detectedCustomerId > 0) {
-
-      return(
+    else if(this.props.detectingCustomerLoading === false && this.props.detectedCustomer) {
+        if(this.props.detectedCustomer.detected){
+          return(
        
-        <View>
-        <TouchableOpacity onPress={()=> this.customerDetectFromCall.close()}
-         style={{position:'absolute',right:5,top:5,zIndex:1}}>
-          <Icon name="ios-close" />
-        </TouchableOpacity>
-      <Text style={{textAlign:'center',marginRight:5,marginTop:10,fontFamily:'Avenir Next',fontSize:16}}>Telefon Numarası : {this.state.detectedPhoneNumber}</Text>
-        <TouchableOpacity
-        onPress={()=>{
-          this.customerDetectFromCall.close()
-          this.props.navigation.navigate("orderAdd", { customerId: this.props.detectedCustomerId })}}
-        style={{borderWidth:3,borderRadius:10,marginTop:20,marginHorizontal:10,paddingVertical:5,borderColor:'#216AF4',backgroundColor: '#216AF4' }}>
- <Text style={{fontFamily:'Avenir Next',fontSize:16,padding:5,textAlign:'center',color:  'white' }}>
-    Müşteri Bulundu Sipariş Eklemek ister misiniz?
- 
- </Text>
- </TouchableOpacity>
+            <View>
+            <TouchableOpacity onPress={()=> this.customerDetectFromCall.close()}
+             style={{position:'absolute',right:5,top:5,zIndex:1}}>
+              <Icon name="ios-close" />
+            </TouchableOpacity>
+          <Text style={{textAlign:'center',marginRight:5,marginTop:10,fontFamily:'Avenir Next',fontSize:16}}>Telefon Numarası : {this.state.detectedPhoneNumber}</Text>
+          <Text style={{textAlign:'center',marginRight:5,marginTop:10,fontFamily:'Avenir Next',fontSize:16, fontWeight:'700'}}>İsim Soyisim : {this.props.detectedCustomer.customerName}</Text>
+            <TouchableOpacity
+            onPress={()=>{
+              this.customerDetectFromCall.close()
+              this.props.navigation.navigate("orderAdd", { customerId: this.props.detectedCustomer.id })}}
+            style={{borderWidth:3,borderRadius:10,marginTop:20,marginHorizontal:10,paddingVertical:5,borderColor:'#216AF4',backgroundColor: '#216AF4' }}>
+     <Text style={{fontFamily:'Avenir Next',fontSize:16,padding:5,textAlign:'center',color:  'white' }}>
+     Sipariş Ekle 
+     
+     </Text>
+     </TouchableOpacity>
+          </View>  
+          )
+        }
+        else{
+          return (
+            <View>
+            <TouchableOpacity onPress={()=> this.customerDetectFromCall.close()}
+            style={{position:'absolute',right:5,top:5,zIndex:1}}>
+              <Icon name="ios-close" />
+            </TouchableOpacity>
+          <Text style={{textAlign:'center',marginRight:5,marginTop:10,fontFamily:'Avenir Next',fontSize:16}}>Telefon Numarası : {this.state.detectedPhoneNumber}</Text>
 
-        
+            <TouchableOpacity
+            onPress={()=> {
+              this.customerDetectFromCall.close()
+              this.props.navigation.navigate('addCustomer',{phoneNumber : this.state.detectedPhoneNumber})} }
+            style={{borderWidth:3,borderRadius:10,marginTop:20,marginHorizontal:10,paddingVertical:5,borderColor:'#216AF4',backgroundColor: '#216AF4' }}>
+     <Text style={{fontFamily:'Avenir Next',fontSize:16,paddingVertical:5,textAlign:'center',color:  'white' }}>
+        Müşteri bulunamadı bu numarayı müşteri eklemek ister misiniz?
+     
+     </Text>
+     </TouchableOpacity>
+    
+            
+    
+          </View>
+          )
+        }
 
-      </View>
-  
-      )
     }
-    else if(this.props.detectingCustomerLoading === false && this.props.detectedCustomerId === 0) {
+    else if(this.props.detectingCustomerLoading === false && this.props.detectedCustomer) {
       return (
         <View>
         <TouchableOpacity onPress={()=> this.customerDetectFromCall.close()}
@@ -788,7 +824,7 @@ stopListenerTapped() {
           this.props.navigation.navigate('addCustomer',{phoneNumber : this.state.detectedPhoneNumber})} }
         style={{borderWidth:3,borderRadius:10,marginTop:20,marginHorizontal:10,paddingVertical:5,borderColor:'#216AF4',backgroundColor: '#216AF4' }}>
  <Text style={{fontFamily:'Avenir Next',fontSize:16,paddingVertical:5,textAlign:'center',color:  'white' }}>
-    Müşteri bulunamadı bu numaraya müşteri eklemek ister misiniz?
+    Müşteri bulunamadı bu numarayı müşteri eklemek ister misiniz?
  
  </Text>
  </TouchableOpacity>
@@ -1029,7 +1065,7 @@ const mapStateToProps = (state: AppState) => ({
   message: state.customerDelete.message,
   totalRecords: state.home.totalRecords,
   customerMoreLoading : state.home.customerMoreLoading,
-  detectedCustomerId : state.home.detectedCustomerId,
+  detectedCustomer : state.home.detectedCustomer,
   detectingCustomerLoading : state.home.detectingCustomerLoading,
 })
 function bindToAction(dispatch: any) {

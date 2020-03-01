@@ -14,7 +14,11 @@ export interface ICustomerItem{
 
 }
 
-
+export interface ICustomerFromPhone {
+    id :number;
+    customerName: string;
+    detected : boolean;
+  }
 
 export interface ICustomerDetailItem extends  ICustomerItem{
     adress?:string;

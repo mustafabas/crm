@@ -8,7 +8,7 @@ const intialState = {
   isHomeLoading: false || null,
   totalRecords : 0,
   customerMoreLoading : false,
-  detectedCustomerId : null,
+  detectedCustomer : null,
   detectingCustomerLoading : false
 };
 
@@ -43,7 +43,7 @@ export default (state: HomeState = intialState, action: Action) => {
       case DETECT_USER_FROM_CALL :
         return {
           ...state,
-          detectedCustomerId : action.payload,
+          detectedCustomer : action.payload,
           detectingCustomerLoading : false,
         }
       case DETECT_USER_FROM_CALL_LOADING:

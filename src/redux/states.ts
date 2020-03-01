@@ -1,4 +1,4 @@
-import { ICustomerItem, ICustomerDetailItem } from "./models/homeModel";
+import { ICustomerItem, ICustomerDetailItem, ICustomerFromPhone } from "./models/homeModel";
 import { IOrderItem } from "./models/orderModel";
 import { IProductItem} from "./models/productModel";
 import {ICustomerPriceProductItem} from "./models/customerPriceProductModel"
@@ -23,17 +23,15 @@ export interface State {
     type: string;
     payload: any;
   }
-
   export interface HomeState{
-      customers:ICustomerItem[];
-      isHomeLoading :boolean | null;
-      customerMoreLoading : boolean,
-      detectedCustomerId : number | null,
-      detectingCustomerLoading : boolean;
+    customers:ICustomerItem[];
+    isHomeLoading :boolean | null;
+    customerMoreLoading : boolean,
+    detectedCustomer : ICustomerFromPhone | null,
+    detectingCustomerLoading : boolean;
 
 
-  }
-
+}
   export interface UserState {
     isLoading: boolean;
     isFinished: boolean;
@@ -42,6 +40,8 @@ export interface State {
 
 
   }
+  
+
 
 
   export interface UserCreate {
