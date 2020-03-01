@@ -76,34 +76,7 @@ interface State {
 
 
 class OrderDetailScreen extends Component<Props, State>{
-
-
-//   showSimpleMessage() {
-
-//     if (this.props.Message) {
-
-//       showMessage({
-//         message: this.props.Message,
-//         type: this.props.isSuccess ? "success" : "danger",
-//         icon: 'auto'
-//       }
-//       );
-//     }
-//     if (this.props.MessageAddCash) {
-//       showMessage({
-//         message: this.props.MessageAddCash,
-//         type: this.props.isSuccessAddCash ? "success" : "danger",
-//         icon: 'auto'
-//       }
-//       );
-//     }
-
-//   }
-
-
-
-  
-   static navigationOptions = ({ navigation }) => ({
+     static navigationOptions = ({ navigation }) => ({
     title: 'Sipariş Detay',
     headerRight: () => {
         let orderId = navigation.getParam('orderId')
@@ -181,28 +154,48 @@ class OrderDetailScreen extends Component<Props, State>{
 
       return( 
          <View>
-              <View style={{padding:10,borderBottomWidth:1,borderBottomColor:"#eeeeee",marginBottom:20}}>
-              <Text style={{fontFamily:'Avenir Next',fontSize:18}}>{detail.customerName}</Text>
-      <Text style={{color:"#8f8f8f",fontFamily:'Avenir Next'}}>{detail.companyName}</Text>
+              <View style={{padding:10,borderBottomWidth:1,borderBottomColor:"#eeeeee", flexDirection:'row'}}>
+                <View style={{flex:.7}}>
+                <Text style={{fontFamily:'Avenir Next',fontSize:18}}>{detail.customerName}</Text>
+            <Text style={{color:"#8f8f8f",fontFamily:'Avenir Next'}}>{detail.companyName}</Text>
+                </View>
+                <View style={{flex:0.3}}>
+             <Text style={{fontSize:12, color:'#AAAAAA' }}> {this.props.orderDetail.createdDate}</Text>
+             <Text style={{color:'green', fontSize:20}}>{this.props.orderDetail.displayTotalPrice}</Text>
+            {this.props.orderDetail.isPaid && <Text style={{color:'#333'}}>
+              (Peşin Alınmalı)</Text>}
+
+                </View>
+          <View>
+
+          </View>
           </View>
 
+          <FlatList
+               data={this.props.orderDetail.orderProducts}
+               renderItem={({ item }) =>
+               <View style={{padding:5,borderBottomWidth:1,borderBottomColor:"#eeeeee", marginHorizontal:10}}>
+               <View style={{flexDirection:'row'}}>
+          <Text style={{fontFamily:'Avenir Next',fontWeight:'600',fontSize:18,flex:1}}>{item.productName}</Text>
+               <Text style={{fontFamily:'Avenir Next',color:'#8C8C8C',alignSelf:'center',marginLeft:10}}>Adet: {item.count}</Text>
+               
+               </View>
+                
+                
+               <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+              
+               <Text style={{fontFamily:'Avenir Next',color:'#8C8C8C',marginTop:10,textAlign:'right'}}>Fiyat: {item.unitPrice}</Text>
+               <View style={{flexDirection:'row', alignSelf:'center'}}>
+                <Text style={{fontFamily:'Avenir Next',color:'#8C8C8C',marginTop:10,textAlign:'right'}}>Toplam: </Text>
+                <Text style={{fontFamily:'Avenir Next',color:'#8C8C8C',marginTop:10,textAlign:'right'}}>{item.totalPrice}</Text>
+                </View>
 
-          <View style={{padding:10,borderBottomWidth:1,borderBottomColor:"#eeeeee",marginBottom:20,}}>
-           <View style={{flexDirection:'row'}}>
-      <Text style={{fontFamily:'Avenir Next',fontWeight:'600',fontSize:18,flex:1}}>{detail.productName}</Text>
-           <Text style={{fontFamily:'Avenir Next',fontWeight:'300',alignSelf:'center',marginLeft:10}}>Adet: {detail.count}</Text>
-           </View>
-            
-            
-           <View style={{flexDirection:'row',justifyContent:'space-between'}}>
-           <Text style={{fontFamily:'Cabin-Regular',color:'#b3b3b3',marginTop:10,textAlign:'left'}}>{detail.createdDate}</Text>
-           <Text style={{fontFamily:'Avenir Next',fontWeight:'300',marginTop:10,textAlign:'right'}}>Fiyat: {detail.displayUnitPrice}</Text>
-           </View>
-            <View style={{flexDirection:'row',justifyContent:'flex-end'}}>
-            <Text style={{fontFamily:'Avenir Next',fontWeight:'300',marginTop:10,textAlign:'right'}}>Toplam: </Text>
-            <Text style={{fontFamily:'Avenir Next',fontWeight:'300',marginTop:10,textAlign:'right'}}>{detail.displayTotalPrice}</Text>
-            </View>
-          </View>
+               </View>
+   
+              </View>
+              }
+          ></FlatList>
+
 
           <View style={{padding:10}}>
               <Text style={{fontFamily:'Avenir Next',fontSize:20,fontWeight:'700',color:'#8c8c8c',marginLeft:10}}>Teslimat Adresi</Text>

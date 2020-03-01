@@ -435,61 +435,8 @@ stopListenerTapped() {
     this.setState({ refreshing: false });
   }
 
-RenderCustomerItem(item:ICustomerItem){
-  if(this.state.customerId){
-    
-  }
-  <TouchableOpacity onPress={() => this.props.navigation.navigate("Customer", { customerId: item.customerId, nameSurname: item.nameSurname, companyName: item.companyName, displayTookTotalAmount: item.displayTookTotalAmount, restTotalAmount: item.displayRestTotalAmount, totalAmount: item.displayTotalAmount })} style={{ marginHorizontal: 5, backgroundColor: '#EFF3F9', paddingVertical: 10, paddingBottom: 20, paddingHorizontal: 5, paddingRight: 10, flex: 1, justifyContent: 'space-between', borderRadius: 15 }}>
-  <TouchableOpacity onPress={() => this.openModal(item)}
-    style={{ alignSelf: 'flex-end', marginRight: 10, marginBottom: 0 }}>
-    <Icon name="ios-more" />
-  </TouchableOpacity>
-  <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-    <View style={{ width: 33, height: 33, borderRadius: 16.5, backgroundColor: '#2069F3', justifyContent: 'center', alignItems: 'center' }}>
-      <Text style={{ color: 'white' }}>{item.nameSurname.substring(0, 1)}</Text>
-    </View>
-    <View style={{ flex: .3, justifyContent: 'center', marginTop: -5 }}>
-
-      <Text style={{ color: '#2069F3', fontWeight: '600', fontSize: 16, fontFamily: 'Avenir Next' }}>
-        {item.nameSurname}
-      </Text>
-    </View>
-
-    <View style={{ width: 1, height: '80%', backgroundColor: '#CFD3D7', marginRight: 10 }} />
-    <View style={{ flex: .2 }}>
-      <Text style={{ color: '#404243', fontSize: 12, fontFamily: 'Avenir Next' }}>
-        Alınan
-           </Text>
-      <Text style={{ color: '#404243', fontWeight: '600', fontSize: 14, fontFamily: 'Avenir Next' }}>
-        {item.displayTookTotalAmount}
-      </Text>
-    </View>
-    <View style={{ width: 1, height: '90%', backgroundColor: '#CFD3D7', marginRight: 10 }} />
-    <View style={{ flex: .2 }}>
-      <Text style={{ color: '#404243', fontSize: 12, fontFamily: 'Avenir Next' }}>
-        Kalan
-           </Text>
-      <Text style={{ color: '#404243', fontWeight: '600', fontSize: 14, fontFamily: 'Avenir Next' }}>
-        {item.displayRestTotalAmount}
-      </Text>
-    </View>
-    <View style={{ width: 1, height: '80%', backgroundColor: '#CFD3D7', marginRight: 10 }} />
-
-    <View style={{ flex: .2 }}>
-      <Text style={{ color: '#404243', fontSize: 12, fontFamily: 'Avenir Next' }}>
-        Toplam
-           </Text>
-      <Text style={{ color: '#404243', fontWeight: '600', fontSize: 14, fontFamily: 'Avenir Next' }}>
-        {item.displayTotalAmount}
-      </Text>
-    </View>
-
-  </View>
 
 
-</TouchableOpacity>}
-
-}
   renderGetPay() {
     const top = this.state.scrollY.interpolate({
       inputRange: [0, 20, 70, 90],
@@ -525,8 +472,78 @@ RenderCustomerItem(item:ICustomerItem){
         </View>}
         ItemSeparatorComponent={({ }) => <View style={{ height: 10 }}></View>}
         renderItem={({ item }) =>
+        <TouchableOpacity onPress={() => this.props.navigation.navigate("Customer", { customerId: item.customerId, nameSurname: item.nameSurname, companyName: item.companyName, displayTookTotalAmount: item.displayTookTotalAmount, restTotalAmount: item.displayRestTotalAmount, totalAmount: item.displayTotalAmount })} style={{ marginHorizontal: 5, backgroundColor: '#EFF3F9', paddingVertical: 10, paddingBottom: 20, paddingHorizontal: 5, paddingRight: 10, flex: 1, justifyContent: 'space-between', borderRadius: 15 }}>
+        <TouchableOpacity onPress={() => this.openModal(item)}
+          style={{ alignSelf: 'flex-end', marginRight: 10, marginBottom: 0 }}>
+          <Icon name="ios-more" />
+        </TouchableOpacity>
+          {this.state.orderType == 2 && 
+                  <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                  <View style={{ width: 33, height: 33, borderRadius: 16.5, backgroundColor: '#2069F3', justifyContent: 'center', alignItems: 'center' }}>
+                    <Text style={{ color: 'white' }}>{item.nameSurname.substring(0, 1)}</Text>
+                  </View>
+                  <View style={{ flex: .3, justifyContent: 'center', marginTop: -5 }}>
+              
+                    <Text style={{ color: '#2069F3', fontWeight: '600', fontSize: 16, fontFamily: 'Avenir Next' }}>
+                      {item.nameSurname}
+                    </Text>
+                  </View>
+              
+                  <View style={{ width: 1, height: '80%', backgroundColor: '#CFD3D7', marginRight: 10 }} />
+                  <View style={{ flex: .2 }}>
+                    <Text style={{ color: '#404243', fontSize: 12, fontFamily: 'Avenir Next' }}>
+                      Alınan
+                         </Text>
+                    <Text style={{ color: '#404243', fontWeight: '600', fontSize: 14, fontFamily: 'Avenir Next' }}>
+                      {item.displayTookTotalAmount}
+                    </Text>
+                  </View>
+                  <View style={{ width: 1, height: '90%', backgroundColor: '#CFD3D7', marginRight: 10 }} />
+                  <View style={{ flex: .2 }}>
+                    <Text style={{ color: '#404243', fontSize: 12, fontFamily: 'Avenir Next' }}>
+                      Kalan
+                         </Text>
+                    <Text style={{ color: '#404243', fontWeight: '600', fontSize: 14, fontFamily: 'Avenir Next' }}>
+                      {item.displayRestTotalAmount}
+                    </Text>
+                  </View>
+                  <View style={{ width: 1, height: '80%', backgroundColor: '#CFD3D7', marginRight: 10 }} />
+              
+                  <View style={{ flex: .2 }}>
+                    <Text style={{ color: '#404243', fontSize: 12, fontFamily: 'Avenir Next' }}>
+                      Toplam
+                         </Text>
+                    <Text style={{ color: '#404243', fontWeight: '600', fontSize: 14, fontFamily: 'Avenir Next' }}>
+                      {item.displayTotalAmount}
+                    </Text>
+                  </View>
+              
+                </View>
+              
+            
+          }
+          {this.state.orderType==1 && 
+                  <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
+                  <View style={{ width: 33, height: 33, borderRadius: 16.5, backgroundColor: '#2069F3', justifyContent: 'center', alignItems: 'center' }}>
+                    <Text style={{ color: 'white' }}>{item.nameSurname.substring(0, 1)}</Text>
+                  </View>
+                  <View style={{ flex: .3, justifyContent: 'center', marginTop: -5 }}>
+              
+                    <Text style={{ color: '#2069F3', fontWeight: '600', fontSize: 16, fontFamily: 'Avenir Next' }}>
+                      {item.nameSurname}
+                    </Text>
+                  </View>
+              
+   
+              
+                </View>
+              
+          }
 
-            {this.RenderCustomerItem(item:ICustomerItem)}
+      
+      </TouchableOpacity>
+        
+        }
 
 
         keyExtractor={(item, index) => String(index)}
@@ -697,10 +714,7 @@ RenderCustomerItem(item:ICustomerItem){
                     <Text style={{ fontFamily: 'Avenir Next', fontWeight: "600", fontSize: 16, color: this.state.selectedState === 1 ? 'black' : '#8F9599' }}>Tüm Müşteriler</Text>
                     <View style={{ backgroundColor: this.state.selectedState === 2 ? 'black' : '#8F9599', width: 20, height: 1, alignSelf: 'center' }}></View>
                   </TouchableOpacity>
-                  <TouchableOpacity onPress={() => this.changePage(3)} style={{ marginHorizontal: 10 }}>
-                    <Text style={{ fontFamily: 'Avenir Next', fontWeight: "600", fontSize: 16, color: this.state.selectedState === 3 ? 'black' : '#8F9599' }}>Bugünün Müşterileri</Text>
-                    <View style={{ backgroundColor: this.state.selectedState === 3 ? 'black' : '#8F9599', width: 20, height: 1, alignSelf: 'center' }}></View>
-                  </TouchableOpacity>
+
                 </View>
               </ScrollView>
               <TouchableOpacity onPress={() => this.OrderSheet.open()} style={{ margin: 20, justifyContent: 'center', alignSelf: 'center', marginTop: 15 }}>

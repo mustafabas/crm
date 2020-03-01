@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {WATER_GET_NOTIFICATIONS, WATER_GET_CUSTOMER_ORDER_DETAIL,WATER_UPDATE_CUSTOMER_ORDER_STATUS, WATER_ADD_ORDER, WATER_GET_ORDER_LIST} from './../constants'
+import {WATER_GET_NOTIFICATIONS, WATER_GET_CUSTOMER_ORDER_DETAIL,WATER_UPDATE_CUSTOMER_ORDER_STATUS, WATER_ADD_ORDER, WATER_GET_ORDER_LIST, WATER_GET_CUSTOMER_ORDER_DETAIL_NEW} from './../constants'
 import { Dispatch } from "react";
 import { GET_CUSTOMER_ORDER_DETAIL, GET_CUSTOMER_ORDER_DETAIL_LOADING, GET_CUSTOMER_ORDER_DETAIL_FAILED, UPDATE_ORDER_DETAIL, UPDATE_ORDER_DETAIL_LOADING, UPDATE_ORDER_DETAIL_FAILED, GET_CUSTOMER_ORDER_LIST_LOADING, GET_CUSTOMER_ORDER_LIST_FAILED, GET_CUSTOMER_ORDER_LIST, GET_CUSTOMER_ORDER_LIST_MORE} from './../types'
 import {Action} from '../states'
@@ -33,15 +33,37 @@ export interface orderDetail {
     companyName: string;
     createdDate: string;
     orderStatus: OrderStatus;
+    orderProducts :IOrderProductItem[];
+    isPaid : boolean;
   }
 
 
       
+export interface IOrderProductItem {
+  productId: number;
+  productName: string;
+  unitPrice: string;
+  count: number;
+  totalPrice: string;
+}
 
 
 
 
+export interface orderListItem {
 
+  orderId: number;
+  displayTotalPrice: string;
+  displayUnitPrice: string;
+  count: string;
+  customerName: string;
+  transportationUserName: string;
+  orderStatusText: string;
+  productName: string;
+  companyName: string;
+  createdDate: string;
+  orderStatus: OrderStatus;
+}
 
 
 
@@ -104,13 +126,14 @@ export function getCustomerOrderDetail(orderId : number) {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
       }
-      axios.get(WATER_GET_CUSTOMER_ORDER_DETAIL +`?orderId=${orderId}`,{
+      axios.get(WATER_GET_CUSTOMER_ORDER_DETAIL_NEW +`?orderId=${orderId}`,{
           headers : headers
         }).then((response) =>{
           
         var orderDetail = {} as orderDetail
 
           var count = 0
+          console.log(response,"res");
       if(response.data.isSuccess){
          let data = response.data.result
          orderDetail.companyName = data.companyName;
@@ -126,6 +149,20 @@ export function getCustomerOrderDetail(orderId : number) {
         orderDetail.orderStatusText = data.orderStatusText;
         orderDetail.productName = data.productName;
         orderDetail.transportationUserName = data.transportationUserName;
+        orderDetail.isPaid = data.isPaid;
+
+        var orderProducts : IOrderProductItem[] = [] as IOrderProductItem[];
+
+        data.orderProductItems.map((item:any)=>{
+          orderProducts.push({
+            count:item.count,
+            productId:item.productId,
+            productName:item.productName,
+            totalPrice:item.totalPrice,
+            unitPrice:item.unitPrice
+          });
+        });
+        orderDetail.orderProducts=orderProducts;
 
          dispatch(getDetail(orderDetail))
          dispatch(reset())
@@ -149,26 +186,12 @@ export function getCustomerOrderDetail(orderId : number) {
   
   }
 
-  export interface orderListItem {
-
-    orderId: number;
-    displayTotalPrice: string;
-    displayUnitPrice: string;
-    count: string;
-    customerName: string;
-    transportationUserName: string;
-    orderStatusText: string;
-    productName: string;
-    companyName: string;
-    createdDate: string;
-    orderStatus: OrderStatus;
-  }
 
 
 
   
 
-  export function getCustomerOrders(page? : number) {
+  export function getCustomerOrders(hasToTake:boolean, status:number | null, page? : number) {
     return (dispatch : Any) =>  {
         dispatch(isLoadingOrderList(true,''))
       AsyncStorage.multiGet(['userToken', 'userId']).then((res) => {
@@ -179,8 +202,8 @@ export function getCustomerOrderDetail(orderId : number) {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
       }
-
-      axios.get(WATER_GET_ORDER_LIST + `?userId=${userId}&page=${page ? page : 1}&pageSize=15&`,{
+      console.log(WATER_GET_ORDER_LIST + `?userId=${userId}&page=${page ? page : 1}&pageSize=15&hasToTransport=${hasToTake}&status=${status}`);
+      axios.get(WATER_GET_ORDER_LIST + `?userId=${userId}&page=${page ? page : 1}&pageSize=15&hasToTransport=${hasToTake}&status=${status}`,{
           headers : headers
         }).then((response) =>{
           
