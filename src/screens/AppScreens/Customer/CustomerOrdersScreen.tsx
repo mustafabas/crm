@@ -456,9 +456,7 @@ componentDidMount(){
       return (<TouchableOpacity style={{marginTop:100}} onPress={() => navigation.navigate("orderAdd", { customerId: navigation.getParam("customerId") })}>
 
      
-      
-
-
+  
         <InfoItem text="Sisteme eklediğiniz müşteri siparişi bulunmakatadır. Müşterinize sipariş ekleyebilirsiniz!" />
 
 
@@ -478,10 +476,7 @@ componentDidMount(){
           <View style={{ marginHorizontal: 0, flexDirection: 'column', backgroundColor: '#EFF3F9', paddingVertical: 10, paddingHorizontal: 10, justifyContent: 'space-between', borderRadius: 15 }}>
 
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-
-             
-
-                <Text style={{ color: '#2069F3', fontWeight: '600', fontSize: 20, fontFamily: 'Avenir Next' ,alignSelf:'center',flex:.8}}>
+                <Text style={{ color: '#2069F3', fontWeight: '600', fontSize: 16, fontFamily: 'Avenir Next' ,alignSelf:'center',flex:.8}}>
 
                   {item.productName}
                 </Text>
@@ -491,7 +486,7 @@ componentDidMount(){
                 <TouchableOpacity onPress={() => this.openModal(item.orderId, item.unitPrice, item.count, item.productId, item.productName, item.isPaid)}>
                   <Icon style={{ color: "#2069F3" }} name="ios-more" />
                 </TouchableOpacity>
-                <Text style={{ color: '#404243', fontSize: 14, fontFamily: 'Avenir Next' }}>
+                <Text style={{ color: '#AAAA', fontSize: 14, fontFamily: 'Avenir Next' }}>
                   {item.dateTime.slice(8, 10) + "/" + item.dateTime.slice(5, 7) + "/" + item.dateTime.slice(0, 4)
                   }
                 </Text>
@@ -518,13 +513,7 @@ componentDidMount(){
                 </View>
 
                 <View style={{ flexDirection: 'row' }}>
-                  <Text style={{ color: '#404243', fontSize: 16, fontFamily: 'Avenir Next' }}>
-                    Birim Fiyat:
-                 </Text>
-                  <Text style={{ color: '#404243', fontSize: 16, fontWeight: '600', fontFamily: 'Avenir Next' }}>
-                    {item.unitPrice} TL
-                 </Text>
-
+    
                 </View>
 
                 <View style={{ flexDirection: 'row' }}>
