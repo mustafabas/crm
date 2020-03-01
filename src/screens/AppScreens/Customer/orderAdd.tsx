@@ -23,7 +23,7 @@ import { GetProducts } from "../../../redux/actions/productAction";
 import { IProductItem } from "../../../redux/models/productAddModel";
 import { AddOrder, notificationEmployee } from "../../../redux/actions/addOrderAction";
 // import { IAddOrderItem } from "../redux/models/addOrderModel";
-import { GetProduct } from "../../../redux/actions/productForCustomerAction";
+import { GetProduct, resetProduct } from "../../../redux/actions/productForCustomerAction";
 import { IProductForCustomerItem } from "../../../redux/models/productForCustomerModel";
 import { Input, CheckBox,Picker, Item, Label, Button, Spinner, Card, CardItem,Body,Icon } from "native-base";
 import { showMessage } from "react-native-flash-message";
@@ -33,13 +33,13 @@ import { NotificationService } from "../../../services/NotificationService";
 import styles from "./styles";
 
 
-interface product {
-  productId : number;
-  unitPrice : number;
-  productCount : number; 
+export interface product {
+  index : number;
+  productId : number | null;
+  unitPrice : string;
+  productCount : string; 
   productCode : string;
-
-
+  productGotUnitPrice : boolean;
 }
 interface Props {
   navigation: NavigationScreenProp<NavigationState>;
@@ -52,6 +52,8 @@ interface Props {
   AddOrderMessage: string;
   GetProduct: (productId: number, customerId: number) => void;
   product: IProductForCustomerItem;
+  resetProduct : () => void;
+
 
 
 
@@ -73,6 +75,8 @@ interface State {
   selectedEmployee : number;
   notificationIsSend : boolean;
   productList : product[];
+  indexOfGottenProduct : number;
+
 
 }
 
@@ -150,8 +154,9 @@ class orderAdd extends Component<Props, State> {
       orderAddedSuccessfully : false,
       selectedEmployee : 0,
       notificationIsSend : false,
-      productList : [{productId:-1,productCount:1,unitPrice:0,productCode:""}],
-
+      productList : [{index:0,productId:null,productCount:"",unitPrice:"",productCode:"",productGotUnitPrice:true},
+      ],
+indexOfGottenProduct : 0
     };
    
   }
@@ -214,6 +219,7 @@ class orderAdd extends Component<Props, State> {
   }
 
   componentWillMount() {
+    this.props.resetProduct();
     console.log(this.props.product)
     this.props.GetProducts();
     console.log(this.props.product)
@@ -326,6 +332,110 @@ _renderChooseEmployeeContent(){
   )
 }
 
+renderProducts(index : number){
+  return(
+    <View>
+
+
+
+
+    <Picker
+placeholderStyle={{width:'95%',color: "#bfc6ea" }}
+headerStyle={{backgroundColor:'#2069F3'}}
+headerTitleStyle={{color:'white',fontFamily:'Avenir Next',fontSize:18}}
+// headerStyle={{backgroundColor: '#2B6EDC'}}
+iosHeader="Ürünler"
+headerBackButtonTextStyle={{color:'white'}}
+mode="dropdown"
+iosIcon={<Icon name="ios-arrow-down" />}
+style={{ width:'95%'}}
+placeholder="Ürün Seçimi"
+
+placeholderIconColor="#007aff"
+selectedValue={this.state.productList[index].productId}
+// onValueChange={this.onValueChange2.bind(this)}
+onValueChange={(itemValue, itemIndex) =>
+  this.changeValueOfProductList("productId",itemValue,index)
+}>
+
+{this.PickerMenuCreate().map((res)=> {
+    return (
+      <Picker.Item label={res.label} value={res.value} />
+    )
+})}
+
+
+</Picker>
+
+
+
+
+
+
+
+<View style={{flexDirection:'row',flex:1,paddingHorizontal:10}}>
+
+<Item style={{flex:.5}} floatingLabel>
+        <Label style={{fontFamily:'Avenir Next',fontSize:18,}}>
+        Ürün Adedi:
+        </Label>
+        <Input
+          placeholderTextColor="#9A9A9A"
+          keyboardType="numeric"
+          value={this.state.productList[index].productCount}
+          onChangeText={e => this.changeValueOfProductList("productCount",e,index)}
+          // onBlur={props.handleBlur("count")}
+        />
+       </Item>
+
+
+    <Item  floatingLabel style={{flex:.5}}>
+  <Label style={{fontFamily:'Avenir Next',fontSize:18}}>
+  Birim Fiyat: 
+
+  </Label>
+    
+     {/* <View style={styles.input}> */}
+        <Input
+          // style={styles.input}
+          // placeholder="Ürün Adedi"
+          placeholderTextColor="#9A9A9A"
+          keyboardType="numeric"
+          value={this.state.productList[index].unitPrice}
+          onChangeText={e => this.changeValueOfProductList("unitPrice",e,index)}
+          // onBlur={props.handleBlur("unitPrice")}
+        />
+        </Item>
+      
+  </View>
+      
+      {/* </View>   */}
+
+
+      {this.state.productList.length < index + 2 && this.state.productList[index].productCount !== "" && 
+      this.state.productList[index].productId !== null && 
+  <TouchableOpacity 
+
+  onPress={()=> {
+    var list = this.state.productList
+    list.push({index:index + 1,productId:null,productCount:"",unitPrice:"",productCode:"",productGotUnitPrice:true});
+    this.setState({productList : list});
+    
+  }}
+
+  
+  style={{marginLeft:10,marginTop:10}}>
+<Text style={{color:'#333',fontFamily:"Avenir Next",fontWeight:'bold',textDecorationLine:"underline"}} >Daha Fazla</Text>
+       
+  </TouchableOpacity>}
+  
+    
+
+
+
+</View>
+  )
+}
 changeValueOfProductList(type : string, value : string,index : number){
 
   var list = this.state.productList ; 
@@ -337,6 +447,9 @@ changeValueOfProductList(type : string, value : string,index : number){
     //   productId: value,
     // },   );
     listItem.productCode = this.props.products.find(task => (task.productId=== Number(value)), this)?.productCode ?? ""
+    this.setState({indexOfGottenProduct : index})
+    listItem.productGotUnitPrice = false,
+
      this.props.GetProduct(Number(value), this.props.navigation.getParam("customerId"))
   }
   listItem = {
@@ -345,6 +458,17 @@ changeValueOfProductList(type : string, value : string,index : number){
   }
   list[index] = listItem
   this.setState({productList : list});
+
+}
+renderListOfProducts(){
+
+    
+
+   return this.state.productList.map((data) => {
+    return this.renderProducts(data.index)
+    })
+
+
 
 }
 
@@ -390,78 +514,14 @@ renderContent(){
     <View>
     </View>
     <View style={[styles.rnpickerselect,{paddingTop:20,paddingRight:20}]}>
-
-
-
-      </View>
-    <View style={[styles.inputContainer,{paddingTop:0}]}>
-    <Picker
-placeholderStyle={{width:'100%'}}
-headerStyle={{backgroundColor:'#2069F3'}}
-headerTitleStyle={{color:'white',fontFamily:'Avenir Next',fontSize:18}}
-// headerStyle={{backgroundColor: '#2B6EDC'}}
-iosHeader="Ürünler"
-headerBackButtonTextStyle={{color:'white'}}
-mode="dropdown"
-iosIcon={<Icon name="ios-arrow-down" />}
-style={{ width:'100%'}}
-placeholder="Ürün Seçimi"
-placeholderStyle={{ color: "#bfc6ea" }}
-placeholderIconColor="#007aff"
-selectedValue={this.state.productList[index].productId}
-// onValueChange={this.onValueChange2.bind(this)}
-onValueChange={(itemValue, itemIndex) =>
-  this.changeValueOfProductList("productId",itemValue,index)
-}>
-
-{this.PickerMenuCreate().map((res)=> {
-    return (
-      <Picker.Item label={res.label} value={res.value} />
-    )
-})}
-
-
-</Picker>
-
-
-      <View style={styles.input}>
-       <Item floatingLabel>
-        <Label style={{fontFamily:'Avenir Next',fontSize:18,}}>
-        Ürün Adedi:
-        </Label>
-        <Input
-          placeholderTextColor="#9A9A9A"
-          keyboardType="numeric"
-          value={this.state.productList[index].productCount}
-          onChangeText={e => this.changeValueOfProductList("productCount",e,index)}
-          // onBlur={props.handleBlur("count")}
-        />
-       </Item>
-      </View>
-
-
-      <Text style={{fontFamily:'Avenir Next',fontSize:18,marginTop:20}}>Ürün Kodu: {this.state.selectedProductValue}</Text>
-      
-    <Item floatingLabel style={{marginTop:20}}>
-  <Label style={{fontFamily:'Avenir Next',fontSize:18}}>
-  Birim Fiyat: 
-
-  </Label>
     
-     {/* <View style={styles.input}> */}
-        <Input
-          // style={styles.input}
-          // placeholder="Ürün Adedi"
-          placeholderTextColor="#9A9A9A"
-          keyboardType="numeric"
-          value={String(props.values.unitPrice)}
-          onChangeText={props.handleChange("unitPrice")}
-          onBlur={props.handleBlur("unitPrice")}
-        />
-        </Item>
-      {/* </View>   */}
-      <View style={{margin:2}}></View>
-      <View style={{flexDirection:'row',marginTop:30}}>
+      {
+      this.renderListOfProducts()
+      }
+      
+
+
+      <View style={{flexDirection:'row',marginTop:30,marginLeft:10}}>
       <CheckBox
 
 // containerStyle={styles.chechBoxContainer}             
@@ -476,7 +536,10 @@ Pesin Odeme
 </Label>
       </View>
 
-        <Text style={styles.odenecekText}>Toplam Fiyat: {(Number(props.values.unitPrice.replace(",",".")) * Number(props.values.count))} TL</Text>
+      </View>
+    <View style={[styles.inputContainer,{paddingTop:0}]}>
+  
+        {/* <Text style={styles.odenecekText}>Toplam Fiyat: {(Number(props.values.unitPrice.replace(",",".")) * Number(props.values.count))} TL</Text> */}
 
       {/* <TouchableOpacity style={styles.siparisButtonContainer}>
         <Text style={styles.amountButtonText}
@@ -486,7 +549,9 @@ Pesin Odeme
 
 
 
-      <Button disabled={ this.state.orderAddedSuccessfully } onPress={props.handleSubmit}  style={{justifyContent:'center',marginTop:30,marginBottom:30,marginHorizontal:40,borderRadius:20,backgroundColor:'#01C3E3',
+      <Button disabled={ this.state.orderAddedSuccessfully }
+
+      style={{justifyContent:'center',marginTop:30,marginBottom:30,marginHorizontal:40,borderRadius:20,backgroundColor:'#01C3E3',
     shadowRadius: 5.00,
     
     elevation: 12,
@@ -528,6 +593,16 @@ shadowOpacity: .5,
   }
 }
   render() {
+    if(this.props.product && this.props.product.productId && this.state.productList[this.state.indexOfGottenProduct].productGotUnitPrice ===false && this.state.productList[this.state.indexOfGottenProduct].unitPrice !== this.props.product.unitPrice.toString()) {
+      console.log("helallll")
+      var list  = this.state.productList 
+      list[this.state.indexOfGottenProduct].productGotUnitPrice = true;
+      list[this.state.indexOfGottenProduct].unitPrice = this.props.product.unitPrice.toString();
+      list[this.state.indexOfGottenProduct].productCode = this.props.product.productCode
+      this.setState({productList : list});
+    
+      
+    }
     console.log(this.props.product,"product");
    
 
@@ -615,6 +690,8 @@ function bindToAction(dispatch: any) {
       dispatch(AddOrder(productId, customerId, unitPrice, count,isPaid)),
     GetProduct: (productId: number, customerId: number) =>
       dispatch(GetProduct(productId, customerId)),
+      resetProduct : ()=>
+      dispatch(resetProduct())
   };
 }
 

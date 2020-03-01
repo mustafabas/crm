@@ -1,5 +1,5 @@
 import { ProductForCustomer, Action } from "../states";
-import { PRODUCT_FOR_CUSTOMER_GET, PRODUCT_FOR_CUSTOMER_LOADING } from "../types";
+import { PRODUCT_FOR_CUSTOMER_GET, PRODUCT_FOR_CUSTOMER_LOADING, RESET_PROPS } from "../types";
 import {IProductForCustomerItem} from "../models/productForCustomerModel"
 
 const initialProduct:IProductForCustomerItem={
@@ -29,6 +29,13 @@ export default (state: ProductForCustomer = intialState, action: Action) => {
         ...state,
         isLoading: action.payload
       };
+
+    case RESET_PROPS:
+      return {
+        ...state,
+        product: {} as IProductForCustomerItem,
+        isLoading: false,
+      }
     default:
       return state;
   }

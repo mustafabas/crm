@@ -30,6 +30,7 @@ export interface notificationEmployee  {
 }
 
 
+export function AddOrderMultiple(productList : pro)
 
 
 
