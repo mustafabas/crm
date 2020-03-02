@@ -68,13 +68,13 @@ return (dispatch : Any) =>  {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
       }
-
+console.log(WATER_GET_LAST_ORDER + `?customerId=${customerId}`);
       axios.get(WATER_GET_LAST_ORDER + `?customerId=${customerId}`,{
           headers : headers
         })
       .then((response) =>{
         var lastOrderItem = {} as lastOrderInterface;
-
+          console.log(response,"lastorder");
       if(response.data.isSuccess){
           if(response.data.result){
             let data = response.data.result;
@@ -85,6 +85,10 @@ return (dispatch : Any) =>  {
 
             });
             lastOrderItem.orderProducts = orderList;
+            dispatch(getLastOrderDispatch(lastOrderItem))
+          }
+          else{
+            
             dispatch(getLastOrderDispatch(lastOrderItem))
           }
         }

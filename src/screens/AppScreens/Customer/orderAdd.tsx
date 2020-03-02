@@ -543,20 +543,6 @@ renderContent(){
     
     return (
        
-    //   <Formik
-    //   enableReinitialize
-    //   initialValues={initialValues}
-    //   validationSchema={girdiler}
-    //   onSubmit={values => this.siparisOlustur(values)}
-    // >
-    //   {props => {
-    //     return (
-        
-    //   );
-    //   }}
-    // </Formik>
-
-
     <View>
     <View>
     </View>
@@ -694,7 +680,7 @@ onPress={()=> {
 }
   render() {
     if(this.props.product && this.props.product.productId && this.state.productList[this.state.indexOfGottenProduct].productGotUnitPrice ===false && this.state.productList[this.state.indexOfGottenProduct].unitPrice !== this.props.product.unitPrice.toString()) {
-      console.log("helallll")
+
       var list  = this.state.productList 
       list[this.state.indexOfGottenProduct].productGotUnitPrice = true;
       list[this.state.indexOfGottenProduct].unitPrice = this.props.product.unitPrice.toString();
