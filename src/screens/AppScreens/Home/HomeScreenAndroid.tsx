@@ -408,7 +408,7 @@ stopListenerTapped() {
             paddingHorizontal:15
 
           }]}>
-           <TouchableOpacity onPress={() => this.props.navigation.navigate('getLastCalls',{phoneNumberList : this.state.lastFivePhoneNumber})} style={{ zIndex: -1,  marginBottom: 8 }}>
+           <TouchableOpacity onPress={() => this.props.navigation.navigate('getLastCalls')} style={{ zIndex: -1,  marginBottom: 8 }}>
             <Icon style={{ color: '#216AF4' }} name="ios-call" />
           </TouchableOpacity>
 
