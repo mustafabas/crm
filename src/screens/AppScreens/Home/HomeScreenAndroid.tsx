@@ -257,7 +257,7 @@ class HomeScreenAndroid extends Component<Props, State>{
     else if (event === 'Incoming') {
     // Do something call got incoming
     console.log(phonenumber, `phone umbe`)
-    this.getCallLog()
+    // this.getCallLog()
     if(phonenumber){
       this.setState({detectedPhoneNumber : phonenumber} ,()=>{
         
@@ -371,7 +371,7 @@ stopListenerTapped() {
       this.startListenerTapped()
     
   
-    this.getCallLog()
+    // this.getCallLog()
 
   }
 

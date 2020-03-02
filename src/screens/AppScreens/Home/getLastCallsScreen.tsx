@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, FlatList, ActivityIndicator, TouchableOpacity,Text, Linking } from "react-native";
+import { View, FlatList, ActivityIndicator, TouchableOpacity,Text, Linking, PermissionsAndroid } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import { Header } from "../../../components";
@@ -10,6 +10,7 @@ import RBSheet from "react-native-raw-bottom-sheet";
 import { AppState } from "../../../redux/store";
 import { detectUserFromCall } from "../../../redux/actions/homeAction";
 import { InfoItem } from "../../../components/InfoItem";
+import CallLogs from 'react-native-call-log'
 
 interface Props {
   navigation: NavigationScreenProp<NavigationState>;
@@ -29,6 +30,42 @@ interface State {
 
 class getLastCallsScreen extends Component<Props, State> {
 
+
+    async getCallLog(){
+        const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.READ_CALL_LOG,
+        {
+          title: 'Müşterilerinizden gelen aramalar',
+          message:
+            'Müşterileriniz sizi aradığında bildirim alın',
+          buttonNeutral: 'Ask Me Later',
+          buttonNegative: 'Cancel',
+          buttonPositive: 'OK',
+        }
+      )
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        console.log(CallLogs);
+        CallLogs.load(5).then(c => {
+          var list: string[] = []
+          c.map((element) => {
+            if(element.phoneNumber) {
+              list.push(element.phoneNumber)
+            }
+         
+          })
+          this.setState({phoneList : list})
+          
+          // let LastPhoneNumber = c[0].phoneNumber
+          
+    
+    
+        });
+      } else {
+        console.log('Call Log permission denied');
+      }
+    }
+
+    
 
     static navigationOptions = ({ navigation }: Props) => {
         return {
@@ -55,6 +92,9 @@ class getLastCallsScreen extends Component<Props, State> {
 
   componentDidMount() {
 
+  }
+  componentWillMount(){
+      this.getCallLog()
   }
 
 getCustomerByPhoneNumber(phoneNumber : string){

@@ -493,7 +493,7 @@ class ProfileScreen extends Component<Props, State>{
 
 
 
-              <TouchableOpacity onPress={() => this.CustomerListSheet.open()} style={styles.profileContainer}>
+              {/* <TouchableOpacity onPress={() => this.CustomerListSheet.open()} style={styles.profileContainer}>
                 <Icon name="rss" type="Entypo" color={this.state.iconColor} style={{ fontSize: 20, marginTop: Platform.OS === 'ios' ? 5 : 0 }} />
                 <Text style={styles.profileTextStyle}>Ek Özelliklere Sahip Ol</Text>
                 <Icon name="right" type="AntDesign" color={this.state.iconColor} style={{ fontSize: 20, marginTop: Platform.OS === 'ios' ? 5 : 0 }} />
@@ -501,7 +501,7 @@ class ProfileScreen extends Component<Props, State>{
               </TouchableOpacity>
 
 
-              <View style={styles.propsSeperator}></View>
+              <View style={styles.propsSeperator}></View> */}
 
               <TouchableOpacity onPress={() => {
 
