@@ -203,7 +203,7 @@ renderDetectCallContainer() {
   }
 
   renderContent(){
-      if(this.state.phoneList.length > 0) {
+      if( this.state.phoneList &&  this.state.phoneList.length > 0) {
           return (
 <FlatList
           data={this.state.phoneList}
@@ -212,9 +212,8 @@ renderDetectCallContainer() {
                 <TouchableOpacity  style={{padding:20,backgroundColor:"#EFF3F9",borderRadius:5,marginTop:10,marginHorizontal:10}}
                 onPress= {()=> this.getCustomerByPhoneNumber(item)}>
                     <View style={{flexDirection :'row'}}>
-                    <Text style={{fontFamily : 'Avenir Next',fontSize:16,fontWeight:'600',color : "#216AF4"}}>
-                    Telefon Numarası: 
-                        </Text>
+                    <Icon name="call-in" type="SimpleLineIcons"  />
+    
                     <Text style={{fontFamily : 'Avenir Next',fontSize:16,marginLeft:10}}>
                          {item}
                     </Text>
